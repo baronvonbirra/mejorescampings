@@ -1,0 +1,87 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import CampingCard from '../../../components/CampingCard.astro';
+import { getCampings, getFeatures } from '../../../lib/db';
+
+export async function getStaticPaths() {
+  const features = await getFeatures();
+  return features.map((feature) => ({
+    params: {
+      region: 'andalucia',
+      province: 'malaga',
+      feature: feature.slug
+    },
+    props: { feature }
+  }));
+}
+
+const { region, province, feature: featureSlug } = Astro.params;
+const { feature } = Astro.props;
+
+const allCampings = await getCampings();
+const features = await getFeatures();
+
+// Filter campings based on feature key
+const featureKey = feature?.key || featureSlug.replace('campings-con-', '').replace('campings-que-admiten-', '').replace('campings-', '');
+const campings = allCampings.filter((c) => c.amenities && c.amenities[featureKey]);
+
+const formattedProvince = province ? province.charAt(0).toUpperCase() + province.slice(1) : 'Málaga';
+---
+
+<Layout title={`${feature.feature_name} en ${formattedProvince} | CampBase`}>
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
+    <a href="/" class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <a href={`/${region}/${province}`} class="hover:text-slate-800 capitalize">{province}</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">{feature.feature_name}</span>
+  </nav>
+
+  <div class="mb-8">
+    <div class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
+      Filtro pSEO
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+      Campings {feature.feature_name} en {formattedProvince}
+    </h1>
+    <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl">
+      Mostrando alojamientos de acampada en {formattedProvince} que disponen de {feature.feature_name.toLowerCase()}.
+    </p>
+  </div>
+
+  <!-- Feature Navigation Tabs -->
+  <div class="mb-8 flex flex-wrap gap-2 pb-2 border-b border-slate-200">
+    <a href={`/${region}/${province}`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition">
+      Todos
+    </a>
+    {features.map((f) => (
+      <a
+        href={`/${region}/${province}/${f.slug}`}
+        class={`px-3.5 py-1.5 rounded-lg text-xs transition ${
+          f.slug === featureSlug
+            ? 'bg-emerald-600 text-white font-bold shadow-xs'
+            : 'bg-slate-100 hover:bg-emerald-50 text-slate-700 font-medium'
+        }`}
+      >
+        {f.feature_name}
+      </a>
+    ))}
+  </div>
+
+  <!-- Camping Cards or Empty state -->
+  {campings.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {campings.map((camping) => (
+        <CampingCard camping={camping} />
+      ))}
+    </div>
+  ) : (
+    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+      <p class="text-slate-500">No hay campings registrados con la característica "{feature.feature_name}" en esta provincia aún.</p>
+      <a href={`/${region}/${province}`} class="inline-block mt-4 text-sm font-bold text-emerald-600 hover:underline">
+        Ver todos los campings de {formattedProvince}
+      </a>
+    </div>
+  )}
+</Layout>

@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Camping El Sur Ronda",
+    "description": "Camping El Sur está situado en una de las zonas más bellas de Andalucía, a sólo 2 km de la histórica ciudad de Ronda. rodeado de olivos centenarios y robles, ofrece un entorno familiar ideal con animación infantil en verano y vistas impresionantes a la Serranía de Ronda.",
+    "address": "Carretera de Algeciras Km 1.5, 29400 Ronda, Málaga",
+    "lat": 36.7262,
+    "lng": -5.1764,
+    "municipality_slug": "andalucia/malaga/ronda",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Ronda/camping_el_sur/?aff=campbase",
+    "official_url": "https://www.campingelsur.mg.es",
+    "price_tier": 2,
+    "amenities": {
+      "piscina": true,
+      "mascotas": true,
+      "animacion_infantil": true,
+      "entorno_familiar": true,
+      "glamping": false,
+      "playa": false
+    },
+    "slug": "camping-el-sur-ronda",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+    "is_active": true
+  },
+  {
+    "name": "Camping Cabopino Marbella",
+    "description": "Camping Cabopino es un complejo turístico situado en Marbella, a escasos metros de la playa de Cabopino y de las famosas dunas protegidas. Cuenta con instalaciones excepcionales con piscinas cubiertas y descubiertas, completo programa de animación infantil y ambiente ideal para vacaciones en familia.",
+    "address": "Ctra. N-340, Km 194.7, 29604 Marbella, Málaga",
+    "lat": 36.4883,
+    "lng": -4.7431,
+    "municipality_slug": "andalucia/malaga/marbella",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_cabopino/?aff=campbase",
+    "official_url": "https://www.campingcabopino.com",
+    "price_tier": 3,
+    "amenities": {
+      "piscina": true,
+      "mascotas": false,
+      "animacion_infantil": true,
+      "entorno_familiar": true,
+      "glamping": true,
+      "playa": true
+    },
+    "slug": "camping-cabopino-marbella",
+    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
+    "is_active": true
+  },
+  {
+    "name": "Camping la Mariposa Nerja",
+    "description": "Ubicado cerca de Nerja y los acantilados de Maro, Camping La Mariposa combina la tranquilidad de la naturaleza con la cercanía a las calas de agua cristalina. Perfecto para familias y viajeros que buscan confort y descanso.",
+    "address": "Ctra. de Maro s/n, 29780 Nerja, Málaga",
+    "lat": 36.7581,
+    "lng": -3.8542,
+    "municipality_slug": "andalucia/malaga/nerja",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": "https://www.travelpayouts.com/campaigns/nerja-camping?aff=campbase",
+    "official_url": "https://www.campinglamariposanerja.es",
+    "price_tier": 2,
+    "amenities": {
+      "piscina": true,
+      "mascotas": true,
+      "animacion_infantil": false,
+      "entorno_familiar": true,
+      "glamping": false,
+      "playa": true
+    },
+    "slug": "camping-la-mariposa-nerja",
+    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
+    "is_active": true
+  },
+  {
+    "name": "Glamping Sierra de las Nieves",
+    "description": "Experiencia de alojamiento ecológico y glamping de lujo a las puertas del Parque Nacional Sierra de las Nieves. Tiendas bell completamente equipadas con baño privado, zona chill-out y piscina sin cloro.",
+    "address": "Camino de los Pinares s/n, 29100 Coín, Málaga",
+    "lat": 36.658,
+    "lng": -4.7561,
+    "municipality_slug": "andalucia/malaga/ronda",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": "https://www.glampingsierradelasnieves.com",
+    "price_tier": 4,
+    "amenities": {
+      "piscina": true,
+      "mascotas": true,
+      "animacion_infantil": false,
+      "entorno_familiar": true,
+      "glamping": true,
+      "playa": false
+    },
+    "slug": "glamping-sierra-de-las-nieves",
+    "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
+    "is_active": true
+  },
+  {
+    "name": "Camping Torremolinos Costa",
+    "description": "Camping urbano junto al paseo marítimo de Torremolinos. Gran ambiente veraniego, parque infantil, piscina olímpica y acceso directo a zonas comerciales y gastronómicas de la Costa del Sol.",
+    "address": "Av. Manuel Fraga Iribarne, 29620 Torremolinos, Málaga",
+    "lat": 36.6288,
+    "lng": -4.4981,
+    "municipality_slug": "andalucia/malaga/torremolinos",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Torremolinos/torremolinos_costa/?aff=campbase",
+    "official_url": "https://www.campingtorremolinoscosta.es",
+    "price_tier": 2,
+    "amenities": {
+      "piscina": true,
+      "mascotas": false,
+      "animacion_infantil": true,
+      "entorno_familiar": true,
+      "glamping": false,
+      "playa": true
+    },
+    "slug": "camping-torremolinos-costa",
+    "image_url": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
+    "is_active": true
+  }
+]

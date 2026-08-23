@@ -1,0 +1,26 @@
+[
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Ronda",
+    "slug": "andalucia/malaga/ronda"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Marbella",
+    "slug": "andalucia/malaga/marbella"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Nerja",
+    "slug": "andalucia/malaga/nerja"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Torremolinos",
+    "slug": "andalucia/malaga/torremolinos"
+  }
+]

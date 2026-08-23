@@ -1,0 +1,27 @@
+---
+interface Props {
+  amenities: Record<string, boolean>;
+}
+
+const { amenities } = Astro.props;
+
+const featureList = [
+  { key: 'piscina', label: 'Piscina', icon: '🏊' },
+  { key: 'mascotas', label: 'Mascotas OK', icon: '🐾' },
+  { key: 'animacion_infantil', label: 'Animación Infantil', icon: '✨' },
+  { key: 'entorno_familiar', label: 'Entorno Familiar', icon: '👨‍👩‍👧‍👦' },
+  { key: 'glamping', label: 'Glamping', icon: '⛺' },
+  { key: 'playa', label: 'Cerca de Playa', icon: '🏖️' }
+];
+
+const activeFeatures = featureList.filter(f => amenities && amenities[f.key]);
+---
+
+<div class="flex flex-wrap gap-2 my-3">
+  {activeFeatures.map((f) => (
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
+      <span>{f.icon}</span>
+      <span>{f.label}</span>
+    </span>
+  ))}
+</div>

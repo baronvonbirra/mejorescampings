@@ -1,0 +1,72 @@
+---
+import type { Camping } from '../lib/db';
+import FeatureBadges from './FeatureBadges.astro';
+
+interface Props {
+  camping: Camping;
+}
+
+const { camping } = Astro.props;
+const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€€', 4: '€€€€' };
+---
+
+<div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between">
+  <div>
+    <div class="relative h-48 sm:h-52 overflow-hidden">
+      <img
+        src={camping.image_url || camping.image_urls[0]}
+        alt={camping.name}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+      <div class="absolute top-3 right-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-xs font-bold text-slate-800 shadow-sm">
+        {priceLabels[camping.price_tier] || '€€'}
+      </div>
+    </div>
+    <div class="p-5">
+      <div class="text-xs font-semibold text-emerald-600 uppercase tracking-wide">
+        {camping.municipality_slug.split('/').pop()?.toUpperCase() || 'MÁLAGA'}
+      </div>
+      <h3 class="font-bold text-lg text-slate-900 mt-1 line-clamp-1">
+        <a href={`/camping/${camping.slug}`} class="hover:text-emerald-600 transition">
+          {camping.name}
+        </a>
+      </h3>
+      <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+        {camping.description}
+      </p>
+
+      <FeatureBadges amenities={camping.amenities} />
+    </div>
+  </div>
+
+  <div class="p-5 pt-0 mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
+    <a
+      href={`/camping/${camping.slug}`}
+      class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+    >
+      Ver detalles
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+
+    {camping.affiliate_url ? (
+      <a
+        href={camping.affiliate_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition"
+      >
+        Reservar
+      </a>
+    ) : (
+      <a
+        href={`/camping/${camping.slug}`}
+        class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
+      >
+        Más información
+      </a>
+    )}
+  </div>
+</div>

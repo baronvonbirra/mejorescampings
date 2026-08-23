@@ -1,0 +1,38 @@
+[
+  {
+    "feature_name": "Piscina",
+    "slug": "campings-con-piscina",
+    "key": "piscina",
+    "icon": "swimming-pool"
+  },
+  {
+    "feature_name": "Mascotas Permitidas",
+    "slug": "campings-que-admiten-perros",
+    "key": "mascotas",
+    "icon": "dog"
+  },
+  {
+    "feature_name": "Animación Infantil",
+    "slug": "campings-con-animacion-infantil",
+    "key": "animacion_infantil",
+    "icon": "sparkles"
+  },
+  {
+    "feature_name": "Entorno Familiar",
+    "slug": "campings-familiares",
+    "key": "entorno_familiar",
+    "icon": "users"
+  },
+  {
+    "feature_name": "Glamping",
+    "slug": "glamping",
+    "key": "glamping",
+    "icon": "tent"
+  },
+  {
+    "feature_name": "Playa",
+    "slug": "campings-cerca-de-la-playa",
+    "key": "playa",
+    "icon": "sun"
+  }
+]
