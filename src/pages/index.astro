@@ -5,36 +5,68 @@ import { getCampings, getFeatures } from '../lib/db';
 
 const campings = await getCampings();
 const features = await getFeatures();
+
+const categories = [
+  { name: 'Glamping de Lujo', slug: 'glamping', icon: '⛺', desc: 'Tiendas bell y domos con el máximo confort.' },
+  { name: 'Mascotas Permitidas', slug: 'campings-que-admiten-perros', icon: '🐾', desc: 'Campings pet-friendly para viajar con tu perro.' },
+  { name: 'Cerca de la Playa', slug: 'campings-cerca-de-la-playa', icon: '🏖️', desc: 'A poca distancia del mar y calas vírgenes.' },
+  { name: 'Familiares con Piscina', slug: 'campings-con-piscina', icon: '🏊', desc: 'Con animación infantil y parques acuáticos.' }
+];
 ---
 
-<Layout title="CampBase | Mejores Campings y Glampings en Málaga">
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
-    <div class="relative z-10 max-w-2xl">
-      <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-semibold tracking-wider text-emerald-200 mb-4 uppercase">
-        Guía Especializada Málaga 2026
+<Layout title="CampBase | Encuentra tu camping ideal en Andalucía">
+  <!-- Hero Section (Zero ads above the fold) -->
+  <section class="bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
+    <div class="relative z-10 max-w-3xl">
+      <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-emerald-200 mb-4 uppercase">
+        Guía Especializada 2026
       </span>
       <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-        Encuentra tu Camping ideal en Málaga
+        Encuentra tu camping ideal en Andalucía
       </h1>
       <p class="mt-4 text-emerald-100 text-sm sm:text-base leading-relaxed">
-        Descubre los mejores campings y glampings de la provincia de Málaga. Instalaciones verificadas con piscinas, animación infantil y entorno familiar.
+        Descubre los mejores campings y glampings de Málaga y Andalucía. Instalaciones verificadas con piscinas, animación infantil y entorno familiar.
       </p>
 
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="/andalucia/malaga" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition shadow-md">
-          Ver Campings en Málaga
+      <!-- Quick Search & Filter Bar -->
+      <div class="mt-6 p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row gap-2">
+        <a
+          href="/andalucia/malaga"
+          class="flex-1 px-4 py-3 bg-white text-slate-900 rounded-xl font-bold text-sm flex items-center justify-between hover:bg-emerald-50 transition"
+        >
+          <span>Provincia: Málaga</span>
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
-        <a href="/andalucia/malaga/glamping" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl text-sm backdrop-blur-md transition">
-          Ver Glampings
+        <a
+          href="/andalucia/malaga/campings-con-piscina"
+          class="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition text-center shadow-md shrink-0"
+        >
+          Buscar Campings
         </a>
       </div>
     </div>
   </section>
 
+  <!-- Featured Categories Grid -->
+  <section class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">Categorías Destacadas</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {categories.map((cat) => (
+        <a
+          href={`/andalucia/malaga/${cat.slug}`}
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-500 transition group"
+        >
+          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">{cat.icon}</div>
+          <h3 class="font-bold text-slate-900 text-base group-hover:text-emerald-600 transition">{cat.name}</h3>
+          <p class="text-xs text-slate-500 mt-1 leading-normal">{cat.desc}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
   <!-- Quick Feature Filter Pills -->
   <section class="mb-10">
-    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Filtrar por característica popular</h2>
+    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Filtrar por servicios clave</h2>
     <div class="flex flex-wrap gap-2">
       {features.map((feat) => (
         <a

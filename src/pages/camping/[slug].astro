@@ -2,7 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import ImageGallery from '../../components/ImageGallery.astro';
 import FeatureBadges from '../../components/FeatureBadges.astro';
-import { getCampings, getCampingBySlug } from '../../lib/db';
+import CampingCard from '../../components/CampingCard.astro';
+import { getCampings } from '../../lib/db';
 
 export async function getStaticPaths() {
   const campings = await getCampings();
@@ -15,7 +16,15 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { camping } = Astro.props;
 
-const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estándar (€€)', 3: 'Confort (€€€)', 4: 'Lujo / Premium (€€€€)' };
+const allCampings = await getCampings();
+const recommendedCampings = allCampings.filter((c) => c.slug !== camping.slug).slice(0, 3);
+
+const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estándar (€€)', 3: 'Confort (€€€)', 4: 'Lujo / Glamping (€€€€)' };
+
+// Break description into paragraphs for in-content ad insertion and contextual links
+const rawParagraphs = camping.description ? camping.description.split('\n').filter(Boolean) : [camping.description];
+const firstParagraph = rawParagraphs[0] || '';
+const remainingParagraphs = rawParagraphs.slice(1);
 ---
 
 <Layout title={`${camping.name} | Camping en Málaga`}>
@@ -23,7 +32,7 @@ const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estánd
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
     <a href="/" class="hover:text-slate-800">Inicio</a>
     <span>/</span>
-    <a href={`/${camping.municipality_slug}`} class="hover:text-slate-800 capitalize">Málaga</a>
+    <a href="/andalucia/malaga" class="hover:text-slate-800 capitalize">Málaga</a>
     <span>/</span>
     <span class="text-slate-800 font-semibold">{camping.name}</span>
   </nav>
@@ -31,8 +40,8 @@ const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estánd
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Main Left Column -->
     <div class="lg:col-span-2 space-y-6">
-      <ImageGallery images={camping.image_urls} name={camping.name} />
 
+      <!-- H1 Title & Location Header -->
       <div>
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-wide">
@@ -56,66 +65,141 @@ const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estánd
         </p>
       </div>
 
-      <hr class="border-slate-200" />
+      <!-- 3-5 Image Gallery (Fixed Aspect Ratio for Zero CLS) -->
+      <ImageGallery images={camping.image_urls} name={camping.name} />
 
-      <!-- Description -->
+      <!-- Amenity Icon Badges -->
       <div>
-        <h2 class="text-lg font-bold text-slate-900 mb-2">Descripción del Alojamiento</h2>
-        <p class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
-          {camping.description}
-        </p>
-      </div>
-
-      <!-- Services & Amenities -->
-      <div>
-        <h2 class="text-lg font-bold text-slate-900 mb-2">Servicios e Instalaciones</h2>
+        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Servicios e Instalaciones</h2>
         <FeatureBadges amenities={camping.amenities} />
       </div>
 
-      <!-- Map Embed / Info Block -->
-      <div class="bg-slate-100 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+      <!-- PRIMARY HIGH-CONTRAST CTA BUTTON (Positioned immediately below photos & amenity badges) -->
+      <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <span class="font-bold text-slate-800 block">Coordenadas GPS</span>
-          <span>Lat: {camping.lat}, Lng: {camping.lng}</span>
+          <span class="text-xs font-bold text-emerald-800 uppercase tracking-wide block">Garantía de Mejor Precio</span>
+          <span class="text-sm text-emerald-950 font-medium">Comprueba disponibilidad y fechas directamente con el alojamiento.</span>
         </div>
-        <a
-          href={`https://maps.google.com/?q=${camping.lat},${camping.lng}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-700 font-semibold hover:bg-slate-50 transition"
-        >
-          Abrir en Google Maps
-        </a>
-      </div>
-    </div>
-
-    <!-- Right Sidebar Desktop CTA -->
-    <div class="hidden lg:block">
-      <div class="sticky top-24 bg-white border border-slate-200 rounded-2xl p-6 shadow-md space-y-4">
-        <h3 class="font-bold text-lg text-slate-900">Reserva tu estancia</h3>
-        <p class="text-xs text-slate-500">Consulta disponibilidad y mejores ofertas directamente para {camping.name}.</p>
-
         {camping.affiliate_url ? (
           <a
             href={camping.affiliate_url}
             target="_blank"
             rel="noopener noreferrer"
-            class="block w-full text-center py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-lg text-center transition shrink-0"
           >
-            Ver Disponibilidad y Precios
+            Ver Disponibilidad y Precios &rarr;
           </a>
         ) : (
-          /* Fallback Adsense / B2B Slot when affiliate_url is missing */
-          <div data-testid="adsense-fallback" class="bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-4 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">Publicidad / Google AdSense</span>
-            <p class="text-xs text-amber-800">Anuncio recomendado de alojamientos similares en Málaga</p>
-            {camping.official_url && (
-              <a href={camping.official_url} target="_blank" rel="noopener" class="mt-3 inline-block text-xs text-emerald-700 underline font-semibold">
-                Visitar web oficial
-              </a>
-            )}
-          </div>
+          <a
+            href={camping.official_url || '#'}
+            target="_blank"
+            rel="noopener"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
+          >
+            Consultar Web Oficial &rarr;
+          </a>
         )}
+      </div>
+
+      <hr class="border-slate-200" />
+
+      <!-- Description & In-Content Ad #1 -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-bold text-slate-900">Descripción del Alojamiento</h2>
+
+        <!-- Paragraph 1 with contextual inline affiliate link -->
+        <p class="text-sm text-slate-700 leading-relaxed">
+          {firstParagraph}
+          {camping.affiliate_url && (
+            <span class="ml-1">
+              Puedes <a href={camping.affiliate_url} target="_blank" rel="noopener noreferrer" class="text-emerald-700 font-bold underline hover:text-emerald-800">reservar tu parcela o bungalow en {camping.name} aquí</a>.
+            </span>
+          )}
+        </p>
+
+        <!-- DISPLAY AD #1: In-Content Horizontal Banner (Fixed Dimensions for Zero CLS) -->
+        <div data-testid="ad-block-incontent" class="my-6 w-full h-[100px] bg-slate-100 border border-slate-200 rounded-xl flex flex-col items-center justify-center text-slate-400 text-xs text-center p-2 shadow-inner">
+          <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Publicidad / Google AdSense (In-Content Banner)</span>
+          <span class="text-slate-400 text-[11px] mt-0.5">Espacio reservado 728x90 (Prevención de CLS)</span>
+        </div>
+
+        {remainingParagraphs.map((paragraph) => (
+          <p class="text-sm text-slate-700 leading-relaxed">
+            {paragraph}
+            {camping.affiliate_url && (
+              <span class="ml-1">
+                Consulta los <a href={camping.affiliate_url} target="_blank" rel="noopener noreferrer" class="text-emerald-700 font-bold underline hover:text-emerald-800">precios actualizados para {camping.name}</a>.
+              </span>
+            )}
+          </p>
+        ))}
+      </div>
+
+      <!-- Embedded Map & GPS Coordinates -->
+      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+        <div>
+          <span class="font-bold text-slate-800 block">Ubicación y Coordenadas GPS</span>
+          <span>Latitud: {camping.lat}, Longitud: {camping.lng}</span>
+        </div>
+        <a
+          href={`https://maps.google.com/?q=${camping.lat},${camping.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-slate-800 font-bold hover:bg-slate-100 transition shadow-xs"
+        >
+          Ver en Google Maps
+        </a>
+      </div>
+
+      <!-- DISPLAY AD #2 (Mobile Bottom Display Ad before recommendations) -->
+      <div data-testid="ad-block-mobile" class="lg:hidden w-full h-[120px] bg-slate-100 border border-slate-200 rounded-xl flex flex-col items-center justify-center text-slate-400 text-xs text-center p-2 shadow-inner">
+        <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Publicidad / Google AdSense (Bloque Móvil)</span>
+        <span class="text-slate-400 text-[11px] mt-0.5">Espacio reservado (Prevención de CLS)</span>
+      </div>
+
+      <!-- Recommended Campings Section -->
+      <div class="pt-6 border-t border-slate-200">
+        <h2 class="text-xl font-bold text-slate-900 mb-4">Campings Recomendados en Málaga</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {recommendedCampings.map((rec) => (
+            <CampingCard camping={rec} />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar Desktop Column -->
+    <div class="hidden lg:block">
+      <div class="sticky top-24 space-y-6">
+
+        <!-- Sticky Sidebar Reservation Box -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md space-y-4">
+          <h3 class="font-bold text-lg text-slate-900">Reserva tu estancia</h3>
+          <p class="text-xs text-slate-500">Consulta precios y disponibilidad en tiempo real para {camping.name}.</p>
+
+          {camping.affiliate_url ? (
+            <a
+              href={camping.affiliate_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block w-full text-center py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition"
+            >
+              Ver Disponibilidad y Precios
+            </a>
+          ) : (
+            <div data-testid="adsense-fallback" class="bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-4 text-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">Publicidad / AdSense</span>
+              <p class="text-xs text-amber-800">Ofertas de campings similares en Málaga</p>
+            </div>
+          )}
+        </div>
+
+        <!-- DISPLAY AD #3: Desktop Sidebar Banner (Fixed Dimensions for Zero CLS) -->
+        <div data-testid="ad-block-sidebar" class="w-full h-[300px] bg-slate-100 border border-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-400 text-xs text-center p-4 shadow-inner">
+          <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Publicidad / Google AdSense (Sidebar Banner)</span>
+          <span class="text-slate-400 text-[11px] mt-1">300x250 Banner Fijo (CLS 0)</span>
+        </div>
+
       </div>
     </div>
   </div>
@@ -123,7 +207,7 @@ const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estánd
   <!-- Mobile Sticky Bottom CTA Bar -->
   <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 z-50 shadow-2xl flex items-center justify-between">
     <div>
-      <span class="text-xs font-bold text-slate-900 block truncate max-w-[180px]">{camping.name}</span>
+      <span class="text-xs font-bold text-slate-900 block truncate max-w-[170px]">{camping.name}</span>
       <span class="text-[10px] text-emerald-600 font-semibold">{priceLabels[camping.price_tier] || '€€'}</span>
     </div>
 
@@ -132,14 +216,19 @@ const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estánd
         href={camping.affiliate_url}
         target="_blank"
         rel="noopener noreferrer"
-        class="py-2.5 px-5 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow-md"
+        class="py-2.5 px-5 rounded-xl bg-emerald-600 text-white font-extrabold text-xs shadow-md"
       >
-        Ver Disponibilidad
+        Ver Disponibilidad y Precios
       </a>
     ) : (
-      <div data-testid="adsense-fallback-mobile" class="bg-amber-100 text-amber-900 text-xs px-3 py-1.5 rounded-lg font-bold">
-        AdSense Active
-      </div>
+      <a
+        href={camping.official_url || '#'}
+        target="_blank"
+        rel="noopener"
+        class="py-2.5 px-4 rounded-xl bg-slate-800 text-white font-bold text-xs shadow-md"
+      >
+        Ver Web Oficial
+      </a>
     )}
   </div>
 </Layout>

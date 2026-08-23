@@ -8,17 +8,20 @@ const { images = [], name } = Astro.props;
 const displayImages = images.length > 0 ? images : ['https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80'];
 ---
 
-<div class="relative w-full overflow-hidden rounded-xl bg-slate-100 group shadow-md">
-  <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-none h-64 sm:h-80 md:h-96">
+<!-- Fixed dimension image container to prevent Cumulative Layout Shift (CLS) -->
+<div class="relative w-full aspect-[16/9] min-h-[260px] sm:min-h-[360px] max-h-[420px] overflow-hidden rounded-2xl bg-slate-100 shadow-md">
+  <div class="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-none">
     {displayImages.map((img, idx) => (
       <div class="snap-start shrink-0 w-full h-full relative">
         <img
           src={img}
           alt={`${name} - Foto ${idx + 1}`}
+          width="1200"
+          height="675"
           class="w-full h-full object-cover"
           loading={idx === 0 ? "eager" : "lazy"}
         />
-        <div class="absolute bottom-3 right-3 bg-slate-900/75 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-xs">
+        <div class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md font-semibold">
           {idx + 1} / {displayImages.length}
         </div>
       </div>
