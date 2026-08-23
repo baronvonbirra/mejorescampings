@@ -4,7 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://campbase.es',
+  site: 'https://baronvonbirra.github.io',
+  base: '/mejorescampings',
   vite: {
     plugins: [tailwindcss()]
   }
