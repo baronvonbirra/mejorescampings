@@ -20,7 +20,7 @@ const formattedRegion = region ? region.charAt(0).toUpperCase() + region.slice(1
 <Layout title={`Mejores Campings en ${formattedProvince} (${formattedRegion})`}>
   <!-- Breadcrumb -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
-    <a href="/" class="hover:text-slate-800">Inicio</a>
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
     <span>/</span>
     <span class="capitalize text-slate-400">{region}</span>
     <span>/</span>
@@ -38,12 +38,12 @@ const formattedRegion = region ? region.charAt(0).toUpperCase() + region.slice(1
 
   <!-- Feature Quick Filter Bar -->
   <div class="mb-8 flex flex-wrap gap-2 pb-2 border-b border-slate-200">
-    <a href={`/${region}/${province}`} class="px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold shadow-xs">
+    <a href={`${import.meta.env.BASE_URL}${region}/${province}`} class="px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold shadow-xs">
       Todos
     </a>
     {features.map((feat) => (
       <a
-        href={`/${region}/${province}/${feat.slug}`}
+        href={`${import.meta.env.BASE_URL}${region}/${province}/${feat.slug}`}
         class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition"
       >
         {feat.feature_name}

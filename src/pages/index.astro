@@ -31,14 +31,14 @@ const categories = [
       <!-- Quick Search & Filter Bar -->
       <div class="mt-6 p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row gap-2">
         <a
-          href="/andalucia/malaga"
+          href={`${import.meta.env.BASE_URL}andalucia/malaga`}
           class="flex-1 px-4 py-3 bg-white text-slate-900 rounded-xl font-bold text-sm flex items-center justify-between hover:bg-emerald-50 transition"
         >
           <span>Provincia: Málaga</span>
           <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
         <a
-          href="/andalucia/malaga/campings-con-piscina"
+          href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-con-piscina`}
           class="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition text-center shadow-md shrink-0"
         >
           Buscar Campings
@@ -53,7 +53,7 @@ const categories = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {categories.map((cat) => (
         <a
-          href={`/andalucia/malaga/${cat.slug}`}
+          href={`${import.meta.env.BASE_URL}andalucia/malaga/${cat.slug}`}
           class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-500 transition group"
         >
           <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">{cat.icon}</div>
@@ -70,7 +70,7 @@ const categories = [
     <div class="flex flex-wrap gap-2">
       {features.map((feat) => (
         <a
-          href={`/andalucia/malaga/${feat.slug}`}
+          href={`${import.meta.env.BASE_URL}andalucia/malaga/${feat.slug}`}
           class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-medium hover:border-emerald-500 hover:text-emerald-600 shadow-xs transition"
         >
           {feat.feature_name}
@@ -83,7 +83,7 @@ const categories = [
   <section class="mb-12">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-slate-900">Campings destacados en Málaga</h2>
-      <a href="/andalucia/malaga" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+      <a href={`${import.meta.env.BASE_URL}andalucia/malaga`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
         Ver todos ({campings.length}) &rarr;
       </a>
     </div>

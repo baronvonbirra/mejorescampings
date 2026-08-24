@@ -28,7 +28,7 @@ const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€�
         {camping.municipality_slug.split('/').pop()?.toUpperCase() || 'MÁLAGA'}
       </div>
       <h3 class="font-bold text-lg text-slate-900 mt-1 line-clamp-1">
-        <a href={`/camping/${camping.slug}`} class="hover:text-emerald-600 transition">
+        <a href={`${import.meta.env.BASE_URL}camping/${camping.slug}`} class="hover:text-emerald-600 transition">
           {camping.name}
         </a>
       </h3>
@@ -42,7 +42,7 @@ const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€�
 
   <div class="p-5 pt-0 mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
     <a
-      href={`/camping/${camping.slug}`}
+      href={`${import.meta.env.BASE_URL}camping/${camping.slug}`}
       class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
     >
       Ver detalles
@@ -62,7 +62,7 @@ const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€�
       </a>
     ) : (
       <a
-        href={`/camping/${camping.slug}`}
+        href={`${import.meta.env.BASE_URL}camping/${camping.slug}`}
         class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
       >
         Más información

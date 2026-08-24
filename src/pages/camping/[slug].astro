@@ -30,9 +30,9 @@ const remainingParagraphs = rawParagraphs.slice(1);
 <Layout title={`${camping.name} | Camping en Málaga`}>
   <!-- Breadcrumbs -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
-    <a href="/" class="hover:text-slate-800">Inicio</a>
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
     <span>/</span>
-    <a href="/andalucia/malaga" class="hover:text-slate-800 capitalize">Málaga</a>
+    <a href={`${import.meta.env.BASE_URL}andalucia/malaga`} class="hover:text-slate-800 capitalize">Málaga</a>
     <span>/</span>
     <span class="text-slate-800 font-semibold">{camping.name}</span>
   </nav>
