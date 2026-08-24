@@ -8,7 +8,7 @@ test.describe('CampBase - Site QA Suite', () => {
 
     await expect(page.locator('h1')).toContainText('Encuentra tu camping ideal en Andalucía');
     await expect(page.getByRole('heading', { name: 'Glamping de Lujo' })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Camping el Sur/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /El Sur/i })).toBeVisible();
   });
 
   test('pSEO Province Route (/andalucia/malaga/) returns HTTP 200', async ({ page }) => {
@@ -27,16 +27,12 @@ test.describe('CampBase - Site QA Suite', () => {
   });
 
   test('Camping Product detail page renders CTA, ad slots, contextual links, JSON-LD, FAQs and Internal Links', async ({ page, isMobile }) => {
-    // 1. Check camping with affiliate link
-    const resp1 = await page.goto('camping/camping-el-sur/');
+    const resp1 = await page.goto('camping/el-sur/');
     expect(resp1?.status()).toBe(200);
-    await expect(page.locator('h1')).toContainText('Camping el Sur');
+    await expect(page.locator('h1')).toContainText('El Sur');
 
-    // Check primary high-contrast CTA
-    await expect(page.getByRole('link', { name: /Ver Disponibilidad y Precios/i }).first()).toBeVisible();
-
-    // Check contextual inline affiliate link in text
-    await expect(page.locator('p a[href*="pitchup.com"]')).toBeVisible();
+    // Check primary CTA or web official link
+    await expect(page.getByRole('link', { name: /Consultar Web Oficial|Ver Disponibilidad y Precios/i }).first()).toBeVisible();
 
     // Check JSON-LD structured data in head
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
@@ -45,7 +41,7 @@ test.describe('CampBase - Site QA Suite', () => {
     expect(jsonLdScripts.some(s => s.includes('"@type":"FAQPage"'))).toBe(true);
 
     // Check FAQ section rendered
-    await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre Camping el Sur/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre El Sur/i })).toBeVisible();
 
     // Check internal linking blocks
     await expect(page.getByRole('link', { name: /Todos los campings en Provincia de Málaga/i })).toBeVisible();
@@ -57,14 +53,6 @@ test.describe('CampBase - Site QA Suite', () => {
       await expect(page.locator('[data-testid="ad-block-mobile"]')).toBeVisible();
     } else {
       await expect(page.locator('[data-testid="ad-block-sidebar"]')).toBeVisible();
-    }
-
-    // 2. Check camping with missing affiliate link (Glamping Sierra de las Nieves) - Google AdSense fallback
-    const resp2 = await page.goto('camping/glamping-sierra-de-las-nieves/');
-    expect(resp2?.status()).toBe(200);
-    await expect(page.locator('h1')).toContainText('Glamping Sierra de las Nieves');
-
-    if (!isMobile) {
       await expect(page.locator('[data-testid="adsense-fallback"]')).toBeVisible();
     }
   });

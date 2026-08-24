@@ -76,8 +76,8 @@ AMENITY_MAPPING = {
     "primera linea de playa": "playa"
 }
 
-# Curated base directory for Málaga province campings with verified high quality data
-CURATED_MALAGA_CAMPINGS = [
+# Offline safety fallback dataset used exclusively if network scraping fails completely
+FALLBACK_MALAGA_CAMPINGS = [
     {
         "name": "CAMPING EL SUR",
         "description": "Camping El Sur está situado en una de las zonas más bellas de Andalucía, a sólo 2 km de la histórica ciudad de Ronda. Rodeado de olivos centenarios y robles, ofrece un entorno familiar ideal con animación infantil en verano y vistas impresionantes a la Serranía de Ronda.",
@@ -111,108 +111,6 @@ CURATED_MALAGA_CAMPINGS = [
         "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_cabopino/?aff=campbase",
         "official_url": "https://www.campingcabopino.com",
         "price_tier": 3
-    },
-    {
-        "name": "CAMPING LA MARIPOSA",
-        "description": "Ubicado cerca de Nerja y los acantilados de Maro, Camping La Mariposa combina la tranquilidad de la naturaleza con la cercanía a las calas de agua cristalina.",
-        "address": "Ctra. de Maro s/n, 29780 Nerja, Málaga",
-        "lat": 36.7581,
-        "lng": -3.8542,
-        "municipality_slug": "andalucia/malaga/nerja",
-        "raw_amenities": ["pisc. exterior", "perros", "mar", "familiar"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": "https://www.travelpayouts.com/campaigns/nerja-camping?aff=campbase",
-        "official_url": "https://www.campinglamariposanerja.es",
-        "price_tier": 2
-    },
-    {
-        "name": "GLAMPING SIERRA DE LAS NIEVES",
-        "description": "Experiencia de alojamiento ecológico y glamping de lujo a las puertas del Parque Nacional Sierra de las Nieves. Tiendas bell completamente equipadas con baño privado y piscina sin cloro.",
-        "address": "Camino de los Pinares s/n, 29100 Coín, Málaga",
-        "lat": 36.6580,
-        "lng": -4.7561,
-        "municipality_slug": "andalucia/malaga/ronda",
-        "raw_amenities": ["swimming_pool", "mascotas", "glamping", "tienda bell"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": None,
-        "official_url": "https://www.glampingsierradelasnieves.com",
-        "price_tier": 4
-    },
-    {
-        "name": "CAMPING TORREMOLINOS COSTA",
-        "description": "Camping urbano junto al paseo marítimo de Torremolinos. Gran ambiente veraniego, parque infantil, piscina olímpica y acceso directo a la playa.",
-        "address": "Av. Manuel Fraga Iribarne, 29620 Torremolinos, Málaga",
-        "lat": 36.6462,
-        "lng": -4.4878,
-        "municipality_slug": "andalucia/malaga/torremolinos",
-        "raw_amenities": ["piscina", "actividades niños", "playa", "familiar"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Torremolinos/torremolinos_costa/?aff=campbase",
-        "official_url": "https://www.campingtorremolinos.com",
-        "price_tier": 2
-    },
-    {
-        "name": "CAMPING ALMAYATE COSTA",
-        "description": "Camping de primera categoría situado en primera línea de playa en Almayate, Vélez-Málaga. Rodeado de naturaleza mediterránea y acceso directo a la arena.",
-        "address": "Ctra. N-340 km 267, 29792 Almayate, Málaga",
-        "lat": 36.7244,
-        "lng": -4.1347,
-        "municipality_slug": "andalucia/malaga/almayate",
-        "raw_amenities": ["piscina", "mascotas", "playa", "familiar"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Almayate/camping_almayate_costa/?aff=campbase",
-        "official_url": "https://www.campingalmayatecosta.com",
-        "price_tier": 2
-    },
-    {
-        "name": "CAMPING BUGANVILLA",
-        "description": "Ubicado en San Pedro de Alcántara - Marbella, rodeado de frondosa arboleda y a poca distancia de las mejores playas de la Costa del Sol.",
-        "address": "Ctra. N-340 km 188.8, 29604 Marbella, Málaga",
-        "lat": 36.5025,
-        "lng": -4.8044,
-        "municipality_slug": "andalucia/malaga/marbella",
-        "raw_amenities": ["piscina", "mascotas", "playa", "bungalow"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_buganvilla/?aff=campbase",
-        "official_url": "https://www.campingbuganvilla.es",
-        "price_tier": 2
-    },
-    {
-        "name": "CAMPING LA SIERRECILLA",
-        "description": "Centro de ocio y camping situado en Humilladero, cerca de la Laguna de Fuente de Piedra. Cuenta con piscina, bungalows adaptados y rutas de senderismo.",
-        "address": "Av. de Andalucía s/n, 29531 Humilladero, Málaga",
-        "lat": 37.1081,
-        "lng": -4.6952,
-        "municipality_slug": "andalucia/malaga/antequera",
-        "raw_amenities": ["piscina", "mascotas", "animacion_infantil", "bungalow"],
-        "image_urls": [
-            "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-        ],
-        "affiliate_url": None,
-        "official_url": "https://lasierrecilla.com",
-        "price_tier": 2
     }
 ]
 
@@ -579,15 +477,19 @@ def sync_to_supabase(campings: List[Dict[str, Any]]):
         logging.error(f"Failed to communicate with Supabase: {e}")
 
 def main():
-    logging.info("Starting CampBase Pipeline V2 Extraction & Cleaning...")
+    logging.info("Starting CampBase Pipeline V2 Dynamic Scraping & Cleaning...")
 
-    # 1. Fetch Overpass OSM Campings
-    osm_campings = fetch_overpass_malaga_campings()
+    # 1. Primary Source: Dynamically Scrape all Málaga Province Campings via Overpass OSM API
+    scraped_campings = fetch_overpass_malaga_campings()
 
-    # 2. Combine Curated Directory + OSM
-    raw_combined = CURATED_MALAGA_CAMPINGS + osm_campings
+    if scraped_campings:
+        logging.info(f"Dynamic scraping successful! Extracted {len(scraped_campings)} campsites from Málaga province.")
+        raw_combined = scraped_campings
+    else:
+        logging.warning("Dynamic scraping returned no results or API was unreachable. Using fallback dataset.")
+        raw_combined = FALLBACK_MALAGA_CAMPINGS
 
-    # 3. Process, clean, normalize, QA test and AI enrich
+    # 2. Process, clean, normalize, QA test and AI enrich
     cleaned_data, total_records, error_records = process_and_clean_pipeline(raw_combined)
 
     error_rate = (error_records / total_records) if total_records > 0 else 0

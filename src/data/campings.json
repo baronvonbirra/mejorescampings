@@ -1,364 +1,5 @@
 [
   {
-    "name": "Camping el Sur",
-    "slug": "camping-el-sur",
-    "description": "Camping El Sur está situado en una de las zonas más bellas de Andalucía, a sólo 2 km de la histórica ciudad de Ronda. Rodeado de olivos centenarios y robles, ofrece un entorno familiar ideal con animación infantil en verano y vistas impresionantes a la Serranía de Ronda.",
-    "address": "Carretera de Algeciras Km 1.5, 29400 Ronda, Málaga",
-    "lat": 36.721,
-    "lng": -5.1725,
-    "municipality_slug": "andalucia/malaga/ronda",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Ronda/camping_el_sur/?aff=campbase",
-    "official_url": "https://www.campingelsur.com",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": true,
-      "entorno_familiar": true,
-      "glamping": false,
-      "playa": false
-    },
-    "status": "active",
-    "ai_description": "El Camping el Sur se encuentra ubicado en el municipio de Ronda, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Ronda y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping el Sur?",
-        "answer": "Sí, el Camping el Sur admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping el Sur?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping el Sur de la playa?",
-        "answer": "Se ubica en la zona interior de Ronda, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Camping el Sur en Ronda (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping el Sur (Ronda). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping Cabopino",
-    "slug": "camping-cabopino",
-    "description": "Camping Cabopino es un complejo turístico situado en Marbella, a escasos metros de la playa de Cabopino y de las famosas dunas protegidas. Cuenta con piscinas cubiertas y descubiertas, programa de animación infantil y alojamientos glamping.",
-    "address": "Ctra. N-340, Km 194.7, 29604 Marbella, Málaga",
-    "lat": 36.4904,
-    "lng": -4.7438,
-    "municipality_slug": "andalucia/malaga/marbella",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_cabopino/?aff=campbase",
-    "official_url": "https://www.campingcabopino.com",
-    "price_tier": 3,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": false,
-      "animacion_infantil": true,
-      "entorno_familiar": true,
-      "glamping": true,
-      "playa": true
-    },
-    "status": "active",
-    "ai_description": "El Camping Cabopino se encuentra ubicado en el municipio de Marbella, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Marbella y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su cercanía a la playa y la costa, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping Cabopino?",
-        "answer": "Actualmente el Camping Cabopino no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping Cabopino?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping Cabopino de la playa?",
-        "answer": "El camping cuenta con ubicación costera cercana a las playas de Marbella."
-      }
-    ],
-    "meta_title": "Camping Cabopino en Marbella (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping Cabopino (Marbella). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping la Mariposa",
-    "slug": "camping-la-mariposa",
-    "description": "Ubicado cerca de Nerja y los acantilados de Maro, Camping La Mariposa combina la tranquilidad de la naturaleza con la cercanía a las calas de agua cristalina.",
-    "address": "Ctra. de Maro s/n, 29780 Nerja, Málaga",
-    "lat": 36.7581,
-    "lng": -3.8542,
-    "municipality_slug": "andalucia/malaga/nerja",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.travelpayouts.com/campaigns/nerja-camping?aff=campbase",
-    "official_url": "https://www.campinglamariposanerja.es",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": false,
-      "entorno_familiar": true,
-      "glamping": false,
-      "playa": true
-    },
-    "status": "active",
-    "ai_description": "El Camping la Mariposa se encuentra ubicado en el municipio de Nerja, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Nerja y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su cercanía a la playa y la costa, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping la Mariposa?",
-        "answer": "Sí, el Camping la Mariposa admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping la Mariposa?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping la Mariposa de la playa?",
-        "answer": "El camping cuenta con ubicación costera cercana a las playas de Nerja."
-      }
-    ],
-    "meta_title": "Camping la Mariposa en Nerja (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping la Mariposa (Nerja). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Glamping Sierra de las Nieves",
-    "slug": "glamping-sierra-de-las-nieves",
-    "description": "Experiencia de alojamiento ecológico y glamping de lujo a las puertas del Parque Nacional Sierra de las Nieves. Tiendas bell completamente equipadas con baño privado y piscina sin cloro.",
-    "address": "Camino de los Pinares s/n, 29100 Coín, Málaga",
-    "lat": 36.658,
-    "lng": -4.7561,
-    "municipality_slug": "andalucia/malaga/ronda",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": "https://www.glampingsierradelasnieves.com",
-    "price_tier": 4,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": true,
-      "playa": false
-    },
-    "status": "active",
-    "ai_description": "El Glamping Sierra de las Nieves se encuentra ubicado en el municipio de Ronda, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Ronda y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Glamping Sierra de las Nieves?",
-        "answer": "Sí, el Glamping Sierra de las Nieves admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Glamping Sierra de las Nieves?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Glamping Sierra de las Nieves de la playa?",
-        "answer": "Se ubica en la zona interior de Ronda, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Glamping Sierra de las Nieves en Ronda (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Glamping Sierra de las Nieves (Ronda). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping Torremolinos Costa",
-    "slug": "camping-torremolinos-costa",
-    "description": "Camping urbano junto al paseo marítimo de Torremolinos. Gran ambiente veraniego, parque infantil, piscina olímpica y acceso directo a la playa.",
-    "address": "Av. Manuel Fraga Iribarne, 29620 Torremolinos, Málaga",
-    "lat": 36.6462,
-    "lng": -4.4878,
-    "municipality_slug": "andalucia/malaga/torremolinos",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Torremolinos/torremolinos_costa/?aff=campbase",
-    "official_url": "https://www.campingtorremolinos.com",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": false,
-      "animacion_infantil": true,
-      "entorno_familiar": true,
-      "glamping": false,
-      "playa": true
-    },
-    "status": "active",
-    "ai_description": "El Camping Torremolinos Costa se encuentra ubicado en el municipio de Torremolinos, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Torremolinos y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su cercanía a la playa y la costa, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping Torremolinos Costa?",
-        "answer": "Actualmente el Camping Torremolinos Costa no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping Torremolinos Costa?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping Torremolinos Costa de la playa?",
-        "answer": "El camping cuenta con ubicación costera cercana a las playas de Torremolinos."
-      }
-    ],
-    "meta_title": "Camping Torremolinos Costa en Torremolinos (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping Torremolinos Costa (Torremolinos). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping Almayate Costa",
-    "slug": "camping-almayate-costa",
-    "description": "Camping de primera categoría situado en primera línea de playa en Almayate, Vélez-Málaga. Rodeado de naturaleza mediterránea y acceso directo a la arena.",
-    "address": "Ctra. N-340 km 267, 29792 Almayate, Málaga",
-    "lat": 36.7244,
-    "lng": -4.1347,
-    "municipality_slug": "andalucia/malaga/almayate",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Almayate/camping_almayate_costa/?aff=campbase",
-    "official_url": "https://www.campingalmayatecosta.com",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": false,
-      "entorno_familiar": true,
-      "glamping": false,
-      "playa": true
-    },
-    "status": "active",
-    "ai_description": "El Camping Almayate Costa se encuentra ubicado en el municipio de Almayate, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Almayate y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su cercanía a la playa y la costa, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping Almayate Costa?",
-        "answer": "Sí, el Camping Almayate Costa admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping Almayate Costa?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping Almayate Costa de la playa?",
-        "answer": "El camping cuenta con ubicación costera cercana a las playas de Almayate."
-      }
-    ],
-    "meta_title": "Camping Almayate Costa en Almayate (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping Almayate Costa (Almayate). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping Buganvilla",
-    "slug": "camping-buganvilla",
-    "description": "Ubicado en San Pedro de Alcántara - Marbella, rodeado de frondosa arboleda y a poca distancia de las mejores playas de la Costa del Sol.",
-    "address": "Ctra. N-340 km 188.8, 29604 Marbella, Málaga",
-    "lat": 36.5025,
-    "lng": -4.8044,
-    "municipality_slug": "andalucia/malaga/marbella",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_buganvilla/?aff=campbase",
-    "official_url": "https://www.campingbuganvilla.es",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": true,
-      "playa": true
-    },
-    "status": "active",
-    "ai_description": "El Camping Buganvilla se encuentra ubicado en el municipio de Marbella, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Marbella y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su cercanía a la playa y la costa, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping Buganvilla?",
-        "answer": "Sí, el Camping Buganvilla admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping Buganvilla?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping Buganvilla de la playa?",
-        "answer": "El camping cuenta con ubicación costera cercana a las playas de Marbella."
-      }
-    ],
-    "meta_title": "Camping Buganvilla en Marbella (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping Buganvilla (Marbella). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping la Sierrecilla",
-    "slug": "camping-la-sierrecilla",
-    "description": "Centro de ocio y camping situado en Humilladero, cerca de la Laguna de Fuente de Piedra. Cuenta con piscina, bungalows adaptados y rutas de senderismo.",
-    "address": "Av. de Andalucía s/n, 29531 Humilladero, Málaga",
-    "lat": 37.1081,
-    "lng": -4.6952,
-    "municipality_slug": "andalucia/malaga/antequera",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": "https://lasierrecilla.com",
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": true,
-      "mascotas": true,
-      "animacion_infantil": true,
-      "entorno_familiar": false,
-      "glamping": true,
-      "playa": false
-    },
-    "status": "active",
-    "ai_description": "El Camping la Sierrecilla se encuentra ubicado en el municipio de Antequera, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que dispone de piscina, además de contar con opciones donde admite mascotas. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Antequera y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping la Sierrecilla?",
-        "answer": "Sí, el Camping la Sierrecilla admite mascotas en sus instalaciones bajo normativa del alojamiento."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping la Sierrecilla?",
-        "answer": "Sí, el alojamiento dispone de piscina para sus huéspedes durante la temporada."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping la Sierrecilla de la playa?",
-        "answer": "Se ubica en la zona interior de Antequera, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Camping la Sierrecilla en Antequera (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping la Sierrecilla (Antequera). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
     "name": "Presa la Vinuela",
     "slug": "presa-la-vinuela",
     "description": "Presa La Vinuela es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
@@ -671,6 +312,51 @@
     ],
     "meta_title": "Camping Iznate en Malaga (Málaga) | Precios y Servicios - CampBase",
     "meta_description": "Guía y reserva en Camping Iznate (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Camping Buganvilla",
+    "slug": "camping-buganvilla",
+    "description": "Camping Buganvilla es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "N-340",
+    "lat": 36.5025505,
+    "lng": -4.8044683,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": "https://www.campingbuganvilla.es/",
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "status": "active",
+    "ai_description": "El Camping Buganvilla se encuentra ubicado en el municipio de Malaga, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que se ubica en entorno natural, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Malaga y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping Buganvilla?",
+        "answer": "Actualmente el Camping Buganvilla no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping Buganvilla?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping Buganvilla de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping Buganvilla en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_description": "Guía y reserva en Camping Buganvilla (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
@@ -1619,6 +1305,51 @@
     "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
+    "name": "Camping Almayate Costa",
+    "slug": "camping-almayate-costa",
+    "description": "Camping Almayate Costa es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.724484,
+    "lng": -4.1347628,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": "https://www.campingalmayatecosta.com/",
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "status": "active",
+    "ai_description": "El Camping Almayate Costa se encuentra ubicado en el municipio de Malaga, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que se ubica en entorno natural, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Malaga y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping Almayate Costa?",
+        "answer": "Actualmente el Camping Almayate Costa no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping Almayate Costa?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping Almayate Costa de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping Almayate Costa en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_description": "Guía y reserva en Camping Almayate Costa (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
     "name": "Camping Valle Niza Playa",
     "slug": "camping-valle-niza-playa",
     "description": "Camping Valle Niza Playa es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
@@ -1751,6 +1482,96 @@
     ],
     "meta_title": "Camping Presa la Viñuela en Malaga (Málaga) | Precios y Servicios - CampBase",
     "meta_description": "Guía y reserva en Camping Presa la Viñuela (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Camping Cabopino",
+    "slug": "camping-cabopino",
+    "description": "Camping Cabopino es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.4904319,
+    "lng": -4.7437877,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": "https://www.campingcabopino.com/",
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "status": "active",
+    "ai_description": "El Camping Cabopino se encuentra ubicado en el municipio de Malaga, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que se ubica en entorno natural, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Malaga y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping Cabopino?",
+        "answer": "Actualmente el Camping Cabopino no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping Cabopino?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping Cabopino de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping Cabopino en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_description": "Guía y reserva en Camping Cabopino (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Camping la Sierrecilla",
+    "slug": "camping-la-sierrecilla",
+    "description": "Camping La Sierrecilla es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 37.1081458,
+    "lng": -4.6952528,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": "https://lasierrecilla.com",
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "status": "active",
+    "ai_description": "El Camping la Sierrecilla se encuentra ubicado en el municipio de Malaga, dentro de la provincia de Málaga. Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. Entre sus servicios principales destacan que se ubica en entorno natural, además de contar con opciones donde ambiente tranquilo. Su localización estratégica facilita el acceso a los principales puntos de interés turístico de Malaga y la Costa del Sol. Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. Su propuesta destaca por su vistas a la sierra y senderos cercanos, ofreciendo una estancia confortable durante todo el año. Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping la Sierrecilla?",
+        "answer": "Actualmente el Camping la Sierrecilla no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping la Sierrecilla?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping la Sierrecilla de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping la Sierrecilla en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_description": "Guía y reserva en Camping la Sierrecilla (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
