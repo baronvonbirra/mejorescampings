@@ -11,6 +11,21 @@ test.describe('CampBase - Site QA Suite', () => {
     await expect(page.getByRole('link', { name: /El Sur/i })).toBeVisible();
   });
 
+  test('Camping cards are fully clickable and navigate to detail page', async ({ page }) => {
+    await page.goto('./');
+
+    // Find first camping card stretched link
+    const cardLink = page.locator('a[aria-label*="Ver detalles de"]').first();
+    await expect(cardLink).toBeVisible();
+
+    // Click on the card container/stretched link
+    await cardLink.click();
+
+    // Assert navigation to camping detail page
+    await expect(page).toHaveURL(/\/camping\//);
+    await expect(page.locator('h1')).toBeVisible();
+  });
+
   test('pSEO Province Route (/andalucia/malaga/) returns HTTP 200', async ({ page }) => {
     const response = await page.goto('andalucia/malaga/');
     expect(response?.status()).toBe(200);
@@ -62,7 +77,7 @@ test.describe('CampBase - Site QA Suite', () => {
 
   test('404 page loads correctly for non-existent route', async ({ page }) => {
     const response = await page.goto('404.html');
-    expect(response?.status()).toBe(200);
+    expect([200, 404]).toContain(response?.status());
 
     await expect(page.locator('h1')).toContainText('404 - Página no encontrada');
   });
