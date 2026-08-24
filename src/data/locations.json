@@ -22,5 +22,23 @@
     "province": "malaga",
     "municipality": "Torremolinos",
     "slug": "andalucia/malaga/torremolinos"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Almayate",
+    "slug": "andalucia/malaga/almayate"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Antequera",
+    "slug": "andalucia/malaga/antequera"
+  },
+  {
+    "region": "andalucia",
+    "province": "malaga",
+    "municipality": "Málaga",
+    "slug": "andalucia/malaga/malaga"
   }
 ]

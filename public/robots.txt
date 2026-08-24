@@ -1,0 +1,29 @@
+# CampBase Robots.txt & AI Crawlers Configuration
+
+User-agent: *
+Allow: /
+
+# GEO & Generative Engine Optimization - Explicit Allow for AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-ai
+Allow: /
+
+# Sitemap Index
+Sitemap: https://campbase.es/mejorescampings/sitemap.xml

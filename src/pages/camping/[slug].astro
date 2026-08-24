@@ -17,17 +17,117 @@ const { slug } = Astro.params;
 const { camping } = Astro.props;
 
 const allCampings = await getCampings();
+
+const municipalitySlug = camping.municipality_slug.split('/').pop() || 'malaga';
+const municipalityName = municipalitySlug.charAt(0).toUpperCase() + municipalitySlug.slice(1);
+
+// Internal Linking Engine: Filter related campings
 const recommendedCampings = allCampings.filter((c) => c.slug !== camping.slug).slice(0, 3);
+
+// Related campings by same municipality or same feature (e.g., piscina)
+const sameMunicipalityCampings = allCampings.filter(
+  (c) => c.slug !== camping.slug && c.municipality_slug === camping.municipality_slug
+);
+const sameFeatureCampings = allCampings.filter(
+  (c) => c.slug !== camping.slug && camping.amenities.piscina && c.amenities.piscina
+).slice(0, 3);
 
 const priceLabels: Record<number, string> = { 1: 'Económico (€)', 2: 'Estándar (€€)', 3: 'Confort (€€€)', 4: 'Lujo / Glamping (€€€€)' };
 
-// Break description into paragraphs for in-content ad insertion and contextual links
-const rawParagraphs = camping.description ? camping.description.split('\n').filter(Boolean) : [camping.description];
+// Use AI description if present, else default description
+const pageDescription = camping.ai_description || camping.description;
+const rawParagraphs = pageDescription ? pageDescription.split('\n').filter(Boolean) : [pageDescription];
 const firstParagraph = rawParagraphs[0] || '';
 const remainingParagraphs = rawParagraphs.slice(1);
+
+// Dynamic Meta Metadata
+const metaTitle = camping.meta_title || `${camping.name} en ${municipalityName} (Málaga) | CampBase`;
+const metaDesc = camping.meta_description || `Reserva y opiniones de ${camping.name} en ${municipalityName}. Servicios, mascotas, fotos y disponibilidad.`;
+
+// Schema.org Structured Data
+const jsonLdCampground = {
+  "@context": "https://schema.org",
+  "@type": "Campground",
+  "name": camping.name,
+  "description": pageDescription,
+  "url": `https://campbase.es${import.meta.env.BASE_URL}camping/${camping.slug}/`,
+  "image": camping.image_urls,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": camping.address,
+    "addressLocality": municipalityName,
+    "addressRegion": "Málaga",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": camping.lat,
+    "longitude": camping.lng
+  },
+  "amenityFeature": Object.entries(camping.amenities)
+    .filter(([_, value]) => value)
+    .map(([key]) => ({
+      "@type": "LocationFeatureSpecification",
+      "name": key.replace('_', ' '),
+      "value": true
+    }))
+};
+
+const jsonLdBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": `https://campbase.es${import.meta.env.BASE_URL}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Andalucía",
+      "item": `https://campbase.es${import.meta.env.BASE_URL}andalucia/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Málaga",
+      "item": `https://campbase.es${import.meta.env.BASE_URL}andalucia/malaga/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": municipalityName,
+      "item": `https://campbase.es${import.meta.env.BASE_URL}${camping.municipality_slug}/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": camping.name,
+      "item": `https://campbase.es${import.meta.env.BASE_URL}camping/${camping.slug}/`
+    }
+  ]
+};
+
+const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": camping.faqs_json.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+} : null;
 ---
 
-<Layout title={`${camping.name} | Camping en Málaga`}>
+<Layout title={metaTitle} description={metaDesc}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdCampground)} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} />
+  {jsonLdFaq && <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq)} />}
   <!-- Breadcrumbs -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
     <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
@@ -65,8 +165,16 @@ const remainingParagraphs = rawParagraphs.slice(1);
         </p>
       </div>
 
+      <!-- Status Notice if Closed Temporarily -->
+      {camping.status === 'closed_temp' && (
+        <div class="p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-xl text-amber-900 text-sm">
+          <span class="font-bold block text-base mb-1">⚠️ Cerrado Temporalmente</span>
+          Este alojamiento se encuentra cerrado temporalmente. Mantente atento a futuras actualizaciones o explora otros campings recomendados en {municipalityName}.
+        </div>
+      )}
+
       <!-- 3-5 Image Gallery (Fixed Aspect Ratio for Zero CLS) -->
-      <ImageGallery images={camping.image_urls} name={camping.name} />
+      <ImageGallery images={camping.image_urls} name={camping.name} municipality={municipalityName} />
 
       <!-- Amenity Icon Badges -->
       <div>
@@ -157,13 +265,61 @@ const remainingParagraphs = rawParagraphs.slice(1);
         <span class="text-slate-400 text-[11px] mt-0.5">Espacio reservado (Prevención de CLS)</span>
       </div>
 
-      <!-- Recommended Campings Section -->
-      <div class="pt-6 border-t border-slate-200">
-        <h2 class="text-xl font-bold text-slate-900 mb-4">Campings Recomendados en Málaga</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {recommendedCampings.map((rec) => (
-            <CampingCard camping={rec} />
-          ))}
+      <!-- FAQs Section (FAQPage Schema Render) -->
+      {camping.faqs_json && camping.faqs_json.length > 0 && (
+        <div class="pt-6 border-t border-slate-200">
+          <h2 class="text-xl font-bold text-slate-900 mb-4">Preguntas Frecuentes sobre {camping.name}</h2>
+          <div class="space-y-4">
+            {camping.faqs_json.map((faq) => (
+              <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
+                <summary class="font-semibold text-slate-900 cursor-pointer flex justify-between items-center text-sm">
+                  <span>{faq.question}</span>
+                  <span class="text-emerald-600 transition group-open:rotate-180">&darr;</span>
+                </summary>
+                <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-2">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Internal Linking Blocks -->
+      <div class="pt-6 border-t border-slate-200 space-y-6">
+        <!-- Upward/Downward Geographic Links -->
+        <div class="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-5">
+          <h3 class="text-sm font-bold text-emerald-900 uppercase tracking-wide mb-2">Explora la Zona</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition">
+              &larr; Todos los campings en Provincia de Málaga
+            </a>
+            <a href={`${import.meta.env.BASE_URL}${camping.municipality_slug}/`} class="px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition">
+              Campings en {municipalityName}
+            </a>
+          </div>
+        </div>
+
+        <!-- Attribute / Related Feature Links -->
+        {sameFeatureCampings.length > 0 && (
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-3">Otros campings con piscina en Málaga</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {sameFeatureCampings.map((rec) => (
+                <CampingCard camping={rec} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Recommended Campings Section -->
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 mb-4">Campings Recomendados en Málaga</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {recommendedCampings.map((rec) => (
+              <CampingCard camping={rec} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
