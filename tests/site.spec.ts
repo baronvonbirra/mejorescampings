@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('CampBase - Site QA Suite', () => {
 
   test('Homepage loads correctly with new H1 and category grid', async ({ page }) => {
-    const response = await page.goto('/');
+    const response = await page.goto('./');
     expect(response?.status()).toBe(200);
 
     await expect(page.locator('h1')).toContainText('Encuentra tu camping ideal en Andalucía');
@@ -12,7 +12,7 @@ test.describe('CampBase - Site QA Suite', () => {
   });
 
   test('pSEO Province Route (/andalucia/malaga) returns HTTP 200', async ({ page }) => {
-    const response = await page.goto('/andalucia/malaga');
+    const response = await page.goto('andalucia/malaga');
     expect(response?.status()).toBe(200);
 
     await expect(page.locator('h1')).toContainText('Campings y Glampings en Malaga');
@@ -20,7 +20,7 @@ test.describe('CampBase - Site QA Suite', () => {
   });
 
   test('pSEO Feature Route (/andalucia/malaga/campings-con-piscina) filters correctly', async ({ page }) => {
-    const response = await page.goto('/andalucia/malaga/campings-con-piscina');
+    const response = await page.goto('andalucia/malaga/campings-con-piscina');
     expect(response?.status()).toBe(200);
 
     await expect(page.locator('h1')).toContainText('Piscina');
@@ -28,7 +28,7 @@ test.describe('CampBase - Site QA Suite', () => {
 
   test('Camping Product detail page renders CTA, ad slots, and contextual links', async ({ page, isMobile }) => {
     // 1. Check camping with affiliate link
-    const resp1 = await page.goto('/camping/camping-el-sur-ronda');
+    const resp1 = await page.goto('camping/camping-el-sur-ronda');
     expect(resp1?.status()).toBe(200);
     await expect(page.locator('h1')).toContainText('Camping El Sur Ronda');
 
@@ -48,7 +48,7 @@ test.describe('CampBase - Site QA Suite', () => {
     }
 
     // 2. Check camping with missing affiliate link (Glamping Sierra de las Nieves) - Google AdSense fallback
-    const resp2 = await page.goto('/camping/glamping-sierra-de-las-nieves');
+    const resp2 = await page.goto('camping/glamping-sierra-de-las-nieves');
     expect(resp2?.status()).toBe(200);
     await expect(page.locator('h1')).toContainText('Glamping Sierra de las Nieves');
 

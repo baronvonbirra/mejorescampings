@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:4321/mejorescampings',
+    baseURL: 'http://localhost:4321/mejorescampings/',
     trace: 'on-first-retry',
   },
   projects: [
@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run preview -- --port 4321',
-    url: 'http://localhost:4321',
+    url: 'http://localhost:4321/mejorescampings',
     reuseExistingServer: !process.env.CI,
   },
 });
