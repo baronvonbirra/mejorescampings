@@ -60,13 +60,23 @@ const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€�
       >
         Reservar
       </a>
-    ) : (
+    ) : camping.official_url ? (
       <a
-        href={`${import.meta.env.BASE_URL}camping/${camping.slug}/`}
-        class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
+        href={camping.official_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shadow-xs transition"
       >
-        Más información
+        Reservar
       </a>
+    ) : (
+      <button
+        disabled
+        class="px-3.5 py-2 rounded-xl bg-slate-200 text-slate-500 text-xs font-bold cursor-not-allowed opacity-75"
+        title="Reserva online no disponible en este momento"
+      >
+        Reservar
+      </button>
     )}
   </div>
 </div>

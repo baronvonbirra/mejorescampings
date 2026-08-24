@@ -31,8 +31,12 @@ test.describe('CampBase - Site QA Suite', () => {
     expect(resp1?.status()).toBe(200);
     await expect(page.locator('h1')).toContainText('El Sur');
 
-    // Check primary CTA or web official link
-    await expect(page.getByRole('link', { name: /Consultar Web Oficial|Ver Disponibilidad y Precios/i }).first()).toBeVisible();
+    // Check primary CTA or web official link / Reservar button
+    await expect(page.locator('a, button').filter({ hasText: /Reservar/i }).first()).toBeVisible();
+
+    // Check 3 image gallery thumbnails
+    const images = page.locator('img');
+    expect(await images.count()).toBeGreaterThanOrEqual(3);
 
     // Check JSON-LD structured data in head
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
@@ -53,7 +57,6 @@ test.describe('CampBase - Site QA Suite', () => {
       await expect(page.locator('[data-testid="ad-block-mobile"]')).toBeVisible();
     } else {
       await expect(page.locator('[data-testid="ad-block-sidebar"]')).toBeVisible();
-      await expect(page.locator('[data-testid="adsense-fallback"]')).toBeVisible();
     }
   });
 

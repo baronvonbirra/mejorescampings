@@ -195,17 +195,24 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
             rel="noopener noreferrer"
             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-lg text-center transition shrink-0"
           >
-            Ver Disponibilidad y Precios &rarr;
+            Reservar Camping &rarr;
           </a>
-        ) : (
+        ) : camping.official_url ? (
           <a
-            href={camping.official_url || '#'}
+            href={camping.official_url}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
           >
-            Consultar Web Oficial &rarr;
+            Reservar en Web Oficial &rarr;
           </a>
+        ) : (
+          <button
+            disabled
+            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-300 text-slate-600 font-extrabold text-sm text-center cursor-not-allowed opacity-75 shrink-0"
+          >
+            Reserva no disponible
+          </button>
         )}
       </div>
 
@@ -340,13 +347,24 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
               rel="noopener noreferrer"
               class="block w-full text-center py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition"
             >
-              Ver Disponibilidad y Precios
+              Reservar Camping
+            </a>
+          ) : camping.official_url ? (
+            <a
+              href={camping.official_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block w-full text-center py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md transition"
+            >
+              Reservar en Web Oficial
             </a>
           ) : (
-            <div data-testid="adsense-fallback" class="bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-4 text-center">
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">Publicidad / AdSense</span>
-              <p class="text-xs text-amber-800">Ofertas de campings similares en Málaga</p>
-            </div>
+            <button
+              disabled
+              class="block w-full text-center py-3.5 px-4 rounded-xl bg-slate-200 text-slate-500 font-extrabold text-sm cursor-not-allowed opacity-75"
+            >
+              Reserva no disponible
+            </button>
           )}
         </div>
 
@@ -374,17 +392,24 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         rel="noopener noreferrer"
         class="py-2.5 px-5 rounded-xl bg-emerald-600 text-white font-extrabold text-xs shadow-md"
       >
-        Ver Disponibilidad y Precios
+        Reservar
       </a>
-    ) : (
+    ) : camping.official_url ? (
       <a
-        href={camping.official_url || '#'}
+        href={camping.official_url}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         class="py-2.5 px-4 rounded-xl bg-slate-800 text-white font-bold text-xs shadow-md"
       >
-        Ver Web Oficial
+        Reservar
       </a>
+    ) : (
+      <button
+        disabled
+        class="py-2.5 px-4 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs cursor-not-allowed opacity-75"
+      >
+        Reservar
+      </button>
     )}
   </div>
 </Layout>
