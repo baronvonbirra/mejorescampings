@@ -1494,7 +1494,6 @@
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
@@ -1538,7 +1537,6 @@
     "lng": -4.6952528,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
     ],
@@ -1572,7 +1570,7 @@
     ],
     "meta_title": "Camping la Sierrecilla en Malaga (Málaga) | Precios y Servicios - CampBase",
     "meta_description": "Guía y reserva en Camping la Sierrecilla (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "El Sur",

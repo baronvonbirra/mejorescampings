@@ -73,4 +73,19 @@ test.describe('CampBase - Site QA Suite', () => {
     expect(content).toContain('ClaudeBot');
   });
 
+  test('Dynamic XML Sitemaps are generated, valid, and contain expected URLs', async ({ page }) => {
+    const respIndex = await page.goto('sitemap.xml');
+    expect(respIndex?.status()).toBe(200);
+    const contentIndex = await respIndex?.text();
+    expect(contentIndex).toContain('sitemap-malaga.xml');
+    expect(contentIndex).toContain('https://baronvonbirra.github.io/mejorescampings');
+
+    const respMalaga = await page.goto('sitemap-malaga.xml');
+    expect(respMalaga?.status()).toBe(200);
+    const contentMalaga = await respMalaga?.text();
+    expect(contentMalaga).toContain('<urlset');
+    expect(contentMalaga).toContain('https://baronvonbirra.github.io/mejorescampings/andalucia/malaga/');
+    expect(contentMalaga).toContain('https://baronvonbirra.github.io/mejorescampings/camping/');
+  });
+
 });

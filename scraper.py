@@ -16,6 +16,7 @@ import re
 import sys
 import json
 import logging
+from datetime import datetime, timezone
 from typing import List, Dict, Any, Tuple, Optional
 import requests
 
@@ -449,6 +450,82 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
 
     return cleaned, total, error_count
 
+def generate_xml_sitemaps(
+    campings: List[Dict[str, Any]],
+    locations: List[Dict[str, Any]],
+    features: List[Dict[str, Any]],
+    base_url: str = "https://baronvonbirra.github.io/mejorescampings"
+):
+    """Generate dynamic public/sitemap.xml index and public/sitemap-malaga.xml urlset."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    os.makedirs("public", exist_ok=True)
+
+    # 1. Generate sitemap-malaga.xml
+    urls_xml = []
+
+    # Root home URL
+    urls_xml.append(f"""  <url>
+    <loc>{base_url}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>""")
+
+    # Province landing URL
+    urls_xml.append(f"""  <url>
+    <loc>{base_url}/andalucia/malaga/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>""")
+
+    # Feature category URLs
+    for feat in features:
+        slug = feat.get("slug")
+        if slug:
+            urls_xml.append(f"""  <url>
+    <loc>{base_url}/andalucia/malaga/{slug}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+    # Individual active campsite detail URLs
+    for camp in campings:
+        if camp.get("status", "active") != "active" or not camp.get("is_active", True):
+            continue
+        slug = camp.get("slug")
+        if slug:
+            urls_xml.append(f"""  <url>
+    <loc>{base_url}/camping/{slug}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>""")
+
+    sitemap_malaga_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    sitemap_malaga_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    sitemap_malaga_content += "\n".join(urls_xml) + "\n"
+    sitemap_malaga_content += '</urlset>\n'
+
+    with open("public/sitemap-malaga.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap_malaga_content)
+
+    # 2. Generate sitemap.xml index referencing sitemap-malaga.xml
+    sitemap_index_content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>{base_url}/sitemap-malaga.xml</loc>
+    <lastmod>{today}</lastmod>
+  </sitemap>
+</sitemapindex>
+"""
+
+    with open("public/sitemap.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap_index_content)
+
+    logging.info(f"Generated dynamic XML sitemaps with {len(urls_xml)} URLs in public/sitemap-malaga.xml and public/sitemap.xml")
+
 def sync_to_supabase(campings: List[Dict[str, Any]]):
     """Upsert cleaned records to Supabase if configured."""
     supabase_url = os.environ.get("SUPABASE_URL")
@@ -533,7 +610,10 @@ def main():
 
     logging.info("Saved clean local static datasets to src/data/")
 
-    # 5. Remote Sync to Supabase if config exists
+    # 5. Generate dynamic XML sitemaps in public/
+    generate_xml_sitemaps(cleaned_data, locations_data, features_data)
+
+    # 6. Remote Sync to Supabase if config exists
     sync_to_supabase(cleaned_data)
     logging.info("Pipeline V2 completed successfully.")
 
