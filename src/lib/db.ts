@@ -18,6 +18,11 @@ export interface Camping {
   official_url?: string | null;
   price_tier: number;
   is_active: boolean;
+  status?: string;
+  ai_description?: string | null;
+  faqs_json?: Array<{ question: string; answer: string }> | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
   amenities: Record<string, boolean>;
 }
 

@@ -29,6 +29,11 @@ CREATE TABLE IF NOT EXISTS campings (
     official_url TEXT,
     price_tier INT DEFAULT 2 CHECK (price_tier BETWEEN 1 AND 4),
     is_active BOOLEAN DEFAULT TRUE,
+    status TEXT DEFAULT 'active',
+    ai_description TEXT,
+    faqs_json JSONB DEFAULT '[]'::jsonb,
+    meta_title TEXT,
+    meta_description TEXT,
     amenities JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
