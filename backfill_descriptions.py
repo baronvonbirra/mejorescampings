@@ -54,13 +54,14 @@ def generate_gemini_description(camping: Dict[str, Any], gemini_client: Any) -> 
 
     if gemini_client:
         prompt = f"""
-        Eres un guía turístico local de Andalucía. Escribe una breve reseña (máximo 70 palabras, 2 párrafos) para el {camping['name']} situado en {municipality} ({province}).
-        Servicios disponibles: {amenities_str}.
-        Entorno: {environment_type}.
+Escribe una reseña concisa, directa y natural (máximo 70 palabras, 2 párrafos cortos) para {camping['name']}, situado en {municipality} ({province}).
+Servicios: {amenities_str}.
+Entorno: {environment_type}.
 
-        REGLAS:
-        - Sin clichés ("amantes de la naturaleza", "propuesta única", "instalaciones de ensueño").
-        - Párrafos cortos y tono directo sobre datos reales del alojamiento.
+Reglas estrictas de estilo:
+- Tono informativo y útil enfocado a viajeros.
+- Sin clichés ni frases hechas como "amantes del camping", "amantes de la naturaleza", "entorno natural", "instalaciones de ensueño", "localización estratégica" o "propuesta única".
+- Párrafos cortos con información práctica de las instalaciones y el entorno.
         """
         try:
             response = gemini_client.models.generate_content(
@@ -73,8 +74,8 @@ def generate_gemini_description(camping: Dict[str, Any], gemini_client: Any) -> 
             logging.error(f"Gemini API request failed for {camping.get('name')}: {e}")
 
     # Direct fallback without clichés (under 70 words, 2 short paragraphs)
-    p1 = f"{camping['name']} ofrece parcelas y estancias equipadas en {municipality} ({province}). El complejo dispone de {amenities_str}."
-    p2 = f"Su ubicación facilita el acceso a los senderos y atractivos locales del entorno {environment_type}."
+    p1 = f"{camping['name']} ofrece parcelas y estancias equipadas en {municipality} ({province}). Dispone de {amenities_str}."
+    p2 = f"Su ubicación facilita el acceso a los puntos de interés y rutas de la zona de {municipality}."
     return f"{p1}\n\n{p2}"
 
 def main():

@@ -1,13 +1,16 @@
 ---
+import { getNearestPois } from '../lib/poi';
+
 interface Props {
   municipality: string;
   price_tier: number;
   address: string;
   lat: number;
   lng: number;
+  seasonality?: string;
 }
 
-const { municipality, price_tier = 2, address, lat, lng } = Astro.props;
+const { municipality, price_tier = 2, address, lat, lng, seasonality = 'Abierto todo el año' } = Astro.props;
 
 const priceLabels: Record<number, string> = {
   1: 'Económico (€)',
@@ -15,26 +18,51 @@ const priceLabels: Record<number, string> = {
   3: 'Confort (€€€)',
   4: 'Lujo / Glamping (€€€€)'
 };
+
+const nearestPois = getNearestPois(lat, lng, 3);
 ---
 
-<div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 sm:p-5 my-4">
-  <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Datos Clave del Alojamiento</h3>
-  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
-    <li class="flex items-center gap-2">
-      <span class="font-bold text-slate-900 shrink-0">📍 Municipio:</span>
-      <span class="capitalize">{municipality}</span>
-    </li>
-    <li class="flex items-center gap-2">
-      <span class="font-bold text-slate-900 shrink-0">🏷️ Categoría de Precio:</span>
-      <span>{priceLabels[price_tier] || 'Estándar (€€)'}</span>
-    </li>
-    <li class="flex items-center gap-2 col-span-1 sm:col-span-2">
-      <span class="font-bold text-slate-900 shrink-0">🏠 Dirección:</span>
-      <span class="truncate">{address}</span>
-    </li>
-    <li class="flex items-center gap-2 col-span-1 sm:col-span-2 text-xs text-slate-500">
-      <span class="font-bold text-slate-700">🌐 Coordenadas GPS:</span>
-      <span>{lat}, {lng}</span>
-    </li>
-  </ul>
+<div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 sm:p-5 my-4 space-y-4">
+  <div>
+    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Datos Clave del Alojamiento</h3>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
+      <li class="flex items-center gap-2">
+        <span class="font-bold text-slate-900 shrink-0">📍 Municipio:</span>
+        <span class="capitalize">{municipality}</span>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="font-bold text-slate-900 shrink-0">🏷️ Categoría de Precio:</span>
+        <span>{priceLabels[price_tier] || 'Estándar (€€)'}</span>
+      </li>
+      <li class="flex items-center gap-2 col-span-1 sm:col-span-2">
+        <span class="font-bold text-slate-900 shrink-0">🗓️ Apertura:</span>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
+          {seasonality}
+        </span>
+      </li>
+      <li class="flex items-center gap-2 col-span-1 sm:col-span-2">
+        <span class="font-bold text-slate-900 shrink-0">🏠 Dirección:</span>
+        <span class="truncate">{address}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Distancias automáticas a POIs clave -->
+  {nearestPois.length > 0 && (
+    <div class="pt-3 border-t border-slate-200">
+      <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">🚗 Distancias a Puntos de Interés (POIs)</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        {nearestPois.map((poi) => (
+          <div class="bg-white border border-slate-200/80 rounded-xl p-2.5 text-xs shadow-2xs">
+            <span class="font-bold text-slate-800 block flex items-center gap-1">
+              <span>{poi.icon}</span> {poi.name}
+            </span>
+            <span class="text-slate-500 mt-0.5 block">
+              A <strong>{poi.timeMin} min</strong> en coche ({poi.distanceKm} km)
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
 </div>

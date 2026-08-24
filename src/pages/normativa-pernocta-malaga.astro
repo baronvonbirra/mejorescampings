@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CampingCard from '../components/CampingCard.astro';
+import { getCampings } from '../lib/db';
+
+const campings = await getCampings();
+const featuredCampings = campings.slice(0, 3);
+
+const metaTitle = "Guía Normativa de Pernocta y Acampada Libre en Málaga 2026 | CampBase";
+const metaDesc = "Descubre la regulación oficial para pernoctar en furgoneta camper, autocaravana y acampada libre en Málaga y Andalucía. Normas de Costas y Medio Ambiente.";
+
+const jsonLdArticle = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Guía Oficial de Normativa de Pernocta y Acampada Libre en Málaga",
+  "description": metaDesc,
+  "author": {
+    "@type": "Organization",
+    "name": "CampBase",
+    "url": "https://baronvonbirra.github.io/mejorescampings/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CampBase"
+  },
+  "mainEntityOfPage": `https://baronvonbirra.github.io${import.meta.env.BASE_URL}normativa-pernocta-malaga/`
+};
+
+const jsonLdFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Es legal la acampada libre en Málaga y Andalucía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La acampada libre está prohibida con carácter general en toda Andalucía por el Decreto 26/2018 de la Junta de Andalucía. Únicamente se permite la pernocta dentro del vehículo camper o autocaravana debidamente estacionado sin desplegar elementos exteriores."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es la diferencia entre aparcar/pernoctar y acampar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pernoctar consiste en dormir dentro de un vehículo correctamente estacionado sin sobrepasar sus dimensiones (sin calzos, toldos, sillas ni ventanas abatibles abiertas). Acampar implica desplegar elementos al exterior y solo es legal en instalaciones autorizadas como campings y áreas de autocaravanas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se puede dormir en la playa con furgoneta o coche?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La Ley de Costas (artículo 33) prohíbe taxativamente la circulación y el estacionamiento de vehículos en las playas y en el Dominio Público Marítimo-Terrestre en todo el territorio español, sancionando con multas de entre 50€ y 150€."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={metaTitle} description={metaDesc}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdArticle)} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="hover:text-slate-800 capitalize">Málaga</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">Normativa de Pernocta</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-8 shadow-xl">
+    <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-emerald-300 mb-3 uppercase">
+      Guía Legal Actualizada 2026
+    </span>
+    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight max-w-3xl">
+      Guía de Normativa de Pernocta y Acampada Libre en Málaga (Andalucía)
+    </h1>
+    <p class="mt-3 text-slate-300 text-xs sm:text-sm max-w-2xl leading-relaxed">
+      Todo lo que necesitas saber antes de iniciar tu ruta en furgoneta camper, autocaravana o tienda de campaña. Diferencias legales entre pernoctar y acampar, Ley de Costas y espacios protegidos.
+    </p>
+  </header>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+    <!-- Article Content -->
+    <article class="lg:col-span-2 space-y-8 text-slate-800 text-sm sm:text-base leading-relaxed">
+
+      <!-- Summary Box -->
+      <div class="p-5 bg-emerald-50 border border-emerald-200/90 rounded-2xl space-y-2">
+        <h2 class="font-extrabold text-emerald-950 text-base flex items-center gap-2">
+          💡 Regla de Oro para Rutas Camper en Málaga
+        </h2>
+        <p class="text-xs sm:text-sm text-emerald-900 leading-relaxed">
+          <strong>Aparcar no es acampar:</strong> Puedes pernoctar dentro de tu furgoneta o autocaravana siempre que esté estacionada legalmente, no ocupe más espacio del perímetro del vehículo y no despliegues elementos exteriores (toldos, sillas, mesas o patas estabilizadoras).
+        </p>
+      </div>
+
+      <!-- Section 1 -->
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          1. ¿Es legal la Acampada Libre en Málaga?
+        </h2>
+        <p>
+          En la Comunidad Autónoma de Andalucía, la acampada libre fuera de los establecimientos turísticos autorizados está <strong>estrictamente prohibida</strong> por la normativa autonómica (Decreto 26/2018). Esta prohibición aplica tanto a tiendas de campaña como a caravanas y furgonetas que estén acampadas en espacios públicos o parajes naturales no habilitados.
+        </p>
+        <p>
+          Las sanciones por acampada ilegal en parques naturales (como la Sierra de las Nieves o los Montes de Málaga) o en zonas de dominio público marítimo-terrestre oscilan entre <strong>60 € y más de 1.500 €</strong> según la gravedad de la infracción.
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          2. Pernoctar vs Acampar: La Instrucción PROT 2023/14 de la DGT
+        </h2>
+        <p>
+          Para clarificar la legislación nacional, la Dirección General de Tráfico (DGT) emitió la instrucción donde se establece expresamente que:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+          <div class="p-4 bg-white border border-emerald-200 rounded-2xl shadow-2xs space-y-1">
+            <span class="font-extrabold text-emerald-800 text-sm block">✅ Pernoctar (PERMITIDO)</span>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Dormir dentro del vehículo en una plaza de aparcamiento pública permitida. El vehículo no sobresale en volumen, no emite ruidos ni fluidos y mantiene sus ruedas apoyadas sobre el suelo.
+            </p>
+          </div>
+          <div class="p-4 bg-white border border-rose-200 rounded-2xl shadow-2xs space-y-1">
+            <span class="font-extrabold text-rose-800 text-sm block">❌ Acampar (PROHIBIDO)</span>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Sacar mesas, sillas, desplegar el toldo lateral, poner calzos de nivelación o verter aguas residuales en la vía pública o espacios naturales.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          3. Áreas Especiales: Costa y Espacios Naturales Protegidos
+        </h2>
+        <ul class="space-y-2 list-disc list-inside text-xs sm:text-sm text-slate-700">
+          <li>
+            <strong>Ley de Costas en la Costa del Sol:</strong> Prohíbe estacionar o pernoctar a menos de 500 metros de la línea de playa o dominio público marítimo. Las playas de Marbella, Nerja, Estepona o Vélez-Málaga tienen controles estrictos.
+          </li>
+          <li>
+            <strong>Parques Naturales:</strong> En la Sierra de las Nieves, Sierra de Grazalema o Los Alcornocales, está terminantemente prohibido pernoctar fuera de campings oficiales o áreas reguladas para autocaravanas.
+          </li>
+        </ul>
+      </section>
+
+      <!-- FAQs Section -->
+      <section class="pt-6 border-t border-slate-200 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Preguntas Frecuentes sobre Pernocta en Málaga</h2>
+        <div class="space-y-3">
+          <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex justify-between items-center text-sm">
+              <span>¿Puedo poner calzos para nivelar la furgoneta?</span>
+              <span class="text-emerald-600 group-open:rotate-180">&darr;</span>
+            </summary>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-2">
+              No. El uso de calzos de nivelación se considera legalmente como elemento de acampada. Solo se permite el uso de cuñas en vehículos de más de 3.500 kg si el terreno está en pendiente por razones de seguridad.
+            </p>
+          </details>
+
+          <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex justify-between items-center text-sm">
+              <span>¿Dónde verter aguas grises y negras de forma segura?</span>
+              <span class="text-emerald-600 group-open:rotate-180">&darr;</span>
+            </summary>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-2">
+              El vaciado solo debe realizarse en estaciones de servicio habilitadas, áreas de autocaravanas públicas/privadas o dentro de las instalaciones de los campings oficiales de la provincia de Málaga.
+            </p>
+          </details>
+
+          <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex justify-between items-center text-sm">
+              <span>¿Cuál es la mejor alternativa para una estancia tranquila con servicios?</span>
+              <span class="text-emerald-600 group-open:rotate-180">&darr;</span>
+            </summary>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-2">
+              Reservar una parcela en un camping oficial. Garantiza toma eléctrica, agua potable, piscina, seguridad 24 horas y duchas calientes sin riesgo de multas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <div class="p-6 bg-gradient-to-r from-emerald-800 to-teal-900 text-white rounded-2xl shadow-md text-center space-y-3">
+        <h3 class="text-lg font-extrabold">¿Buscas parcelas o áreas camper verificadas en Málaga?</h3>
+        <p class="text-xs sm:text-sm text-emerald-100 max-w-xl mx-auto">
+          Explora la lista completa de campings oficiales con toma eléctrica, piscinas y todos los servicios cerca de la playa o la montaña.
+        </p>
+        <a
+          href={`${import.meta.env.BASE_URL}andalucia/malaga/`}
+          class="inline-block px-6 py-3 rounded-xl bg-white text-emerald-950 font-black text-sm hover:bg-emerald-100 transition shadow-md"
+        >
+          Ver Campings Verificados en Málaga &rarr;
+        </a>
+      </div>
+    </article>
+
+    <!-- Sidebar with recommended campings -->
+    <aside class="space-y-6">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4 sticky top-24">
+        <h3 class="font-bold text-base text-slate-900 border-b border-slate-100 pb-2">
+          Campings Recomendados para Tu Ruta
+        </h3>
+        <div class="space-y-4">
+          {featuredCampings.map((camping) => (
+            <CampingCard camping={camping} />
+          ))}
+        </div>
+      </div>
+    </aside>
+  </div>
+</Layout>
