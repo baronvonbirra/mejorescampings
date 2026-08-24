@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://baronvonbirra.github.io',
   base: '/mejorescampings',
+  trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()]
   }

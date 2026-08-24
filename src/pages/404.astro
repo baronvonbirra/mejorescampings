@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Página no encontrada (404) | CampBase">
+  <div class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 py-12">
+    <span class="text-6xl mb-4">⛺</span>
+    <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">404 - Página no encontrada</h1>
+    <p class="mt-3 text-slate-600 max-w-md text-sm sm:text-base leading-relaxed">
+      Lo sentimos, la página que buscas no existe o ha sido movida. Explora nuestra guía para encontrar el mejor camping.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <a
+        href={import.meta.env.BASE_URL}
+        class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition shadow-md"
+      >
+        Volver a Inicio
+      </a>
+      <a
+        href={`${import.meta.env.BASE_URL}andalucia/malaga/`}
+        class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-sm transition"
+      >
+        Ver Campings en Málaga
+      </a>
+    </div>
+  </div>
+</Layout>

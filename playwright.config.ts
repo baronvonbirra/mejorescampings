@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run preview -- --port 4321',
-    url: 'http://localhost:4321/mejorescampings',
+    url: 'http://localhost:4321/mejorescampings/',
     reuseExistingServer: !process.env.CI,
   },
 });
