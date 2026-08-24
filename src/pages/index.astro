@@ -47,9 +47,63 @@ const categories = [
     </div>
   </section>
 
+  <!-- Filtros por Estilo de Viaje (Intención de Búsqueda) -->
+  <section class="mb-12">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Encuentra según tu Estilo de Viaje</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Selecciona la experiencia que mejor se adapta a tu ruta</p>
+      </div>
+      <a
+        href={`${import.meta.env.BASE_URL}normativa-pernocta-malaga/`}
+        class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition"
+      >
+        🚐 Guía Normativa Pernocta &rarr;
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <a
+        href={`${import.meta.env.BASE_URL}andalucia/malaga/`}
+        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
+      >
+        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🚐</div>
+        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Ruta Camper / Furgoneta</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Con toma de electricidad, vaciado de aguas y zonas adaptadas.</p>
+      </a>
+
+      <a
+        href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-familiares/`}
+        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
+      >
+        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">👨‍👩‍👧‍👦</div>
+        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Plan Familiar</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Con piscina, parque infantil, animación y ambiente tranquilo.</p>
+      </a>
+
+      <a
+        href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-cerca-de-la-playa/`}
+        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
+      >
+        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🏖️</div>
+        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Cerca de la Playa</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Alojamiento a pocos pasos de las playas de la Costa del Sol.</p>
+      </a>
+
+      <a
+        href={`${import.meta.env.BASE_URL}andalucia/malaga/glamping/`}
+        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
+      >
+        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">⛺</div>
+        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Glamping Romántico</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Cabañas de madera, tiendas safari y domos con glamour.</p>
+      </a>
+    </div>
+  </section>
+
   <!-- Featured Categories Grid -->
   <section class="mb-12">
-    <h2 class="text-xl font-bold text-slate-900 mb-4">Categorías Destacadas</h2>
+    <h2 class="text-xl font-bold text-slate-900 mb-4">Servicios e Instalaciones Más Buscadas</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {categories.map((cat) => (
         <a

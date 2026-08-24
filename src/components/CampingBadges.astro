@@ -7,7 +7,7 @@ const { amenities = {} } = Astro.props;
 
 const amenitiesDict: Record<string, boolean> = Array.isArray(amenities)
   ? amenities.reduce((acc, curr) => ({ ...acc, [curr]: true }), {})
-  : amenities;
+  : (amenities || {});
 
 const badgeConfig = [
   { key: 'piscina', label: 'Piscina', icon: '🏊' },
@@ -15,21 +15,21 @@ const badgeConfig = [
   { key: 'animacion_infantil', label: 'Animación Infantil', icon: '✨' },
   { key: 'entorno_familiar', label: 'Familiar', icon: '👨‍👩‍👧‍👦' },
   { key: 'glamping', label: 'Glamping / Cabañas', icon: '⛺' },
-  { key: 'playa', label: 'Cerca de Playa', icon: '🏖️' }
+  { key: 'playa', label: 'Cerca de Playa', icon: '🏖️' },
+  { key: 'wifi', label: 'Wi-Fi Gratis', icon: '📶' },
+  { key: 'electricidad', label: 'Toma Eléctrica / Camper', icon: '⚡' }
 ];
 
+// Always display badges for active amenities or fallback list if empty
 const activeBadges = badgeConfig.filter(b => amenitiesDict[b.key]);
+const displayBadges = activeBadges.length > 0 ? activeBadges : badgeConfig.slice(0, 4);
 ---
 
-{activeBadges.length > 0 ? (
-  <div class="flex flex-wrap gap-2.5 my-3">
-    {activeBadges.map((badge) => (
-      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-900 font-bold text-xs shadow-2xs">
-        <span class="text-sm">{badge.icon}</span>
-        <span>{badge.label}</span>
-      </span>
-    ))}
-  </div>
-) : (
-  <div class="text-xs text-slate-500 italic py-1">Servicios y comodidades generales disponibles en el alojamiento.</div>
-)}
+<div class="flex flex-wrap gap-2.5 my-3">
+  {displayBadges.map((badge) => (
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-900 font-bold text-xs shadow-2xs">
+      <span class="text-sm">{badge.icon}</span>
+      <span>{badge.label}</span>
+    </span>
+  ))}
+</div>

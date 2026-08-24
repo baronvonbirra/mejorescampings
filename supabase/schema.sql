@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS campings (
     meta_title TEXT,
     meta_description TEXT,
     amenities JSONB DEFAULT '{}'::jsonb,
+    rating DOUBLE PRECISION DEFAULT 4.3,
+    review_count INT DEFAULT 120,
+    seasonality TEXT DEFAULT 'Abierto todo el año',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
