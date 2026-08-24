@@ -341,38 +341,37 @@ def enrich_camping_data(camping: Dict[str, Any]) -> Dict[str, Any]:
     mascotas_str = "admite mascotas" if amenities.get("mascotas") else "ambiente tranquilo"
     playa_str = "cercanía a la playa y la costa" if amenities.get("playa") else "vistas a la sierra y senderos cercanos"
 
-    # Try calling OpenAI API if key is present
-    openai_key = os.environ.get("OPENAI_API_KEY")
-    if openai_key:
+    # Try calling Gemini API if key is present
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    if gemini_key:
         try:
-            prompt = f"Escribe una descripción neutra, informativa y enfocada en SEO de 150 palabras para el camping {name} en {municipality}. Destaca que cuenta con {piscina_str}, {mascotas_str} y su cercanía a {playa_str}. No uses adjetivos vacíos como 'increíble' o 'paradisíaco'."
-            resp = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={"Authorization": f"Bearer {openai_key}", "Content-Type": "application/json"},
-                json={
-                    "model": "gpt-4o-mini",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "max_tokens": 250,
-                    "temperature": 0.5
-                },
-                timeout=10
-            )
-            if resp.status_code == 200:
-                ai_text = resp.json()["choices"][0]["message"]["content"].strip()
-                camping["ai_description"] = ai_text
-        except Exception as e:
-            logging.warning(f"OpenAI API call failed, using dynamic prompt engine: {e}")
+            from google import genai
+            client = genai.Client(api_key=gemini_key)
+            prompt = f"""
+Escribe una reseña concisa, directa y natural (máximo 70 palabras, 2 párrafos cortos) para {name}, situado en {municipality} (Málaga).
+Servicios: {piscina_str}, {mascotas_str}.
+Ubicación: {playa_str}.
 
-    # Fallback/Default dynamic SEO text generator (strictly 150 words informative format)
+Reglas estrictas de estilo:
+- Tono directo y útil para viajeros.
+- Sin clichés como "amantes del camping", "amantes de la naturaleza", "entorno natural", "instalaciones de ensueño", "localización estratégica" o "propuesta única".
+- Párrafos cortos con información práctica.
+"""
+            response = client.models.generate_content(
+                model='gemini-2.0-flash',
+                contents=prompt
+            )
+            if response and response.text:
+                camping["ai_description"] = response.text.strip()
+        except Exception as e:
+            logging.warning(f"Gemini API call failed, using local prompt engine: {e}")
+
+    # Fallback/Default clean generator without clichés
     if not camping.get("ai_description"):
         camping["ai_description"] = (
-            f"El {name} se encuentra ubicado en el municipio de {municipality}, dentro de la provincia de Málaga. "
-            f"Este establecimiento ofrece instalaciones orientadas a los amantes del camping y el turismo al aire libre. "
-            f"Entre sus servicios principales destacan que {piscina_str}, además de contar con opciones donde {mascotas_str}. "
-            f"Su localización estratégica facilita el acceso a los principales puntos de interés turístico de {municipality} y la Costa del Sol. "
-            f"Los visitantes disponen de parcelas delimitadas y zonas adaptadas tanto para tiendas de campaña como para caravanas y bungalows. "
-            f"Su propuesta destaca por su {playa_str}, ofreciendo una estancia confortable durante todo el año. "
-            f"Para consultar las tarifas vigentes, reservas de plazas y horarios de recepción, los usuarios pueden acceder directamente a la información oficial."
+            f"{name} ofrece alojamiento e instalaciones en {municipality} (Málaga). "
+            f"El complejo {piscina_str} y {mascotas_str}, ofreciendo opciones tanto para parcelas como bungalows. "
+            f"\n\nSu ubicación permite acceder a {playa_str} y a los principales atractivos turísticos de la zona."
         )
 
     # Generate 3 dynamic Q&A FAQs
