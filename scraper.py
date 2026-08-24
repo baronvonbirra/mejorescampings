@@ -548,6 +548,14 @@ def generate_xml_sitemaps(
     <priority>0.9</priority>
   </url>""")
 
+    # Pillar guide page URL
+    urls_xml.append(f"""  <url>
+    <loc>{base_url}/normativa-pernocta-malaga/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
     # Feature category URLs
     for feat in features:
         slug = feat.get("slug")
