@@ -136,3 +136,7 @@ The GitHub Actions workflow automates the full lifecycle:
 3. Executes `npm run build` to compile the Astro static site.
 4. Runs Playwright E2E tests against the built site.
 5. Deploys the static assets in `dist/` directly to **GitHub Pages**.
+
+> **Important Configuration Note:**
+> To ensure GitHub Pages serves the compiled Astro SSG output instead of raw repository root files (such as `README.md`), you must configure the GitHub repository settings:
+> Go to **Settings** $\rightarrow$ **Pages** $\rightarrow$ **Build and deployment** $\rightarrow$ **Source**, and select **GitHub Actions**.
