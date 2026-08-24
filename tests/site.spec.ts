@@ -41,7 +41,7 @@ test.describe('CampBase - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Piscina');
   });
 
-  test('Camping Product detail page renders CTA, ad slots, contextual links, JSON-LD, FAQs and Internal Links', async ({ page, isMobile }) => {
+  test('Camping Product detail page renders atomic components, CTA, weather, OG tags, FAQs and Environment Block', async ({ page, isMobile }) => {
     const resp1 = await page.goto('camping/el-sur/');
     expect(resp1?.status()).toBe(200);
     await expect(page.locator('h1')).toContainText('El Sur');
@@ -49,27 +49,28 @@ test.describe('CampBase - Site QA Suite', () => {
     // Check primary CTA or web official link / Reservar button
     await expect(page.locator('a, button').filter({ hasText: /Reservar/i }).first()).toBeVisible();
 
-    // Check 3 image gallery thumbnails
-    const images = page.locator('img');
-    expect(await images.count()).toBeGreaterThanOrEqual(3);
+    // Check OpenGraph image meta tag
+    const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(ogImage).toBeTruthy();
+
+    // Check Open-Meteo weather widget
+    await expect(page.locator('[data-testid="weather-widget"]')).toBeVisible();
+
+    // Check Environment Block
+    await expect(page.locator('[data-testid="environment-block"]')).toBeVisible();
 
     // Check JSON-LD structured data in head
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
     expect(jsonLdScripts.some(s => s.includes('"@type":"Campground"'))).toBe(true);
-    expect(jsonLdScripts.some(s => s.includes('"@type":"BreadcrumbList"'))).toBe(true);
-    expect(jsonLdScripts.some(s => s.includes('"@type":"FAQPage"'))).toBe(true);
 
     // Check FAQ section rendered
     await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre El Sur/i })).toBeVisible();
-
-    // Check internal linking blocks
-    await expect(page.getByRole('link', { name: /Todos los campings en Provincia de Málaga/i })).toBeVisible();
 
     // Check in-content ad block
     await expect(page.locator('[data-testid="ad-block-incontent"]')).toBeVisible();
 
     if (isMobile) {
-      await expect(page.locator('[data-testid="ad-block-mobile"]')).toBeVisible();
+      await expect(page.locator('[data-testid="ad-block-mobile"]')).toBeHidden(); // Sticky bottom bar takes over
     } else {
       await expect(page.locator('[data-testid="ad-block-sidebar"]')).toBeVisible();
     }

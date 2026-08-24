@@ -1,0 +1,46 @@
+---
+interface Props {
+  name: string;
+  price_tier?: number;
+  affiliate_url?: string;
+  official_url?: string;
+}
+
+const { name, price_tier = 2, affiliate_url, official_url } = Astro.props;
+
+const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€€', 4: '€€€€' };
+---
+
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 z-50 shadow-2xl flex items-center justify-between">
+  <div>
+    <span class="text-xs font-bold text-slate-900 block truncate max-w-[170px]">{name}</span>
+    <span class="text-[10px] text-emerald-600 font-semibold">{priceLabels[price_tier] || '€€'}</span>
+  </div>
+
+  {affiliate_url ? (
+    <a
+      href={affiliate_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md transition"
+    >
+      Reservar
+    </a>
+  ) : official_url ? (
+    <a
+      href={official_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs shadow-md transition"
+    >
+      Reservar
+    </a>
+  ) : (
+    <button
+      disabled
+      class="py-2.5 px-4 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs cursor-not-allowed opacity-75"
+    >
+      Reservar
+    </button>
+  )}
+</div>

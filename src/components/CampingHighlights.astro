@@ -1,0 +1,40 @@
+---
+interface Props {
+  municipality: string;
+  price_tier: number;
+  address: string;
+  lat: number;
+  lng: number;
+}
+
+const { municipality, price_tier = 2, address, lat, lng } = Astro.props;
+
+const priceLabels: Record<number, string> = {
+  1: 'Económico (€)',
+  2: 'Estándar (€€)',
+  3: 'Confort (€€€)',
+  4: 'Lujo / Glamping (€€€€)'
+};
+---
+
+<div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 sm:p-5 my-4">
+  <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Datos Clave del Alojamiento</h3>
+  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
+    <li class="flex items-center gap-2">
+      <span class="font-bold text-slate-900 shrink-0">📍 Municipio:</span>
+      <span class="capitalize">{municipality}</span>
+    </li>
+    <li class="flex items-center gap-2">
+      <span class="font-bold text-slate-900 shrink-0">🏷️ Categoría de Precio:</span>
+      <span>{priceLabels[price_tier] || 'Estándar (€€)'}</span>
+    </li>
+    <li class="flex items-center gap-2 col-span-1 sm:col-span-2">
+      <span class="font-bold text-slate-900 shrink-0">🏠 Dirección:</span>
+      <span class="truncate">{address}</span>
+    </li>
+    <li class="flex items-center gap-2 col-span-1 sm:col-span-2 text-xs text-slate-500">
+      <span class="font-bold text-slate-700">🌐 Coordenadas GPS:</span>
+      <span>{lat}, {lng}</span>
+    </li>
+  </ul>
+</div>
