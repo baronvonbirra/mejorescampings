@@ -5,7 +5,9 @@ on:
     # Run at 00:00 on day-of-month 1
     - cron: '0 0 1 * *'
   push:
-    branches: [ main, jules-* ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -65,6 +67,6 @@ jobs:
           path: './dist'
 
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         id: deployment
         uses: actions/deploy-pages@v4
