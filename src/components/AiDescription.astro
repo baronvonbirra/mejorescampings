@@ -1,0 +1,33 @@
+---
+interface Props {
+  ai_description?: string;
+  description?: string;
+  name: string;
+  affiliate_url?: string;
+}
+
+const { ai_description, description, name, affiliate_url } = Astro.props;
+
+const content = ai_description || description || `${name} ofrece parcelas e instalaciones orientadas a la naturaleza en la provincia de Málaga.`;
+const paragraphs = content.split('\n').filter(Boolean);
+---
+
+<div class="space-y-4 my-6">
+  <div class="flex items-center gap-2">
+    <h2 class="text-lg font-bold text-slate-900">Reseña del Alojamiento</h2>
+    <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md uppercase tracking-wider">Análisis SEO</span>
+  </div>
+
+  <div class="bg-gradient-to-br from-emerald-50/40 to-slate-50 border border-emerald-100/80 rounded-2xl p-4 sm:p-5 space-y-3">
+    {paragraphs.map((p, idx) => (
+      <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+        {p}
+        {idx === 0 && affiliate_url && (
+          <span class="ml-1">
+            Puedes <a href={affiliate_url} target="_blank" rel="noopener noreferrer" class="text-emerald-700 font-bold underline hover:text-emerald-800">reservar tu estancia en {name} directamente aquí</a>.
+          </span>
+        )}
+      </p>
+    ))}
+  </div>
+</div>
