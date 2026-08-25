@@ -482,6 +482,33 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
         reviews = 45 + (abs(hash(name_clean)) % 320)
         seasonality = "Abierto todo el año" if (len(name_clean) % 3 != 0) else "Temporada (Mayo-Octubre)"
 
+        # Infer municipality from address or name if municipality_slug is generic or missing
+        municipality_slug = item.get("municipality_slug", "andalucia/malaga/malaga")
+        address = item.get("address", "")
+        text_for_muni = f"{name_clean} {address}".lower()
+        known_municipalities = [
+            ("ronda", "andalucia/malaga/ronda"),
+            ("marbella", "andalucia/malaga/marbella"),
+            ("nerja", "andalucia/malaga/nerja"),
+            ("torremolinos", "andalucia/malaga/torremolinos"),
+            ("almayate", "andalucia/malaga/almayate"),
+            ("antequera", "andalucia/malaga/antequera"),
+            ("malaga", "andalucia/malaga/malaga"),
+            ("málaga", "andalucia/malaga/malaga"),
+            ("estepona", "andalucia/malaga/marbella"),
+            ("fuengirola", "andalucia/malaga/torremolinos"),
+            ("benalmadena", "andalucia/malaga/torremolinos"),
+            ("benalmádena", "andalucia/malaga/torremolinos"),
+            ("algarrobo", "andalucia/malaga/almayate"),
+            ("torrox", "andalucia/malaga/nerja"),
+            ("velez", "andalucia/malaga/almayate"),
+            ("vélez", "andalucia/malaga/almayate")
+        ]
+        for keyword, m_slug in known_municipalities:
+            if keyword in text_for_muni:
+                municipality_slug = m_slug
+                break
+
         camping_record = {
             "name": name_clean,
             "slug": slug,
@@ -489,7 +516,7 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
             "address": item.get("address", f"Málaga, España"),
             "lat": item.get("lat"),
             "lng": item.get("lng"),
-            "municipality_slug": item.get("municipality_slug", "andalucia/malaga/malaga"),
+            "municipality_slug": municipality_slug,
             "image_urls": item.get("image_urls", []),
             "affiliate_url": item.get("affiliate_url"),
             "official_url": official_url_clean,
@@ -525,11 +552,10 @@ def generate_xml_sitemaps(
     features: List[Dict[str, Any]],
     base_url: str = "https://baronvonbirra.github.io/mejorescampings"
 ):
-    """Generate dynamic public/sitemap.xml index and public/sitemap-malaga.xml urlset."""
+    """Generate dynamic public/sitemap.xml (urlset) and public/sitemap-malaga.xml containing all site pages."""
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     os.makedirs("public", exist_ok=True)
 
-    # 1. Generate sitemap-malaga.xml
     urls_xml = []
 
     # Root home URL
@@ -553,6 +579,19 @@ def generate_xml_sitemaps(
     <loc>{base_url}/normativa-pernocta-malaga/</loc>
     <lastmod>{today}</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+    # Municipality URLs
+    for loc in locations:
+        slug = loc.get("slug")
+        if slug:
+            # Extract municipality part e.g. "andalucia/malaga/ronda" -> "ronda"
+            muni_part = slug.split('/')[-1]
+            urls_xml.append(f"""  <url>
+    <loc>{base_url}/andalucia/malaga/{muni_part}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>""")
 
@@ -580,26 +619,18 @@ def generate_xml_sitemaps(
     <priority>0.7</priority>
   </url>""")
 
-    sitemap_malaga_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    sitemap_malaga_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    sitemap_malaga_content += "\n".join(urls_xml) + "\n"
-    sitemap_malaga_content += '</urlset>\n'
+    sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    sitemap_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    sitemap_content += "\n".join(urls_xml) + "\n"
+    sitemap_content += '</urlset>\n'
 
-    with open("public/sitemap-malaga.xml", "w", encoding="utf-8") as f:
-        f.write(sitemap_malaga_content)
-
-    # 2. Generate sitemap.xml index referencing sitemap-malaga.xml
-    sitemap_index_content = f"""<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>{base_url}/sitemap-malaga.xml</loc>
-    <lastmod>{today}</lastmod>
-  </sitemap>
-</sitemapindex>
-"""
-
+    # Write main sitemap.xml as direct urlset as required by Google Sitemaps for smaller sites (<50k URLs)
     with open("public/sitemap.xml", "w", encoding="utf-8") as f:
-        f.write(sitemap_index_content)
+        f.write(sitemap_content)
+
+    # Write public/sitemap-malaga.xml for compatibility
+    with open("public/sitemap-malaga.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap_content)
 
     logging.info(f"Generated dynamic XML sitemaps with {len(urls_xml)} URLs in public/sitemap-malaga.xml and public/sitemap.xml")
 

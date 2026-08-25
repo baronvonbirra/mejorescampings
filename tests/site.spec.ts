@@ -96,8 +96,9 @@ test.describe('CampBase - Site QA Suite', () => {
     const respIndex = await page.goto('sitemap.xml');
     expect(respIndex?.status()).toBe(200);
     const contentIndex = await respIndex?.text();
-    expect(contentIndex).toContain('sitemap-malaga.xml');
+    expect(contentIndex).toContain('<urlset');
     expect(contentIndex).toContain('https://baronvonbirra.github.io/mejorescampings');
+    expect(contentIndex).toContain('https://baronvonbirra.github.io/mejorescampings/andalucia/malaga/ronda/');
 
     const respMalaga = await page.goto('sitemap-malaga.xml');
     expect(respMalaga?.status()).toBe(200);

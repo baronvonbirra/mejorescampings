@@ -1,41 +1,84 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import CampingCard from '../../../components/CampingCard.astro';
-import { getCampings, getFeatures } from '../../../lib/db';
+import { getCampings, getFeatures, getLocations } from '../../../lib/db';
 
 export async function getStaticPaths() {
   const features = await getFeatures();
-  return features.map((feature) => ({
+  const locations = await getLocations();
+
+  const featurePaths = features.map((feature) => ({
     params: {
       region: 'andalucia',
       province: 'malaga',
       feature: feature.slug
     },
-    props: { feature }
+    props: { type: 'feature', data: feature }
   }));
+
+  const locationPaths = locations.map((loc) => {
+    const muniSlug = loc.slug.split('/').pop() || loc.slug;
+    return {
+      params: {
+        region: loc.region,
+        province: loc.province,
+        feature: muniSlug
+      },
+      props: { type: 'location', data: loc }
+    };
+  });
+
+  return [...featurePaths, ...locationPaths];
 }
 
 const { region, province, feature: featureSlug } = Astro.params;
-const { feature } = Astro.props;
+const { type, data } = Astro.props;
 
 const allCampings = await getCampings();
 const features = await getFeatures();
 
-// Filter campings based on feature key
-const featureKey = feature?.key || featureSlug.replace('campings-con-', '').replace('campings-que-admiten-', '').replace('campings-', '');
-const campings = allCampings.filter((c) => c.amenities && c.amenities[featureKey]);
-
 const formattedProvince = province ? province.charAt(0).toUpperCase() + province.slice(1) : 'Málaga';
+
+let campings = [];
+let pageTitle = '';
+let pageHeading = '';
+let pageDescription = '';
+let currentLabel = '';
+
+if (type === 'feature') {
+  const feature = data;
+  currentLabel = feature.feature_name;
+  const featureKey = feature.key || featureSlug.replace('campings-con-', '').replace('campings-que-admiten-', '').replace('campings-', '');
+  campings = allCampings.filter((c) => c.amenities && c.amenities[featureKey]);
+  pageTitle = `${feature.feature_name} en ${formattedProvince} | CampBase`;
+  pageHeading = `Campings ${feature.feature_name} en ${formattedProvince}`;
+  pageDescription = `Mostrando alojamientos de acampada en ${formattedProvince} que disponen de ${feature.feature_name.toLowerCase()}.`;
+} else {
+  const loc = data;
+  currentLabel = loc.municipality;
+  const targetSlug = loc.slug; // e.g. "andalucia/malaga/ronda"
+  const muniLower = loc.municipality.toLowerCase();
+
+  campings = allCampings.filter((c) => {
+    if (c.municipality_slug === targetSlug) return true;
+    const addr = (c.address || '').toLowerCase();
+    const name = (c.name || '').toLowerCase();
+    return addr.includes(muniLower) || name.includes(muniLower);
+  });
+  pageTitle = `Campings en ${loc.municipality} (${formattedProvince}) | CampBase`;
+  pageHeading = `Campings y Glampings en ${loc.municipality}`;
+  pageDescription = `Descubre los mejores campings y glampings ubicados en ${loc.municipality} (${formattedProvince}). Información, instalaciones y reserva directa.`;
+}
 ---
 
-<Layout title={`${feature.feature_name} en ${formattedProvince} | CampBase`}>
+<Layout title={pageTitle}>
   <!-- Breadcrumbs -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
     <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
     <span>/</span>
     <a href={`${import.meta.env.BASE_URL}${region}/${province}/`} class="hover:text-slate-800 capitalize">{province}</a>
     <span>/</span>
-    <span class="text-slate-800 font-semibold">{feature.feature_name}</span>
+    <span class="text-slate-800 font-semibold">{currentLabel}</span>
   </nav>
 
   <div class="mb-8">
@@ -43,10 +86,10 @@ const formattedProvince = province ? province.charAt(0).toUpperCase() + province
       Filtro pSEO
     </div>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-      Campings {feature.feature_name} en {formattedProvince}
+      {pageHeading}
     </h1>
     <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl">
-      Mostrando alojamientos de acampada en {formattedProvince} que disponen de {feature.feature_name.toLowerCase()}.
+      {pageDescription}
     </p>
   </div>
 
@@ -78,7 +121,7 @@ const formattedProvince = province ? province.charAt(0).toUpperCase() + province
     </div>
   ) : (
     <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
-      <p class="text-slate-500">No hay campings registrados con la característica "{feature.feature_name}" en esta provincia aún.</p>
+      <p class="text-slate-500">No hay campings registrados para "{currentLabel}" en esta categoría aún.</p>
       <a href={`${import.meta.env.BASE_URL}${region}/${province}/`} class="inline-block mt-4 text-sm font-bold text-emerald-600 hover:underline">
         Ver todos los campings de {formattedProvince}
       </a>
