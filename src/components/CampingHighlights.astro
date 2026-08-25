@@ -1,5 +1,6 @@
 ---
 import { getNearestPois } from '../lib/poi';
+import AffiliateBanner from './AffiliateBanner.astro';
 
 interface Props {
   municipality: string;
@@ -65,4 +66,16 @@ const nearestPois = getNearestPois(lat, lng, 3);
       </div>
     </div>
   )}
+
+  <!-- Módulo "Cómo llegar": Alquiler de coches -->
+  <div class="pt-2">
+    <AffiliateBanner
+      type="car_rental"
+      url="https://getrentacar.tpx.lv/CDGo8mN2"
+      title="¿Cómo llegar al camping? Compara alquileres de coche"
+      description={`¿Vienes en avión o tren? Encuentra y compara las mejores ofertas de alquiler de coche en el Aeropuerto de Málaga para moverte hacia ${municipality}.`}
+      buttonText="Comparar Coches en Málaga"
+      locationName={municipality}
+    />
+  </div>
 </div>

@@ -59,6 +59,11 @@ test.describe('CampBase - Site QA Suite', () => {
     // Check Environment Block
     await expect(page.locator('[data-testid="environment-block"]')).toBeVisible();
 
+    // Check Travelpayouts Affiliate elements (Rentacar, Klook cards, Radical Storage)
+    await expect(page.locator('a[href*="getrentacar.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="klook.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="radicalstorage.tpx.lv"]').first()).toBeVisible();
+
     // Check JSON-LD structured data in head
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
     expect(jsonLdScripts.some(s => s.includes('"@type":"Campground"'))).toBe(true);
@@ -74,6 +79,12 @@ test.describe('CampBase - Site QA Suite', () => {
     } else {
       await expect(page.locator('[data-testid="ad-block-sidebar"]')).toBeVisible();
     }
+  });
+
+  test('Province page renders BikesBooking and Klook affiliate sections', async ({ page }) => {
+    await page.goto('andalucia/malaga/');
+    await expect(page.locator('a[href*="bikesbooking.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="klook.tpx.lv"]').first()).toBeVisible();
   });
 
   test('404 page loads correctly for non-existent route', async ({ page }) => {

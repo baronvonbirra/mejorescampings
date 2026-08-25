@@ -24,6 +24,7 @@ export interface Camping {
   meta_title?: string | null;
   meta_description?: string | null;
   amenities: Record<string, boolean>;
+  related_affiliates?: Record<string, any> | null;
 }
 
 export interface Location {
@@ -55,7 +56,8 @@ export async function getCampings(): Promise<Camping[]> {
         return data.map((item: any) => ({
           ...item,
           affiliate_url: item.affiliate_url || item.aff_url || null,
-          image_urls: item.image_urls || (item.image_url ? [item.image_url] : [])
+          image_urls: item.image_urls || (item.image_url ? [item.image_url] : []),
+          related_affiliates: item.related_affiliates || {}
         }));
       }
     } catch (e) {
