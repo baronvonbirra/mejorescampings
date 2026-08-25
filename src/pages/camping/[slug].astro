@@ -6,6 +6,8 @@ import CampingHighlights from '../../components/CampingHighlights.astro';
 import AiDescription from '../../components/AiDescription.astro';
 import StickyCtaMobile from '../../components/StickyCtaMobile.astro';
 import CampingCard from '../../components/CampingCard.astro';
+import AffiliateCard from '../../components/AffiliateCard.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { getCampings } from '../../lib/db';
 
 export async function getStaticPaths() {
@@ -197,7 +199,7 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
           <a
             href={camping.official_url}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow sponsored"
             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
           >
             Reservar en Web Oficial &rarr;
@@ -300,8 +302,8 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         </div>
       )}
 
-      <!-- Environment Block: Qué hacer en [Municipio] -->
-      <div data-testid="environment-block" class="pt-6 border-t border-slate-200 space-y-4">
+      <!-- Environment Block: Qué hacer en [Municipio] + Módulo de Experiencias y Excursiones -->
+      <div data-testid="environment-block" class="pt-6 border-t border-slate-200 space-y-6">
         <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-5">
           <h3 class="text-sm font-extrabold text-emerald-950 uppercase tracking-wide mb-2">
             Qué hacer en {municipalityName} y Alrededores
@@ -318,6 +320,75 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
             </a>
           </div>
         </div>
+
+        <!-- Módulo 1: Qué hacer en los alrededores (Tarjetas Klook/Tiqets) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-rose-600 uppercase tracking-wider block">Actividades & Experiencias</span>
+              <h3 class="text-lg font-extrabold text-slate-900">Excursiones más cercanas a {camping.name}</h3>
+            </div>
+            <a href="https://klook.tpx.lv/q5GFspFV" target="_blank" rel="nofollow sponsored" class="text-xs font-bold text-rose-600 hover:underline">
+              Ver todas en Klook &rarr;
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {municipalityName.toLowerCase().includes('ronda') ? (
+              <>
+                <AffiliateCard
+                  type="activity"
+                  title="Visita a Bodega Tradicional y Cata de Vinos en Ronda"
+                  badge="Enología Ronda"
+                  location="Ronda"
+                  price="Desde €25"
+                  imageUrl="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80"
+                  url="https://klook.tpx.lv/q5GFspFV"
+                />
+                <AffiliateCard
+                  type="activity"
+                  title="Entrada con Audioguía Monumentos y Puente Nuevo de Ronda"
+                  badge="Imprescindible"
+                  location="Ronda"
+                  price="Desde €12"
+                  imageUrl="https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=800&q=80"
+                  url="https://klook.tpx.lv/q5GFspFV"
+                />
+              </>
+            ) : (
+              <>
+                <AffiliateCard
+                  type="activity"
+                  title="Paseo en Catamarán y Avistamiento de Delfines en la Costa del Sol"
+                  badge="Popular Costa"
+                  location="Costa del Sol / Málaga"
+                  price="Desde €18"
+                  imageUrl="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"
+                  url="https://klook.tpx.lv/q5GFspFV"
+                />
+                <AffiliateCard
+                  type="activity"
+                  title="Ruta Guiada Caminito del Rey con Entrada Oficial Incluida"
+                  badge="Aventura Málaga"
+                  location="El Chorro / Málaga"
+                  price="Desde €29"
+                  imageUrl="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+                  url="https://klook.tpx.lv/q5GFspFV"
+                />
+              </>
+            )}
+          </div>
+        </div>
+
+        <!-- Módulo Check-out / Salida (Radical Storage) -->
+        <AffiliateBanner
+          type="luggage"
+          url="https://radicalstorage.tpx.lv/9TQn9Khk"
+          title="¿Tu vuelo o tren sale tarde tras el Check-out?"
+          description={`Guarda tu equipaje de forma segura en las consignas de Málaga antes de dirigirte al aeropuerto o estación.`}
+          buttonText="Consigna Radical Storage"
+          locationName="Málaga Capital"
+        />
 
         {sameFeatureCampings.length > 0 && (
           <div>
@@ -363,7 +434,7 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
             <a
               href={camping.official_url}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="nofollow sponsored"
               class="block w-full text-center py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md transition"
             >
               Reservar en Web Oficial

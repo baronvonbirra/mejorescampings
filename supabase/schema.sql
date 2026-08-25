@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS campings (
     meta_title TEXT,
     meta_description TEXT,
     amenities JSONB DEFAULT '{}'::jsonb,
+    related_affiliates JSONB DEFAULT '{}'::jsonb,
     rating DOUBLE PRECISION DEFAULT 4.3,
     review_count INT DEFAULT 120,
     seasonality TEXT DEFAULT 'Abierto todo el año',

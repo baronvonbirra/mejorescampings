@@ -1,0 +1,83 @@
+---
+interface Props {
+  type: 'car_rental' | 'luggage' | 'mobility' | 'activity';
+  url: string;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  locationName?: string;
+}
+
+const { type, url, title, description, buttonText, locationName = 'Málaga' } = Astro.props;
+
+const bannerConfigs = {
+  car_rental: {
+    icon: '🚗',
+    badge: 'Alquiler de Coches',
+    defaultTitle: '¿Vienes en avión o tren?',
+    defaultDesc: `Compara ofertas y alquila tu coche al mejor precio para moverte con total libertad por ${locationName}.`,
+    defaultBtn: 'Comparar Coches en Aeropuerto',
+    provider: 'Rentacar / Economybookings',
+    bgClass: 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200/90 text-amber-950',
+    btnClass: 'bg-amber-600 hover:bg-amber-700 text-white'
+  },
+  luggage: {
+    icon: '🧳',
+    badge: 'Consigna de Equipaje',
+    defaultTitle: '¿Tu vuelo o tren sale tarde?',
+    defaultDesc: `Guarda tu equipaje de forma segura con Radical Storage en ${locationName} y disfruta del día sin cargas.`,
+    defaultBtn: 'Reservar Consigna por €5/día',
+    provider: 'Radical Storage',
+    bgClass: 'bg-gradient-to-r from-sky-50 to-indigo-50 border-sky-200/90 text-sky-950',
+    btnClass: 'bg-sky-600 hover:bg-sky-700 text-white'
+  },
+  mobility: {
+    icon: '🚲',
+    badge: 'Movilidad Sostenible',
+    defaultTitle: 'Explora la Costa en Bicicleta o Scooter',
+    defaultDesc: `Reserva alquiler de bicicletas, e-bikes o motos para recorrer ${locationName} de forma ágil y ecológica.`,
+    defaultBtn: 'Ver Bicis y Scooters Disponibles',
+    provider: 'BikesBooking',
+    bgClass: 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200/90 text-emerald-950',
+    btnClass: 'bg-emerald-600 hover:bg-emerald-700 text-white'
+  },
+  activity: {
+    icon: '🎟️',
+    badge: 'Tours y Excursiones',
+    defaultTitle: 'Experiencias Únicas e Imprescindibles',
+    defaultDesc: `Reserva visitas guiadas, entradas a monumentos y actividades al mejor precio en ${locationName}.`,
+    defaultBtn: 'Explorar Actividades Destacadas',
+    provider: 'Klook',
+    bgClass: 'bg-gradient-to-r from-rose-50 to-orange-50 border-rose-200/90 text-rose-950',
+    btnClass: 'bg-rose-600 hover:bg-rose-700 text-white'
+  }
+};
+
+const config = bannerConfigs[type] || bannerConfigs.activity;
+const bannerTitle = title || config.defaultTitle;
+const bannerDesc = description || config.defaultDesc;
+const bannerBtn = buttonText || config.defaultBtn;
+---
+
+<div class={`p-4 sm:p-5 rounded-2xl border shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 my-4 ${config.bgClass}`}>
+  <div class="space-y-1">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">{config.icon}</span>
+      <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 bg-white/80 rounded-full border border-black/10">
+        {config.badge}
+      </span>
+      <span class="text-[10px] text-slate-500 font-medium">Vía {config.provider}</span>
+    </div>
+    <h4 class="font-bold text-sm sm:text-base tracking-tight">{bannerTitle}</h4>
+    <p class="text-xs opacity-90 max-w-2xl leading-relaxed">{bannerDesc}</p>
+  </div>
+
+  <a
+    href={url}
+    target="_blank"
+    rel="nofollow sponsored"
+    class={`w-full sm:w-auto px-5 py-3 rounded-xl font-extrabold text-xs text-center transition shrink-0 shadow-xs ${config.btnClass}`}
+  >
+    {bannerBtn} &rarr;
+  </a>
+</div>

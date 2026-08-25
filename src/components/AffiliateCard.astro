@@ -1,0 +1,67 @@
+---
+interface Props {
+  type?: 'activity' | 'experience' | 'tour';
+  title: string;
+  badge?: string;
+  location?: string;
+  price?: string;
+  imageUrl: string;
+  url: string;
+  provider?: string;
+}
+
+const {
+  type = 'activity',
+  title,
+  badge = 'Experiencia recomendada',
+  location,
+  price,
+  imageUrl,
+  url,
+  provider = 'Klook / Tiqets'
+} = Astro.props;
+---
+
+<div class="group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between h-full">
+  <div class="relative aspect-16/10 overflow-hidden bg-slate-100">
+    <img
+      src={imageUrl}
+      alt={title}
+      class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="absolute top-3 left-3 bg-emerald-950/80 backdrop-blur-md text-emerald-300 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full border border-emerald-500/30">
+      {badge}
+    </span>
+  </div>
+
+  <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+    <div>
+      {location && (
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+          📍 {location}
+        </span>
+      )}
+      <h4 class="font-bold text-slate-900 text-sm leading-snug group-hover:text-emerald-700 transition">
+        {title}
+      </h4>
+    </div>
+
+    <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 mt-auto">
+      <div>
+        <span class="text-[10px] text-slate-400 block font-medium">Vía {provider}</span>
+        {price && <span class="text-xs font-extrabold text-slate-900">{price}</span>}
+      </div>
+
+      <a
+        href={url}
+        target="_blank"
+        rel="nofollow sponsored"
+        class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition shrink-0"
+      >
+        Ver entradas &rarr;
+      </a>
+    </div>
+  </div>
+</div>
