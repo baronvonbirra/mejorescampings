@@ -26,4 +26,4 @@ User-agent: Anthropic-ai
 Allow: /
 
 # Sitemap Index
-Sitemap: https://campbase.es/mejorescampings/sitemap.xml
+Sitemap: https://baronvonbirra.github.io/mejorescampings/sitemap.xml
