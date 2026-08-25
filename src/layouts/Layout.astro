@@ -28,6 +28,17 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Travelpayouts script -->
+    <script is:inline nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
+      (function () {
+          var script = document.createElement("script");
+          script.async = 1;
+          script.setAttribute("data-cmp-ab","2");
+          script.src = 'https://tp-em.com/NTY2NDY4.js?t=566468';
+          document.head.appendChild(script);
+      })();
+    </script>
   </head>
   <body class="flex flex-col min-h-screen pb-20 md:pb-0">
     <!-- Header Navigation -->
