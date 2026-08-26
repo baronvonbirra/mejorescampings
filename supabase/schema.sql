@@ -42,6 +42,10 @@ CREATE TABLE IF NOT EXISTS campings (
     rating DOUBLE PRECISION DEFAULT 4.3,
     review_count INT DEFAULT 120,
     seasonality TEXT DEFAULT 'Abierto todo el año',
+    quality_score INT DEFAULT 0 CHECK (quality_score BETWEEN 0 AND 100),
+    rta_license TEXT DEFAULT NULL,
+    category TEXT DEFAULT NULL,
+    legal_capacity INT DEFAULT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -63,12 +67,16 @@ CREATE TABLE IF NOT EXISTS camping_features (
     PRIMARY KEY (camping_id, feature_id)
 );
 
--- Normalización de Provincias y Comarcas
+-- Normalización de Provincias, Comarcas y Calidad de Datos
 ALTER TABLE campings
 ADD COLUMN IF NOT EXISTS province_slug TEXT NOT NULL DEFAULT 'malaga',
 ADD COLUMN IF NOT EXISTS comarca TEXT DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS comarca_slug TEXT DEFAULT NULL,
-ADD COLUMN IF NOT EXISTS municipality_slug TEXT DEFAULT NULL;
+ADD COLUMN IF NOT EXISTS municipality_slug TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS quality_score INT DEFAULT 0,
+ADD COLUMN IF NOT EXISTS rta_license TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS category TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS legal_capacity INT DEFAULT NULL;
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_campings_slug ON campings(slug);

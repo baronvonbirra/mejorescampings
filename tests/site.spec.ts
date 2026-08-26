@@ -64,9 +64,9 @@ test.describe('MejoresCampings - Site QA Suite', () => {
   });
 
   test('Camping Product detail page renders atomic components, CTA, weather, OG tags, FAQs and Environment Block', async ({ page, isMobile }) => {
-    const resp1 = await page.goto('camping/el-sur/');
+    const resp1 = await page.goto('camping/camping-el-sur/');
     expect(resp1?.status()).toBe(200);
-    await expect(page.locator('h1')).toContainText('El Sur');
+    await expect(page.locator('h1')).toContainText('Camping el Sur');
 
     // Check primary CTA or web official link / Reservar button
     await expect(page.locator('a, button').filter({ hasText: /Reservar/i }).first()).toBeVisible();
@@ -91,7 +91,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     expect(jsonLdScripts.some(s => s.includes('"@type":"Campground"'))).toBe(true);
 
     // Check FAQ section rendered
-    await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre El Sur/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre Camping El Sur/i })).toBeVisible();
 
     // Check in-content ad block
     await expect(page.locator('[data-testid="ad-block-incontent"]')).toBeVisible();
