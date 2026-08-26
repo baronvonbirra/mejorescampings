@@ -41,6 +41,28 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Piscina');
   });
 
+  test('New Provincial Hub (/cadiz/) and Category (/cadiz/campings-playa/) load with ItemList Schema', async ({ page }) => {
+    const respCadiz = await page.goto('cadiz/');
+    expect(respCadiz?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Cádiz');
+
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"ItemList"'))).toBe(true);
+
+    const respPlaya = await page.goto('cadiz/campings-playa/');
+    expect(respPlaya?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Playa');
+  });
+
+  test('llms.txt endpoint is served correctly for AI crawlers', async ({ page }) => {
+    const response = await page.goto('llms.txt');
+    expect(response?.status()).toBe(200);
+    const content = await response?.text();
+    expect(content).toContain('MejoresCampings.es');
+    expect(content).toContain('/cadiz/');
+    expect(content).toContain('/malaga/');
+  });
+
   test('Camping Product detail page renders atomic components, CTA, weather, OG tags, FAQs and Environment Block', async ({ page, isMobile }) => {
     const resp1 = await page.goto('camping/el-sur/');
     expect(resp1?.status()).toBe(200);

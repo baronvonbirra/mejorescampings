@@ -3,23 +3,40 @@ import Layout from '../../../layouts/Layout.astro';
 import CampingCard from '../../../components/CampingCard.astro';
 import AffiliateBanner from '../../../components/AffiliateBanner.astro';
 import AffiliateCard from '../../../components/AffiliateCard.astro';
-import { getCampings, getFeatures } from '../../../lib/db';
+import { getCampings, getFeatures, PROVINCES } from '../../../lib/db';
 
 export async function getStaticPaths() {
-  return [
-    { params: { region: 'andalucia', province: 'malaga' } }
-  ];
+  return PROVINCES.map((p) => ({
+    params: { region: 'andalucia', province: p.slug }
+  }));
 }
 
 const { region, province } = Astro.params;
-const campings = await getCampings();
+const allCampings = await getCampings();
+const campings = allCampings.filter(
+  (c) => (c.province_slug || 'malaga').toLowerCase() === (province || 'malaga').toLowerCase()
+);
 const features = await getFeatures();
 
 const formattedProvince = province ? province.charAt(0).toUpperCase() + province.slice(1) : 'Málaga';
 const formattedRegion = region ? region.charAt(0).toUpperCase() + region.slice(1) : 'Andalucía';
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `Los mejores campings en ${formattedProvince}`,
+  "numberOfItems": campings.length,
+  "itemListElement": campings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
 ---
 
 <Layout title={`Mejores Campings en ${formattedProvince} (${formattedRegion})`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
   <!-- Breadcrumb -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
     <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>

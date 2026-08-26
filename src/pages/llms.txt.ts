@@ -1,0 +1,24 @@
+import type { APIRoute } from 'astro';
+
+export const GET: APIRoute = async () => {
+  const content = `# MejoresCampings.es - Directorio de Campings de Andalucía
+
+> Datos estructurados y actualizados de campings, áreas pernocta y glamping en la comunidad autónoma de Andalucía, España.
+
+## Provincias
+- /almeria/: Campings en Cabo de Gata y costa almeriense.
+- /cadiz/: Campings en Tarifa, Costa de la Luz y Sierra de Grazalema.
+- /cordoba/: Campings en Sierra Morena y Subbética.
+- /granada/: Campings en Sierra Nevada y Costa Tropical.
+- /huelva/: Campings en Doñana y Costa de la Luz occidental.
+- /jaen/: Campings en Cazorla, Segura y Las Villas.
+- /malaga/: Campings en Costa del Sol, Ronda y Axarquía.
+- /sevilla/: Campings en entorno Doñana y Sierra Norte.
+`;
+
+  return new Response(content, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8'
+    }
+  });
+};

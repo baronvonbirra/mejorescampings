@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CampingCard from '../../components/CampingCard.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import AffiliateCard from '../../components/AffiliateCard.astro';
+import { getCampings, getFeatures, PROVINCES } from '../../lib/db';
+
+export async function getStaticPaths() {
+  return PROVINCES.map((p) => ({
+    params: { provincia: p.slug },
+    props: { provinceInfo: p }
+  }));
+}
+
+const { provincia } = Astro.params;
+const { provinceInfo } = Astro.props;
+
+const allCampings = await getCampings();
+const features = await getFeatures();
+
+const campings = allCampings.filter(
+  (c) => (c.province_slug || 'malaga').toLowerCase() === provincia.toLowerCase()
+);
+
+const provName = provinceInfo ? provinceInfo.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
+
+// Schema.org ItemList JSON-LD for AI & Search GEO
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `Los mejores campings en ${provName}`,
+  "numberOfItems": campings.length,
+  "itemListElement": campings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
+---
+
+<Layout title={`Los Mejores Campings en ${provName} (Andalucía) | Guía 2026`} description={`Descubre los mejores campings y glampings en ${provName}. Fotos, precios, alojamientos con piscina, admiten mascotas y reserva directa.`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <span class="text-slate-400">Andalucía</span>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">{provName}</span>
+  </nav>
+
+  <div class="mb-8">
+    <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
+      Hub Provincial de Andalucía
+    </span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+      Campings y Glampings en {provName}
+    </h1>
+    <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
+      {provinceInfo ? provinceInfo.description : `Selección completa de campings verificados en ${provName}.`} Consulta parcelas, cabañas de madera, piscinas, normativa de perros y enlaces directos de reserva.
+    </p>
+  </div>
+
+  <!-- Category & Feature Quick Filter Bar -->
+  <div class="mb-8 flex flex-wrap gap-2 pb-2 border-b border-slate-200">
+    <a href={`${import.meta.env.BASE_URL}${provincia}/`} class="px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold shadow-xs">
+      Todos ({campings.length})
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-playa/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition">
+      🏖️ Playa
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-montana/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition">
+      🏔️ Montaña
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-mascotas/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition">
+      🐾 Con Mascotas
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-bungalows/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition">
+      ⛺ Bungalows & Glamping
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-piscina/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-medium transition">
+      🏊 Piscina
+    </a>
+  </div>
+
+  <!-- Camping Results Grid -->
+  {campings.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {campings.map((camping) => (
+        <CampingCard camping={camping} />
+      ))}
+    </div>
+  ) : (
+    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+      <p class="text-slate-500">No hay campings registrados para {provName} en este momento.</p>
+      <a href={import.meta.env.BASE_URL} class="inline-block mt-4 text-sm font-bold text-emerald-600 hover:underline">
+        Ver campings en otras provincias de Andalucía
+      </a>
+    </div>
+  )}
+
+  <!-- Mobility Banner (BikesBooking) -->
+  <div class="my-10">
+    <AffiliateBanner
+      type="mobility"
+      url="https://bikesbooking.tpx.lv/HuVioOgE"
+      title={`Alquiler de Bicis y Scooters en la Provincia de ${provName}`}
+      description={`Recorre los senderos, vistas marítimas y cascos históricos de ${provName} en bicicleta o scooter con total libertad.`}
+      buttonText="Reservar Movilidad"
+      locationName={provName}
+    />
+  </div>
+
+  <!-- Featured Activities Banner (Klook) -->
+  <div class="mt-12 pt-8 border-t border-slate-200 space-y-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider block">Turismo y Aventura</span>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Qué hacer y Excursiones en {provName}</h2>
+      </div>
+      <a href="https://klook.tpx.lv/q5GFspFV" target="_blank" rel="nofollow sponsored" class="text-xs font-bold text-rose-600 hover:underline">
+        Ver en Klook &rarr;
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <AffiliateCard
+        type="activity"
+        title={`Ruta Guiada y Naturaleza en ${provName}`}
+        badge="Recomendado"
+        location={provName}
+        price="Desde €20"
+        imageUrl="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+      <AffiliateCard
+        type="activity"
+        title={`Paseos en Barco y Mar en ${provName}`}
+        badge="Costa & Sol"
+        location={provName}
+        price="Desde €15"
+        imageUrl="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+      <AffiliateCard
+        type="activity"
+        title={`Visitas Culturales y Gastronomía en ${provName}`}
+        badge="Patrimonio"
+        location={provName}
+        price="Desde €25"
+        imageUrl="https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+    </div>
+  </div>
+</Layout>
