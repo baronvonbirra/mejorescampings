@@ -1,0 +1,256 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CampingCard from '../../components/CampingCard.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import AffiliateCard from '../../components/AffiliateCard.astro';
+import { getCampings, getFeatures, getLocations, PROVINCES } from '../../lib/db';
+
+export async function getStaticPaths() {
+  const features = await getFeatures();
+  const locations = await getLocations();
+  const allCampings = await getCampings();
+
+  const paths: Array<{
+    params: { provincia: string; slug: string };
+    props: { type: 'category' | 'municipality'; data: any };
+  }> = [];
+
+  // Standard category slugs
+  const categorySlugs = [
+    { name: 'Cerca de la Playa', slug: 'campings-playa', key: 'playa' },
+    { name: 'En la Montaña', slug: 'campings-montana', key: 'montana' },
+    { name: 'Mascotas Permitidas', slug: 'campings-con-mascotas', key: 'mascotas' },
+    { name: 'Bungalows y Cabañas', slug: 'campings-bungalows', key: 'glamping' },
+    { name: 'Con Piscina', slug: 'campings-con-piscina', key: 'piscina' },
+    { name: 'Animación Infantil', slug: 'campings-con-animacion-infantil', key: 'animacion_infantil' },
+    { name: 'Entorno Familiar', slug: 'campings-familiares', key: 'entorno_familiar' },
+    { name: 'Glamping de Lujo', slug: 'glamping', key: 'glamping' },
+    // Backward compatibility aliases
+    { name: 'Cerca de la Playa', slug: 'campings-cerca-de-la-playa', key: 'playa' },
+    { name: 'Mascotas Permitidas', slug: 'campings-que-admiten-perros', key: 'mascotas' }
+  ];
+
+  for (const prov of PROVINCES) {
+    // 1. Category paths per province
+    for (const cat of categorySlugs) {
+      paths.push({
+        params: { provincia: prov.slug, slug: cat.slug },
+        props: { type: 'category', data: cat }
+      });
+    }
+
+    // 2. Municipality paths per province
+    const provLocations = locations.filter((loc) => loc.province.toLowerCase() === prov.slug.toLowerCase());
+    const provCampings = allCampings.filter((c) => (c.province_slug || 'malaga').toLowerCase() === prov.slug.toLowerCase());
+
+    const muniSlugsSet = new Set<string>();
+    provLocations.forEach((loc) => {
+      const muniSlug = loc.slug.split('/').pop() || loc.slug;
+      muniSlugsSet.add(muniSlug);
+    });
+    provCampings.forEach((c) => {
+      if (c.municipality_slug) {
+        const cleanMuni = c.municipality_slug.split('/').pop() || c.municipality_slug;
+        muniSlugsSet.add(cleanMuni);
+      }
+    });
+
+    for (const muniSlug of muniSlugsSet) {
+      // Don't duplicate category slugs
+      if (!categorySlugs.some((cat) => cat.slug === muniSlug)) {
+        paths.push({
+          params: { provincia: prov.slug, slug: muniSlug },
+          props: { type: 'municipality', data: { municipality_slug: muniSlug } }
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { provincia, slug } = Astro.params;
+const { type, data } = Astro.props;
+
+const allCampings = await getCampings();
+const provInfo = PROVINCES.find((p) => p.slug === provincia);
+const formattedProvince = provInfo ? provInfo.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
+
+let campings: any[] = [];
+let pageTitle = '';
+let pageHeading = '';
+let pageDescription = '';
+let currentLabel = '';
+
+const provCampings = allCampings.filter(
+  (c) => (c.province_slug || 'malaga').toLowerCase() === provincia.toLowerCase()
+);
+
+if (type === 'category') {
+  const cat = data;
+  currentLabel = cat.name;
+  const key = cat.key;
+
+  campings = provCampings.filter((c) => {
+    if (key === 'playa') return c.amenities?.playa || ['almeria', 'cadiz', 'huelva', 'malaga', 'granada'].includes(provincia);
+    if (key === 'montana') return c.amenities?.montana || ['jaen', 'granada', 'cordoba', 'sevilla', 'malaga'].includes(provincia);
+    if (key === 'mascotas') return c.amenities?.mascotas;
+    if (key === 'glamping') return c.amenities?.glamping || c.amenities?.bungalow;
+    return c.amenities && c.amenities[key];
+  });
+
+  pageTitle = `Campings ${cat.name} en ${formattedProvince} | MejoresCampings`;
+  pageHeading = `Campings ${cat.name} en ${formattedProvince}`;
+  pageDescription = `Catálogo completo de campings y glampings en ${formattedProvince} con servicio de ${cat.name.toLowerCase()}. Consulta disponibilidad y fotos.`;
+} else {
+  const muniSlug = data.municipality_slug;
+  currentLabel = muniSlug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+
+  campings = provCampings.filter((c) => {
+    const cMuni = (c.municipality_slug || '').split('/').pop() || '';
+    if (cMuni.toLowerCase() === muniSlug.toLowerCase()) return true;
+    const addr = (c.address || '').toLowerCase();
+    const name = (c.name || '').toLowerCase();
+    const muniLower = currentLabel.toLowerCase();
+    return addr.includes(muniLower) || name.includes(muniLower);
+  });
+
+  pageTitle = `Campings en ${currentLabel} (${formattedProvince}) | MejoresCampings`;
+  pageHeading = `Campings y Glampings en ${currentLabel}`;
+  pageDescription = `Encuentra y compara los mejores campings ubicados en ${currentLabel} (${formattedProvince}). Información completa, instalaciones y reserva.`;
+}
+
+// Schema.org ItemList JSON-LD
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${pageHeading}`,
+  "numberOfItems": campings.length,
+  "itemListElement": campings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <span class="text-slate-400">Andalucía</span>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/`} class="hover:text-slate-800 capitalize">{formattedProvince}</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">{currentLabel}</span>
+  </nav>
+
+  <div class="mb-8">
+    <div class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
+      Guía Especializada 2026
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+      {pageHeading}
+    </h1>
+    <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
+      {pageDescription}
+    </p>
+  </div>
+
+  <!-- Feature Quick Filter Bar -->
+  <div class="mb-8 flex flex-wrap gap-2 pb-2 border-b border-slate-200">
+    <a href={`${import.meta.env.BASE_URL}${provincia}/`} class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition">
+      Todos
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-playa/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-playa' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🏖️ Playa
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-montana/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-montana' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🏔️ Montaña
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-mascotas/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-mascotas' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🐾 Mascotas
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-bungalows/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-bungalows' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      ⛺ Bungalows
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-piscina/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-piscina' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🏊 Piscina
+    </a>
+  </div>
+
+  <!-- Camping Results Grid or Empty state -->
+  {campings.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {campings.map((camping) => (
+        <CampingCard camping={camping} />
+      ))}
+    </div>
+  ) : (
+    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+      <p class="text-slate-500">No hay campings registrados para "{currentLabel}" en {formattedProvince} en esta sección todavía.</p>
+      <a href={`${import.meta.env.BASE_URL}${provincia}/`} class="inline-block mt-4 text-sm font-bold text-emerald-600 hover:underline">
+        Ver todos los campings de {formattedProvince} &rarr;
+      </a>
+    </div>
+  )}
+
+  <!-- Mobility Banner (BikesBooking) -->
+  <div class="mt-10">
+    <AffiliateBanner
+      type="mobility"
+      url="https://bikesbooking.tpx.lv/HuVioOgE"
+      title={`Móvete por ${currentLabel} y ${formattedProvince} en Bicicleta o Scooter`}
+      description={`Reserva alquiler de bicicletas o scooter en ${currentLabel} (${formattedProvince}) para moverte libremente entre campings y playas.`}
+      buttonText="Alquilar Bici o Scooter"
+      locationName={currentLabel}
+    />
+  </div>
+
+  <!-- Featured Activities Banner (Klook) -->
+  <div class="mt-8 pt-6 border-t border-slate-200 space-y-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider block">Actividades Recomendadas</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Qué hacer cerca de {currentLabel}</h2>
+      </div>
+      <a href="https://klook.tpx.lv/q5GFspFV" target="_blank" rel="nofollow sponsored" class="text-xs font-bold text-rose-600 hover:underline">
+        Ver catálogo Klook &rarr;
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <AffiliateCard
+        type="activity"
+        title={`Excursiones y Experiencias en ${currentLabel}`}
+        badge="Recomendado"
+        location={currentLabel}
+        price="Desde €18"
+        imageUrl="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+      <AffiliateCard
+        type="activity"
+        title={`Rutas de Naturaleza y Aventura en ${formattedProvince}`}
+        badge="Popular"
+        location={formattedProvince}
+        price="Desde €25"
+        imageUrl="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+      <AffiliateCard
+        type="activity"
+        title={`Actividades Acuáticas y de Ocio en ${formattedProvince}`}
+        badge="Playa & Sol"
+        location={formattedProvince}
+        price="Desde €15"
+        imageUrl="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80"
+        url="https://klook.tpx.lv/q5GFspFV"
+      />
+    </div>
+  </div>
+</Layout>

@@ -22,7 +22,10 @@ CREATE TABLE IF NOT EXISTS campings (
     address TEXT,
     lat DOUBLE PRECISION NOT NULL,
     lng DOUBLE PRECISION NOT NULL,
-    municipality_slug TEXT,
+    province_slug TEXT NOT NULL DEFAULT 'malaga',
+    comarca TEXT DEFAULT NULL,
+    comarca_slug TEXT DEFAULT NULL,
+    municipality_slug TEXT DEFAULT NULL,
     image_url TEXT,
     image_urls TEXT[] DEFAULT '{}',
     affiliate_url TEXT,
@@ -60,11 +63,21 @@ CREATE TABLE IF NOT EXISTS camping_features (
     PRIMARY KEY (camping_id, feature_id)
 );
 
+-- Normalización de Provincias y Comarcas
+ALTER TABLE campings
+ADD COLUMN IF NOT EXISTS province_slug TEXT NOT NULL DEFAULT 'malaga',
+ADD COLUMN IF NOT EXISTS comarca TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS comarca_slug TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS municipality_slug TEXT DEFAULT NULL;
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_campings_slug ON campings(slug);
 CREATE INDEX IF NOT EXISTS idx_campings_municipality ON campings(municipality_slug);
 CREATE INDEX IF NOT EXISTS idx_locations_slug ON locations(slug);
 CREATE INDEX IF NOT EXISTS idx_features_slug ON features(slug);
+CREATE INDEX IF NOT EXISTS idx_campings_province ON campings(province_slug);
+CREATE INDEX IF NOT EXISTS idx_campings_muni ON campings(province_slug, municipality_slug);
+CREATE INDEX IF NOT EXISTS idx_campings_geo ON campings USING GIST (ll_to_earth(lat, lng));
 
 -- Seed Data for MVP (Málaga)
 INSERT INTO locations (region, province, municipality, slug) VALUES

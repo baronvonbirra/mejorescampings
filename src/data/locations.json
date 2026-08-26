@@ -1,44 +1,104 @@
 [
   {
     "region": "andalucia",
+    "province": "almeria",
+    "municipality": "Níjar",
+    "slug": "almeria/nijar"
+  },
+  {
+    "region": "andalucia",
+    "province": "almeria",
+    "municipality": "Almería",
+    "slug": "almeria/almeria"
+  },
+  {
+    "region": "andalucia",
+    "province": "cadiz",
+    "municipality": "Tarifa",
+    "slug": "cadiz/tarifa"
+  },
+  {
+    "region": "andalucia",
+    "province": "cadiz",
+    "municipality": "Barbate",
+    "slug": "cadiz/barbate"
+  },
+  {
+    "region": "andalucia",
+    "province": "cordoba",
+    "municipality": "Villafranca de Córdoba",
+    "slug": "cordoba/villafranca-de-cordoba"
+  },
+  {
+    "region": "andalucia",
+    "province": "granada",
+    "municipality": "Granada",
+    "slug": "granada/granada"
+  },
+  {
+    "region": "andalucia",
+    "province": "granada",
+    "municipality": "Motril",
+    "slug": "granada/motril"
+  },
+  {
+    "region": "andalucia",
+    "province": "huelva",
+    "municipality": "Mazagón",
+    "slug": "huelva/mazagon"
+  },
+  {
+    "region": "andalucia",
+    "province": "jaen",
+    "municipality": "Cazorla",
+    "slug": "jaen/cazorla"
+  },
+  {
+    "region": "andalucia",
     "province": "malaga",
     "municipality": "Ronda",
-    "slug": "andalucia/malaga/ronda"
+    "slug": "malaga/ronda"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Marbella",
-    "slug": "andalucia/malaga/marbella"
+    "slug": "malaga/marbella"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Nerja",
-    "slug": "andalucia/malaga/nerja"
+    "slug": "malaga/nerja"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Torremolinos",
-    "slug": "andalucia/malaga/torremolinos"
+    "slug": "malaga/torremolinos"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Almayate",
-    "slug": "andalucia/malaga/almayate"
+    "slug": "malaga/almayate"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Antequera",
-    "slug": "andalucia/malaga/antequera"
+    "slug": "malaga/antequera"
   },
   {
     "region": "andalucia",
     "province": "malaga",
     "municipality": "Málaga",
-    "slug": "andalucia/malaga/malaga"
+    "slug": "malaga/malaga"
+  },
+  {
+    "region": "andalucia",
+    "province": "sevilla",
+    "municipality": "Aznalcázar",
+    "slug": "sevilla/aznalcazar"
   }
 ]

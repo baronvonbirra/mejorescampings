@@ -3,26 +3,31 @@ import Layout from '../../../layouts/Layout.astro';
 import CampingCard from '../../../components/CampingCard.astro';
 import AffiliateBanner from '../../../components/AffiliateBanner.astro';
 import AffiliateCard from '../../../components/AffiliateCard.astro';
-import { getCampings, getFeatures, getLocations } from '../../../lib/db';
+import { getCampings, getFeatures, getLocations, PROVINCES } from '../../../lib/db';
 
 export async function getStaticPaths() {
   const features = await getFeatures();
   const locations = await getLocations();
 
-  const featurePaths = features.map((feature) => ({
-    params: {
-      region: 'andalucia',
-      province: 'malaga',
-      feature: feature.slug
-    },
-    props: { type: 'feature', data: feature }
-  }));
+  const featurePaths: any[] = [];
+  for (const prov of PROVINCES) {
+    for (const feature of features) {
+      featurePaths.push({
+        params: {
+          region: 'andalucia',
+          province: prov.slug,
+          feature: feature.slug
+        },
+        props: { type: 'feature', data: feature }
+      });
+    }
+  }
 
   const locationPaths = locations.map((loc) => {
     const muniSlug = loc.slug.split('/').pop() || loc.slug;
     return {
       params: {
-        region: loc.region,
+        region: loc.region || 'andalucia',
         province: loc.province,
         feature: muniSlug
       },
@@ -51,7 +56,10 @@ if (type === 'feature') {
   const feature = data;
   currentLabel = feature.feature_name;
   const featureKey = feature.key || featureSlug.replace('campings-con-', '').replace('campings-que-admiten-', '').replace('campings-', '');
-  campings = allCampings.filter((c) => c.amenities && c.amenities[featureKey]);
+  campings = allCampings.filter((c) => {
+    const sameProv = (c.province_slug || 'malaga').toLowerCase() === (province || 'malaga').toLowerCase();
+    return sameProv && c.amenities && c.amenities[featureKey];
+  });
   pageTitle = `${feature.feature_name} en ${formattedProvince} | MejoresCampings`;
   pageHeading = `Campings ${feature.feature_name} en ${formattedProvince}`;
   pageDescription = `Mostrando alojamientos de acampada en ${formattedProvince} que disponen de ${feature.feature_name.toLowerCase()}.`;
@@ -71,9 +79,23 @@ if (type === 'feature') {
   pageHeading = `Campings y Glampings en ${loc.municipality}`;
   pageDescription = `Descubre los mejores campings y glampings ubicados en ${loc.municipality} (${formattedProvince}). Información, instalaciones y reserva directa.`;
 }
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": pageHeading,
+  "numberOfItems": campings.length,
+  "itemListElement": campings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
 ---
 
 <Layout title={pageTitle}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
   <!-- Breadcrumbs -->
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
     <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>

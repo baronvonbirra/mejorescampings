@@ -25,5 +25,7 @@ Allow: /
 User-agent: Anthropic-ai
 Allow: /
 
-# Sitemap Index
+# Sitemap Index & AI LLM context
 Sitemap: https://mejorescampings.es/sitemap.xml
+# LLMs context summary
+# https://mejorescampings.es/llms.txt

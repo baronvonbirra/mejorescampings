@@ -879,6 +879,11 @@ def sync_to_supabase(campings: List[Dict[str, Any]]):
         logging.error(f"Failed to communicate with Supabase: {e}")
 
 def main():
+    logging.info("Delegating to Andalusian Massive Scraper V3...")
+    import scrape_andalucia
+    scrape_andalucia.main()
+
+def main_v2_legacy():
     logging.info("Starting MejoresCampings Pipeline V2 Dynamic Scraping & Cleaning...")
 
     # 1. Primary Source: Dynamically Scrape all Málaga Province Campings via Overpass OSM API

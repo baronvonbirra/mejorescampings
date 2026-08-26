@@ -8,7 +8,7 @@ import StickyCtaMobile from '../../components/StickyCtaMobile.astro';
 import CampingCard from '../../components/CampingCard.astro';
 import AffiliateCard from '../../components/AffiliateCard.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
-import { getCampings } from '../../lib/db';
+import { getCampings, PROVINCES } from '../../lib/db';
 
 export async function getStaticPaths() {
   const campings = await getCampings();
@@ -23,8 +23,28 @@ const { camping } = Astro.props;
 
 const allCampings = await getCampings();
 
-const municipalitySlug = camping.municipality_slug.split('/').pop() || 'malaga';
-const municipalityName = municipalitySlug.charAt(0).toUpperCase() + municipalitySlug.slice(1);
+const provinceSlug = (camping.province_slug || 'malaga').toLowerCase();
+const provInfo = PROVINCES.find((p) => p.slug === provinceSlug);
+const provinceName = provInfo ? provInfo.name : provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1);
+
+const municipalitySlug = (camping.municipality_slug || '').split('/').pop() || provinceSlug;
+const municipalityName = municipalitySlug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+
+// Neighboring province suggestion logic
+const neighborProvinces: Record<string, string[]> = {
+  almeria: ['granada'],
+  cadiz: ['malaga', 'sevilla', 'huelva'],
+  cordoba: ['sevilla', 'jaen', 'malaga', 'granada'],
+  granada: ['malaga', 'almeria', 'jaen', 'cordoba'],
+  huelva: ['cadiz', 'sevilla'],
+  jaen: ['granada', 'cordoba'],
+  malaga: ['cadiz', 'granada', 'sevilla', 'cordoba'],
+  sevilla: ['cadiz', 'huelva', 'cordoba', 'malaga']
+};
+const neighborSlug = (neighborProvinces[provinceSlug] || ['malaga'])[0];
+const neighborInfo = PROVINCES.find((p) => p.slug === neighborSlug);
+const neighborName = neighborInfo ? neighborInfo.name : neighborSlug.charAt(0).toUpperCase() + neighborSlug.slice(1);
+const neighborCampings = allCampings.filter((c) => (c.province_slug || 'malaga').toLowerCase() === neighborSlug).slice(0, 3);
 
 // Open-Meteo Real-time Weather Forecast (3-day build-time fetch)
 interface WeatherDay {
@@ -65,13 +85,20 @@ const weatherIcons: Record<number, string> = {
   0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 61: '🌧️', 80: '🌦️'
 };
 
-// Internal Linking Engine: Filter related campings by same municipality or feature
-const recommendedCampings = allCampings.filter((c) => c.slug !== camping.slug).slice(0, 3);
+// Internal Linking Engine: Filter related campings by same municipality, same province/category, and neighbor province
 const sameMunicipalityCampings = allCampings.filter(
-  (c) => c.slug !== camping.slug && c.municipality_slug === camping.municipality_slug
+  (c) => c.slug !== camping.slug && ((c.municipality_slug || '').split('/').pop() === municipalitySlug)
+).slice(0, 3);
+
+const sameProvinceCampings = allCampings.filter(
+  (c) => c.slug !== camping.slug && (c.province_slug || 'malaga').toLowerCase() === provinceSlug
 );
-const sameFeatureCampings = allCampings.filter(
-  (c) => c.slug !== camping.slug && camping.amenities?.piscina && c.amenities?.piscina
+
+const featuredAmenityKey = camping.amenities?.piscina ? 'piscina' : camping.amenities?.mascotas ? 'mascotas' : camping.amenities?.playa ? 'playa' : 'glamping';
+const featuredAmenityName = featuredAmenityKey === 'piscina' ? 'con piscina' : featuredAmenityKey === 'mascotas' ? 'que admiten mascotas' : featuredAmenityKey === 'playa' ? 'cerca de la playa' : 'con bungalows y glamping';
+
+const sameProvinceCategoryCampings = sameProvinceCampings.filter(
+  (c) => c.amenities && c.amenities[featuredAmenityKey]
 ).slice(0, 3);
 
 // Dynamic Meta Metadata & OG Image
@@ -123,7 +150,11 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
   <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
     <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
     <span>/</span>
-    <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="hover:text-slate-800 capitalize">Málaga</a>
+    <span class="text-slate-400">Andalucía</span>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}${provinceSlug}/`} class="hover:text-slate-800 capitalize">{provinceName}</a>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}${provinceSlug}/${municipalitySlug}/`} class="hover:text-slate-800">{municipalityName}</a>
     <span>/</span>
     <span class="text-slate-800 font-semibold">{camping.name}</span>
   </nav>
@@ -390,23 +421,63 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
           locationName="Málaga Capital"
         />
 
-        {sameFeatureCampings.length > 0 && (
+        <!-- Bloque de Interconexión Jerárquica de Enlazado Interno -->
+        <div class="space-y-6 pt-4 border-t border-slate-200">
+          <!-- 1. Mismo Municipio -->
           <div>
-            <h3 class="text-base font-bold text-slate-900 mb-3">Otros campings con piscina recomendados</h3>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base font-extrabold text-slate-900">Campings en {municipalityName}</h3>
+              <a href={`${import.meta.env.BASE_URL}${provinceSlug}/${municipalitySlug}/`} class="text-xs font-bold text-emerald-600 hover:underline">
+                Ver hub de {municipalityName} &rarr;
+              </a>
+            </div>
+            {sameMunicipalityCampings.length > 0 ? (
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {sameMunicipalityCampings.map((rec) => (
+                  <CampingCard camping={rec} />
+                ))}
+              </div>
+            ) : (
+              <p class="text-xs text-slate-500 italic bg-slate-50 p-3 rounded-xl border border-slate-200">
+                Este es el único camping registrado en {municipalityName}. Descubre otros alojamientos en la provincia de {provinceName}.
+              </p>
+            )}
+          </div>
+
+          <!-- 2. Misma Provincia / Misma Categoría -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base font-extrabold text-slate-900">Otros campings {featuredAmenityName} en la provincia de {provinceName}</h3>
+              <a href={`${import.meta.env.BASE_URL}${provinceSlug}/`} class="text-xs font-bold text-emerald-600 hover:underline">
+                Ver todos de {provinceName} &rarr;
+              </a>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {sameFeatureCampings.map((rec) => (
+              {(sameProvinceCategoryCampings.length > 0 ? sameProvinceCategoryCampings : sameProvinceCampings.slice(0, 2)).map((rec) => (
                 <CampingCard camping={rec} />
               ))}
             </div>
           </div>
-        )}
 
-        <div>
-          <h2 class="text-xl font-bold text-slate-900 mb-4">Campings Destacados en Málaga</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {recommendedCampings.map((rec) => (
-              <CampingCard camping={rec} />
-            ))}
+          <!-- 3. Provincia Vecina -->
+          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/80 rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <span class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider block">Explora la región</span>
+                <h3 class="text-sm font-extrabold text-slate-900">Ver también campings cerca en {neighborName}</h3>
+              </div>
+              <a href={`${import.meta.env.BASE_URL}${neighborSlug}/`} class="text-xs font-bold text-emerald-700 bg-white border border-emerald-300 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition shadow-2xs">
+                Ver {neighborName} &rarr;
+              </a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {neighborCampings.map((nc) => (
+                <a href={`${import.meta.env.BASE_URL}camping/${nc.slug}/`} class="p-3 bg-white border border-emerald-200 rounded-xl hover:border-emerald-500 transition block group shadow-2xs">
+                  <span class="font-bold text-xs text-slate-900 block group-hover:text-emerald-600 transition truncate">{nc.name}</span>
+                  <span class="text-[10px] text-slate-500 block truncate">{nc.address}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

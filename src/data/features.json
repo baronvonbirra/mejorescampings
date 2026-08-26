@@ -1,15 +1,33 @@
 [
   {
-    "feature_name": "Piscina",
-    "slug": "campings-con-piscina",
-    "key": "piscina",
-    "icon": "swimming-pool"
+    "feature_name": "Cerca de la Playa",
+    "slug": "campings-playa",
+    "key": "playa",
+    "icon": "sun"
+  },
+  {
+    "feature_name": "En la Montaña",
+    "slug": "campings-montana",
+    "key": "montana",
+    "icon": "mountain"
   },
   {
     "feature_name": "Mascotas Permitidas",
-    "slug": "campings-que-admiten-perros",
+    "slug": "campings-con-mascotas",
     "key": "mascotas",
     "icon": "dog"
+  },
+  {
+    "feature_name": "Bungalows y Cabañas",
+    "slug": "campings-bungalows",
+    "key": "glamping",
+    "icon": "tent"
+  },
+  {
+    "feature_name": "Con Piscina",
+    "slug": "campings-con-piscina",
+    "key": "piscina",
+    "icon": "swimming-pool"
   },
   {
     "feature_name": "Animación Infantil",
@@ -24,15 +42,21 @@
     "icon": "users"
   },
   {
-    "feature_name": "Glamping",
+    "feature_name": "Glamping de Lujo",
     "slug": "glamping",
     "key": "glamping",
     "icon": "tent"
   },
   {
-    "feature_name": "Playa",
+    "feature_name": "Cerca de la Playa",
     "slug": "campings-cerca-de-la-playa",
     "key": "playa",
     "icon": "sun"
+  },
+  {
+    "feature_name": "Mascotas Permitidas",
+    "slug": "campings-que-admiten-perros",
+    "key": "mascotas",
+    "icon": "dog"
   }
 ]

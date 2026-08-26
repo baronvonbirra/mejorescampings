@@ -1,44 +1,54 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CampingCard from '../components/CampingCard.astro';
-import { getCampings, getFeatures } from '../lib/db';
+import { getCampings, getFeatures, PROVINCES } from '../lib/db';
 
-const campings = await getCampings();
+const allCampings = await getCampings();
 const features = await getFeatures();
+
+// Curated mix of top/promoted campings across Andalusian provinces
+const elSurCamping = allCampings.find((c) => c.slug === 'el-sur' || c.slug === 'camping-el-sur');
+const otherFeatured = allCampings.filter((c) => c.slug !== 'el-sur' && c.slug !== 'camping-el-sur' && (c.rating || 0) >= 4.2).slice(0, 5);
+const featuredCampings = elSurCamping ? [elSurCamping, ...otherFeatured] : allCampings.slice(0, 6);
 
 const categories = [
   { name: 'Glamping de Lujo', slug: 'glamping', icon: '⛺', desc: 'Tiendas bell y domos con el máximo confort.' },
-  { name: 'Mascotas Permitidas', slug: 'campings-que-admiten-perros', icon: '🐾', desc: 'Campings pet-friendly para viajar con tu perro.' },
-  { name: 'Cerca de la Playa', slug: 'campings-cerca-de-la-playa', icon: '🏖️', desc: 'A poca distancia del mar y calas vírgenes.' },
+  { name: 'Mascotas Permitidas', slug: 'campings-con-mascotas', icon: '🐾', desc: 'Campings pet-friendly para viajar con tu perro.' },
+  { name: 'Cerca de la Playa', slug: 'campings-playa', icon: '🏖️', desc: 'A poca distancia del mar y calas vírgenes.' },
   { name: 'Familiares con Piscina', slug: 'campings-con-piscina', icon: '🏊', desc: 'Con animación infantil y parques acuáticos.' }
 ];
+
+const provinceCounts = PROVINCES.map((p) => {
+  const count = allCampings.filter((c) => (c.province_slug || 'malaga').toLowerCase() === p.slug).length;
+  return { ...p, count };
+});
 ---
 
-<Layout title="MejoresCampings | Encuentra tu camping ideal en Andalucía">
-  <!-- Hero Section (Zero ads above the fold) -->
+<Layout title="MejoresCampings | Guía de Campings y Glampings en Andalucía (8 Provincias)">
+  <!-- Hero Section -->
   <section class="bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
     <div class="relative z-10 max-w-3xl">
       <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-emerald-200 mb-4 uppercase">
-        Guía Especializada 2026
+        Guía Andalucía 2026 • 8 Provincias
       </span>
       <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
         Encuentra tu camping ideal en Andalucía
       </h1>
       <p class="mt-4 text-emerald-100 text-sm sm:text-base leading-relaxed">
-        Descubre los mejores campings y glampings de Málaga y Andalucía. Instalaciones verificadas con piscinas, animación infantil y entorno familiar.
+        Descubre más de 200 campings y glampings verificados en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.
       </p>
 
       <!-- Quick Search & Filter Bar -->
       <div class="mt-6 p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row gap-2">
         <a
-          href={`${import.meta.env.BASE_URL}andalucia/malaga/`}
+          href={`${import.meta.env.BASE_URL}cadiz/`}
           class="flex-1 px-4 py-3 bg-white text-slate-900 rounded-xl font-bold text-sm flex items-center justify-between hover:bg-emerald-50 transition"
         >
-          <span>Provincia: Málaga</span>
+          <span>Selecciona Provincia (ej. Cádiz, Málaga...)</span>
           <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
         <a
-          href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-con-piscina/`}
+          href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`}
           class="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition text-center shadow-md shrink-0"
         >
           Buscar Campings
@@ -47,7 +57,39 @@ const categories = [
     </div>
   </section>
 
-  <!-- Filtros por Estilo de Viaje (Intención de Búsqueda) -->
+  <!-- Explora por Provincia de Andalucía (8 Provincias Grid) -->
+  <section class="mb-12">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Explora los Campings de Andalucía por Provincia</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Haz clic en tu provincia de destino para ver alojamientos, mapa y filtros</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {provinceCounts.map((p) => (
+        <a
+          href={`${import.meta.env.BASE_URL}${p.slug}/`}
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group relative overflow-hidden"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition">{p.name}</h3>
+            <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              {p.count} campings
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed mb-3">{p.description}</p>
+          <div class="flex flex-wrap gap-1 text-[10px]">
+            {p.highlights.map((h) => (
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md font-medium">{h}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Filtros por Estilo de Viaje -->
   <section class="mb-12">
     <div class="flex items-center justify-between mb-4">
       <div>
@@ -64,7 +106,7 @@ const categories = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <a
-        href={`${import.meta.env.BASE_URL}andalucia/malaga/`}
+        href={`${import.meta.env.BASE_URL}malaga/`}
         class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
       >
         <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🚐</div>
@@ -73,7 +115,7 @@ const categories = [
       </a>
 
       <a
-        href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-familiares/`}
+        href={`${import.meta.env.BASE_URL}cadiz/campings-familiares/`}
         class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
       >
         <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">👨‍👩‍👧‍👦</div>
@@ -82,16 +124,16 @@ const categories = [
       </a>
 
       <a
-        href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-cerca-de-la-playa/`}
+        href={`${import.meta.env.BASE_URL}cadiz/campings-playa/`}
         class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
       >
         <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🏖️</div>
         <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Cerca de la Playa</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Alojamiento a pocos pasos de las playas de la Costa del Sol.</p>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Alojamiento a pocos pasos de Tarifa, Cabo de Gata y Costa del Sol.</p>
       </a>
 
       <a
-        href={`${import.meta.env.BASE_URL}andalucia/malaga/glamping/`}
+        href={`${import.meta.env.BASE_URL}huelva/glamping/`}
         class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
       >
         <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">⛺</div>
@@ -107,7 +149,7 @@ const categories = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {categories.map((cat) => (
         <a
-          href={`${import.meta.env.BASE_URL}andalucia/malaga/${cat.slug}/`}
+          href={`${import.meta.env.BASE_URL}cadiz/${cat.slug}/`}
           class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-500 transition group"
         >
           <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">{cat.icon}</div>
@@ -118,32 +160,20 @@ const categories = [
     </div>
   </section>
 
-  <!-- Quick Feature Filter Pills -->
-  <section class="mb-10">
-    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Filtrar por servicios clave</h2>
-    <div class="flex flex-wrap gap-2">
-      {features.map((feat) => (
-        <a
-          href={`${import.meta.env.BASE_URL}andalucia/malaga/${feat.slug}/`}
-          class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-medium hover:border-emerald-500 hover:text-emerald-600 shadow-xs transition"
-        >
-          {feat.feature_name}
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- Camping Grid -->
+  <!-- Curated Mix of Top Featured Campings -->
   <section class="mb-12">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-slate-900">Campings destacados en Málaga</h2>
-      <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
-        Ver todos ({campings.length}) &rarr;
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Selección de Campings Destacados en Andalucía</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Una muestra de los alojamientos mejor valorados en las 8 provincias</p>
+      </div>
+      <a href={`${import.meta.env.BASE_URL}malaga/`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+        Explorar por provincia &rarr;
       </a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {campings.map((camping) => (
+      {featuredCampings.map((camping) => (
         <CampingCard camping={camping} />
       ))}
     </div>
