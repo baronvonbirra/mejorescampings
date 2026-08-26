@@ -1,4 +1,4 @@
--- CampBase Supabase Database Schema
+-- MejoresCampings Supabase Database Schema
 
 -- Enable UUID extension if not enabled
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

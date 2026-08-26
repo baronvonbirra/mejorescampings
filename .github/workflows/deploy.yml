@@ -1,4 +1,4 @@
-name: Deploy CampBase SSG & Data Pipeline
+name: Deploy MejoresCampings SSG & Data Pipeline
 
 on:
   schedule:

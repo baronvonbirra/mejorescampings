@@ -7,7 +7,7 @@ interface Props {
   image?: string;
 }
 
-const { title, description = 'CampBase - Encuentra los mejores campings y glampings en Andalucía y España.', image } = Astro.props;
+const { title, description = 'MejoresCampings - Encuentra los mejores campings y glampings en Andalucía y España.', image } = Astro.props;
 const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80';
 ---
 
@@ -18,7 +18,7 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="twSOWF6MuHCrN5SBMKhYQZJ9FRm1Swt2VTxmpVl7KVc" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <title>{title} | CampBase.es</title>
+    <title>{title} | MejoresCampings.es</title>
     <meta name="description" content={description} />
 
     <!-- OpenGraph Social Preview Meta Tags -->
@@ -48,7 +48,7 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
           <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2L2 22h20L12 2zm0 4.2L18.6 19H5.4L12 6.2z"/>
           </svg>
-          CampBase<span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 ml-1">Málaga MVP</span>
+          MejoresCampings
         </a>
         <nav class="hidden sm:flex gap-6 text-sm font-medium text-slate-600">
           <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="hover:text-emerald-600 transition">Málaga</a>
@@ -68,7 +68,7 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
     <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <span class="font-bold text-lg text-white">CampBase.es</span>
+          <span class="font-bold text-lg text-white">MejoresCampings.es</span>
           <p class="mt-2 text-sm text-slate-400">Guía especializada en alojamiento de naturaleza, campings y glampings en Andalucía.</p>
         </div>
         <div>
@@ -81,11 +81,11 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
         </div>
         <div>
           <h4 class="font-semibold text-white text-sm uppercase tracking-wider">Aviso Legal & Afiliación</h4>
-          <p class="mt-2 text-xs text-slate-500">CampBase participa en programas de afiliación. Al reservar a través de nuestros enlaces, podemos recibir una comisión sin coste adicional para ti.</p>
+          <p class="mt-2 text-xs text-slate-500">MejoresCampings participa en programas de afiliación. Al reservar a través de nuestros enlaces, podemos recibir una comisión sin coste adicional para ti.</p>
         </div>
       </div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-slate-800 text-xs text-center text-slate-500">
-        &copy; {new Date().getFullYear()} CampBase.es - Todos los derechos reservados.
+        &copy; {new Date().getFullYear()} MejoresCampings.es - Todos los derechos reservados.
       </div>
     </footer>
   </body>

@@ -52,7 +52,7 @@ if (type === 'feature') {
   currentLabel = feature.feature_name;
   const featureKey = feature.key || featureSlug.replace('campings-con-', '').replace('campings-que-admiten-', '').replace('campings-', '');
   campings = allCampings.filter((c) => c.amenities && c.amenities[featureKey]);
-  pageTitle = `${feature.feature_name} en ${formattedProvince} | CampBase`;
+  pageTitle = `${feature.feature_name} en ${formattedProvince} | MejoresCampings`;
   pageHeading = `Campings ${feature.feature_name} en ${formattedProvince}`;
   pageDescription = `Mostrando alojamientos de acampada en ${formattedProvince} que disponen de ${feature.feature_name.toLowerCase()}.`;
 } else {
@@ -67,7 +67,7 @@ if (type === 'feature') {
     const name = (c.name || '').toLowerCase();
     return addr.includes(muniLower) || name.includes(muniLower);
   });
-  pageTitle = `Campings en ${loc.municipality} (${formattedProvince}) | CampBase`;
+  pageTitle = `Campings en ${loc.municipality} (${formattedProvince}) | MejoresCampings`;
   pageHeading = `Campings y Glampings en ${loc.municipality}`;
   pageDescription = `Descubre los mejores campings y glampings ubicados en ${loc.municipality} (${formattedProvince}). Información, instalaciones y reserva directa.`;
 }
@@ -85,7 +85,7 @@ if (type === 'feature') {
 
   <div class="mb-8">
     <div class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
-      Filtro pSEO
+      Guía Especializada
     </div>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
       {pageHeading}

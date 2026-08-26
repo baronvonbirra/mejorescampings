@@ -8,9 +8,9 @@
     "lng": -4.185142,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -25,7 +25,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 217,
+    "review_count": 92,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Presa la Vinuela ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -43,9 +43,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Presa la Vinuela en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Presa la Vinuela en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Presa la Vinuela (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "El Cortijo",
@@ -54,6 +54,102 @@
     "address": "Málaga, España",
     "lat": 36.78265,
     "lng": -5.11712,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.3,
+    "review_count": 116,
+    "seasonality": "Abierto todo el año",
+    "status": "active",
+    "ai_description": "El Cortijo ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el El Cortijo?",
+        "answer": "Actualmente el El Cortijo no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el El Cortijo?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra El Cortijo de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "El Cortijo en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en El Cortijo (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Camping el Genal",
+    "slug": "camping-el-genal",
+    "description": "Camping El Genal es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.5668326,
+    "lng": -5.2470862,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.1,
+    "review_count": 69,
+    "seasonality": "Abierto todo el año",
+    "status": "active",
+    "ai_description": "Camping el Genal ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping el Genal?",
+        "answer": "Actualmente el Camping el Genal no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping el Genal?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping el Genal de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping el Genal en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en Camping el Genal (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Camping San Juan",
+    "slug": "camping-san-juan",
+    "description": "Camping San Juan es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.5663944,
+    "lng": -5.2451201,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
@@ -72,36 +168,36 @@
       "glamping": false,
       "playa": false
     },
-    "rating": 4.3,
-    "review_count": 231,
+    "rating": 4.1,
+    "review_count": 251,
     "seasonality": "Abierto todo el año",
     "status": "active",
-    "ai_description": "El Cortijo ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "ai_description": "Camping San Juan ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
     "faqs_json": [
       {
-        "question": "¿Admite mascotas el El Cortijo?",
-        "answer": "Actualmente el El Cortijo no permite el acceso de mascotas."
+        "question": "¿Admite mascotas el Camping San Juan?",
+        "answer": "Actualmente el Camping San Juan no permite el acceso de mascotas."
       },
       {
-        "question": "¿Cuenta con piscina el El Cortijo?",
+        "question": "¿Cuenta con piscina el Camping San Juan?",
         "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
       },
       {
-        "question": "¿A qué distancia se encuentra El Cortijo de la playa?",
+        "question": "¿A qué distancia se encuentra Camping San Juan de la playa?",
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "El Cortijo en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en El Cortijo (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "meta_title": "Camping San Juan en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en Camping San Juan (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    "name": "Camping el Genal",
-    "slug": "camping-el-genal",
-    "description": "Camping El Genal es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "name": "Camping Municipal las Camaretas",
+    "slug": "camping-municipal-las-camaretas",
+    "description": "Camping Municipal Las Camaretas es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
     "address": "Málaga, España",
-    "lat": 36.5668326,
-    "lng": -5.2470862,
+    "lat": 36.6144619,
+    "lng": -5.3422287,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
@@ -120,104 +216,8 @@
       "glamping": false,
       "playa": false
     },
-    "rating": 4.1,
-    "review_count": 225,
-    "seasonality": "Abierto todo el año",
-    "status": "active",
-    "ai_description": "Camping el Genal ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping el Genal?",
-        "answer": "Actualmente el Camping el Genal no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping el Genal?",
-        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping el Genal de la playa?",
-        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Camping el Genal en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping el Genal (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping San Juan",
-    "slug": "camping-san-juan",
-    "description": "Camping San Juan es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
-    "address": "Málaga, España",
-    "lat": 36.5663944,
-    "lng": -5.2451201,
-    "municipality_slug": "andalucia/malaga/malaga",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
-    "rating": 4.1,
-    "review_count": 314,
-    "seasonality": "Abierto todo el año",
-    "status": "active",
-    "ai_description": "Camping San Juan ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Camping San Juan?",
-        "answer": "Actualmente el Camping San Juan no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Camping San Juan?",
-        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Camping San Juan de la playa?",
-        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Camping San Juan en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping San Juan (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Camping Municipal las Camaretas",
-    "slug": "camping-municipal-las-camaretas",
-    "description": "Camping Municipal Las Camaretas es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
-    "address": "Málaga, España",
-    "lat": 36.6144619,
-    "lng": -5.3422287,
-    "municipality_slug": "andalucia/malaga/malaga",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
     "rating": 4.8,
-    "review_count": 333,
+    "review_count": 215,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Municipal las Camaretas ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -235,9 +235,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Municipal las Camaretas en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Municipal las Camaretas en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Municipal las Camaretas (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Parque Ardales Zona 1",
@@ -248,9 +248,9 @@
     "lng": -4.8042808,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "http://www.parqueardales.com/camping",
@@ -265,7 +265,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 173,
+    "review_count": 112,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "closed_temp",
     "ai_description": "Parque Ardales Zona 1 ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -283,9 +283,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Parque Ardales Zona 1 en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Parque Ardales Zona 1 en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Parque Ardales Zona 1 (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Iznate",
@@ -313,7 +313,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 203,
+    "review_count": 83,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Iznate ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -331,7 +331,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Iznate en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Iznate en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Iznate (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80"
   },
@@ -345,8 +345,8 @@
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://campingbuganvilla.com/wp-content/uploads/2024/04/HDR_0377-HDR-Edit-scaled.jpg",
-      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingbuganvilla.es",
@@ -361,7 +361,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 290,
+    "review_count": 105,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping Buganvilla ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -379,7 +379,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Buganvilla en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Buganvilla en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Buganvilla (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://campingbuganvilla.com/wp-content/uploads/2024/04/HDR_0377-HDR-Edit-scaled.jpg"
   },
@@ -390,6 +390,54 @@
     "address": "Málaga, España",
     "lat": 36.6554538,
     "lng": -5.2886056,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.8,
+    "review_count": 65,
+    "seasonality": "Abierto todo el año",
+    "status": "active",
+    "ai_description": "Camping Cabañas Jimera de Líbar ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Camping Cabañas Jimera de Líbar?",
+        "answer": "Actualmente el Camping Cabañas Jimera de Líbar no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Camping Cabañas Jimera de Líbar?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Camping Cabañas Jimera de Líbar de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Camping Cabañas Jimera de Líbar en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en Camping Cabañas Jimera de Líbar (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "Costasol Cruseros",
+    "slug": "costasol-cruseros",
+    "description": "Costasol cruseros es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.5970096,
+    "lng": -4.5106938,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
@@ -408,36 +456,36 @@
       "glamping": false,
       "playa": false
     },
-    "rating": 4.8,
-    "review_count": 128,
+    "rating": 4.2,
+    "review_count": 58,
     "seasonality": "Abierto todo el año",
     "status": "active",
-    "ai_description": "Camping Cabañas Jimera de Líbar ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "ai_description": "Costasol Cruseros ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
     "faqs_json": [
       {
-        "question": "¿Admite mascotas el Camping Cabañas Jimera de Líbar?",
-        "answer": "Actualmente el Camping Cabañas Jimera de Líbar no permite el acceso de mascotas."
+        "question": "¿Admite mascotas el Costasol Cruseros?",
+        "answer": "Actualmente el Costasol Cruseros no permite el acceso de mascotas."
       },
       {
-        "question": "¿Cuenta con piscina el Camping Cabañas Jimera de Líbar?",
+        "question": "¿Cuenta con piscina el Costasol Cruseros?",
         "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
       },
       {
-        "question": "¿A qué distancia se encuentra Camping Cabañas Jimera de Líbar de la playa?",
+        "question": "¿A qué distancia se encuentra Costasol Cruseros de la playa?",
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Cabañas Jimera de Líbar en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Camping Cabañas Jimera de Líbar (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "meta_title": "Costasol Cruseros en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en Costasol Cruseros (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    "name": "Costasol Cruseros",
-    "slug": "costasol-cruseros",
-    "description": "Costasol cruseros es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "name": "Hidden Valley Andalucia",
+    "slug": "hidden-valley-andalucia",
+    "description": "Hidden Valley Andalucia es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
     "address": "Málaga, España",
-    "lat": 36.5970096,
-    "lng": -4.5106938,
+    "lat": 36.8367493,
+    "lng": -4.7140754,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
@@ -456,56 +504,8 @@
       "glamping": false,
       "playa": false
     },
-    "rating": 4.2,
-    "review_count": 274,
-    "seasonality": "Abierto todo el año",
-    "status": "active",
-    "ai_description": "Costasol Cruseros ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Costasol Cruseros?",
-        "answer": "Actualmente el Costasol Cruseros no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Costasol Cruseros?",
-        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Costasol Cruseros de la playa?",
-        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Costasol Cruseros en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Costasol Cruseros (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "Hidden Valley Andalucia",
-    "slug": "hidden-valley-andalucia",
-    "description": "Hidden Valley Andalucia es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
-    "address": "Málaga, España",
-    "lat": 36.8367493,
-    "lng": -4.7140754,
-    "municipality_slug": "andalucia/malaga/malaga",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
     "rating": 4.8,
-    "review_count": 352,
+    "review_count": 64,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Hidden Valley Andalucia ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -523,9 +523,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Hidden Valley Andalucia en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Hidden Valley Andalucia en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Hidden Valley Andalucia (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Finca la Campana el Chorro",
@@ -556,7 +556,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 347,
+    "review_count": 257,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Finca la Campana el Chorro ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -574,7 +574,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Finca la Campana el Chorro en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Finca la Campana el Chorro en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Finca la Campana el Chorro (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://www.fincalacampana.com/images/home/pano-campana.jpg"
   },
@@ -587,9 +587,9 @@
     "lng": -4.7522258,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.olivebranchelchorro.co.uk",
@@ -604,7 +604,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 277,
+    "review_count": 121,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Olive Branch ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -622,9 +622,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Olive Branch en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Olive Branch en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Olive Branch (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Bivouac Possible",
@@ -652,7 +652,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 313,
+    "review_count": 323,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Bivouac Possible ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -670,7 +670,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Bivouac Possible en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Bivouac Possible en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Bivouac Possible (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80"
   },
@@ -681,54 +681,6 @@
     "address": "Málaga, España",
     "lat": 36.918813,
     "lng": -4.2856523,
-    "municipality_slug": "andalucia/malaga/malaga",
-    "image_urls": [
-      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
-    ],
-    "affiliate_url": null,
-    "official_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
-    "rating": 4.7,
-    "review_count": 317,
-    "seasonality": "Abierto todo el año",
-    "status": "active",
-    "ai_description": "Riogordo Scout ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Admite mascotas el Riogordo Scout?",
-        "answer": "Actualmente el Riogordo Scout no permite el acceso de mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina el Riogordo Scout?",
-        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
-      },
-      {
-        "question": "¿A qué distancia se encuentra Riogordo Scout de la playa?",
-        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
-      }
-    ],
-    "meta_title": "Riogordo Scout en Malaga (Málaga) | Precios y Servicios - CampBase",
-    "meta_description": "Guía y reserva en Riogordo Scout (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    "name": "El Hornillo",
-    "slug": "el-hornillo",
-    "description": "El Hornillo es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
-    "address": "Málaga, España",
-    "lat": 36.7245953,
-    "lng": -4.1265262,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
@@ -747,8 +699,56 @@
       "glamping": false,
       "playa": false
     },
+    "rating": 4.7,
+    "review_count": 140,
+    "seasonality": "Abierto todo el año",
+    "status": "active",
+    "ai_description": "Riogordo Scout ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Admite mascotas el Riogordo Scout?",
+        "answer": "Actualmente el Riogordo Scout no permite el acceso de mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina el Riogordo Scout?",
+        "answer": "El camping no dispone de piscina propia, pero se sitúa cerca de zonas de baño de la localidad."
+      },
+      {
+        "question": "¿A qué distancia se encuentra Riogordo Scout de la playa?",
+        "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
+      }
+    ],
+    "meta_title": "Riogordo Scout en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
+    "meta_description": "Guía y reserva en Riogordo Scout (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
+    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "name": "El Hornillo",
+    "slug": "el-hornillo",
+    "description": "El Hornillo es un camping situado en la provincia de Málaga, rodeado de entorno natural mediterráneo.",
+    "address": "Málaga, España",
+    "lat": 36.7245953,
+    "lng": -4.1265262,
+    "municipality_slug": "andalucia/malaga/malaga",
+    "image_urls": [
+      "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "affiliate_url": null,
+    "official_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
     "rating": 4.4,
-    "review_count": 120,
+    "review_count": 229,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "El Hornillo ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -766,9 +766,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "El Hornillo en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "El Hornillo en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en El Hornillo (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "River Lodge Fahala",
@@ -780,8 +780,8 @@
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
       "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -796,7 +796,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 264,
+    "review_count": 306,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "River Lodge Fahala ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -814,7 +814,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "River Lodge Fahala en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "River Lodge Fahala en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en River Lodge Fahala (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
   },
@@ -844,7 +844,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 124,
+    "review_count": 134,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Lucas Bushcraft - Supervivencia ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -862,7 +862,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Lucas Bushcraft - Supervivencia en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Lucas Bushcraft - Supervivencia en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Lucas Bushcraft - Supervivencia (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
   },
@@ -875,9 +875,9 @@
     "lng": -4.7297705,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://campingparkpizarra.com",
@@ -892,7 +892,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 77,
+    "review_count": 110,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Park Pizarra ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -910,9 +910,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Park Pizarra en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Park Pizarra en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Park Pizarra (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Malaga Monte Parc",
@@ -923,9 +923,9 @@
     "lng": -4.6106578,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -940,7 +940,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 169,
+    "review_count": 286,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Malaga Monte Parc ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -958,9 +958,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Malaga Monte Parc en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Malaga Monte Parc en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Malaga Monte Parc (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "El Pino",
@@ -971,9 +971,9 @@
     "lng": -3.9493561,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1515404929826-76fff9fef6fe?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -988,7 +988,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 68,
+    "review_count": 212,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "El Pino ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1006,9 +1006,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "El Pino en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "El Pino en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en El Pino (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Cortijo San Miguel",
@@ -1039,7 +1039,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 355,
+    "review_count": 297,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Cortijo San Miguel ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1057,7 +1057,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Cortijo San Miguel en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Cortijo San Miguel en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Cortijo San Miguel (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://images.squarespace-cdn.com/content/v1/5ee759cffe0fb60bc5b444d8/1592307014341-OTM30OT2C7R2S6ZVINZ2/20200110_124131%2B%25281%2529.jpg"
   },
@@ -1090,7 +1090,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 228,
+    "review_count": 307,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Parque Tropical ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1108,7 +1108,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Parque Tropical en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Parque Tropical en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Parque Tropical (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://campingparquetropical.com/img/social/social.jpg"
   },
@@ -1141,7 +1141,7 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 181,
+    "review_count": 219,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Nomading Camp Ronda ofrece alojamiento e instalaciones en Ronda (Málaga). El complejo se ubica en entorno natural y admite mascotas, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1159,7 +1159,7 @@
         "answer": "Se ubica en la zona interior de Ronda, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Nomading Camp Ronda en Ronda (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Nomading Camp Ronda en Ronda (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Nomading Camp Ronda (Ronda). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://www.nomadingcamp.com/wp-content/uploads/2024/01/Copia-de-20201030_RONDA_EXTERIOR_ATARDECER-09-1200x628-cropped.jpg"
   },
@@ -1172,9 +1172,9 @@
     "lng": -4.1034089,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1189,7 +1189,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 316,
+    "review_count": 341,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Laguna Playa ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1207,9 +1207,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Laguna Playa en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Laguna Playa en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Laguna Playa (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Torremolinos",
@@ -1240,7 +1240,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 135,
+    "review_count": 262,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Torremolinos ofrece alojamiento e instalaciones en Torremolinos (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1258,7 +1258,7 @@
         "answer": "Se ubica en la zona interior de Torremolinos, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Torremolinos en Torremolinos (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Torremolinos en Torremolinos (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Torremolinos (Torremolinos). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://campingtorremolinos.com/wp-content/uploads/2025/04/bungaslide1-1.jpg"
   },
@@ -1271,9 +1271,9 @@
     "lng": -5.0896617,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1288,7 +1288,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 176,
+    "review_count": 161,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping las Conejeras ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1306,9 +1306,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping las Conejeras en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping las Conejeras en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping las Conejeras (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping los Jarales",
@@ -1319,9 +1319,9 @@
     "lng": -4.71824,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1336,7 +1336,7 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 65,
+    "review_count": 251,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping los Jarales ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1354,9 +1354,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping los Jarales en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping los Jarales en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping los Jarales (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Marbella Playa",
@@ -1367,9 +1367,9 @@
     "lng": -4.7646702,
     "municipality_slug": "andalucia/malaga/marbella",
     "image_urls": [
-      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1515404929826-76fff9fef6fe?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1384,7 +1384,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 200,
+    "review_count": 228,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Marbella Playa ofrece alojamiento e instalaciones en Marbella (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1402,9 +1402,9 @@
         "answer": "Se ubica en la zona interior de Marbella, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Marbella Playa en Marbella (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Marbella Playa en Marbella (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Marbella Playa (Marbella). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Almayate Costa",
@@ -1435,7 +1435,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 210,
+    "review_count": 80,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Almayate Costa ofrece alojamiento e instalaciones en Almayate (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1453,7 +1453,7 @@
         "answer": "Se ubica en la zona interior de Almayate, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Almayate Costa en Almayate (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Almayate Costa en Almayate (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Almayate Costa (Almayate). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://www.campingalmayatecosta.com/wp-content/uploads/2023/05/top-inicio-001.jpg"
   },
@@ -1466,9 +1466,9 @@
     "lng": -4.1650633,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingvalleniza.es",
@@ -1483,7 +1483,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 256,
+    "review_count": 275,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "closed_temp",
     "ai_description": "Camping Valle Niza Playa ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1501,9 +1501,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Valle Niza Playa en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Valle Niza Playa en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Valle Niza Playa (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Bellavista",
@@ -1534,7 +1534,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 179,
+    "review_count": 355,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping Bellavista ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1552,7 +1552,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Bellavista en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Bellavista en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Bellavista (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://d13k753z36djzt.cloudfront.net/lle/images/bellavista/_headerGallery/929207/Bella-vista-campsite-low-res-9.jpg"
   },
@@ -1565,9 +1565,9 @@
     "lng": -4.1851057,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://campinglavinuela.es",
@@ -1582,7 +1582,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 240,
+    "review_count": 102,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping Presa la Viñuela ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1600,9 +1600,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Presa la Viñuela en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Presa la Viñuela en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Presa la Viñuela (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Cabopino",
@@ -1633,7 +1633,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 119,
+    "review_count": 266,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping Cabopino ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1651,7 +1651,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Cabopino en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Cabopino en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Cabopino (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://www.campingcabopino.com/wp-content/uploads/2020/12/PORTADA-ENTORNO.jpg"
   },
@@ -1684,7 +1684,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 363,
+    "review_count": 135,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Camping la Sierrecilla ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1702,7 +1702,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping la Sierrecilla en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping la Sierrecilla en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping la Sierrecilla (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://lasierrecilla.com/wp-content/uploads/2020/03/la-sierrecilla.jpg"
   },
@@ -1715,9 +1715,9 @@
     "lng": -5.1724648,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1515404929826-76fff9fef6fe?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingelsur.com/es/index.php",
@@ -1732,7 +1732,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 228,
+    "review_count": 133,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "El Sur ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1750,9 +1750,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "El Sur en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "El Sur en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en El Sur (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Costa del Sol Glamping Village",
@@ -1763,9 +1763,9 @@
     "lng": -4.6317731,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1780,7 +1780,7 @@
       "playa": false
     },
     "rating": 4.7,
-    "review_count": 192,
+    "review_count": 210,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Costa del Sol Glamping Village ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1798,9 +1798,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Costa del Sol Glamping Village en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Costa del Sol Glamping Village en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Costa del Sol Glamping Village (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Camping Suomi Village",
@@ -1811,9 +1811,9 @@
     "lng": -4.6413215,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1828,7 +1828,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 141,
+    "review_count": 269,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping Suomi Village ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1846,9 +1846,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Suomi Village en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Suomi Village en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Suomi Village (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Almanat",
@@ -1879,7 +1879,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 208,
+    "review_count": 79,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Almanat ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1897,7 +1897,7 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Almanat en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Almanat en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Almanat (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
     "image_url": "https://www.almanat.es/wp-content/uploads/inicio-00.webp"
   },
@@ -1910,9 +1910,9 @@
     "lng": -4.7337417,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.espaciosruralesfuentepiedra.com",
@@ -1927,7 +1927,7 @@
       "playa": false
     },
     "rating": 4.1,
-    "review_count": 144,
+    "review_count": 172,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Camping Fuente de Piedra ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1945,9 +1945,9 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Camping Fuente de Piedra en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Camping Fuente de Piedra en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Camping Fuente de Piedra (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Villa del Mar - Camping Nerja",
@@ -1958,9 +1958,9 @@
     "lng": -3.8348666,
     "municipality_slug": "andalucia/malaga/nerja",
     "image_urls": [
-      "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -1975,7 +1975,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 169,
+    "review_count": 130,
     "seasonality": "Abierto todo el año",
     "status": "active",
     "ai_description": "Villa del Mar - Camping Nerja ofrece alojamiento e instalaciones en Nerja (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -1993,9 +1993,9 @@
         "answer": "Se ubica en la zona interior de Nerja, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Villa del Mar - Camping Nerja en Nerja (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Villa del Mar - Camping Nerja en Nerja (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Villa del Mar - Camping Nerja (Nerja). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "name": "Pinsapo Azul",
@@ -2006,9 +2006,9 @@
     "lng": -4.9278655,
     "municipality_slug": "andalucia/malaga/malaga",
     "image_urls": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -2023,7 +2023,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 105,
+    "review_count": 112,
     "seasonality": "Temporada (Mayo-Octubre)",
     "status": "active",
     "ai_description": "Pinsapo Azul ofrece alojamiento e instalaciones en Malaga (Málaga). El complejo se ubica en entorno natural y ambiente tranquilo, ofreciendo opciones tanto para parcelas como bungalows. \n\nSu ubicación permite acceder a vistas a la sierra y senderos cercanos y a los principales atractivos turísticos de la zona.",
@@ -2041,8 +2041,8 @@
         "answer": "Se ubica en la zona interior de Malaga, ideal para rutas en la naturaleza."
       }
     ],
-    "meta_title": "Pinsapo Azul en Malaga (Málaga) | Precios y Servicios - CampBase",
+    "meta_title": "Pinsapo Azul en Malaga (Málaga) | Precios y Servicios - MejoresCampings",
     "meta_description": "Guía y reserva en Pinsapo Azul (Malaga). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga.",
-    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+    "image_url": "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80"
   }
 ]

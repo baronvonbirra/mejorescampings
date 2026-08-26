@@ -6,7 +6,7 @@ import { getCampings } from '../lib/db';
 const campings = await getCampings();
 const featuredCampings = campings.slice(0, 3);
 
-const metaTitle = "Guía Normativa de Pernocta y Acampada Libre en Málaga 2026 | CampBase";
+const metaTitle = "Guía Normativa de Pernocta y Acampada Libre en Málaga 2026 | MejoresCampings";
 const metaDesc = "Descubre la regulación oficial para pernoctar en furgoneta camper, autocaravana y acampada libre en Málaga y Andalucía. Normas de Costas y Medio Ambiente.";
 
 const jsonLdArticle = {
@@ -16,14 +16,14 @@ const jsonLdArticle = {
   "description": metaDesc,
   "author": {
     "@type": "Organization",
-    "name": "CampBase",
-    "url": "https://baronvonbirra.github.io/mejorescampings/"
+    "name": "MejoresCampings",
+    "url": "https://mejorescampings.es/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "CampBase"
+    "name": "MejoresCampings"
   },
-  "mainEntityOfPage": `https://baronvonbirra.github.io${import.meta.env.BASE_URL}normativa-pernocta-malaga/`
+  "mainEntityOfPage": `https://mejorescampings.es${import.meta.env.BASE_URL}normativa-pernocta-malaga/`
 };
 
 const jsonLdFaq = {
