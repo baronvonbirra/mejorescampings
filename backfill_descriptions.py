@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CampBase - Gemini AI Description Backfill Script
+MejoresCampings - Gemini AI Description Backfill Script
 Cron & Backfill processor for campsites missing `ai_description`.
 """
 

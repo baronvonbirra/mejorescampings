@@ -1,4 +1,4 @@
-# CampBase Robots.txt & AI Crawlers Configuration
+# MejoresCampings Robots.txt & AI Crawlers Configuration
 
 User-agent: *
 Allow: /
@@ -26,4 +26,4 @@ User-agent: Anthropic-ai
 Allow: /
 
 # Sitemap Index
-Sitemap: https://baronvonbirra.github.io/mejorescampings/sitemap.xml
+Sitemap: https://mejorescampings.es/sitemap.xml

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('CampBase - Site QA Suite', () => {
+test.describe('MejoresCampings - Site QA Suite', () => {
 
   test('Homepage loads correctly with new H1 and category grid', async ({ page }) => {
     const response = await page.goto('./');
@@ -108,15 +108,15 @@ test.describe('CampBase - Site QA Suite', () => {
     expect(respIndex?.status()).toBe(200);
     const contentIndex = await respIndex?.text();
     expect(contentIndex).toContain('<urlset');
-    expect(contentIndex).toContain('https://baronvonbirra.github.io/mejorescampings');
-    expect(contentIndex).toContain('https://baronvonbirra.github.io/mejorescampings/andalucia/malaga/ronda/');
+    expect(contentIndex).toContain('https://mejorescampings.es');
+    expect(contentIndex).toContain('https://mejorescampings.es/andalucia/malaga/ronda/');
 
     const respMalaga = await page.goto('sitemap-malaga.xml');
     expect(respMalaga?.status()).toBe(200);
     const contentMalaga = await respMalaga?.text();
     expect(contentMalaga).toContain('<urlset');
-    expect(contentMalaga).toContain('https://baronvonbirra.github.io/mejorescampings/andalucia/malaga/');
-    expect(contentMalaga).toContain('https://baronvonbirra.github.io/mejorescampings/camping/');
+    expect(contentMalaga).toContain('https://mejorescampings.es/andalucia/malaga/');
+    expect(contentMalaga).toContain('https://mejorescampings.es/camping/');
   });
 
 });

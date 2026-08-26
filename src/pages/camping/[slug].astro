@@ -75,7 +75,7 @@ const sameFeatureCampings = allCampings.filter(
 ).slice(0, 3);
 
 // Dynamic Meta Metadata & OG Image
-const metaTitle = camping.meta_title || `${camping.name} en ${municipalityName} (Málaga) | CampBase`;
+const metaTitle = camping.meta_title || `${camping.name} en ${municipalityName} (Málaga) | MejoresCampings`;
 const metaDesc = camping.meta_description || `Reserva y opiniones de ${camping.name} en ${municipalityName}. Servicios, mascotas, fotos y disponibilidad.`;
 const ogImage = camping.image_urls && camping.image_urls.length > 0 ? camping.image_urls[0] : camping.image_url;
 
@@ -85,7 +85,7 @@ const jsonLdCampground = {
   "@type": "Campground",
   "name": camping.name,
   "description": camping.ai_description || camping.description,
-  "url": `https://baronvonbirra.github.io${import.meta.env.BASE_URL}camping/${camping.slug}/`,
+  "url": `https://mejorescampings.es${import.meta.env.BASE_URL}camping/${camping.slug}/`,
   "image": camping.image_urls,
   "address": {
     "@type": "PostalAddress",

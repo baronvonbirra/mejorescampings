@@ -1,6 +1,6 @@
-# CampBase (Mejorescampings.es) ⛺🌲
+# MejoresCampings (Mejorescampings.es) ⛺🌲
 
-**CampBase** is a high-performance, low-maintenance static site (SSG) designed for programmatic SEO (pSEO) to capture long-tail organic search traffic for camping and glamping accommodations across Spain.
+**MejoresCampings** is a high-performance, low-maintenance static site (SSG) designed for programmatic SEO (pSEO) to capture long-tail organic search traffic for camping and glamping accommodations across Spain.
 
 The initial MVP focuses on **Andalucía (Málaga province)** to validate data extraction, coordinate geocoding, amenity tagging, and automated SSG static site builds.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CampBase - Data Extraction & Pipeline V2 (Málaga & Andalucía)
+MejoresCampings - Data Extraction & Pipeline V2 (Málaga & Andalucía)
 
 Features:
 1. Overpass API (OSM) extraction & local data enrichment for Málaga province campings.
@@ -148,7 +148,7 @@ FALLBACK_MALAGA_CAMPINGS = [
             "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
             "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
         ],
-        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Ronda/camping_el_sur/?aff=campbase",
+        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Ronda/camping_el_sur/?aff=mejorescampings",
         "official_url": "https://www.campingelsur.com",
         "price_tier": 2
     },
@@ -165,7 +165,7 @@ FALLBACK_MALAGA_CAMPINGS = [
             "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
             "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
         ],
-        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_cabopino/?aff=campbase",
+        "affiliate_url": "https://www.pitchup.com/es/campsites/Spain/Andalucia/Malaga/Marbella/camping_cabopino/?aff=mejorescampings",
         "official_url": "https://www.campingcabopino.com",
         "price_tier": 3
     }
@@ -188,7 +188,7 @@ def fetch_overpass_malaga_campings() -> List[Dict[str, Any]]:
         "https://overpass.kumi.systems/api/interpreter",
         "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
     ]
-    headers = {"User-Agent": "CampBaseBot/2.0 (https://campbase.es)"}
+    headers = {"User-Agent": "MejoresCampingsBot/2.0 (https://mejorescampings.es)"}
 
     for url in endpoints:
         try:
@@ -374,7 +374,7 @@ def scrape_official_website_photos(url: Optional[str]) -> List[str]:
 def fetch_wikimedia_commons_photos(lat: Optional[float], lng: Optional[float], name: str) -> List[str]:
     """Fetch authentic regional camping & scenery photos from Wikimedia Commons near coordinates or by search."""
     photos = []
-    headers = {"User-Agent": "CampBaseBot/2.0 (https://campbase.es)"}
+    headers = {"User-Agent": "MejoresCampingsBot/2.0 (https://mejorescampings.es)"}
 
     # 1. Geo Search if coordinates are present
     if isinstance(lat, (int, float)) and isinstance(lng, (int, float)):
@@ -438,13 +438,13 @@ def check_url_availability(url: Optional[str]) -> bool:
     if not url:
         return True
     try:
-        resp = requests.head(url, timeout=5, allow_redirects=True, headers={"User-Agent": "CampBaseBot/2.0"})
+        resp = requests.head(url, timeout=5, allow_redirects=True, headers={"User-Agent": "MejoresCampingsBot/2.0"})
         if resp.status_code in [200, 301, 302, 307, 308]:
             return True
         if resp.status_code == 404:
             return False
         # Try GET if HEAD returned non-200
-        resp = requests.get(url, timeout=5, headers={"User-Agent": "CampBaseBot/2.0"})
+        resp = requests.get(url, timeout=5, headers={"User-Agent": "MejoresCampingsBot/2.0"})
         return resp.status_code < 400
     except Exception:
         # Network errors / timeouts keep as active unless verified 404
@@ -525,7 +525,7 @@ Reglas estrictas de estilo:
     camping["faqs_json"] = faqs
 
     # Dynamic SEO Meta Title and Description
-    camping["meta_title"] = f"{name} en {municipality} (Málaga) | Precios y Servicios - CampBase"
+    camping["meta_title"] = f"{name} en {municipality} (Málaga) | Precios y Servicios - MejoresCampings"
     camping["meta_description"] = f"Guía y reserva en {name} ({municipality}). Comprueba instalaciones, si admite mascotas, fotos reales y disponibilidad en Málaga."
 
     return camping
@@ -702,7 +702,7 @@ def generate_xml_sitemaps(
     campings: List[Dict[str, Any]],
     locations: List[Dict[str, Any]],
     features: List[Dict[str, Any]],
-    base_url: str = "https://baronvonbirra.github.io/mejorescampings"
+    base_url: str = "https://mejorescampings.es"
 ):
     """Generate dynamic public/sitemap.xml (urlset) and public/sitemap-malaga.xml containing all site pages."""
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -814,7 +814,7 @@ def sync_to_supabase(campings: List[Dict[str, Any]]):
         logging.error(f"Failed to communicate with Supabase: {e}")
 
 def main():
-    logging.info("Starting CampBase Pipeline V2 Dynamic Scraping & Cleaning...")
+    logging.info("Starting MejoresCampings Pipeline V2 Dynamic Scraping & Cleaning...")
 
     # 1. Primary Source: Dynamically Scrape all Málaga Province Campings via Overpass OSM API
     scraped_campings = fetch_overpass_malaga_campings()
