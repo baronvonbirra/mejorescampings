@@ -37,23 +37,6 @@ const provinceCounts = PROVINCES.map((p) => {
       <p class="mt-4 text-emerald-100 text-sm sm:text-base leading-relaxed">
         Descubre más de 200 campings y glampings verificados en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.
       </p>
-
-      <!-- Quick Search & Filter Bar -->
-      <div class="mt-6 p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row gap-2">
-        <a
-          href={`${import.meta.env.BASE_URL}cadiz/`}
-          class="flex-1 px-4 py-3 bg-white text-slate-900 rounded-xl font-bold text-sm flex items-center justify-between hover:bg-emerald-50 transition"
-        >
-          <span>Selecciona Provincia (ej. Cádiz, Málaga...)</span>
-          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-        </a>
-        <a
-          href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`}
-          class="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition text-center shadow-md shrink-0"
-        >
-          Buscar Campings
-        </a>
-      </div>
     </div>
   </section>
 
@@ -89,74 +72,93 @@ const provinceCounts = PROVINCES.map((p) => {
     </div>
   </section>
 
-  <!-- Filtros por Estilo de Viaje -->
-  <section class="mb-12">
-    <div class="flex items-center justify-between mb-4">
+  <!-- Filtros por Estilo de Viaje y Servicios (Green Container Box) -->
+  <section class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 mb-12 shadow-lg border border-emerald-700/50">
+    <!-- Container Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-emerald-700/60">
       <div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Encuentra según tu Estilo de Viaje</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Selecciona la experiencia que mejor se adapta a tu ruta</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Estilos de Viaje y Servicios Destacados</h2>
+        <p class="text-xs sm:text-sm text-emerald-200 mt-1">Encuentra tu camping ideal según la experiencia o instalaciones que necesitas</p>
       </div>
       <a
         href={`${import.meta.env.BASE_URL}normativa-pernocta-malaga/`}
-        class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition"
+        class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-100 bg-emerald-950/60 hover:bg-emerald-950 border border-emerald-500/40 px-3.5 py-2 rounded-xl transition self-start sm:self-auto shrink-0 shadow-xs"
       >
-        🚐 Guía Normativa Pernocta &rarr;
+        🚐 Guía Pernocta &rarr;
       </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <a
-        href={`${import.meta.env.BASE_URL}malaga/`}
-        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
-      >
-        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🚐</div>
-        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Ruta Camper / Furgoneta</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Con toma de electricidad, vaciado de aguas y zonas adaptadas.</p>
-      </a>
-
-      <a
-        href={`${import.meta.env.BASE_URL}cadiz/campings-familiares/`}
-        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
-      >
-        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">👨‍👩‍👧‍👦</div>
-        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Plan Familiar</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Con piscina, parque infantil, animación y ambiente tranquilo.</p>
-      </a>
-
-      <a
-        href={`${import.meta.env.BASE_URL}cadiz/campings-playa/`}
-        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
-      >
-        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🏖️</div>
-        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Cerca de la Playa</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Alojamiento a pocos pasos de Tarifa, Cabo de Gata y Costa del Sol.</p>
-      </a>
-
-      <a
-        href={`${import.meta.env.BASE_URL}huelva/glamping/`}
-        class="bg-white p-5 rounded-2xl border border-emerald-200/90 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group"
-      >
-        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">⛺</div>
-        <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition">Glamping Romántico</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Cabañas de madera, tiendas safari y domos con glamour.</p>
-      </a>
-    </div>
-  </section>
-
-  <!-- Featured Categories Grid -->
-  <section class="mb-12">
-    <h2 class="text-xl font-bold text-slate-900 mb-4">Servicios e Instalaciones Más Buscadas</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {categories.map((cat) => (
+    <!-- Group 1: Estilos de Viaje -->
+    <div class="mb-6">
+      <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <span>🗺️</span> Estilos de Viaje
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <a
-          href={`${import.meta.env.BASE_URL}cadiz/${cat.slug}/`}
-          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-500 transition group"
+          href={`${import.meta.env.BASE_URL}malaga/`}
+          class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
         >
-          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">{cat.icon}</div>
-          <h3 class="font-bold text-slate-900 text-base group-hover:text-emerald-600 transition">{cat.name}</h3>
-          <p class="text-xs text-slate-500 mt-1 leading-normal">{cat.desc}</p>
+          <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🚐</span>
+          <div>
+            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Ruta Camper / Furgoneta</h4>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">Con toma de electricidad y vaciado de aguas.</p>
+          </div>
         </a>
-      ))}
+
+        <a
+          href={`${import.meta.env.BASE_URL}cadiz/campings-familiares/`}
+          class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
+        >
+          <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">👨‍👩‍👧‍👦</span>
+          <div>
+            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Plan Familiar</h4>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">Piscina, parque infantil y animación.</p>
+          </div>
+        </a>
+
+        <a
+          href={`${import.meta.env.BASE_URL}cadiz/campings-playa/`}
+          class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
+        >
+          <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🏖️</span>
+          <div>
+            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Cerca de la Playa</h4>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">A pocos pasos de Tarifa y Costa del Sol.</p>
+          </div>
+        </a>
+
+        <a
+          href={`${import.meta.env.BASE_URL}huelva/glamping/`}
+          class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
+        >
+          <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">⛺</span>
+          <div>
+            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Glamping Romántico</h4>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">Cabañas de madera y domos exclusivos.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Group 2: Servicios e Instalaciones Popular -->
+    <div>
+      <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <span>⚡</span> Servicios e Instalaciones
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {categories.map((cat) => (
+          <a
+            href={`${import.meta.env.BASE_URL}cadiz/${cat.slug}/`}
+            class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
+          >
+            <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">{cat.icon}</span>
+            <div>
+              <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">{cat.name}</h4>
+              <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">{cat.desc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
