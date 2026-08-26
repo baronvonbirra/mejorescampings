@@ -79,59 +79,91 @@ AMENITY_MAPPING = {
 
 from urllib.parse import urljoin, urlparse
 
-# Curated high-resolution Unsplash image pools (Expanded into 10 distinct thematic pools with real camping photos)
-CAMPSITE_IMAGE_POOLS = [
-    [
-        "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+# Verified official website URL lookup mapping by slug for campsites where OSM lacks direct web tags
+KNOWN_CAMPSITE_URLS = {
+    "el-pino": "https://www.campingelpino.com",
+    "laguna-playa": "https://www.lagunaplaya.com",
+    "camping-los-jarales": "https://www.campinglosjarales.com",
+    "camping-marbella-playa": "https://www.marbellaplaya.com",
+    "costa-del-sol-glamping-village": "https://www.costadelsolglamping.com",
+    "el-sur": "https://www.campingelsur.com",
+    "camping-presa-la-vinuela": "https://www.campinglavinuela.es",
+    "presa-la-vinuela": "https://www.campinglavinuela.es",
+    "camping-fuente-de-piedra": "https://www.espaciosruralesfuentepiedra.com",
+    "almanat": "https://www.almanat.es",
+    "camping-san-juan": "https://www.campingsanjuan.es",
+    "camping-iznate": "https://www.campingiznate.com",
+    "camping-buganvilla": "https://www.campingbuganvilla.es",
+    "finca-la-campana-el-chorro": "https://www.fincalacampana.com",
+    "olive-branch": "https://www.olivebranchelchorro.co.uk",
+    "camping-park-pizarra": "https://campingparkpizarra.com",
+    "camping-cortijo-san-miguel": "https://www.campingcortijosanmiguel.com",
+    "parque-tropical": "https://www.campingparquetropical.com",
+    "nomading-camp-ronda": "https://www.nomadingcamp.com",
+    "camping-torremolinos": "https://www.campingtorremolinos.com",
+    "camping-almayate-costa": "https://www.campingalmayatecosta.com",
+    "camping-valle-niza-playa": "https://www.campingvalleniza.es",
+    "camping-bellavista": "https://www.campinglabellavista.com",
+    "camping-cabopino": "https://www.campingcabopino.com",
+    "camping-la-sierrecilla": "https://lasierrecilla.com"
+}
+
+# Geographically and thematically targeted Malaga scenery and campsite image pools
+REGION_IMAGE_POOLS = {
+    # Coastal Costa del Sol (Marbella, Torremolinos, Nerja, Almayate, Estepona, Fuengirola, Benalmádena)
+    "coastal": [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
     ],
-    [
-        "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80"
+    # Inland Mountains & Serranía (Ronda, Grazalema, Sierra de las Nieves, Genal, Jimera)
+    "mountain": [
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"
     ],
-    [
-        "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
-        "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1515404929826-76fff9fef6fe?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
-        "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1571687949921-1358b9ee0180?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1525811902-f2342640856e?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
-        "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
+    # Gorge & Lakes (El Chorro, Caminito del Rey, Ardales, Viñuela, Pizarra)
+    "lakes_gorge": [
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80"
+        "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80"
     ],
-    [
-        "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
-        "https://images.unsplash.com/photo-1520094437158-326f32e650d5?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
-    ],
-    [
+    # Glamping & Premium Camping Setup
+    "glamping": [
+        "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
     ]
-]
+}
+
+def get_regional_image_pool(campsite: Dict[str, Any]) -> List[str]:
+    """Select a regional / thematic image pool tailored to the campsite location and features."""
+    m_slug = campsite.get("municipality_slug", "").lower()
+    name = campsite.get("name", "").lower()
+    address = campsite.get("address", "").lower()
+    amenities = campsite.get("amenities", {})
+
+    combined_text = f"{m_slug} {name} {address}"
+
+    if amenities.get("glamping") or "glamping" in combined_text or "burbuja" in combined_text:
+        return REGION_IMAGE_POOLS["glamping"]
+
+    coastal_keywords = ["marbella", "nerja", "torremolinos", "almayate", "playa", "costa", "estpona", "fuengirola", "benalmadena", "torrox", "algarrobo"]
+    if any(k in combined_text for k in coastal_keywords) or amenities.get("playa"):
+        return REGION_IMAGE_POOLS["coastal"]
+
+    gorge_keywords = ["chorro", "ardales", "viñuela", "vinuela", "pantano", "presa", "pizarra", "antequera", "lago", "laguna"]
+    if any(k in combined_text for k in gorge_keywords):
+        return REGION_IMAGE_POOLS["lakes_gorge"]
+
+    # Mountain / Serranía fallback for inland Malaga
+    return REGION_IMAGE_POOLS["mountain"]
 
 # Offline safety fallback dataset used exclusively if network scraping fails completely
 FALLBACK_MALAGA_CAMPINGS = [
@@ -299,7 +331,9 @@ def check_image_size(url: str, min_bytes: int = 51200) -> bool:
     ignore_patterns = [
         'logo', 'icon', 'avatar', 'button', 'badge', 'widget', 'loader',
         'banner-ad', 'flag', 'sprite', 'payment', 'facebook', 'instagram',
-        'tripadvisor', 'acsi', 'adac', 'telefono', 'horario', 'mapa', 'plano'
+        'tripadvisor', 'acsi', 'adac', 'alanrogers', 'anwb', 'dcc', 'routard',
+        'telefono', 'horario', 'mapa', 'plano', 'correo', 'promociones', 'recarga',
+        '360', 'correo.png', 'telefono.png', 'es.png', 'en.png', 'fr.png', 'de.png'
     ]
     if any(p in url_lower for p in ignore_patterns):
         return False
@@ -329,7 +363,7 @@ def check_image_size(url: str, min_bytes: int = 51200) -> bool:
     return False
 
 def scrape_official_website_photos(url: Optional[str]) -> List[str]:
-    """Scrape authentic photos directly from official campsite websites."""
+    """Scrape authentic photos directly from official campsite websites, including subpages & high-res conversions."""
     if not url or not url.startswith("http"):
         return []
 
@@ -339,35 +373,63 @@ def scrape_official_website_photos(url: Optional[str]) -> List[str]:
     }
 
     scraped_urls = []
-    try:
-        resp = requests.get(url, headers=headers, timeout=6, allow_redirects=True)
-        if resp.status_code != 200:
-            return []
 
-        html = resp.text
+    def _extract_from_page(target_url: str):
+        try:
+            resp = requests.get(target_url, headers=headers, timeout=6, allow_redirects=True)
+            if resp.status_code != 200:
+                return
 
-        # Extract OpenGraph and Twitter card image URLs
-        og_imgs = re.findall(r'<meta[^>]+property=[\"\']og:image[\"\'][^>]+content=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
-        og_imgs += re.findall(r'<meta[^>]+content=[\"\']([^\"\'\s]+)[\"\'][^>]+property=[\"\']og:image[\"\']', html, re.IGNORECASE)
-        og_imgs += re.findall(r'<meta[^>]+name=[\"\']twitter:image[\"\'][^>]+content=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
+            html = resp.text
 
-        for img in og_imgs:
-            full_url = urljoin(url, img)
-            if full_url not in scraped_urls:
-                scraped_urls.append(full_url)
+            # Extract OpenGraph and Twitter card image URLs
+            og_imgs = re.findall(r'<meta[^>]+property=[\"\']og:image[\"\'][^>]+content=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
+            og_imgs += re.findall(r'<meta[^>]+content=[\"\']([^\"\'\s]+)[\"\'][^>]+property=[\"\']og:image[\"\']', html, re.IGNORECASE)
+            og_imgs += re.findall(r'<meta[^>]+name=[\"\']twitter:image[\"\'][^>]+content=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
 
-        # Extract img src, data-src, and inline CSS background images
-        img_candidates = re.findall(r'<img[^>]+src=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
-        img_candidates += re.findall(r'data-src=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
-        img_candidates += re.findall(r'url\([\"\'\s]?([^\"\'\)\s]+)[\"\']?\)', html, re.IGNORECASE)
+            for img in og_imgs:
+                full_url = urljoin(target_url, img)
+                if full_url not in scraped_urls:
+                    scraped_urls.append(full_url)
 
-        for cand in img_candidates:
-            full_url = urljoin(url, cand)
-            if full_url not in scraped_urls and any(full_url.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.webp']):
-                scraped_urls.append(full_url)
+            # Extract img src, data-src, inline CSS background images, and lightbox links
+            img_candidates = re.findall(r'<img[^>]+src=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
+            img_candidates += re.findall(r'data-src=[\"\']([^\"\'\s]+)[\"\']', html, re.IGNORECASE)
+            img_candidates += re.findall(r'url\([\"\'\s]?([^\"\'\)\s]+)[\"\']?\)', html, re.IGNORECASE)
+            img_candidates += re.findall(r'<a[^>]+href=[\"\']([^\"\'\s]+\.(?:jpg|jpeg|png|webp))[\"\']', html, re.IGNORECASE)
 
-    except Exception as e:
-        logging.debug(f"Failed to scrape official website {url}: {e}")
+            for cand in img_candidates:
+                full_url = urljoin(target_url, cand)
+
+                # Convert thumbnail/miniatures to full resolution if applicable
+                high_res_url = re.sub(r'/miniaturas/', '/', full_url, flags=re.IGNORECASE)
+                high_res_url = re.sub(r'/thumbs?/', '/', high_res_url, flags=re.IGNORECASE)
+
+                if high_res_url not in scraped_urls and any(high_res_url.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.webp']):
+                    scraped_urls.append(high_res_url)
+                elif full_url not in scraped_urls and any(full_url.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.webp']):
+                    scraped_urls.append(full_url)
+
+        except Exception as e:
+            logging.debug(f"Failed to scrape page {target_url}: {e}")
+
+    # 1. Scrape main homepage URL
+    _extract_from_page(url)
+
+    # 2. If homepage yielded fewer than 3 images, try standard subpages (/galeria, /fotos, /camping, etc.)
+    if len(scraped_urls) < 3:
+        parsed = urlparse(url)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        subpages = [
+            f"{base}/galeria", f"{base}/galeria-de-imagenes", f"{base}/fotos",
+            f"{base}/camping", f"{base}/es/camping.php", f"{base}/es/instalaciones.php",
+            f"{base}/instalaciones", f"{base}/servicios", f"{base}/es/"
+        ]
+        for sub in subpages:
+            if len(scraped_urls) >= 6:
+                break
+            if sub != url.rstrip('/'):
+                _extract_from_page(sub)
 
     return scraped_urls
 
@@ -584,10 +646,9 @@ def validate_and_qa_camping(camping: Dict[str, Any]) -> Tuple[str, List[str]]:
                 if len(valid_images) >= 6:
                     break
 
-    # Fallback to high quality thematic Unsplash image pool with deterministic assignment
+    # Fallback to high quality geographically & thematically targeted image pool
     if len(valid_images) < 3:
-        pool_idx = abs(hash(name)) % len(CAMPSITE_IMAGE_POOLS)
-        pool = CAMPSITE_IMAGE_POOLS[pool_idx]
+        pool = get_regional_image_pool(camping)
         for p_img in pool:
             if p_img not in valid_images and len(valid_images) < 3:
                 valid_images.append(p_img)
@@ -628,7 +689,11 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
         raw_amenities = item.get("raw_amenities", [])
         amenities = normalize_amenities(raw_amenities)
 
-        official_url_clean = clean_official_url(item.get("official_url"))
+        official_url_raw = item.get("official_url")
+        if not official_url_raw or not clean_official_url(official_url_raw):
+            official_url_raw = KNOWN_CAMPSITE_URLS.get(slug)
+
+        official_url_clean = clean_official_url(official_url_raw)
 
         score = round(4.1 + (len(name_clean) % 8) * 0.1, 1)
         reviews = 45 + (abs(hash(name_clean)) % 320)
