@@ -42,7 +42,7 @@ const detailUrl = `${import.meta.env.BASE_URL}camping/${camping.slug}/`;
         {camping.description}
       </p>
 
-      <FeatureBadges amenities={camping.amenities} />
+      <FeatureBadges amenities={camping.amenities} provinceSlug={camping.province_slug || 'malaga'} />
     </div>
   </div>
 

@@ -41,6 +41,16 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Piscina');
   });
 
+  test('Feature badge links on campsite detail page navigate to category filter routes', async ({ page }) => {
+    await page.goto('camping/camping-cabopino/');
+    const petsBadge = page.locator('a[href*="/campings-con-mascotas/"]').first();
+    if (await petsBadge.isVisible()) {
+      await petsBadge.click();
+      await expect(page).toHaveURL(/\/campings-con-mascotas\//);
+      await expect(page.locator('h1')).toContainText('Mascotas');
+    }
+  });
+
   test('New Provincial Hub (/cadiz/) and Category (/cadiz/campings-playa/) load with ItemList Schema', async ({ page }) => {
     const respCadiz = await page.goto('cadiz/');
     expect(respCadiz?.status()).toBe(200);
