@@ -41,6 +41,12 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Piscina');
   });
 
+  test('Editorial badges and quote render correctly on campsite detail page', async ({ page }) => {
+    await page.goto('camping/camping-el-sur/');
+    await expect(page.locator('span').filter({ hasText: /Selección ABC/i }).first()).toBeVisible();
+    await expect(page.locator('blockquote').first()).toContainText('Recomendado por su entorno');
+  });
+
   test('Feature badge links on campsite detail page navigate to category filter routes', async ({ page }) => {
     await page.goto('camping/camping-cabopino/');
     const petsBadge = page.locator('a[href*="/campings-con-mascotas/"]').first();
