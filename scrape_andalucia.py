@@ -1056,7 +1056,8 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
         if slug in seen_slugs:
             for rec in cleaned:
                 if rec["slug"] == slug:
-                    new_badges = list(set((rec.get("editorial_badges") or []) + (item.get("editorial_badges") or []) + (rta_match.get("editorial_badges") if rta_match else [])))
+                    rta_badges = (rta_match.get("editorial_badges") or []) if rta_match else []
+                    new_badges = list(set((rec.get("editorial_badges") or []) + (item.get("editorial_badges") or []) + rta_badges))
                     rec["editorial_badges"] = new_badges
                     rec["editorial_tags"] = new_badges
                     if not rec.get("editorial_quote"):
@@ -1106,11 +1107,11 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
             "rta_license": rta_license,
             "category": category,
             "legal_capacity": capacity,
-            "editorial_badges": item.get("editorial_badges") or (rta_match.get("editorial_badges") if rta_match else []),
-            "editorial_tags": item.get("editorial_tags") or (rta_match.get("editorial_tags") if rta_match else []),
+            "editorial_badges": item.get("editorial_badges") or ((rta_match.get("editorial_badges") or []) if rta_match else []),
+            "editorial_tags": item.get("editorial_tags") or ((rta_match.get("editorial_tags") or []) if rta_match else []),
             "editorial_quote": item.get("editorial_quote") or (rta_match.get("editorial_quote") if rta_match else None),
             "pitchup_rating": item.get("pitchup_rating") or (rta_match.get("pitchup_rating") if rta_match else None),
-            "photos_manifest": item.get("photos_manifest") or (rta_match.get("photos_manifest") if rta_match else []),
+            "photos_manifest": item.get("photos_manifest") or ((rta_match.get("photos_manifest") or []) if rta_match else []),
             "google_place_id": item.get("google_place_id") or (rta_match.get("google_place_id") if rta_match else f"ChIJ_{abs(hash(slug))}"),
             "image_urls": item.get("image_urls", [])
         }
