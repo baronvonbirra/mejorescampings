@@ -3,7 +3,7 @@
     "name": "Camping los Escullos",
     "slug": "camping-los-escullos",
     "description": "",
-    "address": "Paraje Los Escullos s/n, 04118 Níjar, Almería",
+    "address": "Almería, España",
     "lat": 36.8021,
     "lng": -2.0645,
     "province_slug": "almeria",
@@ -23,11 +23,29 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 77,
+    "review_count": 172,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 650,
+    "editorial_badges": [
+      "Top Playa",
+      "Selección ABC Viajar"
+    ],
+    "editorial_tags": [
+      "Top Playa",
+      "Selección ABC Viajar"
+    ],
+    "editorial_quote": "Seleccionado entre los mejores campings a pie de playa por ABC Viajar en el Parque Natural Cabo de Gata.",
+    "pitchup_rating": 9.1,
+    "photos_manifest": [
+      {
+        "url": "/images/campings/camping-los-escullos/img_1.webp",
+        "caption": "Parcelas y entorno Los Escullos",
+        "score": 9
+      }
+    ],
+    "google_place_id": "ChIJ_LosEscullos_Nijar",
     "image_urls": [
       "/images/campings/camping-los-escullos/img_1.webp",
       "/images/campings/camping-los-escullos/img_2.webp",
@@ -57,67 +75,10 @@
     "status": "active"
   },
   {
-    "name": "Camping Cabo de Gata",
-    "slug": "camping-cabo-de-gata",
-    "description": "",
-    "address": "Ctra. Cabo de Gata km 21, 04150 Almería",
-    "lat": 36.782,
-    "lng": -2.241,
-    "province_slug": "almeria",
-    "comarca": "Comarca de Almería",
-    "comarca_slug": "comarca-de-almeria",
-    "municipality_slug": "almeria",
-    "official_url": null,
-    "affiliate_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
-    "rating": 4.8,
-    "review_count": 232,
-    "seasonality": "Abierto todo el año",
-    "rta_license": "CM/AL/00012",
-    "category": "2ª Categ. (3 estrellas)",
-    "legal_capacity": 420,
-    "image_urls": [
-      "/images/campings/camping-cabo-de-gata/img_1.webp",
-      "/images/campings/camping-cabo-de-gata/img_2.webp",
-      "/images/campings/camping-cabo-de-gata/img_3.webp",
-      "/images/campings/camping-cabo-de-gata/img_4.webp",
-      "/images/campings/camping-cabo-de-gata/img_5.webp"
-    ],
-    "image_url": "/images/campings/camping-cabo-de-gata/img_1.webp",
-    "ai_description": "Camping Cabo de Gata es un alojamiento de 2ª Categ. (3 estrellas) con licencia CM/AL/00012 situado en Almeria (Almería). El complejo cuenta con capacidad para 420 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Cuál es la capacidad legal y categoría de Camping Cabo de Gata?",
-        "answer": "El Camping Cabo de Gata cuenta con categoría de 2ª Categ. (3 estrellas) y capacidad autorizada para 420 personas bajo licencia RTA CM/AL/00012."
-      },
-      {
-        "question": "¿Admite perros y mascotas el Camping Cabo de Gata?",
-        "answer": "El Camping Cabo de Gata mantiene normativa de silencio y no admite mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina Camping Cabo de Gata?",
-        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
-      }
-    ],
-    "meta_title": "Camping Cabo de Gata en Almeria (Almería) | Reserva y Precios - MejoresCampings",
-    "meta_description": "Ficha oficial de Camping Cabo de Gata en Almeria (Almería). Licencia CM/AL/00012, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
-    "quality_score": 70,
-    "status": "active"
-  },
-  {
     "name": "Camping Valdevaqueros",
     "slug": "camping-valdevaqueros",
     "description": "",
-    "address": "Ctra. N-340 Km 75.5, 11380 Tarifa, Cádiz",
+    "address": "Cádiz, España",
     "lat": 36.0712,
     "lng": -5.6698,
     "province_slug": "cadiz",
@@ -137,11 +98,21 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 232,
+    "review_count": 210,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00008",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 780,
+    "editorial_badges": [
+      "Selección ABC Viajar"
+    ],
+    "editorial_tags": [
+      "Selección ABC Viajar"
+    ],
+    "editorial_quote": "Referente para los amantes del surf y las playas gaditanas con vistas al Estrecho de Gibraltar.",
+    "pitchup_rating": 9.4,
+    "photos_manifest": null,
+    "google_place_id": "ChIJ_Valdevaqueros_Tarifa",
     "image_urls": [
       "/images/campings/camping-valdevaqueros/img_1.webp",
       "/images/campings/camping-valdevaqueros/img_2.webp",
@@ -171,10 +142,152 @@
     "status": "active"
   },
   {
+    "name": "Camping Cabopino",
+    "slug": "camping-cabopino",
+    "description": "",
+    "address": "Málaga, España",
+    "lat": 36.4904,
+    "lng": -4.7438,
+    "province_slug": "malaga",
+    "comarca": "Comarca de Málaga",
+    "comarca_slug": "comarca-de-malaga",
+    "municipality_slug": "malaga",
+    "official_url": "https://www.campingcabopino.com",
+    "affiliate_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.4,
+    "review_count": 120,
+    "seasonality": "Abierto todo el año",
+    "rta_license": "CM/MA/00002",
+    "category": "1ª Categ. (4 estrellas)",
+    "legal_capacity": 1100,
+    "editorial_badges": [
+      "Selección Kampaoh",
+      "Top Campings Playa"
+    ],
+    "editorial_tags": [
+      "Selección Kampaoh",
+      "Top Campings Playa"
+    ],
+    "editorial_quote": "Recomendado como uno de los 11 mejores campings de playa en Andalucía por Kampaoh.",
+    "pitchup_rating": 8.9,
+    "photos_manifest": [
+      {
+        "url": "/images/campings/camping-cabopino/img_1.webp",
+        "caption": "Instalaciones Camping Cabopino",
+        "score": 9
+      }
+    ],
+    "google_place_id": "ChIJ_Cabopino_Marbella",
+    "image_urls": [
+      "/images/campings/camping-cabopino/img_1.webp",
+      "/images/campings/camping-cabopino/img_2.webp",
+      "/images/campings/camping-cabopino/img_3.webp",
+      "/images/campings/camping-cabopino/img_4.webp",
+      "/images/campings/camping-cabopino/img_5.webp"
+    ],
+    "image_url": "/images/campings/camping-cabopino/img_1.webp",
+    "ai_description": "Camping Cabopino es un alojamiento de 1ª Categ. (4 estrellas) con licencia CM/MA/00002 situado en Malaga (Málaga). El complejo cuenta con capacidad para 1100 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Cuál es la capacidad legal y categoría de Camping Cabopino?",
+        "answer": "El Camping Cabopino cuenta con categoría de 1ª Categ. (4 estrellas) y capacidad autorizada para 1100 personas bajo licencia RTA CM/MA/00002."
+      },
+      {
+        "question": "¿Admite perros y mascotas el Camping Cabopino?",
+        "answer": "El Camping Cabopino mantiene normativa de silencio y no admite mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina Camping Cabopino?",
+        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
+      }
+    ],
+    "meta_title": "Camping Cabopino en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
+    "meta_description": "Ficha oficial de Camping Cabopino en Malaga (Málaga). Licencia CM/MA/00002, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
+    "quality_score": 85,
+    "status": "active"
+  },
+  {
+    "name": "Camping Doñana Playa",
+    "slug": "camping-donana-playa",
+    "description": "",
+    "address": "Huelva, España",
+    "lat": 37.1085,
+    "lng": -6.745,
+    "province_slug": "huelva",
+    "comarca": "Comarca de Huelva",
+    "comarca_slug": "comarca-de-huelva",
+    "municipality_slug": "huelva",
+    "official_url": "https://www.campingdonana.com",
+    "affiliate_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.8,
+    "review_count": 85,
+    "seasonality": "Abierto todo el año",
+    "rta_license": "CM/HU/00010",
+    "category": "1ª Categ. (4 estrellas)",
+    "legal_capacity": 1400,
+    "editorial_badges": [
+      "Top Campings Playa"
+    ],
+    "editorial_tags": [
+      "Top Campings Playa"
+    ],
+    "editorial_quote": "Ubicación privileged en pleno entorno de Doñana y la costa atlántica de Huelva.",
+    "pitchup_rating": 8.8,
+    "photos_manifest": null,
+    "google_place_id": "ChIJ_DonanaPlaya_Mazagon",
+    "image_urls": [
+      "/images/campings/camping-donana-playa/img_1.webp",
+      "/images/campings/camping-donana-playa/img_2.webp",
+      "/images/campings/camping-donana-playa/img_3.webp",
+      "/images/campings/camping-donana-playa/img_4.webp",
+      "/images/campings/camping-donana-playa/img_5.webp"
+    ],
+    "image_url": "/images/campings/camping-donana-playa/img_1.webp",
+    "ai_description": "Camping Doñana Playa es un alojamiento de 1ª Categ. (4 estrellas) con licencia CM/HU/00010 situado en Huelva (Huelva). El complejo cuenta con capacidad para 1400 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Cuál es la capacidad legal y categoría de Camping Doñana Playa?",
+        "answer": "El Camping Doñana Playa cuenta con categoría de 1ª Categ. (4 estrellas) y capacidad autorizada para 1400 personas bajo licencia RTA CM/HU/00010."
+      },
+      {
+        "question": "¿Admite perros y mascotas el Camping Doñana Playa?",
+        "answer": "El Camping Doñana Playa mantiene normativa de silencio y no admite mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina Camping Doñana Playa?",
+        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
+      }
+    ],
+    "meta_title": "Camping Doñana Playa en Huelva (Huelva) | Reserva y Precios - MejoresCampings",
+    "meta_description": "Ficha oficial de Camping Doñana Playa en Huelva (Huelva). Licencia CM/HU/00010, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
+    "quality_score": 85,
+    "status": "active"
+  },
+  {
     "name": "Camping Pinar San José",
     "slug": "camping-pinar-san-jose",
     "description": "",
-    "address": "Pago de Zahora s/n, 11160 Barbate, Cádiz",
+    "address": "Cádiz, España",
     "lat": 36.1985,
     "lng": -6.0271,
     "province_slug": "cadiz",
@@ -194,11 +307,21 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 217,
+    "review_count": 236,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00021",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 920,
+    "editorial_badges": [
+      "Comunidad Pitchup Top"
+    ],
+    "editorial_tags": [
+      "Comunidad Pitchup Top"
+    ],
+    "editorial_quote": "Destacado por la comunidad de Pitchup por sus servicios completos y proximidad a la playa de Zahora.",
+    "pitchup_rating": 9.2,
+    "photos_manifest": null,
+    "google_place_id": "ChIJ_PinarSanJose_Barbate",
     "image_urls": [
       "/images/campings/camping-pinar-san-jose/img_1.webp",
       "/images/campings/camping-pinar-san-jose/img_2.webp",
@@ -228,6 +351,69 @@
     "status": "active"
   },
   {
+    "name": "Camping Cabo de Gata",
+    "slug": "camping-cabo-de-gata",
+    "description": "",
+    "address": "Ctra. Cabo de Gata km 21, 04150 Almería",
+    "lat": 36.782,
+    "lng": -2.241,
+    "province_slug": "almeria",
+    "comarca": "Comarca de Almería",
+    "comarca_slug": "comarca-de-almeria",
+    "municipality_slug": "almeria",
+    "official_url": null,
+    "affiliate_url": null,
+    "price_tier": 2,
+    "is_active": true,
+    "amenities": {
+      "piscina": false,
+      "mascotas": false,
+      "animacion_infantil": false,
+      "entorno_familiar": false,
+      "glamping": false,
+      "playa": false
+    },
+    "rating": 4.8,
+    "review_count": 210,
+    "seasonality": "Abierto todo el año",
+    "rta_license": "CM/AL/00012",
+    "category": "2ª Categ. (3 estrellas)",
+    "legal_capacity": 420,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
+    "image_urls": [
+      "/images/campings/camping-cabo-de-gata/img_1.webp",
+      "/images/campings/camping-cabo-de-gata/img_2.webp",
+      "/images/campings/camping-cabo-de-gata/img_3.webp",
+      "/images/campings/camping-cabo-de-gata/img_4.webp",
+      "/images/campings/camping-cabo-de-gata/img_5.webp"
+    ],
+    "image_url": "/images/campings/camping-cabo-de-gata/img_1.webp",
+    "ai_description": "Camping Cabo de Gata es un alojamiento de 2ª Categ. (3 estrellas) con licencia CM/AL/00012 situado en Almeria (Almería). El complejo cuenta con capacidad para 420 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
+    "faqs_json": [
+      {
+        "question": "¿Cuál es la capacidad legal y categoría de Camping Cabo de Gata?",
+        "answer": "El Camping Cabo de Gata cuenta con categoría de 2ª Categ. (3 estrellas) y capacidad autorizada para 420 personas bajo licencia RTA CM/AL/00012."
+      },
+      {
+        "question": "¿Admite perros y mascotas el Camping Cabo de Gata?",
+        "answer": "El Camping Cabo de Gata mantiene normativa de silencio y no admite mascotas."
+      },
+      {
+        "question": "¿Cuenta con piscina Camping Cabo de Gata?",
+        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
+      }
+    ],
+    "meta_title": "Camping Cabo de Gata en Almeria (Almería) | Reserva y Precios - MejoresCampings",
+    "meta_description": "Ficha oficial de Camping Cabo de Gata en Almeria (Almería). Licencia CM/AL/00012, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
+    "quality_score": 70,
+    "status": "active"
+  },
+  {
     "name": "Camping Albolafia",
     "slug": "camping-albolafia",
     "description": "",
@@ -251,11 +437,17 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 241,
+    "review_count": 65,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CO/00003",
     "category": "2ª Categ. (3 estrellas)",
     "legal_capacity": 310,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
     "image_urls": [
       "/images/campings/camping-albolafia/img_1.webp",
       "/images/campings/camping-albolafia/img_2.webp",
@@ -308,11 +500,17 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 219,
+    "review_count": 283,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00004",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 550,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
     "image_urls": [
       "/images/campings/camping-sierra-nevada/img_1.webp",
       "/images/campings/camping-sierra-nevada/img_2.webp",
@@ -365,11 +563,17 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 200,
+    "review_count": 196,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00019",
     "category": "2ª Categ. (3 estrellas)",
     "legal_capacity": 480,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
     "image_urls": [
       "/images/campings/camping-playa-de-poniente/img_1.webp",
       "/images/campings/camping-playa-de-poniente/img_2.webp",
@@ -399,63 +603,6 @@
     "status": "active"
   },
   {
-    "name": "Camping Doñana Playa",
-    "slug": "camping-donana-playa",
-    "description": "",
-    "address": "Ctra. Mazagón - Matalascañas Km 14.2, 21130 Mazagón, Huelva",
-    "lat": 37.1085,
-    "lng": -6.745,
-    "province_slug": "huelva",
-    "comarca": "Comarca de Huelva",
-    "comarca_slug": "comarca-de-huelva",
-    "municipality_slug": "huelva",
-    "official_url": "https://www.campingdonana.com",
-    "affiliate_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
-    "rating": 4.8,
-    "review_count": 215,
-    "seasonality": "Abierto todo el año",
-    "rta_license": "CM/HU/00010",
-    "category": "1ª Categ. (4 estrellas)",
-    "legal_capacity": 1400,
-    "image_urls": [
-      "/images/campings/camping-donana-playa/img_1.webp",
-      "/images/campings/camping-donana-playa/img_2.webp",
-      "/images/campings/camping-donana-playa/img_3.webp",
-      "/images/campings/camping-donana-playa/img_4.webp",
-      "/images/campings/camping-donana-playa/img_5.webp"
-    ],
-    "image_url": "/images/campings/camping-donana-playa/img_1.webp",
-    "ai_description": "Camping Doñana Playa es un alojamiento de 1ª Categ. (4 estrellas) con licencia CM/HU/00010 situado en Huelva (Huelva). El complejo cuenta con capacidad para 1400 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Cuál es la capacidad legal y categoría de Camping Doñana Playa?",
-        "answer": "El Camping Doñana Playa cuenta con categoría de 1ª Categ. (4 estrellas) y capacidad autorizada para 1400 personas bajo licencia RTA CM/HU/00010."
-      },
-      {
-        "question": "¿Admite perros y mascotas el Camping Doñana Playa?",
-        "answer": "El Camping Doñana Playa mantiene normativa de silencio y no admite mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina Camping Doñana Playa?",
-        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
-      }
-    ],
-    "meta_title": "Camping Doñana Playa en Huelva (Huelva) | Reserva y Precios - MejoresCampings",
-    "meta_description": "Ficha oficial de Camping Doñana Playa en Huelva (Huelva). Licencia CM/HU/00010, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
-    "quality_score": 85,
-    "status": "active"
-  },
-  {
     "name": "Camping Puente de las Herrarias",
     "slug": "camping-puente-de-las-herrarias",
     "description": "",
@@ -479,11 +626,17 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 257,
+    "review_count": 214,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/JA/00007",
     "category": "2ª Categ. (3 estrellas)",
     "legal_capacity": 390,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
     "image_urls": [
       "/images/campings/camping-puente-de-las-herrarias/img_1.webp",
       "/images/campings/camping-puente-de-las-herrarias/img_2.webp",
@@ -536,11 +689,21 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 262,
+    "review_count": 259,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 450,
+    "editorial_badges": [
+      "Selección ABC Viajar"
+    ],
+    "editorial_tags": [
+      "Selección ABC Viajar"
+    ],
+    "editorial_quote": "Recomendado por su entorno arbolado y vistas a la Serranía de Ronda.",
+    "pitchup_rating": 9.3,
+    "photos_manifest": null,
+    "google_place_id": "ChIJ_CampingElSur_Ronda",
     "image_urls": [
       "/images/campings/camping-el-sur/img_1.webp",
       "/images/campings/camping-el-sur/img_2.webp",
@@ -570,63 +733,6 @@
     "status": "active"
   },
   {
-    "name": "Camping Cabopino",
-    "slug": "camping-cabopino",
-    "description": "",
-    "address": "Ctra. N-340, Km 194.7, 29604 Marbella, Málaga",
-    "lat": 36.4904,
-    "lng": -4.7438,
-    "province_slug": "malaga",
-    "comarca": "Comarca de Málaga",
-    "comarca_slug": "comarca-de-malaga",
-    "municipality_slug": "malaga",
-    "official_url": "https://www.campingcabopino.com",
-    "affiliate_url": null,
-    "price_tier": 2,
-    "is_active": true,
-    "amenities": {
-      "piscina": false,
-      "mascotas": false,
-      "animacion_infantil": false,
-      "entorno_familiar": false,
-      "glamping": false,
-      "playa": false
-    },
-    "rating": 4.4,
-    "review_count": 196,
-    "seasonality": "Abierto todo el año",
-    "rta_license": "CM/MA/00002",
-    "category": "1ª Categ. (4 estrellas)",
-    "legal_capacity": 1100,
-    "image_urls": [
-      "/images/campings/camping-cabopino/img_1.webp",
-      "/images/campings/camping-cabopino/img_2.webp",
-      "/images/campings/camping-cabopino/img_3.webp",
-      "/images/campings/camping-cabopino/img_4.webp",
-      "/images/campings/camping-cabopino/img_5.webp"
-    ],
-    "image_url": "/images/campings/camping-cabopino/img_1.webp",
-    "ai_description": "Camping Cabopino es un alojamiento de 1ª Categ. (4 estrellas) con licencia CM/MA/00002 situado en Malaga (Málaga). El complejo cuenta con capacidad para 1100 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
-    "faqs_json": [
-      {
-        "question": "¿Cuál es la capacidad legal y categoría de Camping Cabopino?",
-        "answer": "El Camping Cabopino cuenta con categoría de 1ª Categ. (4 estrellas) y capacidad autorizada para 1100 personas bajo licencia RTA CM/MA/00002."
-      },
-      {
-        "question": "¿Admite perros y mascotas el Camping Cabopino?",
-        "answer": "El Camping Cabopino mantiene normativa de silencio y no admite mascotas."
-      },
-      {
-        "question": "¿Cuenta con piscina Camping Cabopino?",
-        "answer": "El camping no dispone de piscina, situándose cerca de zonas de baño naturales."
-      }
-    ],
-    "meta_title": "Camping Cabopino en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
-    "meta_description": "Ficha oficial de Camping Cabopino en Malaga (Málaga). Licencia CM/MA/00002, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
-    "quality_score": 85,
-    "status": "active"
-  },
-  {
     "name": "Camping Dehesa Nueva",
     "slug": "camping-dehesa-nueva",
     "description": "",
@@ -650,11 +756,17 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 117,
+    "review_count": 190,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/SE/00006",
     "category": "2ª Categ. (3 estrellas)",
     "legal_capacity": 340,
+    "editorial_badges": null,
+    "editorial_tags": null,
+    "editorial_quote": null,
+    "pitchup_rating": null,
+    "photos_manifest": null,
+    "google_place_id": null,
     "image_urls": [
       "/images/campings/camping-dehesa-nueva/img_1.webp",
       "/images/campings/camping-dehesa-nueva/img_2.webp",

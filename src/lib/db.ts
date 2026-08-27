@@ -31,6 +31,12 @@ export interface Camping {
   rating?: number;
   review_count?: number;
   seasonality?: string;
+  editorial_badges?: string[] | null;
+  editorial_tags?: string[] | null;
+  editorial_quote?: string | null;
+  pitchup_rating?: number | null;
+  photos_manifest?: Array<{ url: string; caption?: string; score?: number }> | null;
+  google_place_id?: string | null;
 }
 
 export interface Location {

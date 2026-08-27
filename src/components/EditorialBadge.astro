@@ -1,0 +1,32 @@
+---
+interface Props {
+  badges?: string[] | null;
+  quote?: string | null;
+  pitchup_rating?: number | null;
+}
+
+const { badges, quote, pitchup_rating } = Astro.props;
+---
+{(badges && badges.length > 0) || quote || pitchup_rating ? (
+  <div class="space-y-2.5 my-3">
+    <div class="flex flex-wrap items-center gap-2">
+      {badges && badges.map((badge: string) => (
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/90 text-amber-900 border border-amber-300/90 font-extrabold text-xs shadow-2xs">
+          🏆 {badge}
+        </span>
+      ))}
+
+      {pitchup_rating && (
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100/90 text-teal-950 border border-teal-300/90 font-extrabold text-xs shadow-2xs">
+          ⭐ Valoración Comunidad: {pitchup_rating} / 10
+        </span>
+      )}
+    </div>
+
+    {quote && (
+      <blockquote class="p-3.5 bg-amber-50/90 border-l-4 border-amber-500 rounded-r-xl text-xs sm:text-sm italic text-amber-950 font-medium leading-relaxed shadow-2xs">
+        "{quote}"
+      </blockquote>
+    )}
+  </div>
+) : null}

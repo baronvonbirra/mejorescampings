@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import HeroGallery from '../../components/HeroGallery.astro';
 import CampingBadges from '../../components/CampingBadges.astro';
+import EditorialBadge from '../../components/EditorialBadge.astro';
 import CampingHighlights from '../../components/CampingHighlights.astro';
 import AiDescription from '../../components/AiDescription.astro';
 import StickyCtaMobile from '../../components/StickyCtaMobile.astro';
@@ -192,6 +193,13 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
           </svg>
           {camping.address}
         </p>
+
+        <!-- Editorial Badges & Quote -->
+        <EditorialBadge
+          badges={camping.editorial_badges || camping.editorial_tags}
+          quote={camping.editorial_quote}
+          pitchup_rating={camping.pitchup_rating}
+        />
       </div>
 
       <!-- Closed Notice if applicable -->

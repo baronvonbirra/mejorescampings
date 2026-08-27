@@ -46,6 +46,12 @@ CREATE TABLE IF NOT EXISTS campings (
     rta_license TEXT DEFAULT NULL,
     category TEXT DEFAULT NULL,
     legal_capacity INT DEFAULT NULL,
+    editorial_badges TEXT[] DEFAULT '{}',
+    editorial_tags TEXT[] DEFAULT '{}',
+    editorial_quote TEXT DEFAULT NULL,
+    pitchup_rating NUMERIC DEFAULT NULL,
+    photos_manifest JSONB DEFAULT '[]'::jsonb,
+    google_place_id TEXT DEFAULT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -76,7 +82,13 @@ ADD COLUMN IF NOT EXISTS municipality_slug TEXT DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS quality_score INT DEFAULT 0,
 ADD COLUMN IF NOT EXISTS rta_license TEXT DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS category TEXT DEFAULT NULL,
-ADD COLUMN IF NOT EXISTS legal_capacity INT DEFAULT NULL;
+ADD COLUMN IF NOT EXISTS legal_capacity INT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS editorial_badges TEXT[] DEFAULT '{}',
+ADD COLUMN IF NOT EXISTS editorial_tags TEXT[] DEFAULT '{}',
+ADD COLUMN IF NOT EXISTS editorial_quote TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS pitchup_rating NUMERIC DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS photos_manifest JSONB DEFAULT '[]'::jsonb,
+ADD COLUMN IF NOT EXISTS google_place_id TEXT DEFAULT NULL;
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_campings_slug ON campings(slug);
