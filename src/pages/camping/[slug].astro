@@ -208,7 +208,7 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
       <!-- 2. Component <CampingBadges /> -->
       <div>
         <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Servicios e Instalaciones</h2>
-        <CampingBadges amenities={camping.amenities} />
+        <CampingBadges amenities={camping.amenities} provinceSlug={provinceSlug} />
       </div>
 
       <!-- Primary Booking CTA Box -->

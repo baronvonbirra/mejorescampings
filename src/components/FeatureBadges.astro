@@ -1,27 +1,37 @@
 ---
 interface Props {
   amenities: Record<string, boolean>;
+  provinceSlug?: string;
 }
 
-const { amenities } = Astro.props;
+const { amenities, provinceSlug = 'malaga' } = Astro.props;
 
 const featureList = [
-  { key: 'piscina', label: 'Piscina', icon: '🏊' },
-  { key: 'mascotas', label: 'Mascotas OK', icon: '🐾' },
-  { key: 'animacion_infantil', label: 'Animación Infantil', icon: '✨' },
-  { key: 'entorno_familiar', label: 'Entorno Familiar', icon: '👨‍👩‍👧‍👦' },
-  { key: 'glamping', label: 'Glamping', icon: '⛺' },
-  { key: 'playa', label: 'Cerca de Playa', icon: '🏖️' }
+  { key: 'piscina', label: 'Piscina', icon: '🏊', slug: 'campings-con-piscina' },
+  { key: 'mascotas', label: 'Mascotas OK', icon: '🐾', slug: 'campings-con-mascotas' },
+  { key: 'animacion_infantil', label: 'Animación Infantil', icon: '✨', slug: 'campings-con-animacion-infantil' },
+  { key: 'entorno_familiar', label: 'Entorno Familiar', icon: '👨‍👩‍👧‍👦', slug: 'campings-familiares' },
+  { key: 'glamping', label: 'Glamping', icon: '⛺', slug: 'campings-bungalows' },
+  { key: 'playa', label: 'Cerca de Playa', icon: '🏖️', slug: 'campings-playa' },
+  { key: 'montana', label: 'Montaña', icon: '🏔️', slug: 'campings-montana' }
 ];
 
 const activeFeatures = featureList.filter(f => amenities && amenities[f.key]);
+const cleanProvince = provinceSlug ? provinceSlug.toLowerCase() : 'malaga';
 ---
 
-<div class="flex flex-wrap gap-2 my-3">
-  {activeFeatures.map((f) => (
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
-      <span>{f.icon}</span>
-      <span>{f.label}</span>
-    </span>
-  ))}
+<div class="flex flex-wrap gap-2 my-3 relative z-30 pointer-events-auto">
+  {activeFeatures.map((f) => {
+    const filterUrl = `${import.meta.env.BASE_URL}${cleanProvince}/${f.slug}/`;
+    return (
+      <a
+        href={filterUrl}
+        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-xs transition group"
+        title={`Ver campings con ${f.label} en ${cleanProvince}`}
+      >
+        <span>{f.icon}</span>
+        <span class="group-hover:underline">{f.label}</span>
+      </a>
+    );
+  })}
 </div>
