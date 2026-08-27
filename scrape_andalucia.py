@@ -482,6 +482,38 @@ def infer_province_from_coords(lat: float, lng: float, name_addr: str) -> Tuple[
         return "sevilla", "Sevilla"
     return "malaga", "Málaga"
 
+def fetch_campsite_website_images(official_url: Optional[str]) -> List[str]:
+    """
+    Scrapes official campsite website HTML to extract direct real photo image candidate URLs.
+    """
+    if not official_url or not official_url.startswith("http"):
+        return []
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+
+    try:
+        logging.info(f"Scraping official campsite website photos from {official_url}...")
+        resp = requests.get(official_url, headers=headers, timeout=5)
+        if resp.status_code != 200:
+            return []
+
+        # Find img src or srcset URLs ending in image extensions
+        matches = re.findall(r'(?:src|data-src|href|srcset)=["\']([^"\']+\.(?:jpg|jpeg|png|webp)(?:\?[^"\']*)?)["\']', resp.text, re.IGNORECASE)
+        extracted = []
+        for m in matches:
+            # Handle srcset entries
+            raw = m.split(',')[0].strip().split(' ')[0]
+            full_url = urljoin(official_url, raw)
+            if full_url not in extracted:
+                extracted.append(full_url)
+        logging.info(f"Extracted {len(extracted)} candidate image URLs from {official_url}")
+        return extracted
+    except Exception as e:
+        logging.debug(f"Could not scrape photos from official website {official_url}: {e}")
+        return []
+
 def get_regional_image_pool(campsite: Dict[str, Any]) -> List[str]:
     m_slug = campsite.get("municipality_slug", "").lower()
     name = campsite.get("name", "").lower()
@@ -603,18 +635,27 @@ def validate_and_process_image_webp(img_url: str, campsite_slug: str, img_index:
 
 def process_campsite_images(campsite: Dict[str, Any], slug: str) -> List[str]:
     """Extract up to 5 real images per campsite, validate, convert to WebP, and return final CDN URLs."""
-    candidates = campsite.get("image_urls", [])
+    candidates = list(campsite.get("image_urls", []))
+
+    # 1. Scrape official website photos if official URL is provided
+    official_url = campsite.get("official_url")
+    if official_url:
+        site_photos = fetch_campsite_website_images(official_url)
+        for sp in site_photos:
+            if sp not in candidates:
+                candidates.append(sp)
+
     valid_webp_urls = []
 
-    # 1. Validate initial candidate URLs
-    for idx, raw_url in enumerate(candidates):
+    # 2. Validate extracted candidate URLs
+    for raw_url in candidates:
         if len(valid_webp_urls) >= 5:
             break
         result_url = validate_and_process_image_webp(raw_url, slug, len(valid_webp_urls) + 1)
         if result_url and result_url not in valid_webp_urls:
             valid_webp_urls.append(result_url)
 
-    # 2. If fewer than 5 valid images, use regional real photo pool
+    # 3. If fewer than 5 valid images, use regional real photo pool
     if len(valid_webp_urls) < 5:
         pool = get_regional_image_pool(campsite)
         for pool_url in pool:
