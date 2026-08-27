@@ -1234,7 +1234,43 @@ def main():
         json.dump(features, f, ensure_ascii=False, indent=2)
 
     generate_xml_sitemaps(cleaned_data, locations, features)
+    sync_to_supabase(cleaned_data, locations, features)
     logging.info("Multi-source scraping & WebP image pipeline execution complete.")
+
+def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, Any]], features: List[Dict[str, Any]]) -> None:
+    """
+    Syncs generated dataset records to Supabase database tables if Supabase environment credentials are present.
+    Executes upsert operations using 'slug' as the primary key/conflict target.
+    """
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
+
+    if not url or not key:
+        logging.info("SUPABASE_URL and key not set. Skipping Supabase database sync.")
+        return
+
+    try:
+        from supabase import create_client
+        supabase = create_client(url, key)
+        logging.info("Synchronizing extracted dataset to Supabase database...")
+
+        # Sync campings
+        if campings:
+            supabase.table("campings").upsert(campings, on_conflict="slug").execute()
+            logging.info(f"Successfully upserted {len(campings)} campings to Supabase.")
+
+        # Sync locations
+        if locations:
+            supabase.table("locations").upsert(locations, on_conflict="slug").execute()
+            logging.info(f"Successfully upserted {len(locations)} locations to Supabase.")
+
+        # Sync features
+        if features:
+            supabase.table("features").upsert(features, on_conflict="slug").execute()
+            logging.info(f"Successfully upserted {len(features)} features to Supabase.")
+
+    except Exception as e:
+        logging.warning(f"Error syncing dataset to Supabase database: {e}")
 
 if __name__ == "__main__":
     main()
