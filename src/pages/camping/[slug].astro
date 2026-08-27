@@ -343,11 +343,14 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
             Descubre otros alojamientos y categorías destacadas dentro de {municipalityName} para planificar tu ruta de naturaleza.
           </p>
           <div class="flex flex-wrap gap-2 text-xs">
-            <a href={`${import.meta.env.BASE_URL}andalucia/malaga/`} class="px-3 py-1.5 bg-white border border-emerald-300 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition shadow-2xs">
-              &larr; Todos los campings en Provincia de Málaga
+            <a href={`${import.meta.env.BASE_URL}${provinceSlug}/`} class="px-3 py-1.5 bg-white border border-emerald-300 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition shadow-2xs">
+              &larr; Todos los campings en Provincia de {provinceName}
             </a>
-            <a href={`${import.meta.env.BASE_URL}andalucia/malaga/campings-con-piscina/`} class="px-3 py-1.5 bg-white border border-emerald-300 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition shadow-2xs">
-              Campings con piscina en {municipalityName}
+            <a href={`${import.meta.env.BASE_URL}${provinceSlug}/campings-con-mascotas/`} class="px-3 py-1.5 bg-white border border-emerald-300 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition shadow-2xs">
+              Campings que admiten mascotas en {provinceName}
+            </a>
+            <a href={`${import.meta.env.BASE_URL}${provinceSlug}/campings-con-piscina/`} class="px-3 py-1.5 bg-white border border-emerald-300 rounded-lg text-emerald-800 font-semibold hover:bg-emerald-100 transition shadow-2xs">
+              Campings con piscina en {provinceName}
             </a>
           </div>
         </div>
