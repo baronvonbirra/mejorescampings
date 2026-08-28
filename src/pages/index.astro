@@ -180,10 +180,87 @@ const provinceCounts = PROVINCES.map((p) => {
       </a>
     </div>
 
+    <!-- Render all available camping cards hidden/visible so client-side admin promoted state re-orders dynamically -->
     <div id="featured-campings-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {featuredCampings.map((camping) => (
+      {allCampings.map((camping) => (
         <CampingCard camping={camping} />
       ))}
     </div>
   </section>
+
+  <script is:inline>
+    // Client-side hydration for admin promoted & disabled campsite preferences
+    (function () {
+      const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
+      const DISABLED_KEY = 'mejorescampings_disabled_slugs';
+      const defaultPromoted = ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
+
+      function applyPromotedFilters() {
+        const grid = document.getElementById('featured-campings-grid');
+        if (!grid) return;
+
+        let promotedSlugs;
+        try {
+          const stored = localStorage.getItem(PROMOTED_KEY);
+          promotedSlugs = stored ? JSON.parse(stored) : defaultPromoted;
+        } catch (e) {
+          promotedSlugs = defaultPromoted;
+        }
+
+        let disabledSlugs = [];
+        try {
+          const storedDisabled = localStorage.getItem(DISABLED_KEY);
+          if (storedDisabled) disabledSlugs = JSON.parse(storedDisabled);
+        } catch (e) {}
+
+        const cardNodes = Array.from(grid.children);
+
+        // Filter out disabled campsites
+        const activeNodes = cardNodes.filter((node) => {
+          const slug = node.getAttribute('data-slug');
+          return !disabledSlugs.includes(slug);
+        });
+
+        // Hide disabled ones
+        cardNodes.forEach((node) => {
+          const slug = node.getAttribute('data-slug');
+          if (disabledSlugs.includes(slug)) {
+            node.style.display = 'none';
+          }
+        });
+
+        // Sort active nodes: promoted ones first (matching order of promotedSlugs if possible), then others
+        activeNodes.sort((a, b) => {
+          const slugA = a.getAttribute('data-slug');
+          const slugB = b.getAttribute('data-slug');
+
+          const isPromA = promotedSlugs.includes(slugA);
+          const isPromB = promotedSlugs.includes(slugB);
+
+          if (isPromA && !isPromB) return -1;
+          if (!isPromA && isPromB) return 1;
+          if (isPromA && isPromB) return promotedSlugs.indexOf(slugA) - promotedSlugs.indexOf(slugB);
+          return 0;
+        });
+
+        // Determine how many cards to show (show all promoted + total min 6 cards)
+        const displayLimit = Math.max(6, promotedSlugs.length);
+
+        activeNodes.forEach((node, index) => {
+          if (index < displayLimit) {
+            node.style.display = 'flex';
+            grid.appendChild(node);
+          } else {
+            node.style.display = 'none';
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyPromotedFilters);
+      } else {
+        applyPromotedFilters();
+      }
+    })();
+  </script>
 </Layout>
