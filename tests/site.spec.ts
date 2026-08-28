@@ -43,6 +43,12 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await rescrapeBtn.click();
     await expect(page.locator('#action-notification-box')).toContainText('Re-scraping');
 
+    // Test promoted toggle checkbox in merged inventory table
+    const promotedCheckbox = page.locator('.promoted-checkbox').first();
+    await expect(promotedCheckbox).toBeVisible();
+    await promotedCheckbox.click();
+    await expect(page.locator('#action-notification-box')).toContainText('Promocionados actualizados');
+
     // Test action button: Delete / Restore toggle
     const deleteBtn = page.locator('button[data-action="delete"]').first();
     await expect(deleteBtn).toBeVisible();
@@ -53,11 +59,8 @@ test.describe('MejoresCampings - Site QA Suite', () => {
   test('Camping cards are fully clickable and navigate to detail page', async ({ page }) => {
     await page.goto('./');
 
-    // Find first camping card stretched link
-    const cardLink = page.locator('a[aria-label*="Ver detalles de"]').first();
-    await expect(cardLink).toBeVisible();
-
-    // Click on the card container/stretched link
+    // Find first visible camping card stretched link
+    const cardLink = page.locator('div[data-slug] a[aria-label*="Ver detalles de"]:visible').first();
     await cardLink.click();
 
     // Assert navigation to camping detail page
