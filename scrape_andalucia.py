@@ -17,6 +17,7 @@ import json
 import math
 import io
 import logging
+import argparse
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Tuple, Optional
 from urllib.parse import urljoin, urlparse
@@ -1170,31 +1171,165 @@ def generate_xml_sitemaps(campings, locations, features, base_url="https://mejor
     with open("public/sitemap-malaga.xml", "w", encoding="utf-8") as f:
         f.write(xml_content)
 
-def main():
-    logging.info("Starting MejoresCampings Multi-Source Scraping & Quality Pipeline...")
-
-    # Load seeds file if present
-    seeds_file = "seeds.json" if os.path.exists("seeds.json") else os.path.join("src", "data", "seeds.json")
-    seed_extracted_items = []
-    if os.path.exists(seeds_file):
+def load_existing_campings() -> List[Dict[str, Any]]:
+    """Loads existing campsite records from src/data/campings.json fallback file."""
+    campings_file = os.path.join("src", "data", "campings.json")
+    if os.path.exists(campings_file):
         try:
-            with open(seeds_file, "r", encoding="utf-8") as sf:
-                seeds_list = json.load(sf)
-                for seed_item in seeds_list:
-                    logging.info(f"Parsing seed item: {seed_item.get('url')}")
-                    seed_extracted_items.extend(parse_seed_article(seed_item))
-        except Exception as se:
-            logging.warning(f"Error processing seeds file {seeds_file}: {se}")
+            with open(campings_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+        except Exception as e:
+            logging.warning(f"Could not load existing dataset from {campings_file}: {e}")
+    return []
 
-    overpass_data = fetch_overpass_andalucia_campings()
-    raw_combined = seed_extracted_items + overpass_data + OFFICIAL_RTA_REGISTRY
+def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) -> Dict[str, Any]:
+    """Merges newly scraped campsite information with an existing dataset record."""
+    merged = dict(existing)
+    merged.update({
+        "name": scraped.get("name") or existing.get("name"),
+        "description": scraped.get("description") or existing.get("description"),
+        "address": scraped.get("address") or existing.get("address"),
+        "lat": scraped.get("lat") if isinstance(scraped.get("lat"), (int, float)) else existing.get("lat"),
+        "lng": scraped.get("lng") if isinstance(scraped.get("lng"), (int, float)) else existing.get("lng"),
+        "province_slug": scraped.get("province_slug") or existing.get("province_slug"),
+        "comarca": scraped.get("comarca") or existing.get("comarca"),
+        "comarca_slug": scraped.get("comarca_slug") or existing.get("comarca_slug"),
+        "municipality_slug": scraped.get("municipality_slug") or existing.get("municipality_slug"),
+        "official_url": scraped.get("official_url") or existing.get("official_url"),
+        "affiliate_url": scraped.get("affiliate_url") or existing.get("affiliate_url"),
+        "price_tier": scraped.get("price_tier", existing.get("price_tier", 2)),
+        "amenities": scraped.get("amenities") or existing.get("amenities", {}),
+        "rating": scraped.get("rating") if scraped.get("rating") is not None else existing.get("rating"),
+        "review_count": scraped.get("review_count") if scraped.get("review_count") is not None else existing.get("review_count"),
+        "seasonality": scraped.get("seasonality") or existing.get("seasonality"),
+        "rta_license": scraped.get("rta_license") or existing.get("rta_license"),
+        "category": scraped.get("category") or existing.get("category"),
+        "legal_capacity": scraped.get("legal_capacity") or existing.get("legal_capacity"),
+        "editorial_badges": scraped.get("editorial_badges") or existing.get("editorial_badges"),
+        "editorial_tags": scraped.get("editorial_tags") or existing.get("editorial_tags"),
+        "editorial_quote": scraped.get("editorial_quote") or existing.get("editorial_quote"),
+        "pitchup_rating": scraped.get("pitchup_rating") or existing.get("pitchup_rating"),
+        "photos_manifest": scraped.get("photos_manifest") or existing.get("photos_manifest"),
+        "google_place_id": scraped.get("google_place_id") or existing.get("google_place_id"),
+        "quality_score": scraped.get("quality_score", existing.get("quality_score", 70)),
+        "status": scraped.get("status", existing.get("status", "active")),
+        "ai_description": scraped.get("ai_description") or existing.get("ai_description"),
+        "faqs_json": scraped.get("faqs_json") or existing.get("faqs_json"),
+        "meta_title": scraped.get("meta_title") or existing.get("meta_title"),
+        "meta_description": scraped.get("meta_description") or existing.get("meta_description"),
+    })
 
-    cleaned_data, total, flagged = process_and_clean_pipeline(raw_combined)
-    logging.info(f"Pipeline processed {total} records. Active campings: {len(cleaned_data)}, Pending Review: {flagged}")
+    # Retain manual deactivation (is_active: False) or disabled status
+    if existing.get("is_active") is False or existing.get("status") == "disabled":
+        merged["is_active"] = False
+        merged["status"] = existing.get("status", "disabled")
+    else:
+        merged["is_active"] = scraped.get("is_active", True)
+
+    # Preserve or update image URLs
+    scraped_images = scraped.get("image_urls", [])
+    if scraped_images:
+        merged["image_urls"] = scraped_images
+        merged["image_url"] = scraped_images[0]
+    elif not merged.get("image_urls"):
+        merged["image_urls"] = existing.get("image_urls", [])
+        merged["image_url"] = existing.get("image_url", "")
+
+    return merged
+
+def parse_args(sys_args: Optional[List[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="MejoresCampings Scraper & Quality Pipeline")
+    parser.add_argument(
+        "--slug", "--target", "-s",
+        dest="target_slug",
+        type=str,
+        default=None,
+        help="Target a specific campsite slug to re-scrape (e.g. camping-cabopino)"
+    )
+    return parser.parse_args(sys_args)
+
+def main(sys_args: Optional[List[str]] = None):
+    args = parse_args(sys_args)
+    target_slug = args.target_slug
+
+    existing_campings = load_existing_campings()
+    existing_map = {c["slug"]: dict(c) for c in existing_campings}
+
+    supabase_sync_items = []
+
+    if target_slug:
+        logging.info(f"Starting targeted re-scrape for campsite slug: '{target_slug}'")
+        # Find candidate for target_slug in existing data, RTA registry, or seed data
+        candidate = existing_map.get(target_slug)
+        if not candidate:
+            for rta in OFFICIAL_RTA_REGISTRY:
+                r_slug = generate_slug(title_case(rta.get("name", "")))
+                if r_slug == target_slug or target_slug in r_slug:
+                    candidate = dict(rta)
+                    break
+
+        if not candidate:
+            candidate = {
+                "name": title_case(target_slug.replace('-', ' ')),
+                "slug": target_slug,
+                "province_slug": "malaga",
+                "municipality_slug": "malaga"
+            }
+
+        cleaned_scraped, total, flagged = process_and_clean_pipeline([candidate])
+        if cleaned_scraped:
+            scraped_item = cleaned_scraped[0]
+            real_slug = scraped_item["slug"]
+            if real_slug in existing_map:
+                existing_map[real_slug] = merge_campsite_records(existing_map[real_slug], scraped_item)
+            elif target_slug in existing_map:
+                existing_map[target_slug] = merge_campsite_records(existing_map[target_slug], scraped_item)
+            else:
+                existing_map[real_slug] = scraped_item
+            supabase_sync_items = [existing_map.get(real_slug) or existing_map.get(target_slug)]
+            logging.info(f"Targeted re-scrape completed for campsite '{target_slug}' (slug: '{real_slug}').")
+        else:
+            logging.warning(f"Could not re-scrape campsite for target slug '{target_slug}'.")
+    else:
+        logging.info("Starting MejoresCampings Multi-Source Scraping & Quality Pipeline...")
+
+        # Load seeds file if present
+        seeds_file = "seeds.json" if os.path.exists("seeds.json") else os.path.join("src", "data", "seeds.json")
+        seed_extracted_items = []
+        if os.path.exists(seeds_file):
+            try:
+                with open(seeds_file, "r", encoding="utf-8") as sf:
+                    seeds_list = json.load(sf)
+                    for seed_item in seeds_list:
+                        logging.info(f"Parsing seed item: {seed_item.get('url')}")
+                        seed_extracted_items.extend(parse_seed_article(seed_item))
+            except Exception as se:
+                logging.warning(f"Error processing seeds file {seeds_file}: {se}")
+
+        overpass_data = fetch_overpass_andalucia_campings()
+        raw_combined = seed_extracted_items + overpass_data + OFFICIAL_RTA_REGISTRY
+
+        cleaned_scraped, total, flagged = process_and_clean_pipeline(raw_combined)
+        logging.info(f"Pipeline processed {total} records. Scraped campings: {len(cleaned_scraped)}, Pending Review: {flagged}")
+
+        # Merge scraped items into existing map to preserve all pre-existing records and manual deactivations
+        for scraped in cleaned_scraped:
+            s_slug = scraped["slug"]
+            if s_slug in existing_map:
+                existing_map[s_slug] = merge_campsite_records(existing_map[s_slug], scraped)
+            else:
+                existing_map[s_slug] = scraped
+
+        supabase_sync_items = list(existing_map.values())
+
+    final_campings = list(existing_map.values())
+    logging.info(f"Total dataset count after merge: {len(final_campings)} campings.")
 
     os.makedirs("src/data", exist_ok=True)
     with open("src/data/campings.json", "w", encoding="utf-8") as f:
-        json.dump(cleaned_data, f, ensure_ascii=False, indent=2)
+        json.dump(final_campings, f, ensure_ascii=False, indent=2)
 
     locations = [
         {"region": "andalucia", "province": "almeria", "municipality": "Níjar", "slug": "almeria/nijar"},
@@ -1233,8 +1368,8 @@ def main():
     with open("src/data/features.json", "w", encoding="utf-8") as f:
         json.dump(features, f, ensure_ascii=False, indent=2)
 
-    generate_xml_sitemaps(cleaned_data, locations, features)
-    sync_to_supabase(cleaned_data, locations, features)
+    generate_xml_sitemaps(final_campings, locations, features)
+    sync_to_supabase(supabase_sync_items, locations, features)
     logging.info("Multi-source scraping & WebP image pipeline execution complete.")
 
 def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, Any]], features: List[Dict[str, Any]]) -> None:
