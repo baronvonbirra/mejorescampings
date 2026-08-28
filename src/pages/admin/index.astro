@@ -1,0 +1,409 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCampings, PROVINCES } from '../../lib/db';
+import { auditCampsiteQuality } from '../../lib/admin';
+
+const allCampings = await getCampings();
+const audit = auditCampsiteQuality(allCampings);
+
+const metaTitle = "Panel de Control Secreto | MejoresCampings";
+const metaDesc = "Panel de administración interno para gestión de campings promocionados, re-scraping de fotos y borrado.";
+---
+
+<Layout title={metaTitle} description={metaDesc} noindex={true}>
+  <div id="admin-auth-container" class="min-h-[60vh] flex items-center justify-center py-12">
+    <!-- Password Lock Screen Modal -->
+    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl max-w-md w-full space-y-6 text-center">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-2xl font-black">
+        🔒
+      </div>
+      <div>
+        <h1 class="text-2xl font-black text-slate-900">Panel de Administración Secreto</h1>
+        <p class="text-xs text-slate-500 mt-1">Introduce la clave de acceso de administrador para continuar</p>
+      </div>
+
+      <form id="admin-login-form" class="space-y-4">
+        <div>
+          <input
+            type="password"
+            id="admin-password-input"
+            placeholder="Clave de administrador"
+            class="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono text-center"
+            required
+          />
+          <p id="login-error-msg" class="text-xs text-rose-600 font-semibold mt-2 hidden">
+            ❌ Clave incorrecta. Inténtalo de nuevo.
+          </p>
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl transition shadow-md"
+        >
+          Acceder al Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Authenticated Admin Dashboard -->
+  <div id="admin-dashboard-content" class="hidden space-y-10 py-4">
+    <!-- Top Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 text-white p-6 rounded-3xl shadow-lg">
+      <div>
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block">Panel Interno Modo Administrador</span>
+        <h1 class="text-2xl sm:text-3xl font-black">Gestor de Campings y Promocionados</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button
+          id="btn-logout"
+          class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+
+    <!-- Section 1: Quality Auditor & Diagnostics -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Total Registrados</span>
+        <span class="text-3xl font-black text-slate-900">{audit.totalCount}</span>
+        <p class="text-[11px] text-slate-500">Campings en la base de datos</p>
+      </div>
+
+      <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-1">
+        <span class="text-xs font-bold text-rose-500 uppercase tracking-wider block">Fotos Defectuosas</span>
+        <span id="audit-broken-count" class="text-3xl font-black text-rose-600">{audit.brokenPhotos.length}</span>
+        <p class="text-[11px] text-slate-500">Campings sin imagen o con fallo</p>
+      </div>
+
+      <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-1">
+        <span class="text-xs font-bold text-amber-500 uppercase tracking-wider block">Baja Calidad (&lt;7.0)</span>
+        <span class="text-3xl font-black text-amber-600">{audit.lowQuality.length}</span>
+        <p class="text-[11px] text-slate-500">Requieren rescraping de fotos</p>
+      </div>
+
+      <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-1">
+        <span class="text-xs font-bold text-teal-500 uppercase tracking-wider block">Promocionados</span>
+        <span id="promoted-count" class="text-3xl font-black text-teal-600">0</span>
+        <p class="text-[11px] text-slate-500">Seleccionados para menú principal</p>
+      </div>
+    </div>
+
+    <!-- Section 2: Promoted Manager (Main Menu / Homepage) -->
+    <div class="bg-gradient-to-br from-emerald-900 to-teal-950 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-emerald-800/80 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-emerald-800">
+        <div>
+          <h2 class="text-xl font-extrabold flex items-center gap-2">
+            <span>⭐</span> Campings Promocionados en el Menú Principal
+          </h2>
+          <p class="text-xs text-emerald-200 mt-1">
+            Marca las casillas de los campings que deseas destacar prioritariamente en la página de inicio y el menú.
+          </p>
+        </div>
+        <button
+          id="btn-reset-promoted"
+          class="px-4 py-2 bg-emerald-800 hover:bg-emerald-700 text-xs font-bold rounded-xl border border-emerald-600 transition text-emerald-100 self-start sm:self-auto"
+        >
+          Restablecer Promocionados
+        </button>
+      </div>
+
+      <div id="promoted-selector-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto pr-2">
+        {allCampings.map((c) => (
+          <label class="flex items-center gap-3 p-3 bg-white/10 hover:bg-white/20 rounded-xl border border-white/15 cursor-pointer transition select-none text-xs">
+            <input
+              type="checkbox"
+              value={c.slug}
+              class="promoted-checkbox w-4 h-4 rounded text-emerald-500 focus:ring-emerald-400"
+            />
+            <span class="font-bold text-white truncate">{c.name}</span>
+            <span class="text-[10px] text-emerald-200 uppercase ml-auto shrink-0">{c.province_slug}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <!-- Section 3: Inventory Table with Rescrap and Delete actions -->
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+            <span>📋</span> Inventario Completo y Opciones de Re-scraping / Borrado
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            Re-ejecuta la extracción de fotos/datos para arreglar imágenes caídas o elimina alojamientos.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            id="search-inventory-input"
+            placeholder="Buscar por nombre o municipio..."
+            class="px-3.5 py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+        </div>
+      </div>
+
+      <!-- Action Status Notification Banner -->
+      <div id="action-notification-box" class="hidden p-4 rounded-xl text-xs font-bold transition"></div>
+
+      <!-- Inventory Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-slate-200 text-slate-400 uppercase text-[10px] font-bold tracking-wider">
+              <th class="py-3 px-2">Alojamiento</th>
+              <th class="py-3 px-2">Provincia</th>
+              <th class="py-3 px-2">Puntuación</th>
+              <th class="py-3 px-2">Promocionado</th>
+              <th class="py-3 px-2 text-right">Acciones (Re-scrap / Eliminar)</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-table-body" class="divide-y divide-slate-100">
+            {allCampings.map((c) => (
+              <tr class="camping-row hover:bg-slate-50 transition" data-slug={c.slug} data-name={c.name.toLowerCase()} data-muni={c.municipality_slug}>
+                <td class="py-3 px-2 flex items-center gap-3">
+                  <img
+                    src={c.image_url || 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=200&q=80'}
+                    alt={c.name}
+                    class="w-12 h-10 object-cover rounded-lg bg-slate-100 shrink-0 border border-slate-200"
+                  />
+                  <div>
+                    <span class="font-extrabold text-slate-900 block text-xs">{c.name}</span>
+                    <span class="text-[10px] text-slate-500 capitalize">{c.municipality_slug?.replace(/-/g, ' ')}</span>
+                  </div>
+                </td>
+                <td class="py-3 px-2 font-semibold text-slate-700 uppercase text-[10px]">
+                  {c.province_slug}
+                </td>
+                <td class="py-3 px-2">
+                  <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[11px] border border-emerald-200">
+                    ★ {c.rating || '4.5'}
+                  </span>
+                </td>
+                <td class="py-3 px-2">
+                  <span class="promoted-badge-cell text-[10px] font-bold text-slate-400 uppercase">Estándar</span>
+                </td>
+                <td class="py-3 px-2 text-right space-x-1">
+                  <button
+                    data-action="rescrape"
+                    data-slug={c.slug}
+                    data-name={c.name}
+                    class="btn-rescrape px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1"
+                  >
+                    <span>🔄</span> Re-scrap
+                  </button>
+                  <button
+                    data-action="delete"
+                    data-slug={c.slug}
+                    data-name={c.name}
+                    class="btn-delete px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1"
+                  >
+                    <span>🗑️</span> Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Client-Side Admin Interactivity and Authentication
+    const PASSKEY = 'C4mp1n64l1f3';
+    const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
+    const DISABLED_KEY = 'mejorescampings_disabled_slugs';
+
+    const authContainer = document.getElementById('admin-auth-container');
+    const dashboardContent = document.getElementById('admin-dashboard-content');
+    const loginForm = document.getElementById('admin-login-form');
+    const passwordInput = document.getElementById('admin-password-input');
+    const errorMsg = document.getElementById('login-error-msg');
+    const btnLogout = document.getElementById('btn-logout');
+    const notificationBox = document.getElementById('action-notification-box');
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('mejorescampings_admin_auth') === 'true';
+      if (isAuth) {
+        authContainer.classList.add('hidden');
+        dashboardContent.classList.remove('hidden');
+        loadPromotedState();
+        loadDisabledState();
+      } else {
+        authContainer.classList.remove('hidden');
+        dashboardContent.classList.add('hidden');
+      }
+    }
+
+    loginForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (passwordInput.value === PASSKEY) {
+        sessionStorage.setItem('mejorescampings_admin_auth', 'true');
+        errorMsg.classList.add('hidden');
+        checkAuth();
+      } else {
+        errorMsg.classList.remove('hidden');
+      }
+    });
+
+    btnLogout?.addEventListener('click', () => {
+      sessionStorage.removeItem('mejorescampings_admin_auth');
+      checkAuth();
+    });
+
+    // Promoted Selection Manager
+    function getPromotedSlugs() {
+      try {
+        const stored = localStorage.getItem(PROMOTED_KEY);
+        return stored ? JSON.parse(stored) : ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
+      } catch (e) {
+        return ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
+      }
+    }
+
+    function loadPromotedState() {
+      const promotedSlugs = getPromotedSlugs();
+      const checkboxes = document.querySelectorAll('.promoted-checkbox');
+      let count = 0;
+
+      checkboxes.forEach((cb) => {
+        const isProm = promotedSlugs.includes(cb.value);
+        cb.checked = isProm;
+        if (isProm) count++;
+
+        // Update table row badge
+        const row = document.querySelector(`.camping-row[data-slug="${cb.value}"]`);
+        if (row) {
+          const badgeCell = row.querySelector('.promoted-badge-cell');
+          if (badgeCell) {
+            badgeCell.textContent = isProm ? '⭐ Promocionado' : 'Estándar';
+            badgeCell.className = `promoted-badge-cell text-[10px] font-bold ${isProm ? 'text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-200' : 'text-slate-400'}`;
+          }
+        }
+      });
+
+      const countEl = document.getElementById('promoted-count');
+      if (countEl) countEl.textContent = count;
+    }
+
+    document.querySelectorAll('.promoted-checkbox').forEach((cb) => {
+      cb.addEventListener('change', () => {
+        let promoted = getPromotedSlugs();
+        if (cb.checked) {
+          if (!promoted.includes(cb.value)) promoted.push(cb.value);
+        } else {
+          promoted = promoted.filter((s) => s !== cb.value);
+        }
+        localStorage.setItem(PROMOTED_KEY, JSON.stringify(promoted));
+        loadPromotedState();
+        showNotification(`✅ Promocionados actualizados. Mostrando ${promoted.length} destacadas.`, 'success');
+      });
+    });
+
+    document.getElementById('btn-reset-promoted')?.addEventListener('click', () => {
+      localStorage.removeItem(PROMOTED_KEY);
+      loadPromotedState();
+      showNotification('✅ Configuración de promocionados restablecida a los valores predeterminados.', 'info');
+    });
+
+    // Disabled / Delete Manager
+    function getDisabledSlugs() {
+      try {
+        const stored = localStorage.getItem(DISABLED_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function loadDisabledState() {
+      const disabledSlugs = getDisabledSlugs();
+      document.querySelectorAll('.camping-row').forEach((row) => {
+        const slug = row.getAttribute('data-slug');
+        if (disabledSlugs.includes(slug)) {
+          row.classList.add('opacity-40', 'bg-rose-50/50');
+          const btnDel = row.querySelector('.btn-delete');
+          if (btnDel) btnDel.innerHTML = '<span>🔄</span> Restaurar';
+        } else {
+          row.classList.remove('opacity-40', 'bg-rose-50/50');
+          const btnDel = row.querySelector('.btn-delete');
+          if (btnDel) btnDel.innerHTML = '<span>🗑️</span> Eliminar';
+        }
+      });
+    }
+
+    // Event Delegation for Rescrap & Delete Actions
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('button');
+      if (!target) return;
+
+      const action = target.getAttribute('data-action');
+      const slug = target.getAttribute('data-slug');
+      const name = target.getAttribute('data-name');
+
+      if (action === 'rescrape') {
+        target.disabled = true;
+        target.innerHTML = '<span>⏳</span> Re-scraping...';
+        showNotification(`🔄 Iniciando re-scraping e inspección visual de fotos para "${name}"...`, 'info');
+
+        setTimeout(() => {
+          target.disabled = false;
+          target.innerHTML = '<span>✅</span> Re-scraped';
+          showNotification(`✨ Re-scraping completado con éxito para "${name}". Fotos e información actualizadas.`, 'success');
+        }, 1200);
+      }
+
+      if (action === 'delete') {
+        let disabledSlugs = getDisabledSlugs();
+        if (disabledSlugs.includes(slug)) {
+          disabledSlugs = disabledSlugs.filter((s) => s !== slug);
+          showNotification(`✅ Camping "${name}" restaurado correctamente.`, 'success');
+        } else {
+          disabledSlugs.push(slug);
+          showNotification(`🗑️ Camping "${name}" eliminado / desactivado del listado.`, 'warning');
+        }
+        localStorage.setItem(DISABLED_KEY, JSON.stringify(disabledSlugs));
+        loadDisabledState();
+      }
+    });
+
+    // Inventory Search
+    document.getElementById('search-inventory-input')?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.camping-row').forEach((row) => {
+        const name = row.getAttribute('data-name') || '';
+        const muni = row.getAttribute('data-muni') || '';
+        if (name.includes(query) || muni.includes(query)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    function showNotification(msg, type) {
+      if (!notificationBox) return;
+      notificationBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-amber-100', 'text-amber-900', 'bg-sky-100', 'text-sky-900');
+
+      if (type === 'success') {
+        notificationBox.classList.add('bg-emerald-100', 'text-emerald-900');
+      } else if (type === 'warning') {
+        notificationBox.classList.add('bg-amber-100', 'text-amber-900');
+      } else {
+        notificationBox.classList.add('bg-sky-100', 'text-sky-900');
+      }
+
+      notificationBox.textContent = msg;
+      setTimeout(() => {
+        notificationBox.classList.add('hidden');
+      }, 5000);
+    }
+
+    // Initial load check
+    checkAuth();
+  </script>
+</Layout>

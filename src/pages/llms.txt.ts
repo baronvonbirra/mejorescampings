@@ -1,11 +1,22 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async () => {
-  const content = `# MejoresCampings.es - Directorio de Campings de Andalucía
+  const content = `# MejoresCampings.es - Directorio y Guías de Campings en Andalucía
 
-> Datos estructurados y actualizados de campings, áreas pernocta y glamping en la comunidad autónoma de Andalucía, España.
+> Datos estructurados y actualizados de campings, áreas pernocta y glamping en las 8 provincias de Andalucía, España.
 
-## Provincias
+## Sección de Guías de Pernocta por Provincia
+- /guias/: Índice central de guías de pernocta y acampada clasificadas por provincia.
+- /guias/normativa-pernocta-almeria/: Normativa en Cabo de Gata-Níjar, Ley de Costas y áreas camper en Almería.
+- /guias/normativa-pernocta-cadiz/: Normativa en Tarifa, El Palmar, Sierra de Grazalema y Los Alcornocales.
+- /guias/normativa-pernocta-cordoba/: Regulación en Sierra Morena, Subbética y embalses de Córdoba.
+- /guias/normativa-pernocta-granada/: Normes en Sierra Nevada, Alpujarra, Costa Tropical y Geoparque.
+- /guias/normativa-pernocta-huelva/: Normas en Doñana, Mazagón, Matalascañas y Sierra de Aracena.
+- /guias/normativa-pernocta-jaen/: Regulación en Parque Natural Cazorla, Segura y Las Villas y Despeñaperros.
+- /guias/normativa-pernocta-malaga/: Normativa en Costa del Sol, Sierra de las Nieves y Serranía de Ronda.
+- /guias/normativa-pernocta-sevilla/: Normativa en Sierra Norte de Sevilla y Pinares de Aznalcázar.
+
+## Hubs Provinciales de Campings
 - /almeria/: Campings en Cabo de Gata y costa almeriense.
 - /cadiz/: Campings en Tarifa, Costa de la Luz y Sierra de Grazalema.
 - /cordoba/: Campings en Sierra Morena y Subbética.

@@ -51,16 +51,30 @@ const jsonLdItemList = {
     <span class="text-slate-800 font-semibold">{provName}</span>
   </nav>
 
-  <div class="mb-8">
-    <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
-      Hub Provincial de Andalucía
-    </span>
-    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-      Campings y Glampings en {provName}
-    </h1>
-    <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
-      {provinceInfo ? provinceInfo.description : `Selección completa de campings verificados en ${provName}.`} Consulta parcelas, cabañas de madera, piscinas, normativa de perros y enlaces directos de reserva.
-    </p>
+  <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full mb-2">
+        Hub Provincial de Andalucía
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        Campings y Glampings en {provName}
+      </h1>
+      <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
+        {provinceInfo ? provinceInfo.description : `Selección completa de campings verificados en ${provName}.`} Consulta parcelas, cabañas de madera, piscinas, normativa de perros y enlaces directos de reserva.
+      </p>
+    </div>
+
+    <!-- Direct Pernocta Guide CTA for this province -->
+    <a
+      href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-${provincia}/`}
+      class="shrink-0 p-4 bg-emerald-900 text-white rounded-2xl hover:bg-emerald-800 transition shadow-xs flex items-center gap-3 border border-emerald-700/60 group"
+    >
+      <span class="text-2xl group-hover:scale-110 transition-transform">🚐</span>
+      <div>
+        <span class="text-[10px] uppercase font-bold text-emerald-300 block">Normativa Legal</span>
+        <span class="text-xs font-extrabold text-white block">Guía Pernocta {provName} &rarr;</span>
+      </div>
+    </a>
   </div>
 
   <!-- Category & Feature Quick Filter Bar -->
