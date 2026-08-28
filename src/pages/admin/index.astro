@@ -10,7 +10,7 @@ const metaTitle = "Panel de Control Secreto | MejoresCampings";
 const metaDesc = "Panel de administración interno para gestión de campings promocionados, re-scraping de fotos y borrado.";
 ---
 
-<Layout title={metaTitle} description={metaDesc}>
+<Layout title={metaTitle} description={metaDesc} noindex={true}>
   <div id="admin-auth-container" class="min-h-[60vh] flex items-center justify-center py-12">
     <!-- Password Lock Screen Modal -->
     <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl max-w-md w-full space-y-6 text-center">
@@ -27,7 +27,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           <input
             type="password"
             id="admin-password-input"
-            placeholder="Clave de administrador (p.ej. campings2026)"
+            placeholder="Clave de administrador"
             class="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono text-center"
             required
           />
@@ -214,7 +214,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
   <script is:inline>
     // Client-Side Admin Interactivity and Authentication
-    const PASSKEY = 'campings2026';
+    const PASSKEY = 'C4mp1n64l1f3';
     const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
     const DISABLED_KEY = 'mejorescampings_disabled_slugs';
 

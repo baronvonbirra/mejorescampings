@@ -31,7 +31,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     // Enter correct passkey
     const passInput = page.locator('#admin-password-input');
     await expect(passInput).toBeVisible();
-    await passInput.fill('campings2026');
+    await passInput.fill('C4mp1n64l1f3');
     await page.getByRole('button', { name: 'Acceder al Panel' }).click();
 
     // Verify dashboard displays
