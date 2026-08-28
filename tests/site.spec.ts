@@ -11,6 +11,45 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.getByRole('link', { name: /El Sur/i })).toBeVisible();
   });
 
+  test('Global Regional Category Route (/campings-con-mascotas/) loads all pet-friendly campsites across Andalucia', async ({ page }) => {
+    const response = await page.goto('campings-con-mascotas/');
+    expect(response?.status()).toBe(200);
+
+    await expect(page.locator('h1')).toContainText('Campings que Admiten Mascotas en Andalucía');
+
+    // Check provincial filter pills
+    await expect(page.locator('a[href*="/cadiz/campings-con-mascotas/"]').first()).toBeVisible();
+
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"ItemList"'))).toBe(true);
+  });
+
+  test('Secret Admin Dashboard (/admin/) password modal authenticates and manages campsites', async ({ page }) => {
+    const response = await page.goto('admin/');
+    expect(response?.status()).toBe(200);
+
+    // Enter correct passkey
+    const passInput = page.locator('#admin-password-input');
+    await expect(passInput).toBeVisible();
+    await passInput.fill('campings2026');
+    await page.getByRole('button', { name: 'Acceder al Panel' }).click();
+
+    // Verify dashboard displays
+    await expect(page.getByRole('heading', { name: 'Gestor de Campings y Promocionados' })).toBeVisible();
+
+    // Test action buttons: Re-scrap
+    const rescrapeBtn = page.locator('button[data-action="rescrape"]').first();
+    await expect(rescrapeBtn).toBeVisible();
+    await rescrapeBtn.click();
+    await expect(page.locator('#action-notification-box')).toContainText('Re-scraping');
+
+    // Test action button: Delete / Restore toggle
+    const deleteBtn = page.locator('button[data-action="delete"]').first();
+    await expect(deleteBtn).toBeVisible();
+    await deleteBtn.click();
+    await expect(page.locator('#action-notification-box')).toContainText('eliminado');
+  });
+
   test('Camping cards are fully clickable and navigate to detail page', async ({ page }) => {
     await page.goto('./');
 

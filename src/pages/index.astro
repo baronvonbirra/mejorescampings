@@ -70,7 +70,7 @@ const provinceCounts = PROVINCES.map((p) => {
             </div>
           </div>
           <div class="pt-2 border-t border-slate-100 text-[11px] font-bold text-emerald-700 flex items-center justify-between">
-            <span>Ver alojamiento</span>
+            <span>Ver alojamientos</span>
             <span>&rarr;</span>
           </div>
         </a>
@@ -112,7 +112,7 @@ const provinceCounts = PROVINCES.map((p) => {
         </a>
 
         <a
-          href={`${import.meta.env.BASE_URL}malaga/campings-familiares/`}
+          href={`${import.meta.env.BASE_URL}campings-familiares/`}
           class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
         >
           <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">👨‍👩‍👧‍👦</span>
@@ -123,18 +123,18 @@ const provinceCounts = PROVINCES.map((p) => {
         </a>
 
         <a
-          href={`${import.meta.env.BASE_URL}malaga/campings-playa/`}
+          href={`${import.meta.env.BASE_URL}campings-playa/`}
           class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
         >
           <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🏖️</span>
           <div>
             <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Cerca de la Playa</h4>
-            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">A pocos pasos de Tarifa y Costa del Sol.</p>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">A pocos pasos de Tarifa, Cabo de Gata y Costa del Sol.</p>
           </div>
         </a>
 
         <a
-          href={`${import.meta.env.BASE_URL}malaga/campings-bungalows/`}
+          href={`${import.meta.env.BASE_URL}glamping/`}
           class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
         >
           <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">⛺</span>
@@ -154,7 +154,7 @@ const provinceCounts = PROVINCES.map((p) => {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {categories.map((cat) => (
           <a
-            href={`${import.meta.env.BASE_URL}malaga/${cat.slug}/`}
+            href={`${import.meta.env.BASE_URL}${cat.slug}/`}
             class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
           >
             <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">{cat.icon}</span>
@@ -168,19 +168,19 @@ const provinceCounts = PROVINCES.map((p) => {
     </div>
   </section>
 
-  <!-- Curated Mix of Top Featured Campings -->
+  <!-- Curated Mix of Top Featured / Admin Promoted Campings -->
   <section class="mb-12">
     <div class="flex items-center justify-between mb-6">
       <div>
         <h2 class="text-2xl font-bold text-slate-900">Selección de Campings Destacados en Andalucía</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Una muestra de los alojamientos mejor valorados en las 8 provincias</p>
+        <p class="text-xs sm:text-sm text-slate-500">Alojamiento de alta calidad y promocionados en las 8 provincias</p>
       </div>
-      <a href={`${import.meta.env.BASE_URL}malaga/`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
-        Explorar por provincia &rarr;
+      <a href={`${import.meta.env.BASE_URL}guias/`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+        Ver guías &rarr;
       </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="featured-campings-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {featuredCampings.map((camping) => (
         <CampingCard camping={camping} />
       ))}

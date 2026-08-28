@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CampingCard from '../components/CampingCard.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import { getCampings, PROVINCES } from '../lib/db';
+
+const allCampings = await getCampings();
+const campings = allCampings.filter((c) => c.is_active && c.status !== 'closed_temp' && c.amenities?.piscina);
+
+const metaTitle = "Campings con Piscina en Andalucía (8 Provincias) | Guía 2026";
+const metaDesc = "Catálogo completo de campings con piscina en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla. Piscinas infantiles y animación.";
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Campings con Piscina en Andalucía",
+  "numberOfItems": campings.length,
+  "itemListElement": campings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
+---
+
+<Layout title={metaTitle} description={metaDesc}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <span class="text-slate-400">Andalucía</span>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">Campings con Piscina</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-3xl">🏊</span>
+      <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full">
+        Guía Regional de Piscina • {campings.length} Campings
+      </span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+      Campings con Piscina en Andalucía
+    </h1>
+    <p class="mt-2 text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
+      Disfruta del sol andaluz en campings verificados con piscina exterior, piscina climatizada y áreas de toboganes acuáticos en las 8 provincias.
+    </p>
+  </div>
+
+  <!-- Province Filter Pills -->
+  <div class="mb-8 p-4 bg-white border border-slate-200 rounded-2xl shadow-2xs">
+    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+      📍 Filtrar por Provincia en Andalucía:
+    </span>
+    <div class="flex flex-wrap gap-2">
+      <a
+        href={`${import.meta.env.BASE_URL}campings-con-piscina/`}
+        class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs"
+      >
+        Toda Andalucía ({campings.length})
+      </a>
+      {PROVINCES.map((p) => {
+        const provCount = campings.filter((c) => (c.province_slug || 'malaga').toLowerCase() === p.slug).length;
+        return (
+          <a
+            href={`${import.meta.env.BASE_URL}${p.slug}/campings-con-piscina/`}
+            class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition"
+          >
+            {p.name} ({provCount})
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Results Grid -->
+  {campings.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {campings.map((camping) => (
+        <CampingCard camping={camping} />
+      ))}
+    </div>
+  ) : (
+    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+      <p class="text-slate-500">No hay campings registrados en esta categoría en este momento.</p>
+    </div>
+  )}
+</Layout>
