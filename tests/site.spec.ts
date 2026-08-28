@@ -70,13 +70,49 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Playa');
   });
 
+  test('Guides Hub page (/guias/) loads cleanly with all 8 province cards', async ({ page }) => {
+    const response = await page.goto('guias/');
+    expect(response?.status()).toBe(200);
+
+    await expect(page.locator('h1')).toContainText('Guías de Pernocta y Acampada por Provincia');
+
+    // Check all 8 provinces are linked in the hub
+    const provinces = ['almeria', 'cadiz', 'cordoba', 'granada', 'huelva', 'jaen', 'malaga', 'sevilla'];
+    for (const prov of provinces) {
+      const guideLink = page.locator(`a[href*="/guias/normativa-pernocta-${prov}/"]`).first();
+      await expect(guideLink).toBeVisible();
+    }
+  });
+
+  test('Provincial Pernocta Guides render Article and FAQPage JSON-LD and recommended campsites', async ({ page }) => {
+    const response = await page.goto('guias/normativa-pernocta-cadiz/');
+    expect(response?.status()).toBe(200);
+
+    await expect(page.locator('h1')).toContainText('Guía de Normativa de Pernocta y Acampada Libre en Cádiz');
+
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"Article"'))).toBe(true);
+    expect(jsonLdScripts.some(s => s.includes('"@type":"FAQPage"'))).toBe(true);
+
+    // Check inter-province switcher
+    await expect(page.locator('a[href*="/guias/normativa-pernocta-almeria/"]').first()).toBeVisible();
+  });
+
+  test('Provincial Hub page links directly to its Pernocta Guide', async ({ page }) => {
+    await page.goto('cadiz/');
+    const pernoctaBtn = page.locator('a[href*="/guias/normativa-pernocta-cadiz/"]').first();
+    await expect(pernoctaBtn).toBeVisible();
+    await pernoctaBtn.click();
+    await expect(page).toHaveURL(/\/guias\/normativa-pernocta-cadiz\//);
+  });
+
   test('llms.txt endpoint is served correctly for AI crawlers', async ({ page }) => {
     const response = await page.goto('llms.txt');
     expect(response?.status()).toBe(200);
     const content = await response?.text();
     expect(content).toContain('MejoresCampings.es');
-    expect(content).toContain('/cadiz/');
-    expect(content).toContain('/malaga/');
+    expect(content).toContain('/guias/');
+    expect(content).toContain('/guias/normativa-pernocta-cadiz/');
   });
 
   test('Camping Product detail page renders atomic components, CTA, weather, OG tags, FAQs and Environment Block', async ({ page, isMobile }) => {
@@ -147,7 +183,8 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const contentIndex = await respIndex?.text();
     expect(contentIndex).toContain('<urlset');
     expect(contentIndex).toContain('https://mejorescampings.es');
-    expect(contentIndex).toContain('https://mejorescampings.es/andalucia/malaga/ronda/');
+    expect(contentIndex).toContain('https://mejorescampings.es/guias/');
+    expect(contentIndex).toContain('https://mejorescampings.es/guias/normativa-pernocta-cadiz/');
 
     const respMalaga = await page.goto('sitemap-malaga.xml');
     expect(respMalaga?.status()).toBe(200);

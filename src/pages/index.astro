@@ -24,7 +24,7 @@ const provinceCounts = PROVINCES.map((p) => {
 });
 ---
 
-<Layout title="MejoresCampings | Guía de Campings y Glampings en Andalucía (8 Provincias)">
+<Layout title="MejoresCampings | Guía de Campings, Glampings y Pernocta en Andalucía (8 Provincias)">
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
     <div class="relative z-10 max-w-3xl">
@@ -35,7 +35,7 @@ const provinceCounts = PROVINCES.map((p) => {
         Encuentra tu camping ideal en Andalucía
       </h1>
       <p class="mt-4 text-emerald-100 text-sm sm:text-base leading-relaxed">
-        Descubre más de 200 campings y glampings verificados en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.
+        Descubre más de 200 campings y glampings verificados, junto con la normativa oficial de pernocta camper en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.
       </p>
     </div>
   </section>
@@ -53,19 +53,25 @@ const provinceCounts = PROVINCES.map((p) => {
       {provinceCounts.map((p) => (
         <a
           href={`${import.meta.env.BASE_URL}${p.slug}/`}
-          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group relative overflow-hidden"
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-emerald-500 transition group relative overflow-hidden flex flex-col justify-between"
         >
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition">{p.name}</h3>
-            <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-              {p.count} campings
-            </span>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition">{p.name}</h3>
+              <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                {p.count} campings
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed mb-3">{p.description}</p>
+            <div class="flex flex-wrap gap-1 text-[10px] mb-3">
+              {p.highlights.map((h) => (
+                <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md font-medium">{h}</span>
+              ))}
+            </div>
           </div>
-          <p class="text-xs text-slate-500 leading-relaxed mb-3">{p.description}</p>
-          <div class="flex flex-wrap gap-1 text-[10px]">
-            {p.highlights.map((h) => (
-              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md font-medium">{h}</span>
-            ))}
+          <div class="pt-2 border-t border-slate-100 text-[11px] font-bold text-emerald-700 flex items-center justify-between">
+            <span>Ver alojamiento</span>
+            <span>&rarr;</span>
           </div>
         </a>
       ))}
@@ -77,31 +83,31 @@ const provinceCounts = PROVINCES.map((p) => {
     <!-- Container Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-emerald-700/60">
       <div>
-        <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Estilos de Viaje y Servicios Destacados</h2>
-        <p class="text-xs sm:text-sm text-emerald-200 mt-1">Encuentra tu camping ideal según la experiencia o instalaciones que necesitas</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Estilos de Viaje y Guías por Provincia</h2>
+        <p class="text-xs sm:text-sm text-emerald-200 mt-1">Encuentra tu camping ideal o consulta la normativa legal de pernocta en tu provincia</p>
       </div>
       <a
-        href={`${import.meta.env.BASE_URL}normativa-pernocta-malaga/`}
+        href={`${import.meta.env.BASE_URL}guias/`}
         class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-100 bg-emerald-950/60 hover:bg-emerald-950 border border-emerald-500/40 px-3.5 py-2 rounded-xl transition self-start sm:self-auto shrink-0 shadow-xs"
       >
-        🚐 Guía Pernocta &rarr;
+        🚐 Guías Pernocta (8 Provincias) &rarr;
       </a>
     </div>
 
     <!-- Group 1: Estilos de Viaje -->
     <div class="mb-6">
       <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-        <span>🗺️</span> Estilos de Viaje
+        <span>🗺️</span> Estilos de Viaje & Guías
       </h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <a
-          href={`${import.meta.env.BASE_URL}malaga/`}
+          href={`${import.meta.env.BASE_URL}guias/`}
           class="bg-white/10 hover:bg-white/20 backdrop-blur-xs p-3.5 rounded-xl border border-white/15 transition group flex items-start gap-3"
         >
           <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🚐</span>
           <div>
-            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Ruta Camper / Furgoneta</h4>
-            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">Con toma de electricidad y vaciado de aguas.</p>
+            <h4 class="font-bold text-white text-xs sm:text-sm leading-snug group-hover:text-emerald-200 transition">Guías de Pernocta Camper</h4>
+            <p class="text-[11px] text-emerald-100/80 mt-0.5 leading-tight">Normativa legal en las 8 provincias de Andalucía.</p>
           </div>
         </a>
 

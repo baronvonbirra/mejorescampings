@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getCampings, getLocations, getFeatures, PROVINCES } from '../lib/db';
+import { getCampings, getLocations, PROVINCES } from '../lib/db';
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site ? site.href.replace(/\/$/, '') : 'https://mejorescampings.es';
@@ -7,18 +7,20 @@ export const GET: APIRoute = async ({ site }) => {
 
   const campings = await getCampings();
   const locations = await getLocations();
-  const features = await getFeatures();
 
   const urls: string[] = [];
 
-  // 1. Root Home
+  // 1. Root Home & Guides Hub
   urls.push(`${baseUrl}/`);
+  urls.push(`${baseUrl}/guias/`);
 
-  // 2. 8 Provincial Hubs
+  // 2. 8 Provincial Guides & Hubs
   for (const prov of PROVINCES) {
     urls.push(`${baseUrl}/${prov.slug}/`);
     urls.push(`${baseUrl}/andalucia/${prov.slug}/`);
+    urls.push(`${baseUrl}/guias/normativa-pernocta-${prov.slug}/`);
   }
+  urls.push(`${baseUrl}/normativa-pernocta-malaga/`);
 
   // 3. Category pages per province
   const categorySlugs = [

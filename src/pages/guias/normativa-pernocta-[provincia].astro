@@ -1,14 +1,21 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import CampingCard from '../components/CampingCard.astro';
-import { getCampings, PROVINCES } from '../lib/db';
-import { PERNOCTA_GUIDES } from '../lib/pernoctaData';
+import Layout from '../../layouts/Layout.astro';
+import CampingCard from '../../components/CampingCard.astro';
+import { getCampings, PROVINCES } from '../../lib/db';
+import { PERNOCTA_GUIDES } from '../../lib/pernoctaData';
 
-const guide = PERNOCTA_GUIDES.malaga;
+export async function getStaticPaths() {
+  return PROVINCES.map((p) => ({
+    params: { provincia: p.slug }
+  }));
+}
+
+const { provincia } = Astro.params;
+const guide = PERNOCTA_GUIDES[provincia?.toLowerCase() || 'malaga'] || PERNOCTA_GUIDES.malaga;
 
 const allCampings = await getCampings();
 const provinceCampings = allCampings.filter(
-  (c) => (c.province_slug || 'malaga').toLowerCase() === 'malaga'
+  (c) => (c.province_slug || 'malaga').toLowerCase() === guide.slug
 );
 const featuredCampings = (provinceCampings.length > 0 ? provinceCampings : allCampings).slice(0, 3);
 
@@ -26,7 +33,7 @@ const jsonLdArticle = {
     "@type": "Organization",
     "name": "MejoresCampings"
   },
-  "mainEntityOfPage": `https://mejorescampings.es${import.meta.env.BASE_URL}normativa-pernocta-malaga/`
+  "mainEntityOfPage": `https://mejorescampings.es${import.meta.env.BASE_URL}guias/normativa-pernocta-${guide.slug}/`
 };
 
 const jsonLdFaq = {
@@ -53,7 +60,7 @@ const jsonLdFaq = {
     <span>/</span>
     <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-slate-800 font-medium">Guías</a>
     <span>/</span>
-    <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-slate-800 capitalize">Málaga</a>
+    <a href={`${import.meta.env.BASE_URL}${guide.slug}/`} class="hover:text-slate-800 capitalize">{guide.provinceName}</a>
     <span>/</span>
     <span class="text-slate-800 font-semibold">Normativa de Pernocta</span>
   </nav>
@@ -65,7 +72,7 @@ const jsonLdFaq = {
         Guía Legal Actualizada 2026
       </span>
       <span class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-slate-200">
-        Provincia de Málaga
+        Provincia de {guide.provinceName}
       </span>
     </div>
     <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight max-w-3xl">
@@ -83,7 +90,7 @@ const jsonLdFaq = {
     </span>
     <div class="flex flex-wrap gap-2">
       {PROVINCES.map((p) => {
-        const isCurrent = p.slug === 'malaga';
+        const isCurrent = p.slug === guide.slug;
         return (
           <a
             href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-${p.slug}/`}
@@ -107,7 +114,7 @@ const jsonLdFaq = {
       <!-- Summary Box -->
       <div class="p-5 bg-emerald-50 border border-emerald-200/90 rounded-2xl space-y-2">
         <h2 class="font-extrabold text-emerald-950 text-base flex items-center gap-2">
-          💡 Regla de Oro para Rutas Camper en Málaga
+          💡 Regla de Oro para Rutas Camper en {guide.provinceName}
         </h2>
         <p class="text-xs sm:text-sm text-emerald-900 leading-relaxed">
           {guide.goldenRule}
@@ -117,13 +124,13 @@ const jsonLdFaq = {
       <!-- Section 1 -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          1. ¿Es legal la Acampada Libre en Málaga?
+          1. ¿Es legal la Acampada Libre en {guide.provinceName}?
         </h2>
         <p>
           {guide.introText}
         </p>
         <p>
-          Las sanciones por acampada ilegal en parajes naturales o zonas costeras no autorizadas oscilan entre <strong>{guide.sanctionsRange}</strong> según la gravedad de la infracción.
+          Las sanciones por acampada ilegal en parajes naturales o zonas costeras no autorizadas oscilan entre <strong>{guide.sanctionsRange}</strong> según la gravedad de la infracción y la figura de protección ambiental.
         </p>
       </section>
 
@@ -154,12 +161,12 @@ const jsonLdFaq = {
       <!-- Section 3 -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          3. Áreas Especiales: Costa y Espacios Naturales Protegidos de Málaga
+          3. Áreas Especiales: Costa y Espacios Naturales Protegidos de {guide.provinceName}
         </h2>
         <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
           <div>
             <h3 class="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-1.5">
-              <span>🌊</span> Regulación Costera en Costa del Sol
+              <span>🌊</span> Regulación Costera / Fluvial
             </h3>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
               {guide.coastalRules}
@@ -176,10 +183,10 @@ const jsonLdFaq = {
         </div>
       </section>
 
-      <!-- Section 4 -->
+      <!-- Section 4: Espacios protegidos emblemáticos -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          4. Principales Espacios Protegidos en Málaga
+          4. Principales Espacios Protegidos en {guide.provinceName}
         </h2>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {guide.naturalParksList.map((park) => (
@@ -190,10 +197,10 @@ const jsonLdFaq = {
         </ul>
       </section>
 
-      <!-- Section 5 -->
+      <!-- Section 5: Consejos Prácticos -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          5. Recomendaciones Prácticas para Tu Ruta en Málaga
+          5. Recomendaciones Prácticas para Tu Ruta en {guide.provinceName}
         </h2>
         <div class="space-y-2">
           {guide.localTips.map((tip) => (
@@ -207,7 +214,7 @@ const jsonLdFaq = {
 
       <!-- FAQs Section -->
       <section class="pt-6 border-t border-slate-200 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Preguntas Frecuentes sobre Pernocta en Málaga</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Preguntas Frecuentes sobre Pernocta en {guide.provinceName}</h2>
         <div class="space-y-3">
           {guide.faqs.map((faq) => (
             <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
@@ -225,15 +232,15 @@ const jsonLdFaq = {
 
       <!-- CTA Section -->
       <div class="p-6 bg-gradient-to-r from-emerald-800 to-teal-900 text-white rounded-2xl shadow-md text-center space-y-3">
-        <h3 class="text-lg font-extrabold">¿Buscas parcelas o áreas camper verificadas en Málaga?</h3>
+        <h3 class="text-lg font-extrabold">¿Buscas parcelas o áreas camper verificadas en {guide.provinceName}?</h3>
         <p class="text-xs sm:text-sm text-emerald-100 max-w-xl mx-auto">
-          Explora la lista completa de campings oficiales con toma eléctrica, piscinas y todos los servicios cerca de la playa o la montaña.
+          Explora la lista completa de campings oficiales con toma eléctrica, piscinas y todos los servicios en {guide.provinceName}.
         </p>
         <a
-          href={`${import.meta.env.BASE_URL}malaga/`}
+          href={`${import.meta.env.BASE_URL}${guide.slug}/`}
           class="inline-block px-6 py-3 rounded-xl bg-white text-emerald-950 font-black text-sm hover:bg-emerald-100 transition shadow-md"
         >
-          Ver Campings Verificados en Málaga &rarr;
+          Ver Campings Verificados en {guide.provinceName} &rarr;
         </a>
       </div>
     </article>
@@ -242,14 +249,20 @@ const jsonLdFaq = {
     <aside class="space-y-6">
       <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4 sticky top-24">
         <h3 class="font-bold text-base text-slate-900 border-b border-slate-100 pb-2 flex items-center justify-between">
-          <span>Campings Recomendados</span>
-          <span class="text-xs font-semibold text-emerald-600">Málaga</span>
+          <span>Campings en {guide.provinceName}</span>
+          <span class="text-xs font-semibold text-emerald-600">{provinceCampings.length} en total</span>
         </h3>
         <div class="space-y-4">
           {featuredCampings.map((camping) => (
             <CampingCard camping={camping} />
           ))}
         </div>
+        <a
+          href={`${import.meta.env.BASE_URL}${guide.slug}/`}
+          class="block text-center text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 py-2.5 rounded-xl border border-emerald-200 transition"
+        >
+          Ver todos los campings de {guide.provinceName} &rarr;
+        </a>
       </div>
     </aside>
   </div>
