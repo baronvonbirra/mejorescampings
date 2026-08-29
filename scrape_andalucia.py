@@ -1070,7 +1070,7 @@ def calculate_data_quality_score(campsite: Dict[str, Any]) -> Tuple[int, str]:
     - High-quality WebP photos: +25 (5 pts per image, max 25)
     - Amenities detailed: +15
     - Seasonality & address detailed: +10
-    Score < 60 -> status = 'pending_review', else 'active'
+    Campsites remain active by default; deletion or deactivation is strictly reserved for admin panel operations.
     """
     score = 0
 
@@ -1099,7 +1099,9 @@ def calculate_data_quality_score(campsite: Dict[str, Any]) -> Tuple[int, str]:
     if campsite.get("address") and campsite.get("seasonality"):
         score += 10
 
-    status = "active" if score >= 60 else "pending_review"
+    status = campsite.get("status", "active")
+    if status == "pending_review" or not status:
+        status = "active"
     return score, status
 
 def synthesize_text_with_gemini(campsite: Dict[str, Any]) -> Dict[str, Any]:
@@ -1273,9 +1275,8 @@ def process_and_clean_pipeline(raw_list: List[Dict[str, Any]]) -> Tuple[List[Dic
         c_record["quality_score"] = quality_score
         c_record["status"] = status
 
-        if status == "pending_review":
-            review_count_flagged += 1
-            logging.warning(f"Campsite '{name_clean}' scored {quality_score}/100 (<60) -> marked pending_review")
+        if quality_score < 60:
+            logging.info(f"Campsite '{name_clean}' scored {quality_score}/100 (<60) (kept active)")
 
         cleaned.append(c_record)
 
@@ -1357,7 +1358,6 @@ def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) ->
         "photos_manifest": scraped.get("photos_manifest") or existing.get("photos_manifest"),
         "google_place_id": scraped.get("google_place_id") or existing.get("google_place_id"),
         "quality_score": scraped.get("quality_score", existing.get("quality_score", 70)),
-        "status": scraped.get("status", existing.get("status", "active")),
         "is_promoted": existing.get("is_promoted", scraped.get("is_promoted", False)),
         "ai_description": scraped.get("ai_description") or existing.get("ai_description"),
         "faqs_json": scraped.get("faqs_json") or existing.get("faqs_json"),
@@ -1365,12 +1365,15 @@ def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) ->
         "meta_description": scraped.get("meta_description") or existing.get("meta_description"),
     })
 
-    # Retain manual deactivation (is_active: False) or disabled status
+    # Retain manual deactivation (is_active: False) or disabled status set by admin; default to active
     if existing.get("is_active") is False or existing.get("status") == "disabled":
         merged["is_active"] = False
         merged["status"] = existing.get("status", "disabled")
     else:
-        merged["is_active"] = scraped.get("is_active", True)
+        merged["is_active"] = True
+        merged["status"] = existing.get("status", "active")
+        if merged["status"] == "disabled" or merged["status"] == "pending_review":
+            merged["status"] = "active"
 
     # Preserve or update image URLs
     scraped_images = scraped.get("image_urls", [])

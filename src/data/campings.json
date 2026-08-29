@@ -23,18 +23,18 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 107,
+    "review_count": 102,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 650,
     "editorial_badges": [
-      "Top Playa",
-      "Selección ABC Viajar"
+      "Selección ABC Viajar",
+      "Top Playa"
     ],
     "editorial_tags": [
-      "Top Playa",
-      "Selección ABC Viajar"
+      "Selección ABC Viajar",
+      "Top Playa"
     ],
     "editorial_quote": "Seleccionado entre los mejores campings a pie de playa por ABC Viajar en el Parque Natural Cabo de Gata.",
     "pitchup_rating": 9.1,
@@ -97,7 +97,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 77,
+    "review_count": 117,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00008",
     "category": "1ª Categ. (4 estrellas)",
@@ -163,7 +163,7 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 258,
+    "review_count": 215,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00002",
     "category": "1ª Categ. (4 estrellas)",
@@ -239,7 +239,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 109,
+    "review_count": 180,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/HU/00010",
     "category": "1ª Categ. (4 estrellas)",
@@ -307,18 +307,18 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 196,
+    "review_count": 154,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00021",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 920,
     "editorial_badges": [
-      "Comunidad Pitchup Top",
-      "Comunidad Pitchup Glamping"
+      "Comunidad Pitchup Glamping",
+      "Comunidad Pitchup Top"
     ],
     "editorial_tags": [
-      "Comunidad Pitchup Top",
-      "Comunidad Pitchup Glamping"
+      "Comunidad Pitchup Glamping",
+      "Comunidad Pitchup Top"
     ],
     "editorial_quote": "Destacado por la comunidad de Pitchup por sus servicios completos y proximidad a la playa de Zahora.",
     "pitchup_rating": 9.2,
@@ -377,7 +377,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 56,
+    "review_count": 283,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00012",
     "category": "2ª Categ. (3 estrellas)",
@@ -439,7 +439,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 142,
+    "review_count": 67,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CO/00003",
     "category": "2ª Categ. (3 estrellas)",
@@ -453,9 +453,7 @@
     "image_urls": [
       "/images/campings/camping-albolafia/img_1.webp",
       "/images/campings/camping-albolafia/img_2.webp",
-      "/images/campings/camping-albolafia/img_3.webp",
-      "/images/campings/camping-albolafia/img_4.webp",
-      "/images/campings/camping-albolafia/img_5.webp"
+      "/images/campings/camping-albolafia/img_3.webp"
     ],
     "image_url": "/images/campings/camping-albolafia/img_1.webp",
     "ai_description": "Camping Albolafia es un alojamiento de 2ª Categ. (3 estrellas) con licencia CM/CO/00003 situado en Cordoba (Córdoba). El complejo cuenta con capacidad para 310 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
@@ -475,7 +473,7 @@
     ],
     "meta_title": "Camping Albolafia en Cordoba (Córdoba) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Albolafia en Cordoba (Córdoba). Licencia CM/CO/00003, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
-    "quality_score": 70,
+    "quality_score": 60,
     "status": "active",
     "is_promoted": false
   },
@@ -503,7 +501,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 194,
+    "review_count": 227,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00004",
     "category": "1ª Categ. (4 estrellas)",
@@ -567,7 +565,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 166,
+    "review_count": 188,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00019",
     "category": "2ª Categ. (3 estrellas)",
@@ -581,9 +579,7 @@
     "image_urls": [
       "/images/campings/camping-playa-de-poniente/img_1.webp",
       "/images/campings/camping-playa-de-poniente/img_2.webp",
-      "/images/campings/camping-playa-de-poniente/img_3.webp",
-      "/images/campings/camping-playa-de-poniente/img_4.webp",
-      "/images/campings/camping-playa-de-poniente/img_5.webp"
+      "/images/campings/camping-playa-de-poniente/img_3.webp"
     ],
     "image_url": "/images/campings/camping-playa-de-poniente/img_1.webp",
     "ai_description": "Camping Playa de Poniente es un alojamiento de 2ª Categ. (3 estrellas) con licencia CM/GR/00019 situado en Granada (Granada). El complejo cuenta con capacidad para 480 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
@@ -603,7 +599,7 @@
     ],
     "meta_title": "Camping Playa de Poniente en Granada (Granada) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Playa de Poniente en Granada (Granada). Licencia CM/GR/00019, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
-    "quality_score": 70,
+    "quality_score": 60,
     "status": "active",
     "is_promoted": false
   },
@@ -631,7 +627,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 276,
+    "review_count": 201,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/JA/00007",
     "category": "2ª Categ. (3 estrellas)",
@@ -692,7 +688,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 115,
+    "review_count": 272,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
@@ -730,7 +726,7 @@
     "meta_title": "Camping el Sur en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping el Sur en Malaga (Málaga). Licencia CM/MA/00014, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 55,
-    "status": "pending_review",
+    "status": "active",
     "is_promoted": true
   },
   {
@@ -757,7 +753,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 45,
+    "review_count": 251,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/SE/00006",
     "category": "2ª Categ. (3 estrellas)",
@@ -771,9 +767,7 @@
     "image_urls": [
       "/images/campings/camping-dehesa-nueva/img_1.webp",
       "/images/campings/camping-dehesa-nueva/img_2.webp",
-      "/images/campings/camping-dehesa-nueva/img_3.webp",
-      "/images/campings/camping-dehesa-nueva/img_4.webp",
-      "/images/campings/camping-dehesa-nueva/img_5.webp"
+      "/images/campings/camping-dehesa-nueva/img_3.webp"
     ],
     "image_url": "/images/campings/camping-dehesa-nueva/img_1.webp",
     "ai_description": "Camping Dehesa Nueva es un alojamiento de 2ª Categ. (3 estrellas) con licencia CM/SE/00006 situado en Sevilla (Sevilla). El complejo cuenta con capacidad para 340 personas y ofrece entorno natural junto con ambiente tranquilo.\n\nSu ubicación ofrece comunicación directa con rutas por la montaña y los senderos principales de la zona.",
@@ -793,7 +787,7 @@
     ],
     "meta_title": "Camping Dehesa Nueva en Sevilla (Sevilla) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Dehesa Nueva en Sevilla (Sevilla). Licencia CM/SE/00006, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
-    "quality_score": 70,
+    "quality_score": 60,
     "status": "active",
     "is_promoted": false
   }
