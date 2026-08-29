@@ -82,7 +82,11 @@ const supabase = (supabaseUrl && supabaseKey)
 export async function getCampings(): Promise<Camping[]> {
   if (supabase) {
     try {
-      const { data, error } = await supabase.from('campings').select('*').eq('is_active', true);
+      const { data, error } = await supabase
+        .from('campings')
+        .select('*')
+        .eq('is_active', true)
+        .order('name', { ascending: true });
       if (!error && data && data.length > 0) {
         return data.map((item: any) => ({
           ...item,
@@ -99,6 +103,26 @@ export async function getCampings(): Promise<Camping[]> {
 }
 
 export async function getCampingBySlug(slug: string): Promise<Camping | undefined> {
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('campings')
+        .select('*')
+        .eq('slug', slug)
+        .eq('is_active', true)
+        .single();
+      if (!error && data) {
+        return {
+          ...data,
+          affiliate_url: data.affiliate_url || data.aff_url || null,
+          image_urls: data.image_urls || (data.image_url ? [data.image_url] : []),
+          related_affiliates: data.related_affiliates || {}
+        };
+      }
+    } catch (e) {
+      console.warn(`Failed to fetch campsite ${slug} from Supabase, falling back:`, e);
+    }
+  }
   const campings = await getCampings();
   return campings.find((c) => c.slug === slug);
 }

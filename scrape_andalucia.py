@@ -1351,6 +1351,11 @@ def parse_args(sys_args: Optional[List[str]] = None) -> argparse.Namespace:
         default=None,
         help="Target a specific campsite slug to re-scrape (e.g. camping-cabopino)"
     )
+    parser.add_argument(
+        "--sync-only",
+        action="store_true",
+        help="Sync local JSON data files directly to Supabase without re-scraping"
+    )
     return parser.parse_args(sys_args)
 
 def main(sys_args: Optional[List[str]] = None):
@@ -1358,6 +1363,22 @@ def main(sys_args: Optional[List[str]] = None):
     target_slug = args.target_slug
 
     existing_campings = load_existing_campings()
+
+    if args.sync_only:
+        logging.info("Running in --sync-only mode. Syncing local JSON files directly to Supabase...")
+        locations_file = os.path.join("src", "data", "locations.json")
+        features_file = os.path.join("src", "data", "features.json")
+        locs = []
+        feats = []
+        if os.path.exists(locations_file):
+            with open(locations_file, "r", encoding="utf-8") as f:
+                locs = json.load(f)
+        if os.path.exists(features_file):
+            with open(features_file, "r", encoding="utf-8") as f:
+                feats = json.load(f)
+        sync_to_supabase(existing_campings, locs, feats)
+        logging.info("--sync-only execution complete.")
+        return
     existing_map = {c["slug"]: dict(c) for c in existing_campings}
 
     supabase_sync_items = []
@@ -1475,10 +1496,35 @@ def main(sys_args: Optional[List[str]] = None):
     sync_to_supabase(supabase_sync_items, locations, features)
     logging.info("Multi-source scraping & WebP image pipeline execution complete.")
 
+ALLOWED_CAMPING_KEYS = {
+    "name", "slug", "description", "address", "lat", "lng",
+    "province_slug", "comarca", "comarca_slug", "municipality_slug",
+    "image_url", "image_urls", "affiliate_url", "official_url",
+    "price_tier", "is_active", "is_promoted", "status",
+    "ai_description", "faqs_json", "meta_title", "meta_description",
+    "amenities", "related_affiliates", "rating", "review_count",
+    "seasonality", "quality_score", "rta_license", "category",
+    "legal_capacity", "editorial_badges", "editorial_tags",
+    "editorial_quote", "pitchup_rating", "photos_manifest",
+    "google_place_id"
+}
+
+ALLOWED_LOCATION_KEYS = {
+    "region", "province", "municipality", "slug"
+}
+
+ALLOWED_FEATURE_KEYS = {
+    "feature_name", "slug", "key", "icon"
+}
+
+def sanitize_record(record: Dict[str, Any], allowed_keys: set) -> Dict[str, Any]:
+    return {k: v for k, v in record.items() if k in allowed_keys and v is not None}
+
 def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, Any]], features: List[Dict[str, Any]]) -> None:
     """
     Syncs generated dataset records to Supabase database tables if Supabase environment credentials are present.
     Executes upsert operations using 'slug' as the primary key/conflict target.
+    Sanitizes records against schema whitelists to prevent PostgREST column error rejections.
     """
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
@@ -1492,23 +1538,29 @@ def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, A
         supabase = create_client(url, key)
         logging.info("Synchronizing extracted dataset to Supabase database...")
 
-        # Sync campings
+        # Sync campings in batches of 50
         if campings:
-            supabase.table("campings").upsert(campings, on_conflict="slug").execute()
-            logging.info(f"Successfully upserted {len(campings)} campings to Supabase.")
+            clean_campings = [sanitize_record(c, ALLOWED_CAMPING_KEYS) for c in campings]
+            batch_size = 50
+            for i in range(0, len(clean_campings), batch_size):
+                batch = clean_campings[i:i + batch_size]
+                res = supabase.table("campings").upsert(batch, on_conflict="slug").execute()
+                logging.info(f"Successfully upserted campings batch {i // batch_size + 1} ({len(batch)} items) to Supabase.")
 
         # Sync locations
         if locations:
-            supabase.table("locations").upsert(locations, on_conflict="slug").execute()
-            logging.info(f"Successfully upserted {len(locations)} locations to Supabase.")
+            clean_locs = [sanitize_record(l, ALLOWED_LOCATION_KEYS) for l in locations]
+            supabase.table("locations").upsert(clean_locs, on_conflict="slug").execute()
+            logging.info(f"Successfully upserted {len(clean_locs)} locations to Supabase.")
 
         # Sync features
         if features:
-            supabase.table("features").upsert(features, on_conflict="slug").execute()
-            logging.info(f"Successfully upserted {len(features)} features to Supabase.")
+            clean_feats = [sanitize_record(f, ALLOWED_FEATURE_KEYS) for f in features]
+            supabase.table("features").upsert(clean_feats, on_conflict="slug").execute()
+            logging.info(f"Successfully upserted {len(clean_feats)} features to Supabase.")
 
     except Exception as e:
-        logging.warning(f"Error syncing dataset to Supabase database: {e}")
+        logging.error(f"Error syncing dataset to Supabase database: {e}", exc_info=True)
 
 if __name__ == "__main__":
     main()
