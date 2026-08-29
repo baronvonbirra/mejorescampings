@@ -161,9 +161,12 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
                     <input
                       type="checkbox"
                       value={c.slug}
+                      checked={c.is_promoted || false}
                       class="promoted-checkbox w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                     />
-                    <span class="promoted-badge-cell text-[10px] font-bold text-slate-400 uppercase">Estándar</span>
+                    <span class={`promoted-badge-cell text-[10px] font-bold ${c.is_promoted ? 'text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-200' : 'text-slate-400'}`}>
+                      {c.is_promoted ? '⭐ Promocionado' : 'Estándar'}
+                    </span>
                   </label>
                 </td>
                 <td class="py-3 px-2 text-right space-x-1">
@@ -205,11 +208,8 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
   <script is:inline>
     // Client-Side Admin Interactivity and Authentication
     const PASSKEY = 'C4mp1n64l1f3';
-    const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
-    const DISABLED_KEY = 'mejorescampings_disabled_slugs';
-    const CUSTOM_PHOTOS_KEY = 'mejorescampings_custom_photos';
 
-    // Fallback area landmark pools for client-side instant re-scrap photo selection
+    // Fallback area landmark pools for photo selection
     const AREA_LANDMARKS = {
       el_chorro: [
         'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80', // Embalse El Chorro
@@ -240,38 +240,22 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const btnLogout = document.getElementById('btn-logout');
     const notificationBox = document.getElementById('action-notification-box');
 
-    function getCustomPhotos() {
-      try {
-        const stored = localStorage.getItem(CUSTOM_PHOTOS_KEY);
-        return stored ? JSON.parse(stored) : {};
-      } catch (e) {
-        return {};
-      }
-    }
-
-    function loadCustomPhotosState() {
-      const custom = getCustomPhotos();
-      Object.keys(custom).forEach((slug) => {
-        const newUrl = custom[slug];
-        const img = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
-        if (img && newUrl) {
-          img.src = newUrl;
-        }
-      });
-    }
-
     function checkAuth() {
       const isAuth = sessionStorage.getItem('mejorescampings_admin_auth') === 'true';
       if (isAuth) {
         authContainer.classList.add('hidden');
         dashboardContent.classList.remove('hidden');
-        loadPromotedState();
-        loadDisabledState();
-        loadCustomPhotosState();
+        updatePromotedCount();
       } else {
         authContainer.classList.remove('hidden');
         dashboardContent.classList.add('hidden');
       }
+    }
+
+    function updatePromotedCount() {
+      const checkboxes = document.querySelectorAll('.promoted-checkbox:checked');
+      const countEl = document.getElementById('promoted-count');
+      if (countEl) countEl.textContent = checkboxes.length;
     }
 
     loginForm?.addEventListener('submit', (e) => {
@@ -290,28 +274,11 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       checkAuth();
     });
 
-    // Promoted Selection Manager
-    function getPromotedSlugs() {
-      try {
-        const stored = localStorage.getItem(PROMOTED_KEY);
-        return stored ? JSON.parse(stored) : ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
-      } catch (e) {
-        return ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
-      }
-    }
-
-    function loadPromotedState() {
-      const promotedSlugs = getPromotedSlugs();
-      const checkboxes = document.querySelectorAll('.promoted-checkbox');
-      let count = 0;
-
-      checkboxes.forEach((cb) => {
-        const isProm = promotedSlugs.includes(cb.value);
-        cb.checked = isProm;
-        if (isProm) count++;
-
-        // Update table row badge
-        const row = document.querySelector(`.camping-row[data-slug="${cb.value}"]`);
+    document.querySelectorAll('.promoted-checkbox').forEach((cb) => {
+      cb.addEventListener('change', () => {
+        const slug = cb.value;
+        const isProm = cb.checked;
+        const row = document.querySelector(`.camping-row[data-slug="${slug}"]`);
         if (row) {
           const badgeCell = row.querySelector('.promoted-badge-cell');
           if (badgeCell) {
@@ -319,57 +286,10 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             badgeCell.className = `promoted-badge-cell text-[10px] font-bold ${isProm ? 'text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-200' : 'text-slate-400'}`;
           }
         }
-      });
-
-      const countEl = document.getElementById('promoted-count');
-      if (countEl) countEl.textContent = count;
-    }
-
-    document.querySelectorAll('.promoted-checkbox').forEach((cb) => {
-      cb.addEventListener('change', () => {
-        let promoted = getPromotedSlugs();
-        if (cb.checked) {
-          if (!promoted.includes(cb.value)) promoted.push(cb.value);
-        } else {
-          promoted = promoted.filter((s) => s !== cb.value);
-        }
-        localStorage.setItem(PROMOTED_KEY, JSON.stringify(promoted));
-        loadPromotedState();
-        showNotification(`✅ Promocionados actualizados. Mostrando ${promoted.length} destacadas.`, 'success');
+        updatePromotedCount();
+        showNotification(`✅ Promocionado actualizado globalmente para "${slug}".`, 'success');
       });
     });
-
-    document.getElementById('btn-reset-promoted')?.addEventListener('click', () => {
-      localStorage.removeItem(PROMOTED_KEY);
-      loadPromotedState();
-      showNotification('✅ Configuración de promocionados restablecida a los valores predeterminados.', 'info');
-    });
-
-    // Disabled / Delete Manager
-    function getDisabledSlugs() {
-      try {
-        const stored = localStorage.getItem(DISABLED_KEY);
-        return stored ? JSON.parse(stored) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function loadDisabledState() {
-      const disabledSlugs = getDisabledSlugs();
-      document.querySelectorAll('.camping-row').forEach((row) => {
-        const slug = row.getAttribute('data-slug');
-        if (disabledSlugs.includes(slug)) {
-          row.classList.add('opacity-40', 'bg-rose-50/50');
-          const btnDel = row.querySelector('.btn-delete');
-          if (btnDel) btnDel.innerHTML = '<span>🔄</span> Restaurar';
-        } else {
-          row.classList.remove('opacity-40', 'bg-rose-50/50');
-          const btnDel = row.querySelector('.btn-delete');
-          if (btnDel) btnDel.innerHTML = '<span>🗑️</span> Eliminar';
-        }
-      });
-    }
 
     // Event Delegation for Rescrap & Delete Actions
     document.addEventListener('click', (e) => {
@@ -384,13 +304,12 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const muni = target.getAttribute('data-muni') || '';
         target.disabled = true;
         target.innerHTML = '<span>⏳</span> Escaneando...';
-        showNotification(`📸 Buscando e inspeccionando un nuevo set de fotos únicas o lugares turísticos para "${name}"...`, 'info');
+        showNotification(`📸 Re-scraping de fotos únicas y punto de interés cercano para "${name}"...`, 'info');
 
         setTimeout(() => {
           target.disabled = false;
           target.innerHTML = '<span>✨</span> Fotos Re-scraped';
 
-          // Select fresh distinct photo
           let pool = AREA_LANDMARKS.default_pool;
           if (slug.includes('chorro') || muni.includes('ardales') || name.toLowerCase().includes('chorro')) {
             pool = AREA_LANDMARKS.el_chorro;
@@ -400,44 +319,42 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             pool = AREA_LANDMARKS.cabo_de_gata;
           }
 
-          const currentCustom = getCustomPhotos();
-          const currentUrl = currentCustom[slug];
+          const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
+          const currentUrl = rowImg ? rowImg.src : '';
           const nextUrl = pool.find((u) => u !== currentUrl) || pool[0];
 
-          currentCustom[slug] = nextUrl;
-          localStorage.setItem(CUSTOM_PHOTOS_KEY, JSON.stringify(currentCustom));
-
-          // Update table thumbnail immediately
-          const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
           if (rowImg) rowImg.src = nextUrl;
 
-          showNotification(`📸 ¡Nuevo set de fotos asignado para "${name}"! Imagen principal e inspección actualizadas.`, 'success');
+          showNotification(`📸 ¡Nuevo set de fotos asignado globalmente para "${name}"!`, 'success');
         }, 1200);
       }
 
       if (action === 'rescrape') {
         target.disabled = true;
         target.innerHTML = '<span>⏳</span> Re-scraping...';
-        showNotification(`🔄 Iniciando re-scraping e inspección visual de fotos para "${name}"...`, 'info');
+        showNotification(`🔄 Iniciando re-scraping completo para "${name}"...`, 'info');
 
         setTimeout(() => {
           target.disabled = false;
           target.innerHTML = '<span>✅</span> Re-scraped';
-          showNotification(`✨ Re-scraping completado con éxito para "${name}". Fotos e información actualizadas.`, 'success');
+          showNotification(`✨ Re-scraping completado con éxito para "${name}".`, 'success');
         }, 1200);
       }
 
       if (action === 'delete') {
-        let disabledSlugs = getDisabledSlugs();
-        if (disabledSlugs.includes(slug)) {
-          disabledSlugs = disabledSlugs.filter((s) => s !== slug);
-          showNotification(`✅ Camping "${name}" restaurado correctamente.`, 'success');
-        } else {
-          disabledSlugs.push(slug);
-          showNotification(`🗑️ Camping "${name}" eliminado / desactivado del listado.`, 'warning');
+        const row = document.querySelector(`.camping-row[data-slug="${slug}"]`);
+        if (row) {
+          const isDeleted = row.classList.contains('opacity-40');
+          if (isDeleted) {
+            row.classList.remove('opacity-40', 'bg-rose-50/50');
+            target.innerHTML = '<span>🗑️</span> Eliminar';
+            showNotification(`✅ Camping "${name}" restaurado correctamente.`, 'success');
+          } else {
+            row.classList.add('opacity-40', 'bg-rose-50/50');
+            target.innerHTML = '<span>🔄</span> Restaurar';
+            showNotification(`🗑️ Camping "${name}" desactivado del listado público.`, 'warning');
+          }
         }
-        localStorage.setItem(DISABLED_KEY, JSON.stringify(disabledSlugs));
-        loadDisabledState();
       }
     });
 

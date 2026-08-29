@@ -6,10 +6,13 @@ import { getCampings, getFeatures, PROVINCES } from '../lib/db';
 const allCampings = await getCampings();
 const features = await getFeatures();
 
-// Curated mix of top/promoted campings across Andalusian provinces
-const elSurCamping = allCampings.find((c) => c.slug === 'el-sur' || c.slug === 'camping-el-sur');
-const otherFeatured = allCampings.filter((c) => c.slug !== 'el-sur' && c.slug !== 'camping-el-sur' && (c.rating || 0) >= 4.2).slice(0, 5);
-const featuredCampings = elSurCamping ? [elSurCamping, ...otherFeatured] : allCampings.slice(0, 6);
+// Filter active campsites and sort globally: promoted first, then by rating
+const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'disabled');
+const sortedCampings = [...activeCampings].sort((a, b) => {
+  if (a.is_promoted && !b.is_promoted) return -1;
+  if (!a.is_promoted && b.is_promoted) return 1;
+  return (b.rating || 0) - (a.rating || 0);
+});
 
 const categories = [
   { name: 'Glamping de Lujo', slug: 'glamping', icon: '⛺', desc: 'Tiendas bell y domos con el máximo confort.' },
@@ -183,113 +186,26 @@ const provinceCounts = PROVINCES.map((p) => {
       </button>
     </div>
 
-    <!-- Render all available camping cards hidden/visible so client-side admin promoted state re-orders dynamically -->
+    <!-- Render all available camping cards cleanly, showing top 6 initially -->
     <div id="featured-campings-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {allCampings.map((camping) => (
-        <CampingCard camping={camping} />
+      {sortedCampings.map((camping, index) => (
+        <div class="camping-card-wrapper flex flex-col" style={index < 6 ? 'display: flex;' : 'display: none;'}>
+          <CampingCard camping={camping} />
+        </div>
       ))}
     </div>
   </section>
 
   <script is:inline>
-    // Client-side hydration for admin promoted & disabled campsite preferences & custom photos
+    // Client-side expansion for 'Ver Campings' button
     (function () {
-      const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
-      const DISABLED_KEY = 'mejorescampings_disabled_slugs';
-      const CUSTOM_PHOTOS_KEY = 'mejorescampings_custom_photos';
-      const defaultPromoted = ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
-
-      function applyPromotedFilters() {
-        // Hydrate custom photo overrides if present
-        try {
-          const storedPhotos = localStorage.getItem(CUSTOM_PHOTOS_KEY);
-          if (storedPhotos) {
-            const photosMap = JSON.parse(storedPhotos);
-            Object.keys(photosMap).forEach((slug) => {
-              const cardImg = document.querySelector(`.camping-card-img[data-slug="${slug}"]`);
-              if (cardImg && photosMap[slug]) {
-                cardImg.src = photosMap[slug];
-              }
-            });
-          }
-        } catch (e) {}
-
-        const grid = document.getElementById('featured-campings-grid');
-        if (!grid) return;
-
-        let promotedSlugs;
-        try {
-          const stored = localStorage.getItem(PROMOTED_KEY);
-          promotedSlugs = stored ? JSON.parse(stored) : defaultPromoted;
-        } catch (e) {
-          promotedSlugs = defaultPromoted;
-        }
-
-        let disabledSlugs = [];
-        try {
-          const storedDisabled = localStorage.getItem(DISABLED_KEY);
-          if (storedDisabled) disabledSlugs = JSON.parse(storedDisabled);
-        } catch (e) {}
-
-        const cardNodes = Array.from(grid.children);
-
-        // Filter out disabled campsites
-        const activeNodes = cardNodes.filter((node) => {
-          const slug = node.getAttribute('data-slug');
-          return !disabledSlugs.includes(slug);
-        });
-
-        // Hide disabled ones
-        cardNodes.forEach((node) => {
-          const slug = node.getAttribute('data-slug');
-          if (disabledSlugs.includes(slug)) {
-            node.style.display = 'none';
-          }
-        });
-
-        // Sort active nodes: promoted ones first (matching order of promotedSlugs if possible), then others
-        activeNodes.sort((a, b) => {
-          const slugA = a.getAttribute('data-slug');
-          const slugB = b.getAttribute('data-slug');
-
-          const isPromA = promotedSlugs.includes(slugA);
-          const isPromB = promotedSlugs.includes(slugB);
-
-          if (isPromA && !isPromB) return -1;
-          if (!isPromA && isPromB) return 1;
-          if (isPromA && isPromB) return promotedSlugs.indexOf(slugA) - promotedSlugs.indexOf(slugB);
-          return 0;
-        });
-
-        // Determine how many cards to show (show all promoted + total min 6 cards)
-        const displayLimit = Math.max(6, promotedSlugs.length);
-
-        activeNodes.forEach((node, index) => {
-          if (index < displayLimit) {
-            node.style.display = 'flex';
-            grid.appendChild(node);
-          } else {
-            node.style.display = 'none';
-          }
-        });
-      }
-
       function showAllCampings() {
         const grid = document.getElementById('featured-campings-grid');
         if (!grid) return;
 
-        let disabledSlugs = [];
-        try {
-          const storedDisabled = localStorage.getItem(DISABLED_KEY);
-          if (storedDisabled) disabledSlugs = JSON.parse(storedDisabled);
-        } catch (e) {}
-
         const cardNodes = Array.from(grid.children);
         cardNodes.forEach((node) => {
-          const slug = node.getAttribute('data-slug');
-          if (!disabledSlugs.includes(slug)) {
-            node.style.display = 'flex';
-          }
+          node.style.display = 'flex';
         });
 
         const btn = document.getElementById('btn-show-all-campings');
@@ -298,11 +214,9 @@ const provinceCounts = PROVINCES.map((p) => {
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-          applyPromotedFilters();
           document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
         });
       } else {
-        applyPromotedFilters();
         document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
       }
     })();

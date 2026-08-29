@@ -47,13 +47,13 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const promotedCheckbox = page.locator('.promoted-checkbox').first();
     await expect(promotedCheckbox).toBeVisible();
     await promotedCheckbox.click();
-    await expect(page.locator('#action-notification-box')).toContainText('Promocionados actualizados');
+    await expect(page.locator('#action-notification-box')).toContainText('Promocionado actualizado');
 
     // Test action button: Delete / Restore toggle
     const deleteBtn = page.locator('button[data-action="delete"]').first();
     await expect(deleteBtn).toBeVisible();
     await deleteBtn.click();
-    await expect(page.locator('#action-notification-box')).toContainText('eliminado');
+    await expect(page.locator('#action-notification-box')).toContainText('desactivado');
   });
 
   test('Camping cards are fully clickable and navigate to detail page', async ({ page }) => {

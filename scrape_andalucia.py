@@ -1317,6 +1317,7 @@ def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) ->
         "google_place_id": scraped.get("google_place_id") or existing.get("google_place_id"),
         "quality_score": scraped.get("quality_score", existing.get("quality_score", 70)),
         "status": scraped.get("status", existing.get("status", "active")),
+        "is_promoted": existing.get("is_promoted", scraped.get("is_promoted", False)),
         "ai_description": scraped.get("ai_description") or existing.get("ai_description"),
         "faqs_json": scraped.get("faqs_json") or existing.get("faqs_json"),
         "meta_title": scraped.get("meta_title") or existing.get("meta_title"),

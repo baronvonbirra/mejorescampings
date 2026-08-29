@@ -23,7 +23,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 278,
+    "review_count": 107,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
@@ -70,7 +70,8 @@
     "meta_title": "Camping los Escullos en Almeria (Almería) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping los Escullos en Almeria (Almería). Licencia CM/AL/00005, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 75,
-    "status": "active"
+    "status": "active",
+    "is_promoted": true
   },
   {
     "name": "Camping Valdevaqueros",
@@ -96,7 +97,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 238,
+    "review_count": 77,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00008",
     "category": "1ª Categ. (4 estrellas)",
@@ -135,7 +136,8 @@
     "meta_title": "Camping Valdevaqueros en Cadiz (Cádiz) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Valdevaqueros en Cadiz (Cádiz). Licencia CM/CA/00008, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 75,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Cabopino",
@@ -161,7 +163,7 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 76,
+    "review_count": 258,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00002",
     "category": "1ª Categ. (4 estrellas)",
@@ -210,7 +212,8 @@
     "meta_title": "Camping Cabopino en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Cabopino en Malaga (Málaga). Licencia CM/MA/00002, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 85,
-    "status": "active"
+    "status": "active",
+    "is_promoted": true
   },
   {
     "name": "Camping Doñana Playa",
@@ -236,7 +239,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 175,
+    "review_count": 109,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/HU/00010",
     "category": "1ª Categ. (4 estrellas)",
@@ -277,7 +280,8 @@
     "meta_title": "Camping Doñana Playa en Huelva (Huelva) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Doñana Playa en Huelva (Huelva). Licencia CM/HU/00010, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 85,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Pinar San José",
@@ -303,7 +307,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 270,
+    "review_count": 196,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00021",
     "category": "1ª Categ. (4 estrellas)",
@@ -346,7 +350,8 @@
     "meta_title": "Camping Pinar San José en Cadiz (Cádiz) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Pinar San José en Cadiz (Cádiz). Licencia CM/CA/00021, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 85,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Cabo de Gata",
@@ -372,7 +377,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 191,
+    "review_count": 56,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00012",
     "category": "2ª Categ. (3 estrellas)",
@@ -407,7 +412,8 @@
     "meta_title": "Camping Cabo de Gata en Almeria (Almería) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Cabo de Gata en Almeria (Almería). Licencia CM/AL/00012, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "quality_score": 60,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Albolafia",
@@ -433,7 +439,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 93,
+    "review_count": 142,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CO/00003",
     "category": "2ª Categ. (3 estrellas)",
@@ -470,7 +476,8 @@
     "meta_title": "Camping Albolafia en Cordoba (Córdoba) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Albolafia en Cordoba (Córdoba). Licencia CM/CO/00003, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "quality_score": 70,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Sierra Nevada",
@@ -496,7 +503,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 190,
+    "review_count": 194,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00004",
     "category": "1ª Categ. (4 estrellas)",
@@ -533,7 +540,8 @@
     "meta_title": "Camping Sierra Nevada en Granada (Granada) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Sierra Nevada en Granada (Granada). Licencia CM/GR/00004, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 85,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Playa de Poniente",
@@ -559,7 +567,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 40,
+    "review_count": 166,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00019",
     "category": "2ª Categ. (3 estrellas)",
@@ -596,7 +604,8 @@
     "meta_title": "Camping Playa de Poniente en Granada (Granada) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Playa de Poniente en Granada (Granada). Licencia CM/GR/00019, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "quality_score": 70,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping Puente de las Herrarias",
@@ -622,7 +631,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 256,
+    "review_count": 276,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/JA/00007",
     "category": "2ª Categ. (3 estrellas)",
@@ -656,7 +665,8 @@
     "meta_title": "Camping Puente de las Herrarias en Jaen (Jaén) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Puente de las Herrarias en Jaen (Jaén). Licencia CM/JA/00007, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "quality_score": 70,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   },
   {
     "name": "Camping el Sur",
@@ -682,7 +692,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 255,
+    "review_count": 115,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
@@ -720,7 +730,8 @@
     "meta_title": "Camping el Sur en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping el Sur en Malaga (Málaga). Licencia CM/MA/00014, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "quality_score": 55,
-    "status": "pending_review"
+    "status": "pending_review",
+    "is_promoted": true
   },
   {
     "name": "Camping Dehesa Nueva",
@@ -746,7 +757,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 201,
+    "review_count": 45,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/SE/00006",
     "category": "2ª Categ. (3 estrellas)",
@@ -783,6 +794,7 @@
     "meta_title": "Camping Dehesa Nueva en Sevilla (Sevilla) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Dehesa Nueva en Sevilla (Sevilla). Licencia CM/SE/00006, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "quality_score": 70,
-    "status": "active"
+    "status": "active",
+    "is_promoted": false
   }
 ]
