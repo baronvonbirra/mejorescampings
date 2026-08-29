@@ -134,34 +134,71 @@ KNOWN_CAMPSITE_URLS = {
 
 # Specific area landmark real photo pools (nearest area landmarks if camping direct photos missing)
 LANDMARK_AREA_IMAGE_POOLS = {
+    "almeria": [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80", # Playa Monsul Cabo de Gata
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80", # Los Escullos
+        "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80", # Arrecife de las Sirenas
+        "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80"  # Desierto de Tabernas
+    ],
+    "cadiz": [
+        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80", # Duna Valdevaqueros Tarifa
+        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80", # Playa de Bolonia
+        "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80", # Conil de la Frontera
+        "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1200&q=80"  # Costa de la Luz
+    ],
+    "cordoba": [
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", # Sierra Morena Córdoba
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", # Valle del Guadalquivir
+        "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"  # Dehesa de Córdoba
+    ],
+    "granada": [
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80", # Sierra Nevada Granada
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80", # Alpujarra granadina
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"  # Costa Tropical Motril
+    ],
+    "huelva": [
+        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80", # Mazagón dunas y pinos
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", # Parque Nacional Doñana
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"  # Costa de Huelva
+    ],
+    "jaen": [
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", # Sierra de Cazorla
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80", # Nacimiento del Guadalquivir
+        "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"  # Segura y Las Villas
+    ],
     "el_chorro": [
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80", # El Chorro turquoise lake
-        "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80", # Caminito del Rey gorge
-        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80", # Ardales reservoir
-        "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80"  # Garganta del Chorro cliffs
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80", # Embalse El Chorro
+        "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80", # Caminito del Rey
+        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80", # Lagos de Ardales
+        "https://images.unsplash.com/photo-1541004995602-b3e898709909?auto=format&fit=crop&w=1200&q=80"  # Garganta del Chorro
     ],
     "ronda": [
         "https://images.unsplash.com/photo-1561016444-14f747499547?auto=format&fit=crop&w=1200&q=80", # Tajo de Ronda
-        "https://images.unsplash.com/photo-1548625361-18596642d935?auto=format&fit=crop&w=1200&q=80", # Serranía de Ronda valley
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"  # Ronda mountains
+        "https://images.unsplash.com/photo-1548625361-18596642d935?auto=format&fit=crop&w=1200&q=80", # Valle del Genal Ronda
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"  # Serranía de Ronda
     ],
     "cabo_de_gata": [
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80", # Playa de Monsul Cabo de Gata
-        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80", # Los Escullos cove
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80", # Playa de Monsul
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80", # Los Escullos
         "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80"  # Arrecife de las Sirenas
     ],
     "tarifa": [
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80", # Valdevaqueros dune Tarifa
-        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80", # Bolonia beach
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"  # Atlantic Tarifa horizon
+        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80", # Valdevaqueros
+        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80", # Bolonia
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"  # Horizonte atlántico
     ],
     "donana_huelva": [
-        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80", # Mazagon pine coastal dunes
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"  # Doñana natural reserve forest
+        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80", # Mazagón
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"  # Reserva Doñana
     ],
     "cazorla": [
-        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", # Sierra de Cazorla pines
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"  # Guadalquivir river spring
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", # Pinos de Cazorla
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"  # Nacimiento Guadalquivir
+    ],
+    "sevilla": [
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", # Dehesa de Aznalcázar
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", # Sierra Norte de Sevilla
+        "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"  # Cazalla de la Sierra
     ]
 }
 
@@ -849,12 +886,13 @@ def parse_seed_article(seed_item: Dict[str, Any]) -> List[Dict[str, Any]]:
 
 def get_regional_image_pool(campsite: Dict[str, Any]) -> List[str]:
     m_slug = campsite.get("municipality_slug", "").lower()
+    p_slug = campsite.get("province_slug", "").lower()
     name = campsite.get("name", "").lower()
     address = campsite.get("address", "").lower()
     c_slug = campsite.get("slug", "").lower()
     amenities = campsite.get("amenities", {})
 
-    combined_text = f"{m_slug} {name} {address} {c_slug}"
+    combined_text = f"{p_slug} {m_slug} {name} {address} {c_slug}"
 
     # Priority landmark area pools
     if "chorro" in combined_text or "ardales" in combined_text:
@@ -869,6 +907,9 @@ def get_regional_image_pool(campsite: Dict[str, Any]) -> List[str]:
         return LANDMARK_AREA_IMAGE_POOLS["donana_huelva"]
     if "cazorla" in combined_text:
         return LANDMARK_AREA_IMAGE_POOLS["cazorla"]
+
+    if p_slug in LANDMARK_AREA_IMAGE_POOLS:
+        return LANDMARK_AREA_IMAGE_POOLS[p_slug]
 
     if amenities.get("glamping") or "glamping" in combined_text or "burbuja" in combined_text:
         return REGION_IMAGE_POOLS["glamping"]
