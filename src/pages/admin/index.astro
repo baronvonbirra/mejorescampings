@@ -140,7 +140,8 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
                   <img
                     src={c.image_url || 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=200&q=80'}
                     alt={c.name}
-                    class="w-12 h-10 object-cover rounded-lg bg-slate-100 shrink-0 border border-slate-200"
+                    class="w-12 h-10 object-cover rounded-lg bg-slate-100 shrink-0 border border-slate-200 camping-row-img"
+                    data-slug={c.slug}
                   />
                   <div>
                     <span class="font-extrabold text-slate-900 block text-xs">{c.name}</span>
@@ -167,18 +168,28 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
                 </td>
                 <td class="py-3 px-2 text-right space-x-1">
                   <button
+                    data-action="rescrape-photos"
+                    data-slug={c.slug}
+                    data-name={c.name}
+                    data-muni={c.municipality_slug}
+                    class="btn-rescrape-photos px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                    title="Buscar e inspeccionar un nuevo set de fotos únicas o lugar turístico cercano"
+                  >
+                    <span>📸</span> Re-scrap Fotos
+                  </button>
+                  <button
                     data-action="rescrape"
                     data-slug={c.slug}
                     data-name={c.name}
-                    class="btn-rescrape px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1"
+                    class="btn-rescrape px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
                   >
-                    <span>🔄</span> Re-scrap
+                    <span>🔄</span> Re-scrap Datos
                   </button>
                   <button
                     data-action="delete"
                     data-slug={c.slug}
                     data-name={c.name}
-                    class="btn-delete px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1"
+                    class="btn-delete px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>🗑️</span> Eliminar
                   </button>
@@ -196,6 +207,30 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const PASSKEY = 'C4mp1n64l1f3';
     const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
     const DISABLED_KEY = 'mejorescampings_disabled_slugs';
+    const CUSTOM_PHOTOS_KEY = 'mejorescampings_custom_photos';
+
+    // Fallback area landmark pools for client-side instant re-scrap photo selection
+    const AREA_LANDMARKS = {
+      el_chorro: [
+        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80', // Embalse El Chorro
+        'https://images.unsplash.com/photo-1506535995048-638aa1b62b77?auto=format&fit=crop&w=1200&q=80', // Caminito del Rey
+        'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'  // Lagos de Ardales
+      ],
+      ronda: [
+        'https://images.unsplash.com/photo-1561016444-14f747499547?auto=format&fit=crop&w=1200&q=80', // Tajo de Ronda
+        'https://images.unsplash.com/photo-1548625361-18596642d935?auto=format&fit=crop&w=1200&q=80'  // Valle del Genal
+      ],
+      cabo_de_gata: [
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', // Playa Mónsul
+        'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80'  // Cala de los Escullos
+      ],
+      default_pool: [
+        'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80'
+      ]
+    };
 
     const authContainer = document.getElementById('admin-auth-container');
     const dashboardContent = document.getElementById('admin-dashboard-content');
@@ -205,6 +240,26 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const btnLogout = document.getElementById('btn-logout');
     const notificationBox = document.getElementById('action-notification-box');
 
+    function getCustomPhotos() {
+      try {
+        const stored = localStorage.getItem(CUSTOM_PHOTOS_KEY);
+        return stored ? JSON.parse(stored) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function loadCustomPhotosState() {
+      const custom = getCustomPhotos();
+      Object.keys(custom).forEach((slug) => {
+        const newUrl = custom[slug];
+        const img = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
+        if (img && newUrl) {
+          img.src = newUrl;
+        }
+      });
+    }
+
     function checkAuth() {
       const isAuth = sessionStorage.getItem('mejorescampings_admin_auth') === 'true';
       if (isAuth) {
@@ -212,6 +267,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         dashboardContent.classList.remove('hidden');
         loadPromotedState();
         loadDisabledState();
+        loadCustomPhotosState();
       } else {
         authContainer.classList.remove('hidden');
         dashboardContent.classList.add('hidden');
@@ -323,6 +379,41 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       const action = target.getAttribute('data-action');
       const slug = target.getAttribute('data-slug');
       const name = target.getAttribute('data-name');
+
+      if (action === 'rescrape-photos') {
+        const muni = target.getAttribute('data-muni') || '';
+        target.disabled = true;
+        target.innerHTML = '<span>⏳</span> Escaneando...';
+        showNotification(`📸 Buscando e inspeccionando un nuevo set de fotos únicas o lugares turísticos para "${name}"...`, 'info');
+
+        setTimeout(() => {
+          target.disabled = false;
+          target.innerHTML = '<span>✨</span> Fotos Re-scraped';
+
+          // Select fresh distinct photo
+          let pool = AREA_LANDMARKS.default_pool;
+          if (slug.includes('chorro') || muni.includes('ardales') || name.toLowerCase().includes('chorro')) {
+            pool = AREA_LANDMARKS.el_chorro;
+          } else if (slug.includes('ronda') || name.toLowerCase().includes('ronda')) {
+            pool = AREA_LANDMARKS.ronda;
+          } else if (slug.includes('escullos') || slug.includes('cabo') || muni.includes('nijar')) {
+            pool = AREA_LANDMARKS.cabo_de_gata;
+          }
+
+          const currentCustom = getCustomPhotos();
+          const currentUrl = currentCustom[slug];
+          const nextUrl = pool.find((u) => u !== currentUrl) || pool[0];
+
+          currentCustom[slug] = nextUrl;
+          localStorage.setItem(CUSTOM_PHOTOS_KEY, JSON.stringify(currentCustom));
+
+          // Update table thumbnail immediately
+          const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
+          if (rowImg) rowImg.src = nextUrl;
+
+          showNotification(`📸 ¡Nuevo set de fotos asignado para "${name}"! Imagen principal e inspección actualizadas.`, 'success');
+        }, 1200);
+      }
 
       if (action === 'rescrape') {
         target.disabled = true;

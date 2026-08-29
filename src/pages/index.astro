@@ -175,9 +175,12 @@ const provinceCounts = PROVINCES.map((p) => {
         <h2 class="text-2xl font-bold text-slate-900">Selección de Campings Destacados en Andalucía</h2>
         <p class="text-xs sm:text-sm text-slate-500">Alojamiento de alta calidad y promocionados en las 8 provincias</p>
       </div>
-      <a href={`${import.meta.env.BASE_URL}guias/`} class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
-        Ver guías &rarr;
-      </a>
+      <button
+        id="btn-show-all-campings"
+        class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer border border-emerald-200 bg-emerald-50 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition"
+      >
+        Ver Campings &rarr;
+      </button>
     </div>
 
     <!-- Render all available camping cards hidden/visible so client-side admin promoted state re-orders dynamically -->
@@ -189,13 +192,28 @@ const provinceCounts = PROVINCES.map((p) => {
   </section>
 
   <script is:inline>
-    // Client-side hydration for admin promoted & disabled campsite preferences
+    // Client-side hydration for admin promoted & disabled campsite preferences & custom photos
     (function () {
       const PROMOTED_KEY = 'mejorescampings_promoted_slugs';
       const DISABLED_KEY = 'mejorescampings_disabled_slugs';
+      const CUSTOM_PHOTOS_KEY = 'mejorescampings_custom_photos';
       const defaultPromoted = ['camping-el-sur', 'camping-cabopino', 'camping-los-escullos'];
 
       function applyPromotedFilters() {
+        // Hydrate custom photo overrides if present
+        try {
+          const storedPhotos = localStorage.getItem(CUSTOM_PHOTOS_KEY);
+          if (storedPhotos) {
+            const photosMap = JSON.parse(storedPhotos);
+            Object.keys(photosMap).forEach((slug) => {
+              const cardImg = document.querySelector(`.camping-card-img[data-slug="${slug}"]`);
+              if (cardImg && photosMap[slug]) {
+                cardImg.src = photosMap[slug];
+              }
+            });
+          }
+        } catch (e) {}
+
         const grid = document.getElementById('featured-campings-grid');
         if (!grid) return;
 
@@ -256,10 +274,36 @@ const provinceCounts = PROVINCES.map((p) => {
         });
       }
 
+      function showAllCampings() {
+        const grid = document.getElementById('featured-campings-grid');
+        if (!grid) return;
+
+        let disabledSlugs = [];
+        try {
+          const storedDisabled = localStorage.getItem(DISABLED_KEY);
+          if (storedDisabled) disabledSlugs = JSON.parse(storedDisabled);
+        } catch (e) {}
+
+        const cardNodes = Array.from(grid.children);
+        cardNodes.forEach((node) => {
+          const slug = node.getAttribute('data-slug');
+          if (!disabledSlugs.includes(slug)) {
+            node.style.display = 'flex';
+          }
+        });
+
+        const btn = document.getElementById('btn-show-all-campings');
+        if (btn) btn.style.display = 'none';
+      }
+
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', applyPromotedFilters);
+        document.addEventListener('DOMContentLoaded', () => {
+          applyPromotedFilters();
+          document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
+        });
       } else {
         applyPromotedFilters();
+        document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
       }
     })();
   </script>
