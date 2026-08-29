@@ -102,6 +102,28 @@ export async function getCampings(): Promise<Camping[]> {
   return localCampings as Camping[];
 }
 
+export async function getAllCampingsForAdmin(): Promise<Camping[]> {
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('campings')
+        .select('*')
+        .order('name', { ascending: true });
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          ...item,
+          affiliate_url: item.affiliate_url || item.aff_url || null,
+          image_urls: item.image_urls || (item.image_url ? [item.image_url] : []),
+          related_affiliates: item.related_affiliates || {}
+        }));
+      }
+    } catch (e) {
+      console.warn('Failed to fetch all campings for admin from Supabase, fallback to local data:', e);
+    }
+  }
+  return localCampings as Camping[];
+}
+
 export async function getCampingBySlug(slug: string): Promise<Camping | undefined> {
   if (supabase) {
     try {

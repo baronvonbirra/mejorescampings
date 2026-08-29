@@ -106,6 +106,9 @@ ALTER TABLE features ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Allow public read access on campings" ON campings;
 CREATE POLICY "Allow public read access on campings" ON campings FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Allow public update access on campings" ON campings;
+CREATE POLICY "Allow public update access on campings" ON campings FOR UPDATE USING (true);
+
 DROP POLICY IF EXISTS "Allow public read access on locations" ON locations;
 CREATE POLICY "Allow public read access on locations" ON locations FOR SELECT USING (true);
 
