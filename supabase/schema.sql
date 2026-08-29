@@ -1,7 +1,9 @@
 -- MejoresCampings Supabase Database Schema
 
--- Enable UUID extension if not enabled
+-- Enable required extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS cube;
+CREATE EXTENSION IF NOT EXISTS earthdistance;
 
 -- 1. Locations Table
 CREATE TABLE IF NOT EXISTS locations (
@@ -92,6 +94,20 @@ ADD COLUMN IF NOT EXISTS pitchup_rating NUMERIC DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS photos_manifest JSONB DEFAULT '[]'::jsonb,
 ADD COLUMN IF NOT EXISTS google_place_id TEXT DEFAULT NULL;
 
+-- Enable Row Level Security (RLS) & Define Public Access Policies
+ALTER TABLE campings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE locations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE features ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read access on campings" ON campings;
+CREATE POLICY "Allow public read access on campings" ON campings FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read access on locations" ON locations;
+CREATE POLICY "Allow public read access on locations" ON locations FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read access on features" ON features;
+CREATE POLICY "Allow public read access on features" ON features FOR SELECT USING (true);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_campings_slug ON campings(slug);
 CREATE INDEX IF NOT EXISTS idx_campings_municipality ON campings(municipality_slug);
@@ -101,20 +117,37 @@ CREATE INDEX IF NOT EXISTS idx_campings_province ON campings(province_slug);
 CREATE INDEX IF NOT EXISTS idx_campings_muni ON campings(province_slug, municipality_slug);
 CREATE INDEX IF NOT EXISTS idx_campings_geo ON campings USING GIST (ll_to_earth(lat, lng));
 
--- Seed Data for MVP (Málaga)
+-- Seed Data for Locations
 INSERT INTO locations (region, province, municipality, slug) VALUES
-('andalucia', 'malaga', 'Ronda', 'andalucia/malaga/ronda'),
-('andalucia', 'malaga', 'Marbella', 'andalucia/malaga/marbella'),
-('andalucia', 'malaga', 'Nerja', 'andalucia/malaga/nerja'),
-('andalucia', 'malaga', 'Cabopino', 'andalucia/malaga/cabopino'),
-('andalucia', 'malaga', 'Torremolinos', 'andalucia/malaga/torremolinos')
+('andalucia', 'almeria', 'Níjar', 'almeria/nijar'),
+('andalucia', 'almeria', 'Almería', 'almeria/almeria'),
+('andalucia', 'cadiz', 'Tarifa', 'cadiz/tarifa'),
+('andalucia', 'cadiz', 'Barbate', 'cadiz/barbate'),
+('andalucia', 'cordoba', 'Villafranca de Córdoba', 'cordoba/villafranca-de-cordoba'),
+('andalucia', 'granada', 'Granada', 'granada/granada'),
+('andalucia', 'granada', 'Motril', 'granada/motril'),
+('andalucia', 'huelva', 'Mazagón', 'huelva/mazagon'),
+('andalucia', 'jaen', 'Cazorla', 'jaen/cazorla'),
+('andalucia', 'malaga', 'Ronda', 'malaga/ronda'),
+('andalucia', 'malaga', 'Marbella', 'malaga/marbella'),
+('andalucia', 'malaga', 'Nerja', 'malaga/nerja'),
+('andalucia', 'malaga', 'Torremolinos', 'malaga/torremolinos'),
+('andalucia', 'malaga', 'Almayate', 'malaga/almayate'),
+('andalucia', 'malaga', 'Antequera', 'malaga/antequera'),
+('andalucia', 'malaga', 'Málaga', 'malaga/malaga'),
+('andalucia', 'sevilla', 'Aznalcázar', 'sevilla/aznalcazar')
 ON CONFLICT (slug) DO NOTHING;
 
+-- Seed Data for Features
 INSERT INTO features (feature_name, slug, key, icon) VALUES
-('Piscina', 'campings-con-piscina', 'piscina', 'swimming-pool'),
-('Mascotas Permitidas', 'campings-que-admiten-perros', 'mascotas', 'dog'),
+('Cerca de la Playa', 'campings-playa', 'playa', 'sun'),
+('En la Montaña', 'campings-montana', 'montana', 'mountain'),
+('Mascotas Permitidas', 'campings-con-mascotas', 'mascotas', 'dog'),
+('Bungalows y Cabañas', 'campings-bungalows', 'glamping', 'tent'),
+('Con Piscina', 'campings-con-piscina', 'piscina', 'swimming-pool'),
 ('Animación Infantil', 'campings-con-animacion-infantil', 'animacion_infantil', 'sparkles'),
 ('Entorno Familiar', 'campings-familiares', 'entorno_familiar', 'users'),
-('Glamping', 'glamping', 'glamping', 'tent'),
-('Playa', 'campings-cerca-de-la-playa', 'playa', 'sun')
+('Glamping de Lujo', 'glamping', 'glamping', 'tent'),
+('Cerca de la Playa (Alt)', 'campings-cerca-de-la-playa', 'playa', 'sun'),
+('Mascotas Permitidas (Alt)', 'campings-que-admiten-perros', 'mascotas', 'dog')
 ON CONFLICT (slug) DO NOTHING;
