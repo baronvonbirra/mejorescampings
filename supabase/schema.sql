@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS campings (
     official_url TEXT,
     price_tier INT DEFAULT 2 CHECK (price_tier BETWEEN 1 AND 4),
     is_active BOOLEAN DEFAULT TRUE,
+    is_promoted BOOLEAN DEFAULT FALSE,
     status TEXT DEFAULT 'active',
     ai_description TEXT,
     faqs_json JSONB DEFAULT '[]'::jsonb,
@@ -75,6 +76,7 @@ CREATE TABLE IF NOT EXISTS camping_features (
 
 -- Normalización de Provincias, Comarcas y Calidad de Datos
 ALTER TABLE campings
+ADD COLUMN IF NOT EXISTS is_promoted BOOLEAN DEFAULT FALSE,
 ADD COLUMN IF NOT EXISTS province_slug TEXT NOT NULL DEFAULT 'malaga',
 ADD COLUMN IF NOT EXISTS comarca TEXT DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS comarca_slug TEXT DEFAULT NULL,

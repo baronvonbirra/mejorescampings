@@ -21,6 +21,7 @@ export interface Camping {
   official_url?: string | null;
   price_tier: number;
   is_active: boolean;
+  is_promoted?: boolean;
   status?: string;
   ai_description?: string | null;
   faqs_json?: Array<{ question: string; answer: string }> | null;

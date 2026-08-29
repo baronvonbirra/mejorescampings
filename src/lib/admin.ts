@@ -1,6 +1,6 @@
 import localCampings from '../data/campings.json';
 
-export const ADMIN_PASSKEY = 'campings2026';
+export const ADMIN_PASSKEY = 'C4mp1n64l1f3';
 
 export interface AdminCampsiteStatus {
   slug: string;

@@ -22,9 +22,10 @@ const detailUrl = `${import.meta.env.BASE_URL}camping/${camping.slug}/`;
   <div>
     <div class="relative h-48 sm:h-52 overflow-hidden">
       <img
-        src={camping.image_url || camping.image_urls[0]}
+        src={camping.image_url || (camping.image_urls && camping.image_urls[0])}
         alt={camping.name}
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 camping-card-img"
+        data-slug={camping.slug}
         loading="lazy"
       />
       <div class="absolute top-3 right-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-xs font-bold text-slate-800 shadow-sm z-20 pointer-events-none">
