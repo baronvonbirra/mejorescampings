@@ -77,6 +77,10 @@ CREATE TABLE IF NOT EXISTS camping_features (
 );
 
 -- Normalización de Provincias, Comarcas y Calidad de Datos
+-- Normalización y Migraciones
+ALTER TABLE features
+ADD COLUMN IF NOT EXISTS icon TEXT;
+
 ALTER TABLE campings
 ADD COLUMN IF NOT EXISTS is_promoted BOOLEAN DEFAULT FALSE,
 ADD COLUMN IF NOT EXISTS province_slug TEXT NOT NULL DEFAULT 'malaga',
