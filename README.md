@@ -79,7 +79,8 @@ CREATE TABLE features (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   feature_name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
-  key TEXT UNIQUE NOT NULL
+  key TEXT UNIQUE NOT NULL,
+  icon TEXT
 );
 
 CREATE TABLE camping_features (
