@@ -72,8 +72,8 @@ export const PROVINCES: ProvinceInfo[] = [
   { name: 'Sevilla', slug: 'sevilla', description: 'Campings en Sierra Norte, Vega del Guadalquivir y entorno de Doñana.', highlights: ['Sierra Norte', 'Cazalla de la Sierra', 'El Pedroso'] }
 ];
 
-const supabaseUrl = import.meta.env.SUPABASE_URL || process.env.SUPABASE_URL;
-const supabaseKey = import.meta.env.SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || process.env.PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || process.env.PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
 
 const supabase = (supabaseUrl && supabaseKey)
   ? createClient(supabaseUrl, supabaseKey)

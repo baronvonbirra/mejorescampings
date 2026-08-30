@@ -23,7 +23,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 102,
+    "review_count": 214,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
@@ -97,7 +97,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 117,
+    "review_count": 258,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00008",
     "category": "1ª Categ. (4 estrellas)",
@@ -163,7 +163,7 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 215,
+    "review_count": 94,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00002",
     "category": "1ª Categ. (4 estrellas)",
@@ -239,7 +239,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 180,
+    "review_count": 191,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/HU/00010",
     "category": "1ª Categ. (4 estrellas)",
@@ -307,18 +307,18 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 154,
+    "review_count": 143,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00021",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 920,
     "editorial_badges": [
-      "Comunidad Pitchup Glamping",
-      "Comunidad Pitchup Top"
+      "Comunidad Pitchup Top",
+      "Comunidad Pitchup Glamping"
     ],
     "editorial_tags": [
-      "Comunidad Pitchup Glamping",
-      "Comunidad Pitchup Top"
+      "Comunidad Pitchup Top",
+      "Comunidad Pitchup Glamping"
     ],
     "editorial_quote": "Destacado por la comunidad de Pitchup por sus servicios completos y proximidad a la playa de Zahora.",
     "pitchup_rating": 9.2,
@@ -377,7 +377,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 283,
+    "review_count": 193,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00012",
     "category": "2ª Categ. (3 estrellas)",
@@ -439,7 +439,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 67,
+    "review_count": 132,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CO/00003",
     "category": "2ª Categ. (3 estrellas)",
@@ -501,7 +501,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 227,
+    "review_count": 232,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00004",
     "category": "1ª Categ. (4 estrellas)",
@@ -565,7 +565,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 188,
+    "review_count": 115,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00019",
     "category": "2ª Categ. (3 estrellas)",
@@ -627,7 +627,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 201,
+    "review_count": 265,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/JA/00007",
     "category": "2ª Categ. (3 estrellas)",
@@ -688,7 +688,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 272,
+    "review_count": 68,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
@@ -753,7 +753,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 251,
+    "review_count": 93,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/SE/00006",
     "category": "2ª Categ. (3 estrellas)",

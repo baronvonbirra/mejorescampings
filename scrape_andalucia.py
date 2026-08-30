@@ -1316,13 +1316,28 @@ def generate_xml_sitemaps(campings, locations, features, base_url="https://mejor
         f.write(xml_content)
 
 def load_existing_campings() -> List[Dict[str, Any]]:
-    """Loads existing campsite records from src/data/campings.json fallback file."""
+    """Loads existing campsite records from Supabase database if configured, falling back to src/data/campings.json."""
+    url = os.environ.get("SUPABASE_URL") or os.environ.get("PUBLIC_SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("PUBLIC_SUPABASE_ANON_KEY")
+
+    if url and key:
+        try:
+            from supabase import create_client
+            supabase = create_client(url, key)
+            res = supabase.table("campings").select("*").execute()
+            if res.data and isinstance(res.data, list) and len(res.data) > 0:
+                logging.info(f"Loaded {len(res.data)} existing campsite records from Supabase database.")
+                return res.data
+        except Exception as e:
+            logging.warning(f"Could not load existing dataset from Supabase: {e}")
+
     campings_file = os.path.join("src", "data", "campings.json")
     if os.path.exists(campings_file):
         try:
             with open(campings_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 if isinstance(data, list):
+                    logging.info(f"Loaded {len(data)} campsite records from local JSON fallback dataset.")
                     return data
         except Exception as e:
             logging.warning(f"Could not load existing dataset from {campings_file}: {e}")
@@ -1570,8 +1585,8 @@ def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, A
     Executes upsert operations using 'slug' as the primary key/conflict target.
     Sanitizes records against schema whitelists to prevent PostgREST column error rejections.
     """
-    url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
+    url = os.environ.get("SUPABASE_URL") or os.environ.get("PUBLIC_SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("PUBLIC_SUPABASE_ANON_KEY")
 
     if not url or not key:
         logging.info("SUPABASE_URL and key not set. Skipping Supabase database sync.")
