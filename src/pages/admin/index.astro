@@ -6,8 +6,22 @@ import { auditCampsiteQuality } from '../../lib/admin';
 const allCampings = await getAllCampingsForAdmin();
 const audit = auditCampsiteQuality(allCampings);
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || process.env.PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || process.env.PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
+const getEnvVar = (key: string): string => {
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta?.env && import.meta.env[key]) {
+      return import.meta.env[key];
+    }
+  } catch (e) {}
+  try {
+    if (typeof process !== 'undefined' && process?.env && process.env[key]) {
+      return process.env[key];
+    }
+  } catch (e) {}
+  return '';
+};
+
+const supabaseUrl = getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL');
+const supabaseKey = getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY');
 
 const metaTitle = "Panel de Control Secreto | MejoresCampings";
 const metaDesc = "Panel de administración interno para gestión de campings promocionados, re-scraping de fotos y borrado.";

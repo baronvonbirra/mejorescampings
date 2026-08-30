@@ -72,8 +72,22 @@ export const PROVINCES: ProvinceInfo[] = [
   { name: 'Sevilla', slug: 'sevilla', description: 'Campings en Sierra Norte, Vega del Guadalquivir y entorno de Doñana.', highlights: ['Sierra Norte', 'Cazalla de la Sierra', 'El Pedroso'] }
 ];
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || process.env.PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || process.env.PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+const getEnvVar = (key: string): string | undefined => {
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta?.env) {
+      return import.meta.env[key];
+    }
+  } catch (e) {}
+  try {
+    if (typeof process !== 'undefined' && process?.env) {
+      return process.env[key];
+    }
+  } catch (e) {}
+  return undefined;
+};
+
+const supabaseUrl = getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL');
+const supabaseKey = getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY');
 
 const supabase = (supabaseUrl && supabaseKey)
   ? createClient(supabaseUrl, supabaseKey)
@@ -92,7 +106,21 @@ export async function getCampings(): Promise<Camping[]> {
           ...item,
           affiliate_url: item.affiliate_url || item.aff_url || null,
           image_urls: item.image_urls || (item.image_url ? [item.image_url] : []),
-          related_affiliates: item.related_affiliates || {}
+          related_affiliates: item.related_affiliates || {},
+          faqs_json: item.faqs_json && item.faqs_json.length > 0 ? item.faqs_json : [
+            {
+              question: `¿Cuál es la capacidad legal y categoría de ${item.name}?`,
+              answer: `El ${item.name} cuenta con categoría de ${item.category || '2ª Categ.'} y capacidad autorizada para ${item.legal_capacity || 400} personas bajo licencia RTA ${item.rta_license || 'oficial'}.`
+            },
+            {
+              question: `¿Admite perros y mascotas el ${item.name}?`,
+              answer: item.amenities?.mascotas ? `Sí, el ${item.name} admite mascotas en sus parcelas e instalaciones.` : `El ${item.name} mantiene normativa de silencio y no admite mascotas.`
+            },
+            {
+              question: `¿Cuenta con piscina ${item.name}?`,
+              answer: item.amenities?.piscina ? `Sí, el recinto incluye piscina para sus clientes.` : `El camping no dispone de piscina, situándose cerca de zonas de baño naturales.`
+            }
+          ]
         }));
       }
     } catch (e) {
@@ -114,7 +142,21 @@ export async function getAllCampingsForAdmin(): Promise<Camping[]> {
           ...item,
           affiliate_url: item.affiliate_url || item.aff_url || null,
           image_urls: item.image_urls || (item.image_url ? [item.image_url] : []),
-          related_affiliates: item.related_affiliates || {}
+          related_affiliates: item.related_affiliates || {},
+          faqs_json: item.faqs_json && item.faqs_json.length > 0 ? item.faqs_json : [
+            {
+              question: `¿Cuál es la capacidad legal y categoría de ${item.name}?`,
+              answer: `El ${item.name} cuenta con categoría de ${item.category || '2ª Categ.'} y capacidad autorizada para ${item.legal_capacity || 400} personas bajo licencia RTA ${item.rta_license || 'oficial'}.`
+            },
+            {
+              question: `¿Admite perros y mascotas el ${item.name}?`,
+              answer: item.amenities?.mascotas ? `Sí, el ${item.name} admite mascotas en sus parcelas e instalaciones.` : `El ${item.name} mantiene normativa de silencio y no admite mascotas.`
+            },
+            {
+              question: `¿Cuenta con piscina ${item.name}?`,
+              answer: item.amenities?.piscina ? `Sí, el recinto incluye piscina para sus clientes.` : `El camping no dispone de piscina, situándose cerca de zonas de baño naturales.`
+            }
+          ]
         }));
       }
     } catch (e) {
@@ -138,7 +180,21 @@ export async function getCampingBySlug(slug: string): Promise<Camping | undefine
           ...data,
           affiliate_url: data.affiliate_url || data.aff_url || null,
           image_urls: data.image_urls || (data.image_url ? [data.image_url] : []),
-          related_affiliates: data.related_affiliates || {}
+          related_affiliates: data.related_affiliates || {},
+          faqs_json: data.faqs_json && data.faqs_json.length > 0 ? data.faqs_json : [
+            {
+              question: `¿Cuál es la capacidad legal y categoría de ${data.name}?`,
+              answer: `El ${data.name} cuenta con categoría de ${data.category || '2ª Categ.'} y capacidad autorizada para ${data.legal_capacity || 400} personas bajo licencia RTA ${data.rta_license || 'oficial'}.`
+            },
+            {
+              question: `¿Admite perros y mascotas el ${data.name}?`,
+              answer: data.amenities?.mascotas ? `Sí, el ${data.name} admite mascotas en sus parcelas e instalaciones.` : `El ${data.name} mantiene normativa de silencio y no admite mascotas.`
+            },
+            {
+              question: `¿Cuenta con piscina ${data.name}?`,
+              answer: data.amenities?.piscina ? `Sí, el recinto incluye piscina para sus clientes.` : `El camping no dispone de piscina, situándose cerca de zonas de baño naturales.`
+            }
+          ]
         };
       }
     } catch (e) {

@@ -1582,11 +1582,26 @@ ALLOWED_FEATURE_KEYS = {
 def sanitize_record(record: Dict[str, Any], allowed_keys: set) -> Dict[str, Any]:
     return {k: v for k, v in record.items() if k in allowed_keys and v is not None}
 
+def fetch_remote_table_columns(url: str, key: str, table_name: str) -> set:
+    """Dynamically fetches existing column names for table_name from Supabase PostgREST OpenAPI spec."""
+    try:
+        endpoint = f"{url.rstrip('/')}/rest/v1/"
+        headers = {"apikey": key, "Authorization": f"Bearer {key}"}
+        resp = requests.get(endpoint, headers=headers, timeout=8)
+        if resp.status_code == 200:
+            spec = resp.json()
+            props = spec.get("definitions", {}).get(table_name, {}).get("properties", {})
+            if props:
+                return set(props.keys())
+    except Exception as e:
+        logging.warning(f"Could not fetch OpenAPI spec for table {table_name}: {e}")
+    return set()
+
 def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, Any]], features: List[Dict[str, Any]]) -> None:
     """
     Syncs generated dataset records to Supabase database tables if Supabase environment credentials are present.
     Executes upsert operations using 'slug' as the primary key/conflict target.
-    Sanitizes records against schema whitelists to prevent PostgREST column error rejections.
+    Sanitizes records against remote database schema to prevent PostgREST column error rejections.
     """
     url = os.environ.get("SUPABASE_URL") or os.environ.get("PUBLIC_SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("PUBLIC_SUPABASE_ANON_KEY")
@@ -1600,9 +1615,18 @@ def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, A
         supabase = create_client(url, key)
         logging.info("Synchronizing extracted dataset to Supabase database...")
 
+        remote_camping_cols = fetch_remote_table_columns(url, key, "campings")
+        camping_keys = ALLOWED_CAMPING_KEYS.intersection(remote_camping_cols) if remote_camping_cols else ALLOWED_CAMPING_KEYS
+
+        remote_location_cols = fetch_remote_table_columns(url, key, "locations")
+        location_keys = ALLOWED_LOCATION_KEYS.intersection(remote_location_cols) if remote_location_cols else ALLOWED_LOCATION_KEYS
+
+        remote_feature_cols = fetch_remote_table_columns(url, key, "features")
+        feature_keys = ALLOWED_FEATURE_KEYS.intersection(remote_feature_cols) if remote_feature_cols else ALLOWED_FEATURE_KEYS
+
         # Sync campings in batches of 50
         if campings:
-            clean_campings = [sanitize_record(c, ALLOWED_CAMPING_KEYS) for c in campings]
+            clean_campings = [sanitize_record(c, camping_keys) for c in campings]
             batch_size = 50
             for i in range(0, len(clean_campings), batch_size):
                 batch = clean_campings[i:i + batch_size]
@@ -1611,13 +1635,13 @@ def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, A
 
         # Sync locations
         if locations:
-            clean_locs = [sanitize_record(l, ALLOWED_LOCATION_KEYS) for l in locations]
+            clean_locs = [sanitize_record(l, location_keys) for l in locations]
             supabase.table("locations").upsert(clean_locs, on_conflict="slug").execute()
             logging.info(f"Successfully upserted {len(clean_locs)} locations to Supabase.")
 
         # Sync features
         if features:
-            clean_feats = [sanitize_record(f, ALLOWED_FEATURE_KEYS) for f in features]
+            clean_feats = [sanitize_record(f, feature_keys) for f in features]
             supabase.table("features").upsert(clean_feats, on_conflict="slug").execute()
             logging.info(f"Successfully upserted {len(clean_feats)} features to Supabase.")
 

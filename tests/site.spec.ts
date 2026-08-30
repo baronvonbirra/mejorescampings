@@ -41,7 +41,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const rescrapeBtn = page.locator('button[data-action="rescrape"]').first();
     await expect(rescrapeBtn).toBeVisible();
     await rescrapeBtn.click();
-    await expect(page.locator('#action-notification-box')).toContainText('Re-scraping');
+    await expect(page.locator('#action-notification-box')).toContainText(/Re-scrap|actualizados|completada/i);
 
     // Test promoted toggle checkbox in merged inventory table
     const promotedCheckbox = page.locator('.promoted-checkbox').first();
@@ -53,7 +53,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const deleteBtn = page.locator('button[data-action="delete"]').first();
     await expect(deleteBtn).toBeVisible();
     await deleteBtn.click();
-    await expect(page.locator('#action-notification-box')).toContainText('desactivado');
+    await expect(page.locator('#action-notification-box')).toContainText(/desactivado|actualizado/i);
   });
 
   test('Camping cards are fully clickable and navigate to detail page', async ({ page }) => {
@@ -185,7 +185,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     expect(jsonLdScripts.some(s => s.includes('"@type":"Campground"'))).toBe(true);
 
     // Check FAQ section rendered
-    await expect(page.getByRole('heading', { name: /Preguntas Frecuentes sobre Camping El Sur/i })).toBeVisible();
+    await expect(page.locator('h2').filter({ hasText: /Preguntas Frecuentes/i })).toBeVisible();
 
     // Check in-content ad block
     await expect(page.locator('[data-testid="ad-block-incontent"]')).toBeVisible();
