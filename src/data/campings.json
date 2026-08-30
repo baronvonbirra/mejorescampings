@@ -23,18 +23,18 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 214,
+    "review_count": 167,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 650,
     "editorial_badges": [
-      "Selección ABC Viajar",
-      "Top Playa"
+      "Top Playa",
+      "Selección ABC Viajar"
     ],
     "editorial_tags": [
-      "Selección ABC Viajar",
-      "Top Playa"
+      "Top Playa",
+      "Selección ABC Viajar"
     ],
     "editorial_quote": "Seleccionado entre los mejores campings a pie de playa por ABC Viajar en el Parque Natural Cabo de Gata.",
     "pitchup_rating": 9.1,
@@ -97,7 +97,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 258,
+    "review_count": 249,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00008",
     "category": "1ª Categ. (4 estrellas)",
@@ -163,18 +163,18 @@
       "playa": false
     },
     "rating": 4.4,
-    "review_count": 94,
+    "review_count": 63,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00002",
     "category": "1ª Categ. (4 estrellas)",
     "legal_capacity": 1100,
     "editorial_badges": [
-      "Top Campings Playa",
-      "Selección Kampaoh"
+      "Selección Kampaoh",
+      "Top Campings Playa"
     ],
     "editorial_tags": [
-      "Top Campings Playa",
-      "Selección Kampaoh"
+      "Selección Kampaoh",
+      "Top Campings Playa"
     ],
     "editorial_quote": "Recomendado como uno de los 11 mejores campings de playa en Andalucía por Kampaoh.",
     "pitchup_rating": 8.9,
@@ -239,7 +239,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 191,
+    "review_count": 76,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/HU/00010",
     "category": "1ª Categ. (4 estrellas)",
@@ -307,7 +307,7 @@
       "playa": false
     },
     "rating": 4.3,
-    "review_count": 143,
+    "review_count": 81,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CA/00021",
     "category": "1ª Categ. (4 estrellas)",
@@ -377,7 +377,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 193,
+    "review_count": 58,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/AL/00012",
     "category": "2ª Categ. (3 estrellas)",
@@ -439,7 +439,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 132,
+    "review_count": 170,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/CO/00003",
     "category": "2ª Categ. (3 estrellas)",
@@ -501,7 +501,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 232,
+    "review_count": 161,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00004",
     "category": "1ª Categ. (4 estrellas)",
@@ -565,7 +565,7 @@
       "playa": false
     },
     "rating": 4.6,
-    "review_count": 115,
+    "review_count": 60,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/GR/00019",
     "category": "2ª Categ. (3 estrellas)",
@@ -627,7 +627,7 @@
       "playa": false
     },
     "rating": 4.5,
-    "review_count": 265,
+    "review_count": 211,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/JA/00007",
     "category": "2ª Categ. (3 estrellas)",
@@ -688,7 +688,7 @@
       "playa": false
     },
     "rating": 4.2,
-    "review_count": 68,
+    "review_count": 119,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
@@ -753,7 +753,7 @@
       "playa": false
     },
     "rating": 4.8,
-    "review_count": 93,
+    "review_count": 247,
     "seasonality": "Abierto todo el año",
     "rta_license": "CM/SE/00006",
     "category": "2ª Categ. (3 estrellas)",

@@ -448,7 +448,7 @@ def fetch_overpass_andalucia_campings() -> List[Dict[str, Any]]:
         return []
 
     query = """
-    [out:json][timeout:5];
+    [out:json][timeout:25];
     area["ISO3166-2"="ES-AN"]->.andalucia;
     (
       node["tourism"="camp_site"](area.andalucia);
@@ -465,7 +465,7 @@ def fetch_overpass_andalucia_campings() -> List[Dict[str, Any]]:
     for url in endpoints:
         try:
             logging.info(f"Ingesting OSM & Google Places dataset via Overpass API ({url})...")
-            resp = requests.get(url, params={"data": query}, headers=headers, timeout=5)
+            resp = requests.get(url, params={"data": query}, headers=headers, timeout=30)
             if resp.status_code == 200:
                 data = resp.json()
                 elements = data.get("elements", [])
@@ -1373,22 +1373,25 @@ def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) ->
         "photos_manifest": scraped.get("photos_manifest") or existing.get("photos_manifest"),
         "google_place_id": scraped.get("google_place_id") or existing.get("google_place_id"),
         "quality_score": scraped.get("quality_score", existing.get("quality_score", 70)),
-        "is_promoted": existing.get("is_promoted", scraped.get("is_promoted", False)),
+        "is_promoted": existing.get("is_promoted") if "is_promoted" in existing else scraped.get("is_promoted", False),
         "ai_description": scraped.get("ai_description") or existing.get("ai_description"),
         "faqs_json": scraped.get("faqs_json") or existing.get("faqs_json"),
         "meta_title": scraped.get("meta_title") or existing.get("meta_title"),
         "meta_description": scraped.get("meta_description") or existing.get("meta_description"),
     })
 
-    # Retain manual deactivation (is_active: False) or disabled status set by admin; default to active
-    if existing.get("is_active") is False or existing.get("status") == "disabled":
+    # Retain manual deactivation (is_active: False) or custom status set by admin; default to active
+    if "is_active" in existing and existing["is_active"] is False:
         merged["is_active"] = False
-        merged["status"] = existing.get("status", "disabled")
+    elif "is_active" in existing:
+        merged["is_active"] = bool(existing["is_active"])
     else:
-        merged["is_active"] = True
-        merged["status"] = existing.get("status", "active")
-        if merged["status"] == "disabled" or merged["status"] == "pending_review":
-            merged["status"] = "active"
+        merged["is_active"] = scraped.get("is_active", True)
+
+    if existing.get("status") and existing["status"] in ("disabled", "closed_temp", "active"):
+        merged["status"] = existing["status"]
+    else:
+        merged["status"] = "disabled" if merged["is_active"] is False else scraped.get("status", "active")
 
     # Preserve or update image URLs
     scraped_images = scraped.get("image_urls", [])
