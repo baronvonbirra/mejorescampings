@@ -167,3 +167,20 @@ INSERT INTO features (feature_name, slug, key, icon) VALUES
 ('Cerca de la Playa (Alt)', 'campings-cerca-de-la-playa', 'playa', 'sun'),
 ('Mascotas Permitidas (Alt)', 'campings-que-admiten-perros', 'mascotas', 'dog')
 ON CONFLICT (slug) DO NOTHING;
+
+-- 5. Supabase Storage Bucket & Access Policies for Campsite Images
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('campsite-images', 'campsite-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "Public Access campsite-images" ON storage.objects;
+CREATE POLICY "Public Access campsite-images" ON storage.objects
+FOR SELECT USING (bucket_id = 'campsite-images');
+
+DROP POLICY IF EXISTS "Allow public uploads campsite-images" ON storage.objects;
+CREATE POLICY "Allow public uploads campsite-images" ON storage.objects
+FOR INSERT WITH CHECK (bucket_id = 'campsite-images');
+
+DROP POLICY IF EXISTS "Allow public updates campsite-images" ON storage.objects;
+CREATE POLICY "Allow public updates campsite-images" ON storage.objects
+FOR UPDATE USING (bucket_id = 'campsite-images');
