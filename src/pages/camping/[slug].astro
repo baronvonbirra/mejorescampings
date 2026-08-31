@@ -548,4 +548,109 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
     affiliate_url={camping.affiliate_url}
     official_url={camping.official_url}
   />
+
+  <script is:inline data-slug={camping.slug}>
+    (function () {
+      const slug = document.currentScript?.getAttribute('data-slug');
+      if (!slug) return;
+
+      function cleanUrl(url) {
+        if (!url) return '';
+        let c = url.trim();
+        c = c.replace(/\/+$/, '');
+        c = c.replace(/\/rest\/v1\/?$/i, '');
+        c = c.replace(/\/+$/, '');
+        return c;
+      }
+
+      function getSupabaseCredentials() {
+        try {
+          const stored = localStorage.getItem('mejorescampings_supabase_config');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed.url && parsed.key) {
+              return { url: cleanUrl(parsed.url), key: parsed.key.trim() };
+            }
+          }
+        } catch (e) {}
+        return null;
+      }
+
+      async function fetchLiveCampsiteData() {
+        const creds = getSupabaseCredentials();
+        if (!creds?.url || !creds?.key) return null;
+
+        try {
+          const res = await fetch(`${creds.url}/rest/v1/campings?slug=eq.${encodeURIComponent(slug)}&select=image_url,image_urls`, {
+            headers: {
+              'apikey': creds.key,
+              'Authorization': `Bearer ${creds.key}`
+            }
+          });
+          if (!res.ok) return null;
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            return data[0];
+          }
+          return null;
+        } catch (e) {
+          console.warn('Live Supabase campsite detail fetch failed:', e);
+          return null;
+        }
+      }
+
+      async function syncCampsiteImages() {
+        let ov = null;
+        try {
+          const raw = localStorage.getItem('mejorescampings_admin_overrides');
+          if (raw) {
+            const overrides = JSON.parse(raw);
+            if (overrides[slug]) ov = overrides[slug];
+          }
+        } catch (e) {}
+
+        const liveRecord = await fetchLiveCampsiteData();
+
+        let primaryUrl = ov?.image_url || liveRecord?.image_url;
+        let galleryUrls = ov?.image_urls || liveRecord?.image_urls;
+
+        if (!galleryUrls && primaryUrl) {
+          galleryUrls = [primaryUrl];
+        } else if (galleryUrls && galleryUrls.length > 0 && primaryUrl && galleryUrls[0] !== primaryUrl) {
+          galleryUrls = [primaryUrl, ...galleryUrls.filter(u => u !== primaryUrl)];
+        }
+
+        if (!galleryUrls || galleryUrls.length === 0) return;
+
+        const galleryTrack = document.querySelector('[data-hero-gallery-track]');
+        if (galleryTrack) {
+          galleryTrack.innerHTML = '';
+          galleryUrls.forEach((img, idx) => {
+            const slide = document.createElement('div');
+            slide.className = 'snap-start shrink-0 w-full h-full relative';
+            slide.innerHTML = `
+              <img
+                src="${img}"
+                alt="Instalaciones"
+                width="1200"
+                height="675"
+                class="w-full h-full object-cover"
+                loading="${idx === 0 ? 'eager' : 'lazy'}"
+              />
+              <div class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md font-semibold">
+                ${idx + 1} / ${galleryUrls.length}
+              </div>
+            `;
+            galleryTrack.appendChild(slide);
+          });
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', syncCampsiteImages);
+      } else {
+        syncCampsiteImages();
+      }
+    })();
+  </script>
 </Layout>
