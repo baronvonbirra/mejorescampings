@@ -94,6 +94,51 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       </div>
     </div>
 
+    <!-- Photo Re-scraper Inspection & Selection Modal -->
+    <div id="photo-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90vh] flex flex-col space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+          <div>
+            <h3 id="photo-modal-title" class="text-lg font-black text-slate-900 flex items-center gap-2">
+              <span>📸</span> Inspección y Selección de Fotos para Camping
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Re-scrapea imágenes del sitio web oficial y entorno local. Selecciona las fotos que deseas conservar y marca la Foto Principal.
+            </p>
+          </div>
+          <button id="btn-close-photo-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer">&times;</button>
+        </div>
+
+        <!-- Candidate Photo Grid -->
+        <div id="rescraped-photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 overflow-y-auto max-h-[55vh] p-1 shrink">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 shrink-0">
+          <span id="photo-modal-counter-badge" class="text-xs font-extrabold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            0 fotos seleccionadas
+          </span>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <button
+              type="button"
+              id="btn-cancel-photo-modal"
+              class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              id="btn-save-photo-selection"
+              class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <span>💾</span> Guardar Selección y Sobrescribir Base de Datos
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Supabase Configuration Modal -->
     <div id="supabase-config-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
       <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 border border-slate-200 shadow-2xl">
@@ -360,6 +405,130 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const errorMsg = document.getElementById('login-error-msg');
     const btnLogout = document.getElementById('btn-logout');
     const notificationBox = document.getElementById('action-notification-box');
+
+    // --- Photo Re-scraper Modal Management ---
+    let currentRescrapeSlug = '';
+    let currentRescrapeName = '';
+    let candidatePhotosList = [];
+
+    const photoModal = document.getElementById('photo-rescraper-modal');
+    const photoModalTitle = document.getElementById('photo-modal-title');
+    const photoGrid = document.getElementById('rescraped-photos-grid');
+    const photoCounter = document.getElementById('photo-modal-counter-badge');
+
+    document.getElementById('btn-close-photo-modal')?.addEventListener('click', () => {
+      photoModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-cancel-photo-modal')?.addEventListener('click', () => {
+      photoModal?.classList.add('hidden');
+    });
+
+    function renderPhotoCandidatesGrid() {
+      if (!photoGrid) return;
+      photoGrid.innerHTML = '';
+
+      const selectedCount = candidatePhotosList.filter(c => c.isSelected).length;
+      if (photoCounter) {
+        photoCounter.textContent = `${selectedCount} foto(s) seleccionada(s)`;
+      }
+
+      candidatePhotosList.forEach((cand, idx) => {
+        const item = document.createElement('div');
+        item.className = `relative rounded-2xl overflow-hidden border-2 transition p-2 flex flex-col justify-between bg-slate-50 ${cand.isSelected ? (cand.isPrimary ? 'border-emerald-600 bg-emerald-50/30' : 'border-sky-500 bg-sky-50/20') : 'border-slate-200 opacity-50'}`;
+
+        item.innerHTML = `
+          <div class="relative h-28 rounded-xl overflow-hidden mb-2 bg-slate-200">
+            <img src="${cand.url}" alt="Candidata ${idx + 1}" class="w-full h-full object-cover" />
+            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase ${cand.source.includes('Actual') ? 'bg-emerald-600 text-white' : 'bg-slate-800/80 text-slate-100'}">
+              ${cand.source}
+            </span>
+            ${cand.isPrimary ? '<span class="absolute top-1.5 right-1.5 px-2 py-0.5 rounded-md text-[9px] font-black bg-emerald-600 text-white shadow-xs">★ Principal</span>' : ''}
+          </div>
+
+          <div class="space-y-1.5 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" data-idx="${idx}" class="cand-toggle-cb w-4 h-4 text-emerald-600 rounded cursor-pointer" ${cand.isSelected ? 'checked' : ''} />
+              <span class="text-[11px] font-extrabold ${cand.isSelected ? 'text-slate-900' : 'text-slate-400'}">
+                ${cand.isSelected ? 'Conservar' : 'Descartar'}
+              </span>
+            </label>
+
+            <button
+              type="button"
+              data-idx="${idx}"
+              class="cand-set-primary w-full py-1 px-2 rounded-lg text-[10px] font-bold transition cursor-pointer ${cand.isPrimary ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}"
+              ${!cand.isSelected ? 'disabled' : ''}
+            >
+              ${cand.isPrimary ? '★ Foto Principal' : 'Hacer Principal'}
+            </button>
+          </div>
+        `;
+
+        photoGrid.appendChild(item);
+      });
+
+      photoGrid.querySelectorAll('.cand-toggle-cb').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const idx = parseInt(e.target.getAttribute('data-idx'));
+          candidatePhotosList[idx].isSelected = e.target.checked;
+          if (!candidatePhotosList[idx].isSelected && candidatePhotosList[idx].isPrimary) {
+            candidatePhotosList[idx].isPrimary = false;
+            const nextSel = candidatePhotosList.find(c => c.isSelected);
+            if (nextSel) nextSel.isPrimary = true;
+          }
+          renderPhotoCandidatesGrid();
+        });
+      });
+
+      photoGrid.querySelectorAll('.cand-set-primary').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          candidatePhotosList.forEach((c, i) => {
+            c.isPrimary = (i === idx);
+            if (i === idx) c.isSelected = true;
+          });
+          renderPhotoCandidatesGrid();
+        });
+      });
+    }
+
+    document.getElementById('btn-save-photo-selection')?.addEventListener('click', async () => {
+      const selectedCands = candidatePhotosList.filter(c => c.isSelected);
+      if (selectedCands.length === 0) {
+        alert('Debes seleccionar al menos una foto para conservar.');
+        return;
+      }
+
+      let primary = candidatePhotosList.find(c => c.isPrimary && c.isSelected) || selectedCands[0];
+      const primaryUrl = primary.url;
+      const selectedUrls = [primaryUrl, ...selectedCands.filter(c => c.url !== primaryUrl).map(c => c.url)];
+
+      const saveBtn = document.getElementById('btn-save-photo-selection');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ Guardando en base de datos...';
+      }
+
+      const res = await updateCampsiteInSupabase(currentRescrapeSlug, {
+        image_url: primaryUrl,
+        image_urls: selectedUrls
+      });
+
+      applyAdminOverridesToDOM();
+      photoModal?.classList.add('hidden');
+
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<span>💾</span> Guardar Selección y Sobrescribir Base de Datos';
+      }
+
+      if (res.mode === 'supabase' && res.success) {
+        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en la base de datos Supabase para "${currentRescrapeName}"!`, 'success');
+      } else {
+        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en almacenamiento local para "${currentRescrapeName}"!`, 'warning');
+      }
+    });
 
     // --- Supabase Client Initialization & Override Management ---
     let supabaseClient = null;
@@ -665,9 +834,12 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const muni = (target.getAttribute('data-muni') || '').toLowerCase();
         const prov = (target.getAttribute('data-province') || '').toLowerCase();
 
-        target.disabled = true;
-        target.innerHTML = '<span>⏳</span> Escaneando...';
-        showNotification(`📸 Extrayendo fotos únicas basadas en localización para "${name}"...`, 'info');
+        currentRescrapeSlug = slug;
+        currentRescrapeName = name;
+
+        if (photoModalTitle) {
+          photoModalTitle.textContent = `📸 Inspección y Selección de Fotos para "${name}"`;
+        }
 
         let pool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
         if (slug.includes('chorro') || muni.includes('ardales') || name.toLowerCase().includes('chorro')) {
@@ -678,32 +850,29 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           pool = LOCATION_PHOTO_POOLS.almeria;
         }
 
-        // Collect all currently assigned main photo URLs across the DOM to guarantee uniqueness
-        const assignedUrls = new Set();
-        document.querySelectorAll('.camping-row-img').forEach((img) => {
-          if (img.src) assignedUrls.add(img.src);
-        });
-
-        // Pick a location photo from the pool that is NOT assigned to another campsite
         const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
         const currentUrl = rowImg ? rowImg.src : '';
-        let nextUrl = pool.find((u) => u !== currentUrl && !assignedUrls.has(u));
-        if (!nextUrl) {
-          nextUrl = pool.find((u) => u !== currentUrl) || pool[0];
+
+        // Build candidate list from current photo + pool photos
+        const candidatesMap = new Map();
+        if (currentUrl) {
+          candidatesMap.set(currentUrl, { url: currentUrl, source: 'Foto Actual', isSelected: true, isPrimary: true });
         }
 
-        if (rowImg) rowImg.src = nextUrl;
+        pool.forEach((url, i) => {
+          if (!candidatesMap.has(url)) {
+            candidatesMap.set(url, {
+              url: url,
+              source: `Localización ${i + 1}`,
+              isSelected: true,
+              isPrimary: candidatesMap.size === 0
+            });
+          }
+        });
 
-        const res = await updateCampsiteInSupabase(slug, { image_url: nextUrl, image_urls: [nextUrl] });
-        applyAdminOverridesToDOM();
-
-        target.disabled = false;
-        target.innerHTML = '<span>✨</span> Fotos Re-scraped';
-        if (res.mode === 'supabase' && res.success) {
-          showNotification(`📸 ¡Nueva foto asignada y guardada en Supabase DB para "${name}"!`, 'success');
-        } else {
-          showNotification(`📸 Foto actualizada localmente para "${name}".`, 'warning');
-        }
+        candidatePhotosList = Array.from(candidatesMap.values());
+        renderPhotoCandidatesGrid();
+        photoModal?.classList.remove('hidden');
       }
 
       if (action === 'rescrape') {
