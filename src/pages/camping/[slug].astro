@@ -19,6 +19,35 @@ export async function getStaticPaths() {
   }));
 }
 
+const getEnvVar = (key: string): string => {
+  try {
+    if (typeof process !== 'undefined' && process?.env && process.env[key]) {
+      return process.env[key];
+    }
+  } catch (e) {}
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta?.env && import.meta.env[key]) {
+      return import.meta.env[key];
+    }
+  } catch (e) {}
+  return '';
+};
+
+const sanitizeSupabaseUrl = (url?: string): string => {
+  if (!url) return '';
+  let cleaned = url.trim();
+  cleaned = cleaned.replace(/\/+$/, '');
+  cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
+  cleaned = cleaned.replace(/\/+$/, '');
+  return cleaned;
+};
+
+const rawSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL') || '';
+const rawSupabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY') || '';
+
+const supabaseUrl = sanitizeSupabaseUrl(rawSupabaseUrl);
+const supabaseKey = rawSupabaseKey.trim();
+
 const { slug } = Astro.params;
 const { camping } = Astro.props;
 
@@ -144,6 +173,7 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
 ---
 
 <Layout title={metaTitle} description={metaDesc} image={ogImage}>
+  <div id="campsite-detail-supabase-config" data-supabase-url={supabaseUrl} data-supabase-key={supabaseKey} class="hidden"></div>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdCampground)} />
   {jsonLdFaq && <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq)} />}
 
@@ -573,6 +603,15 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
             }
           }
         } catch (e) {}
+
+        const el = document.getElementById('campsite-detail-supabase-config');
+        if (el) {
+          const envUrl = el.getAttribute('data-supabase-url');
+          const envKey = el.getAttribute('data-supabase-key');
+          if (envUrl && envKey) {
+            return { url: cleanUrl(envUrl), key: envKey.trim() };
+          }
+        }
         return null;
       }
 

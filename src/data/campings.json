@@ -8,9 +8,9 @@
     "lat": 36.8021,
     "lng": -2.0645,
     "image_urls": [
-      "/images/campings/camping-los-escullos/img_1.webp",
-      "/images/campings/camping-los-escullos/img_2.webp",
-      "/images/campings/camping-los-escullos/img_3.webp"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.losesculloscamping.com",
@@ -30,7 +30,7 @@
     "province_slug": "almeria",
     "comarca": "Comarca de Almería",
     "comarca_slug": "comarca-de-almeria",
-    "is_promoted": true,
+    "is_promoted": false,
     "quality_score": 75,
     "rta_license": "CM/AL/00005",
     "category": "1ª Categ. (4 estrellas)",
@@ -47,9 +47,13 @@
     "pitchup_rating": 9.1,
     "photos_manifest": [
       {
-        "url": "/images/campings/camping-los-escullos/img_1.webp",
-        "caption": "Parcelas y entorno Los Escullos",
-        "score": 9
+        "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80"
       }
     ],
     "google_place_id": "ChIJ_LosEscullos_Nijar",
@@ -73,7 +77,7 @@
     "meta_title": "Camping los Escullos en Almeria (Almería) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping los Escullos en Almeria (Almería). Licencia CM/AL/00005, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-los-escullos/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "f477b5d5-2ac8-457a-9e31-cccc3ec12344",
@@ -84,9 +88,9 @@
     "lat": 36.0712,
     "lng": -5.6698,
     "image_urls": [
-      "/images/campings/camping-valdevaqueros/img_1.webp",
-      "/images/campings/camping-valdevaqueros/img_2.webp",
-      "/images/campings/camping-valdevaqueros/img_3.webp"
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingvaldevaqueros.com",
@@ -119,7 +123,17 @@
     ],
     "editorial_quote": "Referente para los amantes del surf y las playas gaditanas con vistas al Estrecho de Gibraltar.",
     "pitchup_rating": 9.4,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": "ChIJ_Valdevaqueros_Tarifa",
     "rating": 4.2,
     "review_count": 125,
@@ -141,7 +155,7 @@
     "meta_title": "Camping Valdevaqueros en Cadiz (Cádiz) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Valdevaqueros en Cadiz (Cádiz). Licencia CM/CA/00008, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-valdevaqueros/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "8119082b-e70e-45a7-9208-59db8fc3debc",
@@ -152,11 +166,9 @@
     "lat": 36.4904,
     "lng": -4.7438,
     "image_urls": [
-      "/images/campings/camping-cabopino/img_1.webp",
-      "/images/campings/camping-cabopino/img_2.webp",
-      "/images/campings/camping-cabopino/img_3.webp",
-      "/images/campings/camping-cabopino/img_4.webp",
-      "/images/campings/camping-cabopino/img_5.webp"
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingcabopino.com",
@@ -176,7 +188,7 @@
     "province_slug": "malaga",
     "comarca": "Comarca de Málaga",
     "comarca_slug": "comarca-de-malaga",
-    "is_promoted": true,
+    "is_promoted": false,
     "quality_score": 85,
     "rta_license": "CM/MA/00002",
     "category": "1ª Categ. (4 estrellas)",
@@ -193,9 +205,13 @@
     "pitchup_rating": 8.9,
     "photos_manifest": [
       {
-        "url": "/images/campings/camping-cabopino/img_1.webp",
-        "caption": "Instalaciones Camping Cabopino",
-        "score": 9
+        "url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
       }
     ],
     "google_place_id": "ChIJ_Cabopino_Marbella",
@@ -219,7 +235,7 @@
     "meta_title": "Camping Cabopino en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Cabopino en Malaga (Málaga). Licencia CM/MA/00002, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-cabopino/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "221c9ade-11e3-4ee7-af88-d2b5be850b81",
@@ -230,11 +246,8 @@
     "lat": 37.1085,
     "lng": -6.745,
     "image_urls": [
-      "/images/campings/camping-donana-playa/img_1.webp",
-      "/images/campings/camping-donana-playa/img_2.webp",
-      "/images/campings/camping-donana-playa/img_3.webp",
-      "/images/campings/camping-donana-playa/img_4.webp",
-      "/images/campings/camping-donana-playa/img_5.webp"
+      "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingdonana.com",
@@ -267,7 +280,14 @@
     ],
     "editorial_quote": "Ubicación privileged en pleno entorno de Doñana y la costa atlántica de Huelva.",
     "pitchup_rating": 8.8,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": "ChIJ_DonanaPlaya_Mazagon",
     "rating": 4.8,
     "review_count": 111,
@@ -289,7 +309,7 @@
     "meta_title": "Camping Doñana Playa en Huelva (Huelva) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Doñana Playa en Huelva (Huelva). Licencia CM/HU/00010, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-donana-playa/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "6c291e6a-faa8-4f25-b742-d47b59b0671f",
@@ -300,11 +320,8 @@
     "lat": 36.1985,
     "lng": -6.0271,
     "image_urls": [
-      "/images/campings/camping-pinar-san-jose/img_1.webp",
-      "/images/campings/camping-pinar-san-jose/img_2.webp",
-      "/images/campings/camping-pinar-san-jose/img_3.webp",
-      "/images/campings/camping-pinar-san-jose/img_4.webp",
-      "/images/campings/camping-pinar-san-jose/img_5.webp"
+      "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingpinarsanjose.com",
@@ -339,7 +356,14 @@
     ],
     "editorial_quote": "Destacado por la comunidad de Pitchup por sus servicios completos y proximidad a la playa de Zahora.",
     "pitchup_rating": 9.2,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": "ChIJ_PinarSanJose_Barbate",
     "rating": 4.3,
     "review_count": 69,
@@ -361,7 +385,7 @@
     "meta_title": "Camping Pinar San José en Cadiz (Cádiz) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Pinar San José en Cadiz (Cádiz). Licencia CM/CA/00021, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-pinar-san-jose/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "dd31fd16-616a-403b-83ad-73f7dce61f28",
@@ -372,9 +396,8 @@
     "lat": 36.782,
     "lng": -2.241,
     "image_urls": [
-      "/images/campings/camping-cabo-de-gata/img_1.webp",
-      "/images/campings/camping-cabo-de-gata/img_2.webp",
-      "/images/campings/camping-cabo-de-gata/img_3.webp"
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -403,7 +426,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.8,
     "review_count": 113,
@@ -425,7 +455,7 @@
     "meta_title": "Camping Cabo de Gata en Almeria (Almería) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Cabo de Gata en Almeria (Almería). Licencia CM/AL/00012, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-cabo-de-gata/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "d8027fe0-241a-49c2-ac52-1a3a3c8bb228",
@@ -436,9 +466,8 @@
     "lat": 37.9575,
     "lng": -4.5421,
     "image_urls": [
-      "/images/campings/camping-albolafia/img_1.webp",
-      "/images/campings/camping-albolafia/img_2.webp",
-      "/images/campings/camping-albolafia/img_3.webp"
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -467,7 +496,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.5,
     "review_count": 98,
@@ -489,7 +525,7 @@
     "meta_title": "Camping Albolafia en Cordoba (Córdoba) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Albolafia en Cordoba (Córdoba). Licencia CM/CO/00003, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-albolafia/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "bb52fb9e-38f8-4638-95ec-48dc2b64c2ea",
@@ -500,9 +536,8 @@
     "lat": 37.1995,
     "lng": -3.611,
     "image_urls": [
-      "/images/campings/camping-sierra-nevada/img_1.webp",
-      "/images/campings/camping-sierra-nevada/img_2.webp",
-      "/images/campings/camping-sierra-nevada/img_3.webp"
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.campingsierranevada.com",
@@ -531,7 +566,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.2,
     "review_count": 137,
@@ -553,7 +595,7 @@
     "meta_title": "Camping Sierra Nevada en Granada (Granada) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Sierra Nevada en Granada (Granada). Licencia CM/GR/00004, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-sierra-nevada/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "5be4220c-0127-49f7-abe7-8bb04911577e",
@@ -564,9 +606,8 @@
     "lat": 36.7198,
     "lng": -3.535,
     "image_urls": [
-      "/images/campings/camping-playa-de-poniente/img_1.webp",
-      "/images/campings/camping-playa-de-poniente/img_2.webp",
-      "/images/campings/camping-playa-de-poniente/img_3.webp"
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -595,7 +636,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.6,
     "review_count": 212,
@@ -617,7 +665,7 @@
     "meta_title": "Camping Playa de Poniente en Granada (Granada) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Playa de Poniente en Granada (Granada). Licencia CM/GR/00019, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-playa-de-poniente/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "993778cd-a922-40da-a72d-2169f27a6686",
@@ -628,8 +676,8 @@
     "lat": 37.9421,
     "lng": -2.951,
     "image_urls": [
-      "/images/campings/camping-puente-de-las-herrarias/img_1.webp",
-      "/images/campings/camping-puente-de-las-herrarias/img_2.webp"
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": "https://www.puentedelasherrarias.com",
@@ -658,7 +706,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.5,
     "review_count": 175,
@@ -680,7 +735,7 @@
     "meta_title": "Camping Puente de las Herrarias en Jaen (Jaén) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Puente de las Herrarias en Jaen (Jaén). Licencia CM/JA/00007, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-puente-de-las-herrarias/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "01e03a0c-9301-49ae-af6d-4483c5e8c8d6",
@@ -691,8 +746,8 @@
     "lat": 36.721,
     "lng": -5.1725,
     "image_urls": [
-      "/images/campings/camping-el-sur/img_1.webp",
-      "/images/campings/camping-el-sur/img_2.webp"
+      "https://images.unsplash.com/photo-1561016444-14f747499547?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1548625361-18596642d935?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -712,7 +767,7 @@
     "province_slug": "malaga",
     "comarca": "Comarca de Málaga",
     "comarca_slug": "comarca-de-malaga",
-    "is_promoted": true,
+    "is_promoted": false,
     "quality_score": 55,
     "rta_license": "CM/MA/00014",
     "category": "1ª Categ. (4 estrellas)",
@@ -725,7 +780,14 @@
     ],
     "editorial_quote": "Recomendado por su entorno arbolado y vistas a la Serranía de Ronda.",
     "pitchup_rating": 9.3,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1561016444-14f747499547?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1548625361-18596642d935?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": "ChIJ_CampingElSur_Ronda",
     "rating": 4.2,
     "review_count": 224,
@@ -747,7 +809,7 @@
     "meta_title": "Camping el Sur en Malaga (Málaga) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping el Sur en Malaga (Málaga). Licencia CM/MA/00014, categoría 1ª Categ. (4 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-el-sur/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1561016444-14f747499547?auto=format&fit=crop&w=1200&q=80"
   },
   {
     "id": "8933a8dc-ae34-4965-a5ed-3a72f565f68f",
@@ -758,9 +820,8 @@
     "lat": 37.289,
     "lng": -6.239,
     "image_urls": [
-      "/images/campings/camping-dehesa-nueva/img_1.webp",
-      "/images/campings/camping-dehesa-nueva/img_2.webp",
-      "/images/campings/camping-dehesa-nueva/img_3.webp"
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
     ],
     "affiliate_url": null,
     "official_url": null,
@@ -789,7 +850,14 @@
     "editorial_tags": [],
     "editorial_quote": null,
     "pitchup_rating": null,
-    "photos_manifest": [],
+    "photos_manifest": [
+      {
+        "url": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
     "google_place_id": null,
     "rating": 4.8,
     "review_count": 112,
@@ -811,6 +879,6 @@
     "meta_title": "Camping Dehesa Nueva en Sevilla (Sevilla) | Reserva y Precios - MejoresCampings",
     "meta_description": "Ficha oficial de Camping Dehesa Nueva en Sevilla (Sevilla). Licencia CM/SE/00006, categoría 2ª Categ. (3 estrellas), instalaciones y reserva.",
     "status": "active",
-    "image_url": "/images/campings/camping-dehesa-nueva/img_1.webp"
+    "image_url": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80"
   }
 ]

@@ -695,6 +695,51 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       });
     }
 
+    async function uploadImageToSupabaseStorage(url, campsiteSlug, index) {
+      if (!supabaseClient) return url;
+      if (url.includes('/storage/v1/object/public/campsite-images/')) {
+        return url;
+      }
+      try {
+        const response = await fetch(url);
+        if (!response.ok) return url;
+        const blob = await response.blob();
+
+        let ext = 'webp';
+        if (blob.type.includes('png')) ext = 'png';
+        else if (blob.type.includes('jpeg') || blob.type.includes('jpg')) ext = 'jpg';
+
+        const timestamp = Date.now();
+        const filePath = `${campsiteSlug}/img_${index}_${timestamp}.${ext}`;
+
+        const { data, error } = await supabaseClient
+          .storage
+          .from('campsite-images')
+          .upload(filePath, blob, {
+            cacheControl: '3600',
+            upsert: true,
+            contentType: blob.type || 'image/webp'
+          });
+
+        if (error) {
+          console.warn('Supabase storage upload error:', error);
+          return url;
+        }
+
+        const { data: publicUrlData } = supabaseClient
+          .storage
+          .from('campsite-images')
+          .getPublicUrl(filePath);
+
+        if (publicUrlData && publicUrlData.publicUrl) {
+          return publicUrlData.publicUrl;
+        }
+      } catch (err) {
+        console.warn('Failed to upload image blob to Supabase Storage:', err);
+      }
+      return url;
+    }
+
     document.getElementById('btn-save-photo-selection')?.addEventListener('click', async () => {
       const selectedCands = candidatePhotosList.filter(c => c.isSelected);
       if (selectedCands.length === 0) {
@@ -702,9 +747,30 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         return;
       }
 
+      const saveBtn = document.getElementById('btn-save-photo-selection');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span>⏳</span> Procesando e instalando fotos en Supabase Storage...';
+      }
+
       let primary = candidatePhotosList.find(c => c.isPrimary && c.isSelected) || selectedCands[0];
-      const primaryUrl = primary.url;
-      const selectedUrls = [primaryUrl, ...selectedCands.filter(c => c.url !== primaryUrl).map(c => c.url)];
+      const initialPrimaryUrl = primary.url;
+      const initialSelectedUrls = [initialPrimaryUrl, ...selectedCands.filter(c => c.url !== initialPrimaryUrl).map(c => c.url)];
+
+      // Upload external candidate photos to Supabase Storage if connected
+      const uploadedUrls = [];
+      if (supabaseClient) {
+        for (let i = 0; i < initialSelectedUrls.length; i++) {
+          const rawUrl = initialSelectedUrls[i];
+          const storedUrl = await uploadImageToSupabaseStorage(rawUrl, currentRescrapeSlug, i + 1);
+          uploadedUrls.push(storedUrl);
+        }
+      } else {
+        uploadedUrls.push(...initialSelectedUrls);
+      }
+
+      const primaryUrl = uploadedUrls[0] || initialPrimaryUrl;
+      const selectedUrls = uploadedUrls;
 
       // Identify deselected photos and delete from Supabase Storage if applicable
       const deselectedCands = candidatePhotosList.filter(c => !c.isSelected);
@@ -733,10 +799,8 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         }
       }
 
-      const saveBtn = document.getElementById('btn-save-photo-selection');
       if (saveBtn) {
-        saveBtn.disabled = true;
-        saveBtn.textContent = '⏳ Guardando en base de datos Supabase...';
+        saveBtn.innerHTML = '<span>⏳</span> Guardando en la base de datos Supabase...';
       }
 
       // Update Supabase DB with new primary image_url, image_urls array, and clean photos_manifest
