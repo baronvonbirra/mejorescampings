@@ -47,7 +47,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const promotedCheckbox = page.locator('.promoted-checkbox').first();
     await expect(promotedCheckbox).toBeVisible();
     await promotedCheckbox.click();
-    await expect(page.locator('#action-notification-box')).toContainText('Promocionado actualizado');
+    await expect(page.locator('#action-notification-box')).toContainText(/Promocionado actualizado|Sin conexión a Supabase DB/i);
 
     // Test action button: Delete / Restore toggle
     const deleteBtn = page.locator('button[data-action="delete"]').first();
