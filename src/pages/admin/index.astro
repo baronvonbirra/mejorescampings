@@ -79,11 +79,91 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       </div>
       <div class="flex items-center gap-2">
         <button
+          id="btn-open-supabase-modal"
+          class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl border border-emerald-600 transition cursor-pointer flex items-center gap-1.5"
+        >
+          <span>🔑</span> Configurar Supabase
+        </button>
+        <button
           id="btn-logout"
           class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition cursor-pointer"
         >
           Cerrar Sesión
         </button>
+      </div>
+    </div>
+
+    <!-- Supabase Credentials Manual Configuration Modal -->
+    <div id="supabase-config-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full flex flex-col space-y-5 border border-slate-200 shadow-2xl">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
+              <span>🔑</span> Configuración de Credenciales Supabase
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Introduce las claves de tu proyecto Supabase para sincronizar directamente con la base de datos remota.
+            </p>
+          </div>
+          <button id="btn-close-supabase-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer">&times;</button>
+        </div>
+
+        <form id="supabase-config-form" class="space-y-4">
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-[11px] text-amber-800 space-y-1">
+            <p class="font-bold">💡 ¿Por qué aparece "Sin Supabase Configurado"?</p>
+            <p class="text-slate-600">
+              Astro requiere la variable pública <code class="bg-amber-100 px-1 py-0.5 rounded text-amber-900 font-mono">PUBLIC_SUPABASE_URL</code> y <code class="bg-amber-100 px-1 py-0.5 rounded text-amber-900 font-mono">PUBLIC_SUPABASE_ANON_KEY</code> durante el proceso de build. Si no estaban presentes en el entorno al construir la web, puedes introducirlas aquí manualmente.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Supabase URL (<code class="text-slate-500 font-mono">PUBLIC_SUPABASE_URL</code>)</label>
+            <input
+              type="url"
+              id="input-supabase-url"
+              placeholder="https://xyz.supabase.co"
+              class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Supabase Anon Key (<code class="text-slate-500 font-mono">PUBLIC_SUPABASE_ANON_KEY</code>)</label>
+            <input
+              type="text"
+              id="input-supabase-key"
+              placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
+              required
+            />
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 gap-3">
+            <button
+              type="button"
+              id="btn-clear-supabase-config"
+              class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Borrar Ajustes
+            </button>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                id="btn-cancel-supabase-modal"
+                class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer"
+              >
+                Guardar y Conectar
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -475,13 +555,72 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     let supabaseClient = null;
     const statusBadge = document.getElementById('supabase-status-badge');
 
+    // --- Supabase Modal & Config Management ---
+    const supabaseConfigModal = document.getElementById('supabase-config-modal');
+    const supabaseConfigForm = document.getElementById('supabase-config-form');
+    const inputSupabaseUrl = document.getElementById('input-supabase-url');
+    const inputSupabaseKey = document.getElementById('input-supabase-key');
+
+    document.getElementById('btn-open-supabase-modal')?.addEventListener('click', () => {
+      const creds = getSupabaseCredentials();
+      if (inputSupabaseUrl && creds?.url) inputSupabaseUrl.value = creds.url;
+      if (inputSupabaseKey && creds?.key) inputSupabaseKey.value = creds.key;
+      supabaseConfigModal?.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-close-supabase-modal')?.addEventListener('click', () => {
+      supabaseConfigModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-cancel-supabase-modal')?.addEventListener('click', () => {
+      supabaseConfigModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-clear-supabase-config')?.addEventListener('click', async () => {
+      localStorage.removeItem('mejorescampings_supabase_config');
+      if (inputSupabaseUrl) inputSupabaseUrl.value = '';
+      if (inputSupabaseKey) inputSupabaseKey.value = '';
+      supabaseConfigModal?.classList.add('hidden');
+      supabaseClient = null;
+      await initSupabaseClient();
+      showNotification('ℹ️ Credenciales locales de Supabase eliminadas.', 'info');
+    });
+
+    supabaseConfigForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = inputSupabaseUrl?.value?.trim();
+      const key = inputSupabaseKey?.value?.trim();
+      if (url && key) {
+        localStorage.setItem('mejorescampings_supabase_config', JSON.stringify({ url, key }));
+        supabaseConfigModal?.classList.add('hidden');
+        const connected = await initSupabaseClient();
+        if (connected) {
+          showNotification('🟢 Guardado y conectado exitosamente a Supabase DB.', 'success');
+        } else {
+          showNotification('⚠️ Credenciales guardadas pero fallo la conexión con Supabase.', 'warning');
+        }
+      }
+    });
+
     function getSupabaseCredentials() {
-      // Fall back to GitHub Secrets / Environment Variables passed at build time
+      // 1. Try build time variables from data attributes
       const envUrl = authContainer?.getAttribute('data-supabase-url');
       const envKey = authContainer?.getAttribute('data-supabase-key');
       if (envUrl && envKey) {
-        return { url: envUrl, key: envKey };
+        return { url: envUrl, key: envKey, source: 'build' };
       }
+
+      // 2. Fall back to manual local configuration in localStorage
+      try {
+        const stored = localStorage.getItem('mejorescampings_supabase_config');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.url && parsed.key) {
+            return { url: parsed.url, key: parsed.key, source: 'local' };
+          }
+        }
+      } catch (e) {}
+
       return null;
     }
 
@@ -493,7 +632,8 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           // Test query to verify connection
           const { count, error } = await supabaseClient.from('campings').select('slug', { count: 'exact', head: true });
           if (!error) {
-            updateStatusBadge('connected', `🟢 Supabase Conectado (${count || 0} registros)`);
+            const srcLabel = creds.source === 'local' ? ' (Config Manual)' : '';
+            updateStatusBadge('connected', `🟢 Supabase Conectado${srcLabel} (${count || 0} registros)`);
             return true;
           } else {
             console.warn('Supabase ping test failed:', error);
