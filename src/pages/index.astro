@@ -189,7 +189,7 @@ const provinceCounts = PROVINCES.map((p) => {
     <!-- Render all available camping cards cleanly, showing top 6 initially -->
     <div id="featured-campings-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {sortedCampings.map((camping, index) => (
-        <div class="camping-card-wrapper flex flex-col" style={index < 6 ? 'display: flex;' : 'display: none;'}>
+        <div class="camping-card-wrapper flex flex-col" data-slug={camping.slug} style={index < 6 ? 'display: flex;' : 'display: none;'}>
           <CampingCard camping={camping} />
         </div>
       ))}
@@ -197,27 +197,81 @@ const provinceCounts = PROVINCES.map((p) => {
   </section>
 
   <script is:inline>
-    // Client-side expansion for 'Ver Campings' button
+    // Client-side expansion and local admin overrides application
     (function () {
+      function applyAdminOverridesToHomePage() {
+        try {
+          const raw = localStorage.getItem('mejorescampings_admin_overrides');
+          if (!raw) return;
+          const overrides = JSON.parse(raw);
+          const grid = document.getElementById('featured-campings-grid');
+          if (!grid) return;
+
+          const cardWrappers = Array.from(grid.querySelectorAll('.camping-card-wrapper'));
+          cardWrappers.forEach((wrapper) => {
+            const slug = wrapper.getAttribute('data-slug');
+            if (!slug) return;
+            const ov = overrides[slug];
+            if (!ov) return;
+
+            // Handle soft deletion / deactivation
+            if (ov.is_active === false || ov.status === 'disabled') {
+              wrapper.style.display = 'none';
+              wrapper.setAttribute('data-hidden-admin', 'true');
+              return;
+            }
+
+            // Handle image override
+            if (ov.image_url) {
+              const img = wrapper.querySelector('.camping-card-img') || wrapper.querySelector('img');
+              if (img) img.src = ov.image_url;
+            }
+          });
+
+          // Re-sort promoted wrappers to the top
+          const activeWrappers = Array.from(grid.querySelectorAll('.camping-card-wrapper:not([data-hidden-admin="true"])'));
+          activeWrappers.sort((a, b) => {
+            const slugA = a.getAttribute('data-slug');
+            const slugB = b.getAttribute('data-slug');
+            const isPromA = overrides[slugA]?.is_promoted ?? false;
+            const isPromB = overrides[slugB]?.is_promoted ?? false;
+            if (isPromA && !isPromB) return -1;
+            if (!isPromA && isPromB) return 1;
+            return 0;
+          });
+
+          activeWrappers.forEach((wrapper) => {
+            grid.appendChild(wrapper);
+          });
+        } catch (e) {
+          console.warn('Error applying admin overrides on homepage:', e);
+        }
+      }
+
       function showAllCampings() {
         const grid = document.getElementById('featured-campings-grid');
         if (!grid) return;
 
         const cardNodes = Array.from(grid.children);
         cardNodes.forEach((node) => {
-          node.style.display = 'flex';
+          if (node.getAttribute('data-hidden-admin') !== 'true') {
+            node.style.display = 'flex';
+          }
         });
 
         const btn = document.getElementById('btn-show-all-campings');
         if (btn) btn.style.display = 'none';
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
-        });
-      } else {
+      function init() {
+        applyAdminOverridesToHomePage();
         document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
       }
     })();
   </script>
