@@ -199,68 +199,68 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     </div>
 
     <!-- Photo Re-scraper Inspection & Selection Modal -->
-    <div id="photo-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90vh] flex flex-col space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+    <div id="photo-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-2.5 sm:p-4">
+      <div class="bg-white rounded-3xl p-3.5 sm:p-6 md:p-8 max-w-4xl w-full max-h-[94vh] sm:max-h-[90vh] flex flex-col space-y-3 sm:space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between pb-2 sm:pb-3 border-b border-slate-100 shrink-0">
           <div>
-            <h3 id="photo-modal-title" class="text-lg font-black text-slate-900 flex items-center gap-2">
+            <h3 id="photo-modal-title" class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
               <span>📸</span> Inspección, Re-scraping y Reemplazo de Fotos
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
               Administra las imágenes del camping. Elimina fotos no deseadas, añade nuevas fotos mediante re-scraping o introduciendo URLs personalizadas.
             </p>
           </div>
-          <button id="btn-close-photo-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer">&times;</button>
+          <button id="btn-close-photo-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer p-1">&times;</button>
         </div>
 
         <!-- Control Bar for Photo Modal: Add Custom Photo URL & Trigger Rescrape Fresh Photos -->
-        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
+        <div class="bg-slate-50 p-2.5 sm:p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 shrink-0">
           <div class="flex-1 flex items-center gap-2">
             <input
               type="url"
               id="input-custom-photo-url"
               placeholder="https://ejemplo.com/nueva-imagen-camping.jpg"
-              class="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
+              class="w-full px-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
             />
             <button
               type="button"
               id="btn-add-custom-photo"
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition shrink-0 cursor-pointer flex items-center gap-1"
+              class="px-3 py-1.5 sm:py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition shrink-0 cursor-pointer flex items-center gap-1"
             >
-              <span>➕</span> Añadir Foto
+              <span>➕</span> Añadir
             </button>
           </div>
           <button
             type="button"
             id="btn-fetch-fresh-photos"
-            class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-xl transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
+            class="px-3.5 py-1.5 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-xl transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
           >
             <span>🔄</span> Buscar/Re-scrapear Fotos Relevantes
           </button>
         </div>
 
         <!-- Candidate Photo Grid -->
-        <div id="rescraped-photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 overflow-y-auto max-h-[50vh] p-1 shrink">
+        <div id="rescraped-photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4 overflow-y-auto flex-1 min-h-0 p-1">
           <!-- Dynamically populated via JS -->
         </div>
 
         <!-- Footer Actions -->
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 shrink-0">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 pt-2 sm:pt-3 border-t border-slate-100 shrink-0">
           <span id="photo-modal-counter-badge" class="text-xs font-extrabold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
             0 fotos seleccionadas
           </span>
-          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+          <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
             <button
               type="button"
               id="btn-cancel-photo-modal"
-              class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+              class="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
             >
               Cancelar
             </button>
             <button
               type="button"
               id="btn-save-photo-selection"
-              class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
+              class="px-4 sm:px-5 py-2 sm:py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
             >
               <span>💾</span> Guardar Selección y Propagar a Supabase DB
             </button>
@@ -637,21 +637,21 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
       candidatePhotosList.forEach((cand, idx) => {
         const item = document.createElement('div');
-        item.className = `relative rounded-2xl overflow-hidden border-2 transition p-2 flex flex-col justify-between bg-slate-50 ${cand.isSelected ? (cand.isPrimary ? 'border-emerald-600 bg-emerald-50/30' : 'border-sky-500 bg-sky-50/20') : 'border-slate-200 opacity-50'}`;
+        item.className = `relative rounded-2xl overflow-hidden border-2 transition p-2 flex flex-col justify-between bg-slate-50 min-h-[175px] sm:min-h-[190px] ${cand.isSelected ? (cand.isPrimary ? 'border-emerald-600 bg-emerald-50/30' : 'border-sky-500 bg-sky-50/20') : 'border-slate-200 opacity-50'}`;
 
         item.innerHTML = `
-          <div class="relative h-28 rounded-xl overflow-hidden mb-2 bg-slate-200">
+          <div class="relative w-full aspect-video min-h-[85px] sm:min-h-[100px] rounded-xl overflow-hidden mb-1.5 bg-slate-200 shrink-0">
             <img src="${cand.url}" alt="Candidata ${idx + 1}" class="w-full h-full object-cover" />
-            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase ${cand.source.includes('Actual') ? 'bg-emerald-600 text-white' : 'bg-slate-800/80 text-slate-100'}">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded-md text-[8px] sm:text-[9px] font-bold uppercase ${cand.source.includes('Actual') || cand.source.includes('Principal') ? 'bg-emerald-600 text-white' : 'bg-slate-800/80 text-slate-100'}">
               ${cand.source}
             </span>
-            ${cand.isPrimary ? '<span class="absolute top-1.5 right-1.5 px-2 py-0.5 rounded-md text-[9px] font-black bg-emerald-600 text-white shadow-xs">★ Principal</span>' : ''}
+            ${cand.isPrimary ? '<span class="absolute top-1 right-1 px-1.5 py-0.5 rounded-md text-[8px] sm:text-[9px] font-black bg-emerald-600 text-white shadow-xs">★ Principal</span>' : ''}
           </div>
 
-          <div class="space-y-1.5 text-xs">
-            <label class="flex items-center gap-2 cursor-pointer select-none">
-              <input type="checkbox" data-idx="${idx}" class="cand-toggle-cb w-4 h-4 text-emerald-600 rounded cursor-pointer" ${cand.isSelected ? 'checked' : ''} />
-              <span class="text-[11px] font-extrabold ${cand.isSelected ? 'text-slate-900' : 'text-slate-400'}">
+          <div class="space-y-1.5 text-xs mt-auto">
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" data-idx="${idx}" class="cand-toggle-cb w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 rounded cursor-pointer" ${cand.isSelected ? 'checked' : ''} />
+              <span class="text-[10px] sm:text-[11px] font-extrabold ${cand.isSelected ? 'text-slate-900' : 'text-slate-400'}">
                 ${cand.isSelected ? 'Conservar' : 'Descartar'}
               </span>
             </label>
@@ -659,10 +659,10 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             <button
               type="button"
               data-idx="${idx}"
-              class="cand-set-primary w-full py-1 px-2 rounded-lg text-[10px] font-bold transition cursor-pointer ${cand.isPrimary ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}"
+              class="cand-set-primary w-full py-1 px-1.5 sm:px-2 rounded-lg text-[9px] sm:text-[10px] font-bold transition cursor-pointer ${cand.isPrimary ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}"
               ${!cand.isSelected ? 'disabled' : ''}
             >
-              ${cand.isPrimary ? '★ Foto Principal' : 'Hacer Principal'}
+              ${cand.isPrimary ? '★ Principal' : 'Hacer Principal'}
             </button>
           </div>
         `;
@@ -956,11 +956,35 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       // 2. If Supabase client is connected, update Supabase DB directly
       if (supabaseClient) {
         try {
-          const { data, error } = await supabaseClient
+          let { data, error } = await supabaseClient
             .from('campings')
             .update(payload)
             .eq('slug', slug)
             .select('slug');
+
+          // If update fails due to schema cache missing updated_at / update_at column, retry without timestamp
+          if (error && (
+            error.message?.toLowerCase().includes('update_at') ||
+            error.message?.toLowerCase().includes('updated_at') ||
+            error.message?.toLowerCase().includes('schema cache') ||
+            error.details?.toLowerCase().includes('update_at') ||
+            error.details?.toLowerCase().includes('updated_at') ||
+            error.details?.toLowerCase().includes('schema cache')
+          )) {
+            console.warn(`Supabase schema cache missing updated_at column for ${slug}, retrying without updated_at...`);
+            const retryPayload = { ...payload };
+            delete retryPayload.updated_at;
+            delete retryPayload.update_at;
+
+            const retryRes = await supabaseClient
+              .from('campings')
+              .update(retryPayload)
+              .eq('slug', slug)
+              .select('slug');
+
+            data = retryRes.data;
+            error = retryRes.error;
+          }
 
           if (error) {
             console.error(`Supabase DB update error for ${slug}:`, error);

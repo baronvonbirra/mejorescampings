@@ -105,7 +105,8 @@ ADD COLUMN IF NOT EXISTS meta_description TEXT,
 ADD COLUMN IF NOT EXISTS related_affiliates JSONB DEFAULT '{}'::jsonb,
 ADD COLUMN IF NOT EXISTS rating DOUBLE PRECISION DEFAULT 4.3,
 ADD COLUMN IF NOT EXISTS review_count INT DEFAULT 120,
-ADD COLUMN IF NOT EXISTS seasonality TEXT DEFAULT 'Abierto todo el año';
+ADD COLUMN IF NOT EXISTS seasonality TEXT DEFAULT 'Abierto todo el año',
+ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
 
 -- Enable Row Level Security (RLS) & Define Public Access Policies
 ALTER TABLE campings ENABLE ROW LEVEL SECURITY;

@@ -49,6 +49,23 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await promotedCheckbox.click();
     await expect(page.locator('#action-notification-box')).toContainText(/Promocionado actualizado|Sin conexión a Supabase DB/i);
 
+    // Test photo rescraper modal button and mobile responsiveness grid
+    const photoModalBtn = page.locator('button[data-action="rescrape-photos"]').first();
+    await expect(photoModalBtn).toBeVisible();
+    await photoModalBtn.click();
+
+    const photoModal = page.locator('#photo-rescraper-modal');
+    await expect(photoModal).toBeVisible();
+
+    const candidateCards = page.locator('#rescraped-photos-grid .cand-toggle-cb');
+    await expect(candidateCards.first()).toBeVisible();
+    const photoCount = await candidateCards.count();
+    expect(photoCount).toBeGreaterThan(0);
+
+    // Close photo modal
+    await page.locator('#btn-close-photo-modal').click();
+    await expect(photoModal).toBeHidden();
+
     // Test action button: Delete / Restore toggle
     const deleteBtn = page.locator('button[data-action="delete"]').first();
     await expect(deleteBtn).toBeVisible();
