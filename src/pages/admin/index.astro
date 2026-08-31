@@ -20,8 +20,20 @@ const getEnvVar = (key: string): string => {
   return '';
 };
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL');
-const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY');
+const sanitizeSupabaseUrl = (url?: string): string => {
+  if (!url) return '';
+  let cleaned = url.trim();
+  cleaned = cleaned.replace(/\/+$/, '');
+  cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
+  cleaned = cleaned.replace(/\/+$/, '');
+  return cleaned;
+};
+
+const rawSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL') || '';
+const rawSupabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY') || '';
+
+const supabaseUrl = sanitizeSupabaseUrl(rawSupabaseUrl);
+const supabaseKey = rawSupabaseKey.trim();
 
 const metaTitle = "Panel de Control Secreto | MejoresCampings";
 const metaDesc = "Panel de administración interno para gestión de campings promocionados, re-scraping de fotos y borrado.";
@@ -336,6 +348,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
                 data-name={c.name.toLowerCase()}
                 data-muni={c.municipality_slug}
                 data-province={c.province_slug}
+                data-image-urls={JSON.stringify(c.image_urls || [])}
               >
                 <td class="py-3 px-2 flex items-center gap-3">
                   <img
@@ -377,6 +390,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
                     data-name={c.name}
                     data-muni={c.municipality_slug}
                     data-province={c.province_slug}
+                    data-image-urls={JSON.stringify(c.image_urls || [])}
                     class="btn-rescrape-photos px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-[11px] transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
                     title="Buscar e inspeccionar un nuevo set de fotos únicas o lugar turístico cercano"
                   >
@@ -520,63 +534,96 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       showNotification('➕ Nueva foto añadida a la selección. Guarda para confirmar los cambios.', 'info');
     });
 
+    async function fetchWikimediaImages(searchTerm) {
+      try {
+        const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchTerm)}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|size&format=json&origin=*`;
+        const res = await fetch(url);
+        if (!res.ok) return [];
+        const data = await res.json();
+        if (!data?.query?.pages) return [];
+
+        const urls = [];
+        const allowedExts = ['.jpg', '.jpeg', '.png', '.webp'];
+        for (const pid of Object.keys(data.query.pages)) {
+          const page = data.query.pages[pid];
+          const info = page.imageinfo?.[0];
+          if (info && info.url && info.width && info.width >= 350) {
+            const lowerUrl = info.url.toLowerCase();
+            if (allowedExts.some(ext => lowerUrl.endsWith(ext) || lowerUrl.includes(ext + '?'))) {
+              urls.push(info.url);
+            }
+          }
+        }
+        return urls;
+      } catch (e) {
+        console.warn('Wikimedia fetch failed:', e);
+        return [];
+      }
+    }
+
     // Handle Dynamic Fresh Re-scraping of Relevant Photos
-    document.getElementById('btn-fetch-fresh-photos')?.addEventListener('click', () => {
+    document.getElementById('btn-fetch-fresh-photos')?.addEventListener('click', async () => {
       const btn = document.getElementById('btn-fetch-fresh-photos');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>⏳</span> Buscando Fotos Frescas...';
+        btn.innerHTML = '<span>⏳</span> Buscando Fotos Reales...';
       }
 
-      setTimeout(() => {
-        // Fetch extended thematic and location pool based on campsite context
-        const prov = (currentRescrapeProvince || 'malaga').toLowerCase();
-        let extendedPool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
+      const muniName = (currentRescrapeMuni || '').replace(/-/g, ' ');
+      const provName = (currentRescrapeProvince || '').replace(/-/g, ' ');
 
-        if (currentRescrapeSlug.includes('chorro') || currentRescrapeMuni.includes('ardales') || currentRescrapeName.toLowerCase().includes('chorro')) {
-          extendedPool = [...LOCATION_PHOTO_POOLS.el_chorro, ...LOCATION_PHOTO_POOLS.malaga];
-        } else if (currentRescrapeSlug.includes('ronda') || currentRescrapeName.toLowerCase().includes('ronda')) {
-          extendedPool = [...LOCATION_PHOTO_POOLS.ronda, ...LOCATION_PHOTO_POOLS.malaga];
-        } else if (currentRescrapeSlug.includes('escullos') || currentRescrapeSlug.includes('cabo') || currentRescrapeMuni.includes('nijar')) {
-          extendedPool = [...LOCATION_PHOTO_POOLS.almeria, ...LOCATION_PHOTO_POOLS.cadiz];
-        } else {
-          // Mix general high-quality camping/nature Unsplash photos
-          const naturePool = [
-            'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80'
-          ];
-          extendedPool = [...extendedPool, ...naturePool];
+      const searchQueries = [
+        `${currentRescrapeName}`,
+        `${muniName} ${provName} turismo`,
+        `camping ${provName}`
+      ];
+
+      let freshUrls = [];
+      for (const q of searchQueries) {
+        if (!q.trim()) continue;
+        const scraped = await fetchWikimediaImages(q);
+        freshUrls = [...freshUrls, ...scraped];
+        if (freshUrls.length >= 8) break;
+      }
+
+      // Also include expanded regional pools
+      const prov = (currentRescrapeProvince || 'malaga').toLowerCase();
+      let fallbackPool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
+      if (currentRescrapeSlug.includes('chorro') || currentRescrapeMuni.includes('ardales') || currentRescrapeName.toLowerCase().includes('chorro')) {
+        fallbackPool = [...LOCATION_PHOTO_POOLS.el_chorro, ...fallbackPool];
+      } else if (currentRescrapeSlug.includes('ronda') || currentRescrapeName.toLowerCase().includes('ronda')) {
+        fallbackPool = [...LOCATION_PHOTO_POOLS.ronda, ...fallbackPool];
+      } else if (currentRescrapeSlug.includes('escullos') || currentRescrapeSlug.includes('cabo') || currentRescrapeMuni.includes('nijar')) {
+        fallbackPool = [...LOCATION_PHOTO_POOLS.almeria, ...fallbackPool];
+      }
+
+      freshUrls = [...freshUrls, ...fallbackPool];
+
+      let addedCount = 0;
+      freshUrls.forEach((url) => {
+        if (!candidatePhotosList.some(c => c.url === url)) {
+          candidatePhotosList.push({
+            url: url,
+            source: url.includes('wikimedia') ? 'Wikimedia' : 'Re-scraped',
+            isSelected: true,
+            isPrimary: candidatePhotosList.length === 0
+          });
+          addedCount++;
         }
+      });
 
-        let addedCount = 0;
-        extendedPool.forEach((url, i) => {
-          if (!candidatePhotosList.some(c => c.url === url)) {
-            candidatePhotosList.push({
-              url: url,
-              source: `Re-scraped ${i + 1}`,
-              isSelected: true,
-              isPrimary: false
-            });
-            addedCount++;
-          }
-        });
+      renderPhotoCandidatesGrid();
 
-        renderPhotoCandidatesGrid();
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🔄</span> Buscar/Re-scrapear Fotos Relevantes';
+      }
 
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = '<span>🔄</span> Buscar/Re-scrapear Fotos Relevantes';
-        }
-
-        if (addedCount > 0) {
-          showNotification(`✨ ${addedCount} fotos relevantes agregadas a los candidatos para "${currentRescrapeName}".`, 'success');
-        } else {
-          showNotification(`ℹ️ No se encontraron más fotos nuevas para "${currentRescrapeName}". Se han cargado las mejores fotos disponibles.`, 'info');
-        }
-      }, 500);
+      if (addedCount > 0) {
+        showNotification(`✨ ${addedCount} nuevas fotos agregadas a los candidatos para "${currentRescrapeName}".`, 'success');
+      } else {
+        showNotification(`ℹ️ No se encontraron fotos adicionales para "${currentRescrapeName}". Se muestran las mejores fotos disponibles.`, 'info');
+      }
     });
 
     function renderPhotoCandidatesGrid() {
@@ -662,26 +709,32 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       const saveBtn = document.getElementById('btn-save-photo-selection');
       if (saveBtn) {
         saveBtn.disabled = true;
-        saveBtn.textContent = '⏳ Guardando en base de datos...';
+        saveBtn.textContent = '⏳ Guardando en base de datos Supabase...';
       }
 
       const res = await updateCampsiteInSupabase(currentRescrapeSlug, {
         image_url: primaryUrl,
-        image_urls: selectedUrls
+        image_urls: selectedUrls,
+        updated_at: new Date().toISOString()
       });
-
-      applyAdminOverridesToDOM();
-      photoModal?.classList.add('hidden');
 
       if (saveBtn) {
         saveBtn.disabled = false;
-        saveBtn.innerHTML = '<span>💾</span> Guardar Selección y Sobrescribir Base de Datos';
+        saveBtn.innerHTML = '<span>💾</span> Guardar Selección y Propagar a Supabase DB';
       }
 
       if (res.mode === 'supabase' && res.success) {
-        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en la base de datos Supabase para "${currentRescrapeName}"!`, 'success');
+        applyAdminOverridesToDOM();
+        photoModal?.classList.add('hidden');
+        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) exitosamente en la base de datos Supabase para "${currentRescrapeName}"!`, 'success');
+      } else if (res.mode === 'disconnected') {
+        alert(`⚠️ Supabase no está conectado.\n\nLos cambios solo se guardaron en tu navegador local. Para guardarlos en la base de datos para todos los usuarios, haz clic en "Configurar Supabase" e introduce la URL y la Anon Key de tu proyecto.`);
+        applyAdminOverridesToDOM();
+        photoModal?.classList.add('hidden');
+        showNotification(`⚠️ Guardado solo localmente. Supabase desconectado.`, 'warning');
       } else {
-        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en almacenamiento local para "${currentRescrapeName}"!`, 'warning');
+        alert(`❌ Error al escribir en Supabase DB:\n\n${res.error}\n\nComprueba tu conexión y credenciales de Supabase.`);
+        showNotification(`❌ Error al escribir en Supabase DB: ${res.error}`, 'warning');
       }
     });
 
@@ -741,6 +794,15 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       }
     });
 
+    function cleanUrl(url) {
+      if (!url) return '';
+      let c = url.trim();
+      c = c.replace(/\/+$/, '');
+      c = c.replace(/\/rest\/v1\/?$/i, '');
+      c = c.replace(/\/+$/, '');
+      return c;
+    }
+
     function getSupabaseCredentials() {
       // 1. First check manual local configuration in localStorage (allows override)
       try {
@@ -748,7 +810,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         if (stored) {
           const parsed = JSON.parse(stored);
           if (parsed.url && parsed.key) {
-            return { url: parsed.url, key: parsed.key, source: 'local' };
+            return { url: cleanUrl(parsed.url), key: parsed.key.trim(), source: 'local' };
           }
         }
       } catch (e) {}
@@ -757,7 +819,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       const envUrl = authContainer?.getAttribute('data-supabase-url');
       const envKey = authContainer?.getAttribute('data-supabase-key');
       if (envUrl && envKey) {
-        return { url: envUrl, key: envKey, source: 'build' };
+        return { url: cleanUrl(envUrl), key: envKey.trim(), source: 'build' };
       }
 
       return null;
@@ -902,7 +964,11 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
           if (error) {
             console.error(`Supabase DB update error for ${slug}:`, error);
-            return { success: false, mode: 'supabase', error: error.message || error.details || 'Error desconocido al escribir en Supabase DB' };
+            return { success: false, mode: 'supabase', error: error.message || error.details || 'Error al escribir en Supabase DB' };
+          }
+          if (!data || data.length === 0) {
+            console.warn(`Supabase DB update returned 0 rows for ${slug}`);
+            return { success: false, mode: 'supabase', error: `No se pudo actualizar el registro en Supabase para "${slug}". Comprueba permisos RLS o la existencia del slug.` };
           }
           return { success: true, mode: 'supabase' };
         } catch (e) {
@@ -962,12 +1028,23 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         }
         updatePromotedCount();
 
-        const res = await updateCampsiteInSupabase(slug, { is_promoted: isProm });
+        const res = await updateCampsiteInSupabase(slug, { is_promoted: isProm, updated_at: new Date().toISOString() });
         if (res.mode === 'supabase' && res.success) {
           showNotification(`✅ Promocionado actualizado en la base de datos Supabase para "${slug}".`, 'success');
         } else if (res.mode === 'disconnected') {
-          showNotification(`⚠️ Sin conexión a Supabase DB. Configura Supabase para sincronizar para todos los usuarios.`, 'warning');
+          showNotification(`⚠️ Sin conexión a Supabase DB. Se guardó localmente en tu navegador. Configura Supabase para sincronizar para todos los usuarios.`, 'warning');
         } else {
+          // Revert checkbox state if Supabase update failed
+          cb.checked = !isProm;
+          if (row) {
+            const badgeCell = row.querySelector('.promoted-badge-cell');
+            if (badgeCell) {
+              badgeCell.textContent = !isProm ? '⭐ Promocionado' : 'Estándar';
+              badgeCell.className = `promoted-badge-cell text-[10px] font-bold ${!isProm ? 'text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-200' : 'text-slate-400'}`;
+            }
+          }
+          updatePromotedCount();
+          alert(`❌ Error al escribir en Supabase DB:\n\n${res.error}\n\nSe ha revertido el cambio.`);
           showNotification(`❌ Error al escribir en Supabase DB: ${res.error}.`, 'warning');
         }
       });
@@ -1010,6 +1087,12 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const muni = (target.getAttribute('data-muni') || '').toLowerCase();
         const prov = (target.getAttribute('data-province') || '').toLowerCase();
 
+        let rowImageUrls = [];
+        try {
+          const rawUrls = target.getAttribute('data-image-urls') || '[]';
+          rowImageUrls = JSON.parse(rawUrls);
+        } catch (err) {}
+
         currentRescrapeSlug = slug;
         currentRescrapeName = name;
         currentRescrapeMuni = muni;
@@ -1031,17 +1114,30 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
         const currentUrl = rowImg ? rowImg.src : '';
 
-        // Build candidate list from current photo + pool photos
+        // Build candidate list from primary photo + existing image_urls + location pool
         const candidatesMap = new Map();
         if (currentUrl) {
-          candidatesMap.set(currentUrl, { url: currentUrl, source: 'Foto Actual', isSelected: true, isPrimary: true });
+          candidatesMap.set(currentUrl, { url: currentUrl, source: 'Foto Principal', isSelected: true, isPrimary: true });
+        }
+
+        if (Array.isArray(rowImageUrls)) {
+          rowImageUrls.forEach((u, idx) => {
+            if (u && !candidatesMap.has(u)) {
+              candidatesMap.set(u, {
+                url: u,
+                source: `Guardada ${idx + 1}`,
+                isSelected: true,
+                isPrimary: candidatesMap.size === 0
+              });
+            }
+          });
         }
 
         pool.forEach((url, i) => {
           if (!candidatesMap.has(url)) {
             candidatesMap.set(url, {
               url: url,
-              source: `Localización ${i + 1}`,
+              source: `Ubicación ${i + 1}`,
               isSelected: true,
               isPrimary: candidatesMap.size === 0
             });
