@@ -11,7 +11,11 @@ const priceLabels: Record<number, string> = { 1: '€', 2: '€€', 3: '€€�
 const detailUrl = `${import.meta.env.BASE_URL}camping/${camping.slug}/`;
 ---
 
-<div class="relative group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer" data-slug={camping.slug}>
+<div
+  class="relative group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer"
+  data-slug={camping.slug}
+  data-ssg-promoted={camping.is_promoted ? "true" : "false"}
+>
   <!-- Main stretched link covering the entire card -->
   <a
     href={detailUrl}

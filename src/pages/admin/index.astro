@@ -706,21 +706,60 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       const primaryUrl = primary.url;
       const selectedUrls = [primaryUrl, ...selectedCands.filter(c => c.url !== primaryUrl).map(c => c.url)];
 
+      // Identify deselected photos and delete from Supabase Storage if applicable
+      const deselectedCands = candidatePhotosList.filter(c => !c.isSelected);
+      const deselectedUrls = deselectedCands.map(c => c.url);
+
+      if (supabaseClient && deselectedUrls.length > 0) {
+        const storageFilesToDelete = [];
+        deselectedUrls.forEach(url => {
+          if (url && url.includes('/storage/v1/object/public/campsite-images/')) {
+            const parts = url.split('/storage/v1/object/public/campsite-images/');
+            if (parts[1]) storageFilesToDelete.push(parts[1]);
+          }
+        });
+        if (storageFilesToDelete.length > 0) {
+          try {
+            const { error: removeErr } = await supabaseClient
+              .storage
+              .from('campsite-images')
+              .remove(storageFilesToDelete);
+            if (removeErr) {
+              console.warn('Supabase storage removal warning:', removeErr);
+            }
+          } catch (err) {
+            console.warn('Error deleting deselected files from Supabase storage:', err);
+          }
+        }
+      }
+
       const saveBtn = document.getElementById('btn-save-photo-selection');
       if (saveBtn) {
         saveBtn.disabled = true;
         saveBtn.textContent = '⏳ Guardando en base de datos Supabase...';
       }
 
+      // Update Supabase DB with new primary image_url, image_urls array, and clean photos_manifest
       const res = await updateCampsiteInSupabase(currentRescrapeSlug, {
         image_url: primaryUrl,
         image_urls: selectedUrls,
+        photos_manifest: selectedUrls.map(u => ({ url: u })),
         updated_at: new Date().toISOString()
       });
 
       if (saveBtn) {
         saveBtn.disabled = false;
         saveBtn.innerHTML = '<span>💾</span> Guardar Selección y Propagar a Supabase DB';
+      }
+
+      // Update DOM table row attributes so UI reflects the newly saved image list immediately
+      const row = document.querySelector(`.camping-row[data-slug="${currentRescrapeSlug}"]`);
+      if (row) {
+        row.setAttribute('data-image-urls', JSON.stringify(selectedUrls));
+        const rowImg = row.querySelector('.camping-row-img');
+        if (rowImg) rowImg.src = primaryUrl;
+        const rescrapeBtn = row.querySelector('[data-action="rescrape-photos"]');
+        if (rescrapeBtn) rescrapeBtn.setAttribute('data-image-urls', JSON.stringify(selectedUrls));
       }
 
       if (res.mode === 'supabase' && res.success) {
