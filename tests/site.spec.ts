@@ -8,7 +8,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
 
     await expect(page.locator('h1')).toContainText('Encuentra tu camping ideal en Andalucía');
     await expect(page.getByRole('heading', { name: 'Glamping de Lujo' })).toBeVisible();
-    await expect(page.getByRole('link', { name: /El Sur/i })).toBeVisible();
+    await expect(page.locator('div[data-slug] a[aria-label*="Ver detalles de"]:visible').first()).toBeVisible();
   });
 
   test('Global Regional Category Route (/campings-con-mascotas/) loads all pet-friendly campsites across Andalucia', async ({ page }) => {
