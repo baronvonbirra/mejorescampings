@@ -1603,8 +1603,10 @@ def sync_to_supabase(campings: List[Dict[str, Any]], locations: List[Dict[str, A
     Executes upsert operations using 'slug' as the primary key/conflict target.
     Sanitizes records against remote database schema to prevent PostgREST column error rejections.
     """
-    url = os.environ.get("SUPABASE_URL") or os.environ.get("PUBLIC_SUPABASE_URL")
+    raw_url = os.environ.get("SUPABASE_URL") or os.environ.get("PUBLIC_SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("PUBLIC_SUPABASE_ANON_KEY")
+
+    url = raw_url.strip().rstrip("/").removesuffix("/rest/v1").rstrip("/") if raw_url else None
 
     if not url or not key:
         logging.info("SUPABASE_URL and key not set. Skipping Supabase database sync.")

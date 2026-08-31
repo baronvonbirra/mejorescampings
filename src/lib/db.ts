@@ -86,8 +86,20 @@ const getEnvVar = (key: string): string | undefined => {
   return undefined;
 };
 
-const supabaseUrl = getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL');
-const supabaseKey = getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY');
+export const sanitizeSupabaseUrl = (url: string | undefined): string | undefined => {
+  if (!url) return undefined;
+  let cleaned = url.trim();
+  cleaned = cleaned.replace(/\/+$/, '');
+  cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
+  cleaned = cleaned.replace(/\/+$/, '');
+  return cleaned || undefined;
+};
+
+const rawSupabaseUrl = getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL');
+const rawSupabaseKey = getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY');
+
+const supabaseUrl = sanitizeSupabaseUrl(rawSupabaseUrl);
+const supabaseKey = rawSupabaseKey ? rawSupabaseKey.trim() : undefined;
 
 const supabase = (supabaseUrl && supabaseKey)
   ? createClient(supabaseUrl, supabaseKey)

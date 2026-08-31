@@ -14,7 +14,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 def get_supabase_client():
     """Instantiate Supabase client if credentials exist."""
-    url = os.environ.get("SUPABASE_URL")
+    raw_url = os.environ.get("SUPABASE_URL")
+    url = raw_url.strip().rstrip("/").removesuffix("/rest/v1").rstrip("/") if raw_url else None
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
     if url and key:
         try:
