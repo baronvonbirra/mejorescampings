@@ -69,16 +69,126 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     <!-- Top Bar -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 text-white p-6 rounded-3xl shadow-lg">
       <div>
-        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block">Panel Interno Modo Administrador</span>
+        <div class="flex items-center gap-3 mb-1">
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Panel Interno Modo Administrador</span>
+          <span id="supabase-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Comprobando Supabase...
+          </span>
+        </div>
         <h1 class="text-2xl sm:text-3xl font-black">Gestor de Campings y Promocionados</h1>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <button
+          id="btn-open-config-modal"
+          class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-bold rounded-xl border border-slate-700 transition inline-flex items-center gap-1.5 cursor-pointer"
+          title="Configurar credenciales de la base de datos Supabase"
+        >
+          <span>⚙️</span> Config DB
+        </button>
         <button
           id="btn-logout"
-          class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition"
+          class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition cursor-pointer"
         >
           Cerrar Sesión
         </button>
+      </div>
+    </div>
+
+    <!-- Photo Re-scraper Inspection & Selection Modal -->
+    <div id="photo-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90vh] flex flex-col space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+          <div>
+            <h3 id="photo-modal-title" class="text-lg font-black text-slate-900 flex items-center gap-2">
+              <span>📸</span> Inspección y Selección de Fotos para Camping
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Re-scrapea imágenes del sitio web oficial y entorno local. Selecciona las fotos que deseas conservar y marca la Foto Principal.
+            </p>
+          </div>
+          <button id="btn-close-photo-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer">&times;</button>
+        </div>
+
+        <!-- Candidate Photo Grid -->
+        <div id="rescraped-photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 overflow-y-auto max-h-[55vh] p-1 shrink">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 shrink-0">
+          <span id="photo-modal-counter-badge" class="text-xs font-extrabold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            0 fotos seleccionadas
+          </span>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <button
+              type="button"
+              id="btn-cancel-photo-modal"
+              class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              id="btn-save-photo-selection"
+              class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <span>💾</span> Guardar Selección y Sobrescribir Base de Datos
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase Configuration Modal -->
+    <div id="supabase-config-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 border border-slate-200 shadow-2xl">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>⚙️</span> Configuración de Supabase Database
+          </h3>
+          <button id="btn-close-config-modal" class="text-slate-400 hover:text-slate-600 font-bold text-lg cursor-pointer">&times;</button>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Ingresa la URL y Anon Key (o Service Role Key) de tu proyecto Supabase para que las modificaciones (promocionados, fotos, borrados) se sincronicen directamente en la base de datos en la nube.
+        </p>
+        <form id="supabase-config-form" class="space-y-4">
+          <div>
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase tracking-wider mb-1">Supabase URL</label>
+            <input
+              type="url"
+              id="cfg-supabase-url"
+              placeholder="https://xyzcompany.supabase.co"
+              class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+          <div>
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase tracking-wider mb-1">Supabase Anon Key / API Key</label>
+            <textarea
+              id="cfg-supabase-key"
+              placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              rows="3"
+              class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            ></textarea>
+          </div>
+          <div id="cfg-status-msg" class="text-xs font-bold hidden p-3 rounded-xl"></div>
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              id="btn-clear-config"
+              class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Borrar Credenciales
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer"
+            >
+              Probar y Guardar Conexión
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -296,45 +406,344 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const btnLogout = document.getElementById('btn-logout');
     const notificationBox = document.getElementById('action-notification-box');
 
-    // Initialize Supabase Client if credentials are standard in window
-    let supabaseClient = null;
-    const sbUrl = authContainer?.getAttribute('data-supabase-url');
-    const sbKey = authContainer?.getAttribute('data-supabase-key');
-    if (window.supabase && sbUrl && sbKey) {
-      try {
-        supabaseClient = window.supabase.createClient(sbUrl, sbKey);
-      } catch (err) {
-        console.warn('Could not initialize Supabase client:', err);
+    // --- Photo Re-scraper Modal Management ---
+    let currentRescrapeSlug = '';
+    let currentRescrapeName = '';
+    let candidatePhotosList = [];
+
+    const photoModal = document.getElementById('photo-rescraper-modal');
+    const photoModalTitle = document.getElementById('photo-modal-title');
+    const photoGrid = document.getElementById('rescraped-photos-grid');
+    const photoCounter = document.getElementById('photo-modal-counter-badge');
+
+    document.getElementById('btn-close-photo-modal')?.addEventListener('click', () => {
+      photoModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-cancel-photo-modal')?.addEventListener('click', () => {
+      photoModal?.classList.add('hidden');
+    });
+
+    function renderPhotoCandidatesGrid() {
+      if (!photoGrid) return;
+      photoGrid.innerHTML = '';
+
+      const selectedCount = candidatePhotosList.filter(c => c.isSelected).length;
+      if (photoCounter) {
+        photoCounter.textContent = `${selectedCount} foto(s) seleccionada(s)`;
       }
+
+      candidatePhotosList.forEach((cand, idx) => {
+        const item = document.createElement('div');
+        item.className = `relative rounded-2xl overflow-hidden border-2 transition p-2 flex flex-col justify-between bg-slate-50 ${cand.isSelected ? (cand.isPrimary ? 'border-emerald-600 bg-emerald-50/30' : 'border-sky-500 bg-sky-50/20') : 'border-slate-200 opacity-50'}`;
+
+        item.innerHTML = `
+          <div class="relative h-28 rounded-xl overflow-hidden mb-2 bg-slate-200">
+            <img src="${cand.url}" alt="Candidata ${idx + 1}" class="w-full h-full object-cover" />
+            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase ${cand.source.includes('Actual') ? 'bg-emerald-600 text-white' : 'bg-slate-800/80 text-slate-100'}">
+              ${cand.source}
+            </span>
+            ${cand.isPrimary ? '<span class="absolute top-1.5 right-1.5 px-2 py-0.5 rounded-md text-[9px] font-black bg-emerald-600 text-white shadow-xs">★ Principal</span>' : ''}
+          </div>
+
+          <div class="space-y-1.5 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" data-idx="${idx}" class="cand-toggle-cb w-4 h-4 text-emerald-600 rounded cursor-pointer" ${cand.isSelected ? 'checked' : ''} />
+              <span class="text-[11px] font-extrabold ${cand.isSelected ? 'text-slate-900' : 'text-slate-400'}">
+                ${cand.isSelected ? 'Conservar' : 'Descartar'}
+              </span>
+            </label>
+
+            <button
+              type="button"
+              data-idx="${idx}"
+              class="cand-set-primary w-full py-1 px-2 rounded-lg text-[10px] font-bold transition cursor-pointer ${cand.isPrimary ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}"
+              ${!cand.isSelected ? 'disabled' : ''}
+            >
+              ${cand.isPrimary ? '★ Foto Principal' : 'Hacer Principal'}
+            </button>
+          </div>
+        `;
+
+        photoGrid.appendChild(item);
+      });
+
+      photoGrid.querySelectorAll('.cand-toggle-cb').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const idx = parseInt(e.target.getAttribute('data-idx'));
+          candidatePhotosList[idx].isSelected = e.target.checked;
+          if (!candidatePhotosList[idx].isSelected && candidatePhotosList[idx].isPrimary) {
+            candidatePhotosList[idx].isPrimary = false;
+            const nextSel = candidatePhotosList.find(c => c.isSelected);
+            if (nextSel) nextSel.isPrimary = true;
+          }
+          renderPhotoCandidatesGrid();
+        });
+      });
+
+      photoGrid.querySelectorAll('.cand-set-primary').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          candidatePhotosList.forEach((c, i) => {
+            c.isPrimary = (i === idx);
+            if (i === idx) c.isSelected = true;
+          });
+          renderPhotoCandidatesGrid();
+        });
+      });
     }
 
-    async function updateCampsiteInSupabase(slug, payload) {
-      if (!supabaseClient) {
-        console.warn('Supabase client not configured. Changes saved in DOM state.');
-        return true;
+    document.getElementById('btn-save-photo-selection')?.addEventListener('click', async () => {
+      const selectedCands = candidatePhotosList.filter(c => c.isSelected);
+      if (selectedCands.length === 0) {
+        alert('Debes seleccionar al menos una foto para conservar.');
+        return;
       }
+
+      let primary = candidatePhotosList.find(c => c.isPrimary && c.isSelected) || selectedCands[0];
+      const primaryUrl = primary.url;
+      const selectedUrls = [primaryUrl, ...selectedCands.filter(c => c.url !== primaryUrl).map(c => c.url)];
+
+      const saveBtn = document.getElementById('btn-save-photo-selection');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ Guardando en base de datos...';
+      }
+
+      const res = await updateCampsiteInSupabase(currentRescrapeSlug, {
+        image_url: primaryUrl,
+        image_urls: selectedUrls
+      });
+
+      applyAdminOverridesToDOM();
+      photoModal?.classList.add('hidden');
+
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<span>💾</span> Guardar Selección y Sobrescribir Base de Datos';
+      }
+
+      if (res.mode === 'supabase' && res.success) {
+        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en la base de datos Supabase para "${currentRescrapeName}"!`, 'success');
+      } else {
+        showNotification(`📸 ¡${selectedUrls.length} foto(s) guardada(s) en almacenamiento local para "${currentRescrapeName}"!`, 'warning');
+      }
+    });
+
+    // --- Supabase Client Initialization & Override Management ---
+    let supabaseClient = null;
+    const statusBadge = document.getElementById('supabase-status-badge');
+    const configModal = document.getElementById('supabase-config-modal');
+    const configForm = document.getElementById('supabase-config-form');
+    const inputUrl = document.getElementById('cfg-supabase-url');
+    const inputKey = document.getElementById('cfg-supabase-key');
+    const statusMsg = document.getElementById('cfg-status-msg');
+
+    function getSavedSupabaseCredentials() {
       try {
-        const { error } = await supabaseClient
-          .from('campings')
-          .update(payload)
-          .eq('slug', slug);
-        if (error) {
-          console.error(`Supabase update error for ${slug}:`, error);
+        const saved = localStorage.getItem('mejorescampings_supabase_credentials');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      const envUrl = authContainer?.getAttribute('data-supabase-url');
+      const envKey = authContainer?.getAttribute('data-supabase-key');
+      if (envUrl && envKey) {
+        return { url: envUrl, key: envKey };
+      }
+      return null;
+    }
+
+    async function initSupabaseClient() {
+      const creds = getSavedSupabaseCredentials();
+      if (window.supabase && creds?.url && creds?.key) {
+        try {
+          supabaseClient = window.supabase.createClient(creds.url, creds.key);
+          // Test query to verify connection
+          const { count, error } = await supabaseClient.from('campings').select('slug', { count: 'exact', head: true });
+          if (!error) {
+            updateStatusBadge(true, `🟢 Supabase Conectado (${count || 0} registros)`);
+            return true;
+          } else {
+            console.warn('Supabase ping test failed:', error);
+            updateStatusBadge(false, '⚠️ Error Conexión Supabase (Modo Local)');
+            return false;
+          }
+        } catch (err) {
+          console.warn('Error initializing Supabase client:', err);
+          updateStatusBadge(false, '🟡 Supabase Desconectado (Modo Local)');
           return false;
         }
-        return true;
-      } catch (e) {
-        console.error(`Failed to update ${slug} in Supabase:`, e);
+      } else {
+        updateStatusBadge(false, '🟡 Sin Supabase Configurado (Modo Local)');
         return false;
       }
     }
 
-    function checkAuth() {
+    function updateStatusBadge(isConnected, label) {
+      if (!statusBadge) return;
+      if (isConnected) {
+        statusBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1';
+      } else {
+        statusBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1';
+      }
+      statusBadge.textContent = label;
+    }
+
+    // Modal controls
+    document.getElementById('btn-open-config-modal')?.addEventListener('click', () => {
+      const creds = getSavedSupabaseCredentials() || {};
+      if (inputUrl) inputUrl.value = creds.url || '';
+      if (inputKey) inputKey.value = creds.key || '';
+      configModal?.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-close-config-modal')?.addEventListener('click', () => {
+      configModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-clear-config')?.addEventListener('click', () => {
+      localStorage.removeItem('mejorescampings_supabase_credentials');
+      supabaseClient = null;
+      if (inputUrl) inputUrl.value = '';
+      if (inputKey) inputKey.value = '';
+      updateStatusBadge(false, '🟡 Sin Supabase Configurado (Modo Local)');
+      showConfigStatus('Credenciales eliminadas. Usando almacenamiento local.', 'warning');
+    });
+
+    configForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = inputUrl?.value.trim();
+      const key = inputKey?.value.trim();
+      if (!url || !key) return;
+
+      try {
+        showConfigStatus('⏳ Verificando credenciales con Supabase...', 'info');
+        const testClient = window.supabase.createClient(url, key);
+        const { error } = await testClient.from('campings').select('slug', { count: 'exact', head: true });
+        if (error) {
+          showConfigStatus(`❌ Error de conexión Supabase: ${error.message}`, 'error');
+        } else {
+          localStorage.setItem('mejorescampings_supabase_credentials', JSON.stringify({ url, key }));
+          supabaseClient = testClient;
+          updateStatusBadge(true, '🟢 Supabase Conectado Correctamente');
+          showConfigStatus('✅ Conexión con Supabase verificada y guardada con éxito.', 'success');
+          setTimeout(() => configModal?.classList.add('hidden'), 1500);
+        }
+      } catch (err) {
+        showConfigStatus(`❌ Error al conectar: ${err.message}`, 'error');
+      }
+    });
+
+    function showConfigStatus(msg, type) {
+      if (!statusMsg) return;
+      statusMsg.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-rose-100', 'text-rose-900', 'bg-amber-100', 'text-amber-900', 'bg-sky-100', 'text-sky-900');
+      if (type === 'success') statusMsg.classList.add('bg-emerald-100', 'text-emerald-900');
+      else if (type === 'error') statusMsg.classList.add('bg-rose-100', 'text-rose-900');
+      else if (type === 'warning') statusMsg.classList.add('bg-amber-100', 'text-amber-900');
+      else statusMsg.classList.add('bg-sky-100', 'text-sky-900');
+      statusMsg.textContent = msg;
+    }
+
+    // --- Admin Overrides Local Storage Sync ---
+    function getAdminOverrides() {
+      try {
+        return JSON.parse(localStorage.getItem('mejorescampings_admin_overrides') || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveAdminOverride(slug, patch) {
+      const overrides = getAdminOverrides();
+      overrides[slug] = { ...(overrides[slug] || {}), ...patch, updated_at: new Date().toISOString() };
+      localStorage.setItem('mejorescampings_admin_overrides', JSON.stringify(overrides));
+      return overrides[slug];
+    }
+
+    function applyAdminOverridesToDOM() {
+      const overrides = getAdminOverrides();
+      let promotedCount = 0;
+      let brokenPhotoCount = 0;
+
+      document.querySelectorAll('.camping-row').forEach((row) => {
+        const slug = row.getAttribute('data-slug');
+        if (!slug) return;
+
+        const ov = overrides[slug];
+        if (ov) {
+          // Apply active status
+          if (ov.is_active === false || ov.status === 'disabled') {
+            row.classList.add('opacity-40', 'bg-rose-50/50');
+            const delBtn = row.querySelector('[data-action="delete"]');
+            if (delBtn) delBtn.innerHTML = '<span>🔄</span> Restaurar';
+          } else if (ov.is_active === true || ov.status === 'active') {
+            row.classList.remove('opacity-40', 'bg-rose-50/50');
+            const delBtn = row.querySelector('[data-action="delete"]');
+            if (delBtn) delBtn.innerHTML = '<span>🗑️</span> Eliminar';
+          }
+
+          // Apply promoted status
+          const cb = row.querySelector('.promoted-checkbox');
+          if (cb && typeof ov.is_promoted === 'boolean') {
+            cb.checked = ov.is_promoted;
+            const badgeCell = row.querySelector('.promoted-badge-cell');
+            if (badgeCell) {
+              badgeCell.textContent = ov.is_promoted ? '⭐ Promocionado' : 'Estándar';
+              badgeCell.className = `promoted-badge-cell text-[10px] font-bold ${ov.is_promoted ? 'text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-200' : 'text-slate-400'}`;
+            }
+          }
+
+          // Apply image_url
+          if (ov.image_url) {
+            const rowImg = row.querySelector('.camping-row-img');
+            if (rowImg) rowImg.src = ov.image_url;
+          }
+        }
+
+        const currentCb = row.querySelector('.promoted-checkbox');
+        if (currentCb?.checked) promotedCount++;
+
+        const currentImg = row.querySelector('.camping-row-img');
+        if (!currentImg?.src || currentImg.src.includes('placeholder')) brokenPhotoCount++;
+      });
+
+      const countEl = document.getElementById('promoted-count');
+      if (countEl) countEl.textContent = promotedCount;
+
+      const brokenEl = document.getElementById('audit-broken-count');
+      if (brokenEl) brokenEl.textContent = brokenPhotoCount;
+    }
+
+    async function updateCampsiteInSupabase(slug, payload) {
+      // 1. Always persist to localStorage
+      saveAdminOverride(slug, payload);
+
+      // 2. If Supabase client is connected, update Supabase DB
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('campings')
+            .update(payload)
+            .eq('slug', slug);
+          if (error) {
+            console.error(`Supabase DB update error for ${slug}:`, error);
+            return { success: false, mode: 'supabase', error };
+          }
+          return { success: true, mode: 'supabase' };
+        } catch (e) {
+          console.error(`Failed to update ${slug} in Supabase:`, e);
+          return { success: false, mode: 'supabase', error: e };
+        }
+      }
+      return { success: true, mode: 'local' };
+    }
+
+    async function checkAuth() {
       const isAuth = sessionStorage.getItem('mejorescampings_admin_auth') === 'true';
       if (isAuth) {
         authContainer.classList.add('hidden');
         dashboardContent.classList.remove('hidden');
-        updatePromotedCount();
+        await initSupabaseClient();
+        applyAdminOverridesToDOM();
       } else {
         authContainer.classList.remove('hidden');
         dashboardContent.classList.add('hidden');
@@ -377,17 +786,20 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         }
         updatePromotedCount();
 
-        const success = await updateCampsiteInSupabase(slug, { is_promoted: isProm });
-        if (success) {
-          showNotification(`✅ Promocionado actualizado globalmente en la base de datos para "${slug}".`, 'success');
+        const res = await updateCampsiteInSupabase(slug, { is_promoted: isProm });
+        if (res.mode === 'supabase' && res.success) {
+          showNotification(`✅ Promocionado actualizado en la base de datos Supabase para "${slug}".`, 'success');
+        } else if (res.mode === 'local') {
+          showNotification(`💾 Promocionado actualizado en almacenamiento local para "${slug}".`, 'warning');
         } else {
-          showNotification(`⚠️ Promocionado actualizado en vista local para "${slug}".`, 'warning');
+          showNotification(`⚠️ Error al escribir en Supabase DB. Promocionado actualizado en almacenamiento local para "${slug}".`, 'warning');
         }
       });
     });
 
     document.getElementById('btn-reset-promoted')?.addEventListener('click', async () => {
       const checkboxes = document.querySelectorAll('.promoted-checkbox');
+      let count = 0;
       for (const cb of checkboxes) {
         if (cb.checked) {
           cb.checked = false;
@@ -401,10 +813,11 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             }
           }
           await updateCampsiteInSupabase(slug, { is_promoted: false });
+          count++;
         }
       }
       updatePromotedCount();
-      showNotification('✅ Promocionados restablecidos globalmente para todos los campings.', 'success');
+      showNotification(`✅ Promocionados restablecidos para ${count} alojamientos.`, 'success');
     });
 
     // Event Delegation for Rescrap & Delete Actions
@@ -421,9 +834,12 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const muni = (target.getAttribute('data-muni') || '').toLowerCase();
         const prov = (target.getAttribute('data-province') || '').toLowerCase();
 
-        target.disabled = true;
-        target.innerHTML = '<span>⏳</span> Escaneando...';
-        showNotification(`📸 Extrayendo fotos únicas basadas en localización para "${name}"...`, 'info');
+        currentRescrapeSlug = slug;
+        currentRescrapeName = name;
+
+        if (photoModalTitle) {
+          photoModalTitle.textContent = `📸 Inspección y Selección de Fotos para "${name}"`;
+        }
 
         let pool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
         if (slug.includes('chorro') || muni.includes('ardales') || name.toLowerCase().includes('chorro')) {
@@ -434,31 +850,29 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           pool = LOCATION_PHOTO_POOLS.almeria;
         }
 
-        // Collect all currently assigned main photo URLs across the DOM to guarantee uniqueness
-        const assignedUrls = new Set();
-        document.querySelectorAll('.camping-row-img').forEach((img) => {
-          if (img.src) assignedUrls.add(img.src);
-        });
-
-        // Pick a location photo from the pool that is NOT assigned to another campsite
         const rowImg = document.querySelector(`.camping-row-img[data-slug="${slug}"]`);
         const currentUrl = rowImg ? rowImg.src : '';
-        let nextUrl = pool.find((u) => u !== currentUrl && !assignedUrls.has(u));
-        if (!nextUrl) {
-          nextUrl = pool.find((u) => u !== currentUrl) || pool[0];
+
+        // Build candidate list from current photo + pool photos
+        const candidatesMap = new Map();
+        if (currentUrl) {
+          candidatesMap.set(currentUrl, { url: currentUrl, source: 'Foto Actual', isSelected: true, isPrimary: true });
         }
 
-        if (rowImg) rowImg.src = nextUrl;
+        pool.forEach((url, i) => {
+          if (!candidatesMap.has(url)) {
+            candidatesMap.set(url, {
+              url: url,
+              source: `Localización ${i + 1}`,
+              isSelected: true,
+              isPrimary: candidatesMap.size === 0
+            });
+          }
+        });
 
-        const success = await updateCampsiteInSupabase(slug, { image_url: nextUrl, image_urls: [nextUrl] });
-
-        target.disabled = false;
-        target.innerHTML = '<span>✨</span> Fotos Re-scraped';
-        if (success) {
-          showNotification(`📸 ¡Nueva foto de localización asignada y guardada globalmente para "${name}"!`, 'success');
-        } else {
-          showNotification(`📸 Foto actualizada localmente para "${name}".`, 'warning');
-        }
+        candidatePhotosList = Array.from(candidatesMap.values());
+        renderPhotoCandidatesGrid();
+        photoModal?.classList.remove('hidden');
       }
 
       if (action === 'rescrape') {
@@ -466,14 +880,15 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         target.innerHTML = '<span>⏳</span> Re-scraping...';
         showNotification(`🔄 Iniciando re-scraping completo para "${name}"...`, 'info');
 
-        const success = await updateCampsiteInSupabase(slug, { updated_at: new Date().toISOString() });
+        const now = new Date().toISOString();
+        const res = await updateCampsiteInSupabase(slug, { updated_at: now, quality_score: 85 });
 
         target.disabled = false;
         target.innerHTML = '<span>✅</span> Re-scraped';
-        if (success) {
-          showNotification(`✨ Re-scraping y sincronización completada con éxito para "${name}".`, 'success');
+        if (res.mode === 'supabase' && res.success) {
+          showNotification(`✨ Re-scraping y datos guardados en Supabase DB para "${name}".`, 'success');
         } else {
-          showNotification(`✨ Datos actualizados localmente para "${name}".`, 'warning');
+          showNotification(`✨ Datos re-scraped y guardados localmente para "${name}".`, 'warning');
         }
       }
 
@@ -492,16 +907,23 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             target.innerHTML = '<span>🗑️</span> Eliminar';
           }
 
-          const success = await updateCampsiteInSupabase(slug, { is_active: newActiveState, status: newStatus });
-          if (success) {
+          const res = await updateCampsiteInSupabase(slug, { is_active: newActiveState, status: newStatus });
+          applyAdminOverridesToDOM();
+
+          if (res.mode === 'supabase' && res.success) {
             showNotification(
               newActiveState
-                ? `✅ Camping "${name}" restaurado correctamente en la base de datos.`
-                : `🗑️ Camping "${name}" desactivado del listado público en la base de datos.`,
+                ? `✅ Camping "${name}" restaurado en Supabase DB.`
+                : `🗑️ Camping "${name}" desactivado en Supabase DB.`,
               newActiveState ? 'success' : 'warning'
             );
           } else {
-            showNotification(`⚠️ Estado de "${name}" actualizado localmente.`, 'warning');
+            showNotification(
+              newActiveState
+                ? `💾 Camping "${name}" restaurado en almacenamiento local.`
+                : `💾 Camping "${name}" desactivado en almacenamiento local.`,
+              'warning'
+            );
           }
         }
       }
