@@ -3,6 +3,35 @@ import Layout from '../layouts/Layout.astro';
 import CampingCard from '../components/CampingCard.astro';
 import { getCampings, getFeatures, PROVINCES } from '../lib/db';
 
+const getEnvVar = (key: string): string => {
+  try {
+    if (typeof process !== 'undefined' && process?.env && process.env[key]) {
+      return process.env[key];
+    }
+  } catch (e) {}
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta?.env && import.meta.env[key]) {
+      return import.meta.env[key];
+    }
+  } catch (e) {}
+  return '';
+};
+
+const sanitizeSupabaseUrl = (url?: string): string => {
+  if (!url) return '';
+  let cleaned = url.trim();
+  cleaned = cleaned.replace(/\/+$/, '');
+  cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
+  cleaned = cleaned.replace(/\/+$/, '');
+  return cleaned;
+};
+
+const rawSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL') || '';
+const rawSupabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY') || '';
+
+const supabaseUrl = sanitizeSupabaseUrl(rawSupabaseUrl);
+const supabaseKey = rawSupabaseKey.trim();
+
 const allCampings = await getCampings();
 const features = await getFeatures();
 
@@ -28,6 +57,7 @@ const provinceCounts = PROVINCES.map((p) => {
 ---
 
 <Layout title="MejoresCampings | Guía de Campings, Glampings y Pernocta en Andalucía (8 Provincias)">
+  <div id="homepage-supabase-config" data-supabase-url={supabaseUrl} data-supabase-key={supabaseKey} class="hidden"></div>
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
     <div class="relative z-10 max-w-3xl">
@@ -224,6 +254,15 @@ const provinceCounts = PROVINCES.map((p) => {
             }
           }
         } catch (e) {}
+
+        const el = document.getElementById('homepage-supabase-config');
+        if (el) {
+          const envUrl = el.getAttribute('data-supabase-url');
+          const envKey = el.getAttribute('data-supabase-key');
+          if (envUrl && envKey) {
+            return { url: cleanUrl(envUrl), key: envKey.trim() };
+          }
+        }
         return null;
       }
 
@@ -304,6 +343,16 @@ const provinceCounts = PROVINCES.map((p) => {
             }
             wrapper.setAttribute('data-is-promoted', isPromoted ? 'true' : 'false');
 
+            // Toggle visual badge on card
+            const badge = wrapper.querySelector('.camping-promoted-badge');
+            if (badge) {
+              if (isPromoted) {
+                badge.classList.remove('hidden');
+              } else {
+                badge.classList.add('hidden');
+              }
+            }
+
             // Resolve image URL
             const finalImgUrl = ov?.image_url || supaRecord?.image_url;
             if (finalImgUrl) {
@@ -324,9 +373,14 @@ const provinceCounts = PROVINCES.map((p) => {
             return 0;
           });
 
-          // Re-append sorted cards in order
-          activeWrappers.forEach((wrapper) => {
+          // Re-append sorted cards in order and re-evaluate top 6 display logic
+          activeWrappers.forEach((wrapper, index) => {
             grid.appendChild(wrapper);
+            if (!window.__showAllCampingsClicked) {
+              wrapper.style.display = index < 6 ? 'flex' : 'none';
+            } else {
+              wrapper.style.display = 'flex';
+            }
           });
         } catch (e) {
           console.warn('Error applying dynamic updates on homepage:', e);
@@ -334,6 +388,7 @@ const provinceCounts = PROVINCES.map((p) => {
       }
 
       function showAllCampings() {
+        window.__showAllCampingsClicked = true;
         const grid = document.getElementById('featured-campings-grid');
         if (!grid) return;
 

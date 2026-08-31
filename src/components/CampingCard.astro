@@ -32,6 +32,11 @@ const detailUrl = `${import.meta.env.BASE_URL}camping/${camping.slug}/`;
         data-slug={camping.slug}
         loading="lazy"
       />
+      <span
+        class={`camping-promoted-badge absolute top-3 left-3 bg-emerald-700 text-white px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide shadow-sm z-20 pointer-events-none ${camping.is_promoted ? '' : 'hidden'}`}
+      >
+        ⭐ Promocionado
+      </span>
       <div class="absolute top-3 right-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-xs font-bold text-slate-800 shadow-sm z-20 pointer-events-none">
         {priceLabels[camping.price_tier] || '€€'}
       </div>
