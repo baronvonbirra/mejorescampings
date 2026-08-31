@@ -74,13 +74,13 @@ export const PROVINCES: ProvinceInfo[] = [
 
 const getEnvVar = (key: string): string | undefined => {
   try {
-    if (typeof import.meta !== 'undefined' && import.meta?.env) {
-      return import.meta.env[key];
+    if (typeof process !== 'undefined' && process?.env && process.env[key]) {
+      return process.env[key];
     }
   } catch (e) {}
   try {
-    if (typeof process !== 'undefined' && process?.env) {
-      return process.env[key];
+    if (typeof import.meta !== 'undefined' && import.meta?.env) {
+      return import.meta.env[key];
     }
   } catch (e) {}
   return undefined;
