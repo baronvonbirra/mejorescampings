@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CampingCard from '../../components/CampingCard.astro';
+import LiveSupabaseSync from '../../components/LiveSupabaseSync.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import AffiliateCard from '../../components/AffiliateCard.astro';
 import { getCampings, getFeatures, PROVINCES } from '../../lib/db';
@@ -40,6 +41,7 @@ const jsonLdItemList = {
 ---
 
 <Layout title={`Los Mejores Campings en ${provName} (Andalucía) | Guía 2026`} description={`Descubre los mejores campings y glampings en ${provName}. Fotos, precios, alojamientos con piscina, admiten mascotas y reserva directa.`}>
+  <LiveSupabaseSync gridId="campings-listing-grid" configId="listing-supabase-config" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
 
   <!-- Breadcrumbs -->
@@ -107,9 +109,16 @@ const jsonLdItemList = {
 
   <!-- Camping Results Grid -->
   {campings.length > 0 ? (
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="campings-listing-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {campings.map((camping) => (
-        <CampingCard camping={camping} />
+        <div
+          class="camping-card-wrapper flex flex-col"
+          data-slug={camping.slug}
+          data-ssg-promoted={camping.is_promoted ? "true" : "false"}
+          data-ssg-active={camping.is_active ? "true" : "false"}
+        >
+          <CampingCard camping={camping} />
+        </div>
       ))}
     </div>
   ) : (
@@ -175,4 +184,5 @@ const jsonLdItemList = {
       />
     </div>
   </div>
-</Layout>
+
+  </Layout>

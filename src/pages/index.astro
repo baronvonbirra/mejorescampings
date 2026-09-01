@@ -1,36 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CampingCard from '../components/CampingCard.astro';
+import LiveSupabaseSync from '../components/LiveSupabaseSync.astro';
 import { getCampings, getFeatures, PROVINCES } from '../lib/db';
-
-const getEnvVar = (key: string): string => {
-  try {
-    if (typeof process !== 'undefined' && process?.env && process.env[key]) {
-      return process.env[key];
-    }
-  } catch (e) {}
-  try {
-    if (typeof import.meta !== 'undefined' && import.meta?.env && import.meta.env[key]) {
-      return import.meta.env[key];
-    }
-  } catch (e) {}
-  return '';
-};
-
-const sanitizeSupabaseUrl = (url?: string): string => {
-  if (!url) return '';
-  let cleaned = url.trim();
-  cleaned = cleaned.replace(/\/+$/, '');
-  cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
-  cleaned = cleaned.replace(/\/+$/, '');
-  return cleaned;
-};
-
-const rawSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || getEnvVar('PUBLIC_SUPABASE_URL') || getEnvVar('SUPABASE_URL') || '';
-const rawSupabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || getEnvVar('PUBLIC_SUPABASE_ANON_KEY') || getEnvVar('SUPABASE_ANON_KEY') || '';
-
-const supabaseUrl = sanitizeSupabaseUrl(rawSupabaseUrl);
-const supabaseKey = rawSupabaseKey.trim();
 
 const allCampings = await getCampings();
 const features = await getFeatures();
@@ -57,7 +29,7 @@ const provinceCounts = PROVINCES.map((p) => {
 ---
 
 <Layout title="MejoresCampings | Guía de Campings, Glampings y Pernocta en Andalucía (8 Provincias)">
-  <div id="homepage-supabase-config" data-supabase-url={supabaseUrl} data-supabase-key={supabaseKey} class="hidden"></div>
+  <LiveSupabaseSync gridId="featured-campings-grid" configId="homepage-supabase-config" />
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
     <div class="relative z-10 max-w-3xl">
@@ -233,160 +205,7 @@ const provinceCounts = PROVINCES.map((p) => {
   </section>
 
   <script is:inline>
-    // Client-side dynamic sync with Supabase DB & Local Admin Overrides
     (function () {
-      function cleanUrl(url) {
-        if (!url) return '';
-        let c = url.trim();
-        c = c.replace(/\/+$/, '');
-        c = c.replace(/\/rest\/v1\/?$/i, '');
-        c = c.replace(/\/+$/, '');
-        return c;
-      }
-
-      function getSupabaseCredentials() {
-        try {
-          const stored = localStorage.getItem('mejorescampings_supabase_config');
-          if (stored) {
-            const parsed = JSON.parse(stored);
-            if (parsed.url && parsed.key) {
-              return { url: cleanUrl(parsed.url), key: parsed.key.trim() };
-            }
-          }
-        } catch (e) {}
-
-        const el = document.getElementById('homepage-supabase-config');
-        if (el) {
-          const envUrl = el.getAttribute('data-supabase-url');
-          const envKey = el.getAttribute('data-supabase-key');
-          if (envUrl && envKey) {
-            return { url: cleanUrl(envUrl), key: envKey.trim() };
-          }
-        }
-        return null;
-      }
-
-      async function fetchLiveSupabaseData() {
-        const creds = getSupabaseCredentials();
-        if (!creds?.url || !creds?.key) return {};
-
-        try {
-          const res = await fetch(`${creds.url}/rest/v1/campings?select=slug,is_promoted,is_active,status,image_url,image_urls`, {
-            headers: {
-              'apikey': creds.key,
-              'Authorization': `Bearer ${creds.key}`
-            }
-          });
-          if (!res.ok) return {};
-          const data = await res.json();
-          const supaMap = {};
-          if (Array.isArray(data)) {
-            data.forEach((item) => {
-              if (item.slug) supaMap[item.slug] = item;
-            });
-          }
-          return supaMap;
-        } catch (e) {
-          console.warn('Live Supabase sync fetch failed:', e);
-          return {};
-        }
-      }
-
-      async function applyDynamicUpdatesToHomePage() {
-        try {
-          let overrides = {};
-          try {
-            const raw = localStorage.getItem('mejorescampings_admin_overrides');
-            if (raw) overrides = JSON.parse(raw);
-          } catch (e) {}
-
-          const liveSupaMap = await fetchLiveSupabaseData();
-          const grid = document.getElementById('featured-campings-grid');
-          if (!grid) return;
-
-          const cardWrappers = Array.from(grid.querySelectorAll('.camping-card-wrapper'));
-
-          cardWrappers.forEach((wrapper) => {
-            const slug = wrapper.getAttribute('data-slug');
-            if (!slug) return;
-
-            const ssgPromoted = wrapper.getAttribute('data-ssg-promoted') === 'true';
-            const ssgActive = wrapper.getAttribute('data-ssg-active') !== 'false';
-
-            const ov = overrides[slug];
-            const supaRecord = liveSupaMap[slug];
-
-            // Resolve active status
-            let isActive = ssgActive;
-            if (supaRecord && typeof supaRecord.is_active === 'boolean') {
-              isActive = supaRecord.is_active && supaRecord.status !== 'disabled';
-            }
-            if (ov) {
-              if (ov.is_active === false || ov.status === 'disabled') isActive = false;
-              if (ov.is_active === true || ov.status === 'active') isActive = true;
-            }
-
-            if (!isActive) {
-              wrapper.style.display = 'none';
-              wrapper.setAttribute('data-hidden-admin', 'true');
-            } else {
-              wrapper.removeAttribute('data-hidden-admin');
-            }
-
-            // Resolve promoted status
-            let isPromoted = ssgPromoted;
-            if (supaRecord && typeof supaRecord.is_promoted === 'boolean') {
-              isPromoted = supaRecord.is_promoted;
-            }
-            if (ov && typeof ov.is_promoted === 'boolean') {
-              isPromoted = ov.is_promoted;
-            }
-            wrapper.setAttribute('data-is-promoted', isPromoted ? 'true' : 'false');
-
-            // Toggle visual badge on card
-            const badge = wrapper.querySelector('.camping-promoted-badge');
-            if (badge) {
-              if (isPromoted) {
-                badge.classList.remove('hidden');
-              } else {
-                badge.classList.add('hidden');
-              }
-            }
-
-            // Resolve image URL
-            const finalImgUrl = ov?.image_url || supaRecord?.image_url;
-            if (finalImgUrl) {
-              const img = wrapper.querySelector('.camping-card-img') || wrapper.querySelector('img');
-              if (img && img.src !== finalImgUrl) {
-                img.src = finalImgUrl;
-              }
-            }
-          });
-
-          // Re-sort active wrappers: Promoted first, then standard
-          const activeWrappers = Array.from(grid.querySelectorAll('.camping-card-wrapper:not([data-hidden-admin="true"])'));
-          activeWrappers.sort((a, b) => {
-            const isPromA = a.getAttribute('data-is-promoted') === 'true';
-            const isPromB = b.getAttribute('data-is-promoted') === 'true';
-            if (isPromA && !isPromB) return -1;
-            if (!isPromA && isPromB) return 1;
-            return 0;
-          });
-
-          // Re-append sorted cards in order and re-evaluate top 6 display logic
-          activeWrappers.forEach((wrapper, index) => {
-            grid.appendChild(wrapper);
-            if (!window.__showAllCampingsClicked) {
-              wrapper.style.display = index < 6 ? 'flex' : 'none';
-            } else {
-              wrapper.style.display = 'flex';
-            }
-          });
-        } catch (e) {
-          console.warn('Error applying dynamic updates on homepage:', e);
-        }
-      }
-
       function showAllCampings() {
         window.__showAllCampingsClicked = true;
         const grid = document.getElementById('featured-campings-grid');
@@ -404,7 +223,6 @@ const provinceCounts = PROVINCES.map((p) => {
       }
 
       function init() {
-        applyDynamicUpdatesToHomePage();
         document.getElementById('btn-show-all-campings')?.addEventListener('click', showAllCampings);
       }
 

@@ -653,10 +653,12 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         let primaryUrl = ov?.image_url || liveRecord?.image_url;
         let galleryUrls = ov?.image_urls || liveRecord?.image_urls;
 
-        if (!galleryUrls && primaryUrl) {
+        if (Array.isArray(galleryUrls) && galleryUrls.length > 0) {
+          if (primaryUrl && galleryUrls.includes(primaryUrl)) {
+            galleryUrls = [primaryUrl, ...galleryUrls.filter(u => u !== primaryUrl)];
+          }
+        } else if (primaryUrl) {
           galleryUrls = [primaryUrl];
-        } else if (galleryUrls && galleryUrls.length > 0 && primaryUrl && galleryUrls[0] !== primaryUrl) {
-          galleryUrls = [primaryUrl, ...galleryUrls.filter(u => u !== primaryUrl)];
         }
 
         if (!galleryUrls || galleryUrls.length === 0) return;
