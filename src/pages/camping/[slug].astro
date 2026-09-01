@@ -663,12 +663,14 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
 
         if (!galleryUrls || galleryUrls.length === 0) return;
 
+        const galleryContainer = document.querySelector('[data-hero-gallery]');
         const galleryTrack = document.querySelector('[data-hero-gallery-track]');
-        if (galleryTrack) {
+        if (galleryTrack && galleryContainer) {
           galleryTrack.innerHTML = '';
           galleryUrls.forEach((img, idx) => {
             const slide = document.createElement('div');
             slide.className = 'snap-start shrink-0 w-full h-full relative';
+            slide.setAttribute('data-gallery-slide', '');
             slide.innerHTML = `
               <img
                 src="${img}"
@@ -678,12 +680,48 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
                 class="w-full h-full object-cover"
                 loading="${idx === 0 ? 'eager' : 'lazy'}"
               />
-              <div class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md font-semibold">
+              <div class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md font-semibold z-10" data-gallery-counter>
                 ${idx + 1} / ${galleryUrls.length}
               </div>
             `;
             galleryTrack.appendChild(slide);
           });
+
+          // Ensure navigation buttons exist if multiple images present
+          let prevBtn = galleryContainer.querySelector('[data-gallery-prev]');
+          let nextBtn = galleryContainer.querySelector('[data-gallery-next]');
+
+          if (galleryUrls.length > 1) {
+            if (!prevBtn) {
+              prevBtn = document.createElement('button');
+              prevBtn.type = 'button';
+              prevBtn.setAttribute('data-gallery-prev', '');
+              prevBtn.setAttribute('aria-label', 'Imagen anterior');
+              prevBtn.className = 'absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white flex items-center justify-center transition shadow-lg opacity-80 hover:opacity-100 z-20 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500';
+              prevBtn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>`;
+              prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                galleryTrack.scrollBy({ left: -galleryTrack.clientWidth, behavior: 'smooth' });
+              });
+              galleryContainer.appendChild(prevBtn);
+            }
+            if (!nextBtn) {
+              nextBtn = document.createElement('button');
+              nextBtn.type = 'button';
+              nextBtn.setAttribute('data-gallery-next', '');
+              nextBtn.setAttribute('aria-label', 'Imagen siguiente');
+              nextBtn.className = 'absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white flex items-center justify-center transition shadow-lg opacity-80 hover:opacity-100 z-20 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500';
+              nextBtn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>`;
+              nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                galleryTrack.scrollBy({ left: galleryTrack.clientWidth, behavior: 'smooth' });
+              });
+              galleryContainer.appendChild(nextBtn);
+            }
+          } else {
+            if (prevBtn) prevBtn.remove();
+            if (nextBtn) nextBtn.remove();
+          }
         }
       }
 

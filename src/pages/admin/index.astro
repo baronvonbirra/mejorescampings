@@ -697,13 +697,15 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
     async function uploadImageToSupabaseStorage(url, campsiteSlug, index) {
       if (!supabaseClient) return url;
-      if (url.includes('/storage/v1/object/public/campsite-images/')) {
+      // If image is already a public Supabase Storage URL or relative static site asset, keep it
+      if (url.includes('/storage/v1/object/public/campsite-images/') || url.startsWith('/images/')) {
         return url;
       }
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, { mode: 'cors' });
         if (!response.ok) return url;
         const blob = await response.blob();
+        if (!blob || blob.size === 0) return url;
 
         let ext = 'webp';
         if (blob.type.includes('png')) ext = 'png';
@@ -722,7 +724,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           });
 
         if (error) {
-          console.warn('Supabase storage upload error:', error);
+          console.warn('Supabase storage upload error, falling back to direct URL:', error);
           return url;
         }
 
@@ -735,7 +737,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           return publicUrlData.publicUrl;
         }
       } catch (err) {
-        console.warn('Failed to upload image blob to Supabase Storage:', err);
+        console.warn('Failed to upload image blob to Supabase Storage, using original HTTPS URL:', err);
       }
       return url;
     }
