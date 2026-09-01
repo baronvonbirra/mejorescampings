@@ -10,8 +10,33 @@
     "badge_label": "Top Campings Playa"
   },
   {
+    "url": "https://es.kampaoh.com/campings-y-glampings-en-andalucia/",
+    "source_type": "editorial",
+    "badge_label": "Kampaoh Andalucía"
+  },
+  {
+    "url": "https://ladehesaexperiences.com/",
+    "source_type": "editorial",
+    "badge_label": "Glamping de Lujo Starlight"
+  },
+  {
     "url": "https://www.pitchup.com/es/campsites/spain/andalucia/cadiz/",
     "source_type": "directory",
     "badge_label": null
+  },
+  {
+    "url": "https://www.glampings.com/es/espana/andalucia/",
+    "source_type": "directory",
+    "badge_label": "Glamping Destacado"
+  },
+  {
+    "url": "https://alohacamp.com/es/s/glamping-andalucia",
+    "source_type": "directory",
+    "badge_label": "Glamping de Lujo"
+  },
+  {
+    "url": "https://www.pitchup.com/es/glamping/spain/andalucia/",
+    "source_type": "directory",
+    "badge_label": "Comunidad Pitchup Glamping"
   }
 ]

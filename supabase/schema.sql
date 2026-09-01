@@ -185,3 +185,7 @@ FOR INSERT WITH CHECK (bucket_id = 'campsite-images');
 DROP POLICY IF EXISTS "Allow public updates campsite-images" ON storage.objects;
 CREATE POLICY "Allow public updates campsite-images" ON storage.objects
 FOR UPDATE USING (bucket_id = 'campsite-images');
+
+DROP POLICY IF EXISTS "Allow public deletes campsite-images" ON storage.objects;
+CREATE POLICY "Allow public deletes campsite-images" ON storage.objects
+FOR DELETE USING (bucket_id = 'campsite-images');
