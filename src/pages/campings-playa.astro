@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CampingCard from '../components/CampingCard.astro';
+import LiveSupabaseSync from '../components/LiveSupabaseSync.astro';
 import AffiliateBanner from '../components/AffiliateBanner.astro';
 import { getCampings, PROVINCES } from '../lib/db';
 
@@ -29,6 +30,7 @@ const jsonLdItemList = {
 ---
 
 <Layout title={metaTitle} description={metaDesc}>
+  <LiveSupabaseSync gridId="category-campings-grid" configId="category-supabase-config" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
 
   <!-- Breadcrumbs -->
@@ -84,9 +86,16 @@ const jsonLdItemList = {
 
   <!-- Results Grid -->
   {campings.length > 0 ? (
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="category-campings-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {campings.map((camping) => (
-        <CampingCard camping={camping} />
+        <div
+          class="camping-card-wrapper flex flex-col"
+          data-slug={camping.slug}
+          data-ssg-promoted={camping.is_promoted ? "true" : "false"}
+          data-ssg-active={camping.is_active ? "true" : "false"}
+        >
+          <CampingCard camping={camping} />
+        </div>
       ))}
     </div>
   ) : (
@@ -94,4 +103,4 @@ const jsonLdItemList = {
       <p class="text-slate-500">No hay campings registrados en esta categoría en este momento.</p>
     </div>
   )}
-</Layout>
+  </Layout>
