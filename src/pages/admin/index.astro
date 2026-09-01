@@ -213,30 +213,51 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           <button id="btn-close-photo-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer p-1">&times;</button>
         </div>
 
-        <!-- Control Bar for Photo Modal: Add Custom Photo URL & Trigger Rescrape Fresh Photos -->
-        <div class="bg-slate-50 p-2.5 sm:p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 shrink-0">
-          <div class="flex-1 flex items-center gap-2">
+        <!-- Control Bar for Photo Modal: Add Custom Photo URL, Scrape Website URL, & Trigger Rescrape Fresh Photos -->
+        <div class="bg-slate-50 p-2.5 sm:p-4 rounded-2xl border border-slate-200 flex flex-col space-y-2.5 shrink-0">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+            <!-- Row 1: Directly Add Specific Image URL -->
+            <div class="flex-1 flex items-center gap-2">
+              <input
+                type="url"
+                id="input-custom-photo-url"
+                placeholder="https://ejemplo.com/nueva-imagen-camping.jpg"
+                class="w-full px-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
+              />
+              <button
+                type="button"
+                id="btn-add-custom-photo"
+                class="px-3 py-1.5 sm:py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition shrink-0 cursor-pointer flex items-center gap-1"
+              >
+                <span>🖼️</span> Añadir Imagen
+              </button>
+            </div>
+
+            <button
+              type="button"
+              id="btn-fetch-fresh-photos"
+              class="px-3.5 py-1.5 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-xl transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
+            >
+              <span>🔄</span> Buscar Fotos Relevantes
+            </button>
+          </div>
+
+          <!-- Row 2: Scrape Website URL for Images -->
+          <div class="flex items-center gap-2 pt-1 border-t border-slate-200/60">
             <input
               type="url"
-              id="input-custom-photo-url"
-              placeholder="https://ejemplo.com/nueva-imagen-camping.jpg"
-              class="w-full px-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono"
+              id="input-scrape-website-url"
+              placeholder="https://www.camping-ejemplo.com (Scrapear web del camping)"
+              class="w-full px-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
             />
             <button
               type="button"
-              id="btn-add-custom-photo"
-              class="px-3 py-1.5 sm:py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition shrink-0 cursor-pointer flex items-center gap-1"
+              id="btn-scrape-website"
+              class="px-3 py-1.5 sm:py-2 bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold rounded-xl transition shrink-0 cursor-pointer flex items-center gap-1"
             >
-              <span>➕</span> Añadir
+              <span>🌐</span> Extraer Fotos de Web
             </button>
           </div>
-          <button
-            type="button"
-            id="btn-fetch-fresh-photos"
-            class="px-3.5 py-1.5 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-xl transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
-          >
-            <span>🔄</span> Buscar/Re-scrapear Fotos Relevantes
-          </button>
         </div>
 
         <!-- Candidate Photo Grid -->
@@ -507,6 +528,148 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       photoModal?.classList.add('hidden');
     });
 
+    const MAX_SELECTED_PHOTOS = 5;
+
+    function enforceMaxImageSelection(lastToggledIdx = -1) {
+      const selected = candidatePhotosList.filter(c => c.isSelected);
+      if (selected.length <= MAX_SELECTED_PHOTOS) return;
+
+      // Unselect candidates beyond MAX_SELECTED_PHOTOS, starting with non-primary candidates
+      // and avoiding the candidate that was just toggled/added by the user if possible
+      let excess = selected.length - MAX_SELECTED_PHOTOS;
+      for (let i = candidatePhotosList.length - 1; i >= 0 && excess > 0; i--) {
+        const c = candidatePhotosList[i];
+        if (c.isSelected && !c.isPrimary && i !== lastToggledIdx) {
+          c.isSelected = false;
+          excess--;
+        }
+      }
+      // Fallback if still excess
+      for (let i = candidatePhotosList.length - 1; i >= 0 && excess > 0; i--) {
+        const c = candidatePhotosList[i];
+        if (c.isSelected && !c.isPrimary) {
+          c.isSelected = false;
+          excess--;
+        }
+      }
+    }
+
+    const websiteScrapeInput = document.getElementById('input-scrape-website-url');
+
+    // Scrape Images from Website URL using client-side DOMParser & Proxies
+    async function fetchWebsiteImages(targetSiteUrl) {
+      if (!targetSiteUrl) return [];
+      let siteUrl = targetSiteUrl.trim();
+      if (!siteUrl.startsWith('http://') && !siteUrl.startsWith('https://')) {
+        siteUrl = 'https://' + siteUrl;
+      }
+
+      try {
+        let htmlText = '';
+        // 1. Try direct fetch
+        try {
+          const directRes = await fetch(siteUrl, { mode: 'cors' });
+          if (directRes.ok) htmlText = await directRes.text();
+        } catch (e) {}
+
+        // 2. Fallback to image/site proxy if direct CORS fetch fails
+        if (!htmlText) {
+          try {
+            const proxyRes = await fetch(`https://wsrv.nl/?url=${encodeURIComponent(siteUrl)}`);
+            if (proxyRes.ok) {
+              const contentType = proxyRes.headers.get('content-type') || '';
+              if (contentType.includes('image')) {
+                return [siteUrl];
+              }
+            }
+          } catch (e) {}
+        }
+
+        // 3. Fallback search fetch via Wikimedia / DuckDuckGo if HTML cannot be read directly
+        if (!htmlText) {
+          try {
+            const domain = new URL(siteUrl).hostname.replace('www.', '');
+            const searchResults = await fetchWikimediaImages(domain);
+            if (searchResults && searchResults.length > 0) return searchResults;
+          } catch (e) {}
+          return [];
+        }
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        const foundUrls = new Set();
+
+        // Extract og:image and twitter:image meta tags
+        doc.querySelectorAll('meta[property="og:image"], meta[name="og:image"], meta[name="twitter:image"]').forEach(el => {
+          const content = el.getAttribute('content');
+          if (content) {
+            try {
+              foundUrls.add(new URL(content, siteUrl).href);
+            } catch (e) {}
+          }
+        });
+
+        // Extract img tags
+        doc.querySelectorAll('img').forEach(img => {
+          const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('srcset')?.split(' ')[0];
+          if (src && !src.includes('svg') && !src.includes('logo') && !src.includes('icon') && !src.includes('avatar')) {
+            try {
+              const fullUrl = new URL(src, siteUrl).href;
+              foundUrls.add(fullUrl);
+            } catch (e) {}
+          }
+        });
+
+        return Array.from(foundUrls);
+      } catch (err) {
+        console.warn('Website scraping error:', err);
+        return [];
+      }
+    }
+
+    // Handle Scrape Website Button Click
+    document.getElementById('btn-scrape-website')?.addEventListener('click', async () => {
+      const siteUrl = websiteScrapeInput?.value?.trim();
+      if (!siteUrl) {
+        alert('Por favor introduce la URL del sitio web del camping.');
+        return;
+      }
+
+      const btn = document.getElementById('btn-scrape-website');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span> Extrayendo Fotos...';
+      }
+
+      const scrapedUrls = await fetchWebsiteImages(siteUrl);
+      let addedCount = 0;
+
+      scrapedUrls.forEach((url) => {
+        if (url && !candidatePhotosList.some(c => c.url === url)) {
+          candidatePhotosList.push({
+            url: url,
+            source: 'Web Camping',
+            isSelected: true,
+            isPrimary: candidatePhotosList.length === 0
+          });
+          addedCount++;
+        }
+      });
+
+      if (addedCount > 0) {
+        enforceMaxImageSelection();
+        renderPhotoCandidatesGrid();
+        showNotification(`🌐 ${addedCount} foto(s) extraída(s) de la web.`, 'success');
+      } else {
+        showNotification(`⚠️ No se pudieron extraer fotos automáticamente de esa URL. Prueba añadiendo la URL directa de una imagen.`, 'warning');
+      }
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🌐</span> Extraer Fotos de Web';
+      }
+    });
+
     // Handle Adding Custom Photo URL directly
     document.getElementById('btn-add-custom-photo')?.addEventListener('click', () => {
       const url = customPhotoInput?.value?.trim();
@@ -517,9 +680,10 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       }
 
       // Check if already in candidate list
-      const existing = candidatePhotosList.find(c => c.url === url);
-      if (existing) {
-        existing.isSelected = true;
+      const existingIdx = candidatePhotosList.findIndex(c => c.url === url);
+      if (existingIdx !== -1) {
+        candidatePhotosList[existingIdx].isSelected = true;
+        enforceMaxImageSelection(existingIdx);
       } else {
         candidatePhotosList.unshift({
           url: url,
@@ -527,6 +691,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           isSelected: true,
           isPrimary: candidatePhotosList.length === 0
         });
+        enforceMaxImageSelection(0);
       }
 
       if (customPhotoInput) customPhotoInput.value = '';
@@ -630,9 +795,11 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       if (!photoGrid) return;
       photoGrid.innerHTML = '';
 
+      enforceMaxImageSelection();
+
       const selectedCount = candidatePhotosList.filter(c => c.isSelected).length;
       if (photoCounter) {
-        photoCounter.textContent = `${selectedCount} foto(s) seleccionada(s)`;
+        photoCounter.textContent = `${selectedCount} / ${MAX_SELECTED_PHOTOS} foto(s) seleccionada(s) (Máx 5)`;
       }
 
       candidatePhotosList.forEach((cand, idx) => {
@@ -679,6 +846,9 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
             const nextSel = candidatePhotosList.find(c => c.isSelected);
             if (nextSel) nextSel.isPrimary = true;
           }
+          if (candidatePhotosList[idx].isSelected) {
+            enforceMaxImageSelection(idx);
+          }
           renderPhotoCandidatesGrid();
         });
       });
@@ -695,17 +865,39 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       });
     }
 
+    function getSafeImageUrl(url) {
+      if (!url) return '';
+      if (url.includes('/storage/v1/object/public/campsite-images/') || url.startsWith('/images/') || url.includes('wsrv.nl')) {
+        return url;
+      }
+      return `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
+    }
+
     async function uploadImageToSupabaseStorage(url, campsiteSlug, index) {
-      if (!supabaseClient) return url;
       // If image is already a public Supabase Storage URL or relative static site asset, keep it
       if (url.includes('/storage/v1/object/public/campsite-images/') || url.startsWith('/images/')) {
         return url;
       }
+      if (!supabaseClient) {
+        return getSafeImageUrl(url);
+      }
       try {
-        const response = await fetch(url, { mode: 'cors' });
-        if (!response.ok) return url;
+        let response;
+        try {
+          response = await fetch(url, { mode: 'cors' });
+        } catch (e) {
+          // Direct fetch failed (likely CORS), attempt via image proxy
+          response = await fetch(`https://wsrv.nl/?url=${encodeURIComponent(url)}`);
+        }
+
+        if (!response || !response.ok) {
+          response = await fetch(`https://wsrv.nl/?url=${encodeURIComponent(url)}`);
+        }
+
+        if (!response || !response.ok) return getSafeImageUrl(url);
+
         const blob = await response.blob();
-        if (!blob || blob.size === 0) return url;
+        if (!blob || blob.size === 0) return getSafeImageUrl(url);
 
         let ext = 'webp';
         if (blob.type.includes('png')) ext = 'png';
@@ -724,8 +916,8 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           });
 
         if (error) {
-          console.warn('Supabase storage upload error, falling back to direct URL:', error);
-          return url;
+          console.warn('Supabase storage upload error, falling back to safe proxied URL:', error);
+          return getSafeImageUrl(url);
         }
 
         const { data: publicUrlData } = supabaseClient
@@ -737,9 +929,9 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           return publicUrlData.publicUrl;
         }
       } catch (err) {
-        console.warn('Failed to upload image blob to Supabase Storage, using original HTTPS URL:', err);
+        console.warn('Failed to upload image blob to Supabase Storage, using safe proxied URL:', err);
       }
-      return url;
+      return getSafeImageUrl(url);
     }
 
     document.getElementById('btn-save-photo-selection')?.addEventListener('click', async () => {
