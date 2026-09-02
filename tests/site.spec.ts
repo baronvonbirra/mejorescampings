@@ -155,6 +155,10 @@ test.describe('MejoresCampings - Site QA Suite', () => {
 
     // Check inter-province switcher
     await expect(page.locator('a[href*="/guias/normativa-pernocta-almeria/"]').first()).toBeVisible();
+
+    // Check affiliate banners on pernocta guide page
+    await expect(page.locator('a[href*="getrentacar.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="bikesbooking.tpx.lv"]').first()).toBeVisible();
   });
 
   test('Provincial Hub page links directly to its Pernocta Guide', async ({ page }) => {

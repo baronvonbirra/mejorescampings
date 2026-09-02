@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { PROVINCES } from '../../lib/db';
 import { PERNOCTA_GUIDES } from '../../lib/pernoctaData';
 
@@ -54,6 +55,15 @@ const jsonLdItemList = {
     <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
       En toda la comunidad autónoma de Andalucía, la <strong>acampada libre está prohibida</strong> fuera de establecimientos turísticos autorizados. No obstante, según la Instrucción PROT 2023/14 de la DGT, es totalmente legal <strong>pernoctar</strong> dentro de tu vehículo camper o autocaravana debidamente estacionado en plazas públicas, siempre que no sobresalga de su perímetro ni despliegues elementos exteriores (toldos, calzos, mesas o patas de nivelación).
     </p>
+  </div>
+
+  <!-- Affiliate Banner: Car Rental for Roadtrips -->
+  <div class="mb-10">
+    <AffiliateBanner
+      type="car_rental"
+      url="https://getrentacar.tpx.lv/3TC3lyZZ"
+      locationName="Andalucía"
+    />
   </div>
 
   <!-- Classified Guides Grid by Province -->

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CampingCard from '../../components/CampingCard.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { getCampings, PROVINCES } from '../../lib/db';
 import { PERNOCTA_GUIDES } from '../../lib/pernoctaData';
 
@@ -158,6 +159,13 @@ const jsonLdFaq = {
         </div>
       </section>
 
+      <!-- Affiliate Banner: Car Rental -->
+      <AffiliateBanner
+        type="car_rental"
+        url="https://getrentacar.tpx.lv/3TC3lyZZ"
+        locationName={guide.provinceName}
+      />
+
       <!-- Section 3 -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
@@ -211,6 +219,13 @@ const jsonLdFaq = {
           ))}
         </div>
       </section>
+
+      <!-- Affiliate Banner: Mobility -->
+      <AffiliateBanner
+        type="mobility"
+        url="https://bikesbooking.tpx.lv/8A9SZZdt"
+        locationName={guide.provinceName}
+      />
 
       <!-- FAQs Section -->
       <section class="pt-6 border-t border-slate-200 space-y-4">
