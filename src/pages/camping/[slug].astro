@@ -650,8 +650,9 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
 
         const liveRecord = await fetchLiveCampsiteData();
 
-        let primaryUrl = ov?.image_url || liveRecord?.image_url;
-        let galleryUrls = ov?.image_urls || liveRecord?.image_urls;
+        // Prioritize live DB record over single-browser localStorage override
+        let primaryUrl = liveRecord?.image_url || ov?.image_url;
+        let galleryUrls = liveRecord?.image_urls || ov?.image_urls;
 
         if (Array.isArray(galleryUrls) && galleryUrls.length > 0) {
           if (primaryUrl && galleryUrls.includes(primaryUrl)) {

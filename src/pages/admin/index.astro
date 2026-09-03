@@ -556,7 +556,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
     const websiteScrapeInput = document.getElementById('input-scrape-website-url');
 
-    // Scrape Images from Website URL using client-side DOMParser & Proxies
+    // Scrape Images from Website URL using working CORS proxies & client-side DOMParser
     async function fetchWebsiteImages(targetSiteUrl) {
       if (!targetSiteUrl) return [];
       let siteUrl = targetSiteUrl.trim();
@@ -566,27 +566,44 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
 
       try {
         let htmlText = '';
-        // 1. Try direct fetch
-        try {
-          const directRes = await fetch(siteUrl, { mode: 'cors' });
-          if (directRes.ok) htmlText = await directRes.text();
-        } catch (e) {}
 
-        // 2. Fallback to image/site proxy if direct CORS fetch fails
-        if (!htmlText) {
+        // 1. Try proxy endpoints designed to forward full HTML
+        const proxyUrls = [
+          `https://proxy.cors.sh/${siteUrl}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(siteUrl)}`
+        ];
+
+        for (const proxyEndpoint of proxyUrls) {
           try {
-            const proxyRes = await fetch(`https://wsrv.nl/?url=${encodeURIComponent(siteUrl)}`);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const proxyRes = await fetch(proxyEndpoint, {
+              headers: { 'x-requested-with': 'XMLHttpRequest' },
+              signal: controller.signal
+            });
+            clearTimeout(timeoutId);
             if (proxyRes.ok) {
-              const contentType = proxyRes.headers.get('content-type') || '';
-              if (contentType.includes('image')) {
-                return [siteUrl];
+              const txt = await proxyRes.text();
+              if (txt && txt.length > 500 && (txt.includes('<html') || txt.includes('<body') || txt.includes('<img'))) {
+                htmlText = txt;
+                break;
               }
             }
+          } catch (e) {
+            console.warn(`Proxy ${proxyEndpoint} failed:`, e);
+          }
+        }
+
+        // 2. Fallback to direct CORS fetch
+        if (!htmlText) {
+          try {
+            const directRes = await fetch(siteUrl, { mode: 'cors' });
+            if (directRes.ok) htmlText = await directRes.text();
           } catch (e) {}
         }
 
-        // 3. Fallback search fetch via Wikimedia / DuckDuckGo if HTML cannot be read directly
         if (!htmlText) {
+          // If HTML cannot be read, attempt domain search via Wikimedia
           try {
             const domain = new URL(siteUrl).hostname.replace('www.', '');
             const searchResults = await fetchWikimediaImages(domain);
@@ -600,7 +617,7 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         const foundUrls = new Set();
 
         // Extract og:image and twitter:image meta tags
-        doc.querySelectorAll('meta[property="og:image"], meta[name="og:image"], meta[name="twitter:image"]').forEach(el => {
+        doc.querySelectorAll('meta[property="og:image"], meta[name="og:image"], meta[name="twitter:image"], meta[name="og:image:secure_url"]').forEach(el => {
           const content = el.getAttribute('content');
           if (content) {
             try {
@@ -609,14 +626,25 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
           }
         });
 
-        // Extract img tags
-        doc.querySelectorAll('img').forEach(img => {
-          const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('srcset')?.split(' ')[0];
-          if (src && !src.includes('svg') && !src.includes('logo') && !src.includes('icon') && !src.includes('avatar')) {
-            try {
-              const fullUrl = new URL(src, siteUrl).href;
-              foundUrls.add(fullUrl);
-            } catch (e) {}
+        // Extract img tags and background images
+        doc.querySelectorAll('img, [style*="background"]').forEach(el => {
+          let src = el.getAttribute('src') || el.getAttribute('data-src') || el.getAttribute('data-lazy-src') || el.getAttribute('srcset')?.split(' ')[0];
+
+          if (!src && el.getAttribute('style')) {
+            const style = el.getAttribute('style') || '';
+            const bgMatch = style.match(/url\(['"]?([^'"\)]+)['"]?\)/i);
+            if (bgMatch && bgMatch[1]) src = bgMatch[1];
+          }
+
+          if (src) {
+            const lowerSrc = src.toLowerCase();
+            const ignoreList = ['svg', 'logo', 'icon', 'avatar', 'banner', 'widget', 'loader', 'badge', 'flag', 'facebook', 'instagram', 'chatbotsplace', 'tripadvisor'];
+            if (!ignoreList.some(ig => lowerSrc.includes(ig))) {
+              try {
+                const fullUrl = new URL(src, siteUrl).href;
+                foundUrls.add(fullUrl);
+              } catch (e) {}
+            }
           }
         });
 
@@ -751,18 +779,26 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
         if (freshUrls.length >= 8) break;
       }
 
-      // Also include expanded regional pools
+      // Rotate regional pool based on campsite slug hash so different campings get different fallback images
       const prov = (currentRescrapeProvince || 'malaga').toLowerCase();
-      let fallbackPool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
+      let rawPool = LOCATION_PHOTO_POOLS[prov] || LOCATION_PHOTO_POOLS.malaga;
       if (currentRescrapeSlug.includes('chorro') || currentRescrapeMuni.includes('ardales') || currentRescrapeName.toLowerCase().includes('chorro')) {
-        fallbackPool = [...LOCATION_PHOTO_POOLS.el_chorro, ...fallbackPool];
+        rawPool = LOCATION_PHOTO_POOLS.el_chorro;
       } else if (currentRescrapeSlug.includes('ronda') || currentRescrapeName.toLowerCase().includes('ronda')) {
-        fallbackPool = [...LOCATION_PHOTO_POOLS.ronda, ...fallbackPool];
+        rawPool = LOCATION_PHOTO_POOLS.ronda;
       } else if (currentRescrapeSlug.includes('escullos') || currentRescrapeSlug.includes('cabo') || currentRescrapeMuni.includes('nijar')) {
-        fallbackPool = [...LOCATION_PHOTO_POOLS.almeria, ...fallbackPool];
+        rawPool = LOCATION_PHOTO_POOLS.almeria;
       }
 
-      freshUrls = [...freshUrls, ...fallbackPool];
+      let slugHash = 0;
+      for (let i = 0; i < currentRescrapeSlug.length; i++) {
+        slugHash = (slugHash << 5) - slugHash + currentRescrapeSlug.charCodeAt(i);
+        slugHash |= 0;
+      }
+      const offset = Math.abs(slugHash) % Math.max(1, rawPool.length);
+      const rotatedPool = [...rawPool.slice(offset), ...rawPool.slice(0, offset)];
+
+      freshUrls = [...freshUrls, ...rotatedPool];
 
       let addedCount = 0;
       freshUrls.forEach((url) => {

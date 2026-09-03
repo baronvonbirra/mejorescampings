@@ -163,8 +163,8 @@ const supabaseKey = rawSupabaseKey.trim();
             }
           }
 
-          // Resolve image URL
-          const finalImgUrl = ov?.image_url || supaRecord?.image_url;
+          // Resolve image URL (prioritize live Supabase DB record, fallback to local admin override)
+          const finalImgUrl = supaRecord?.image_url || ov?.image_url;
           if (finalImgUrl) {
             const img = wrapper.querySelector('.camping-card-img') || wrapper.querySelector('img');
             if (img && img.src !== finalImgUrl) {

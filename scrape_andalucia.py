@@ -1393,12 +1393,22 @@ def merge_campsite_records(existing: Dict[str, Any], scraped: Dict[str, Any]) ->
     else:
         merged["status"] = "disabled" if merged["is_active"] is False else scraped.get("status", "active")
 
-    # Preserve or update image URLs
-    scraped_images = scraped.get("image_urls", [])
-    if scraped_images:
-        merged["image_urls"] = scraped_images
-        merged["image_url"] = scraped_images[0]
-    elif not merged.get("image_urls"):
+    # Preserve existing curated images if available; only populate from scraped_images if existing is empty
+    existing_images = [img for img in existing.get("image_urls", []) if img and "placeholder" not in img]
+    existing_primary = existing.get("image_url") if existing.get("image_url") and "placeholder" not in existing.get("image_url") else None
+
+    if existing_images:
+        merged["image_urls"] = existing_images
+        merged["image_url"] = existing_primary or existing_images[0]
+    elif scraped.get("image_urls"):
+        scraped_imgs = [img for img in scraped.get("image_urls", []) if img and "placeholder" not in img]
+        if scraped_imgs:
+            merged["image_urls"] = scraped_imgs
+            merged["image_url"] = scraped_imgs[0]
+        else:
+            merged["image_urls"] = existing.get("image_urls", [])
+            merged["image_url"] = existing.get("image_url", "")
+    else:
         merged["image_urls"] = existing.get("image_urls", [])
         merged["image_url"] = existing.get("image_url", "")
 
