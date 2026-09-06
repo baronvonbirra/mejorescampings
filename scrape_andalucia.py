@@ -924,7 +924,7 @@ def get_regional_image_pool(campsite: Dict[str, Any]) -> List[str]:
 
     return REGION_IMAGE_POOLS["mountain"]
 
-def validate_and_process_image_webp(img_url: str, campsite_slug: str, img_index: int) -> Optional[str]:
+def validate_and_process_image_webp(img_url: str, campsite_slug: str, img_index: int, province_slug: str = "malaga") -> Optional[str]:
     """
     Downloads image, validates visual criteria (>=800px width, >=40KB size, aspect ratio 0.5-2.2),
     resizes to max width 1200px, converts to WebP format, saves locally or uploads to Supabase Storage,
@@ -995,7 +995,9 @@ def validate_and_process_image_webp(img_url: str, campsite_slug: str, img_index:
 
         if supabase_url and supabase_key:
             try:
-                storage_endpoint = f"{supabase_url.rstrip('/')}/storage/v1/object/campsite-images/{campsite_slug}/img_{img_index}.webp"
+                prov = (province_slug or "malaga").strip().lower()
+                storage_path = f"{prov}/{campsite_slug}/img_{img_index}.webp"
+                storage_endpoint = f"{supabase_url.rstrip('/')}/storage/v1/object/campsite-images/{storage_path}"
                 up_headers = {
                     "apikey": supabase_key,
                     "Authorization": f"Bearer {supabase_key}",
@@ -1004,7 +1006,7 @@ def validate_and_process_image_webp(img_url: str, campsite_slug: str, img_index:
                 }
                 up_res = requests.post(storage_endpoint, headers=up_headers, data=webp_data, timeout=8)
                 if up_res.status_code in [200, 201]:
-                    cdn_url = f"{supabase_url.rstrip('/')}/storage/v1/object/public/campsite-images/{campsite_slug}/img_{img_index}.webp"
+                    cdn_url = f"{supabase_url.rstrip('/')}/storage/v1/object/public/campsite-images/{storage_path}"
                     return cdn_url
             except Exception as se:
                 logging.warning(f"Supabase storage upload failed: {se}")
@@ -1036,11 +1038,13 @@ def process_campsite_images(campsite: Dict[str, Any], slug: str) -> List[str]:
 
     valid_webp_urls = []
 
+    prov_slug = campsite.get("province_slug") or "malaga"
+
     # 2. Validate extracted candidate URLs
     for raw_url in candidates:
         if len(valid_webp_urls) >= 5:
             break
-        result_url = validate_and_process_image_webp(raw_url, slug, len(valid_webp_urls) + 1)
+        result_url = validate_and_process_image_webp(raw_url, slug, len(valid_webp_urls) + 1, province_slug=prov_slug)
         if result_url and result_url not in valid_webp_urls and result_url not in ASSIGNED_GLOBAL_IMAGE_URLS:
             valid_webp_urls.append(result_url)
             ASSIGNED_GLOBAL_IMAGE_URLS.add(result_url)
@@ -1054,7 +1058,7 @@ def process_campsite_images(campsite: Dict[str, Any], slug: str) -> List[str]:
         for pool_url in rotated_pool:
             if len(valid_webp_urls) >= 5:
                 break
-            result_url = validate_and_process_image_webp(pool_url, slug, len(valid_webp_urls) + 1)
+            result_url = validate_and_process_image_webp(pool_url, slug, len(valid_webp_urls) + 1, province_slug=prov_slug)
             if result_url and result_url not in valid_webp_urls:
                 valid_webp_urls.append(result_url)
                 ASSIGNED_GLOBAL_IMAGE_URLS.add(result_url)

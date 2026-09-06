@@ -5,6 +5,41 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS cube;
 CREATE EXTENSION IF NOT EXISTS earthdistance;
 
+-- Enums for Scrape Sources Ingestion Pipeline
+DO $$ BEGIN
+    CREATE TYPE source_type_enum AS ENUM ('editorial', 'directory', 'official_portal');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE scrape_status_enum AS ENUM ('pending', 'processing', 'completed', 'failed');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 0. Scrape Sources Table
+CREATE TABLE IF NOT EXISTS scrape_sources (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    url TEXT NOT NULL UNIQUE,
+    source_type source_type_enum NOT NULL DEFAULT 'editorial',
+    badge_label TEXT DEFAULT NULL,
+    status scrape_status_enum NOT NULL DEFAULT 'pending',
+    error_log TEXT DEFAULT NULL,
+    items_extracted INT DEFAULT 0,
+    last_scraped_at TIMESTAMPTZ DEFAULT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_scrape_sources_status ON scrape_sources(status);
+
+-- Enable RLS for scrape_sources
+ALTER TABLE scrape_sources ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public read access on scrape_sources" ON scrape_sources;
+CREATE POLICY "Allow public read access on scrape_sources" ON scrape_sources FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow public update access on scrape_sources" ON scrape_sources;
+CREATE POLICY "Allow public update access on scrape_sources" ON scrape_sources FOR UPDATE USING (true);
+
 -- 1. Locations Table
 CREATE TABLE IF NOT EXISTS locations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -175,8 +210,9 @@ VALUES ('campsite-images', 'campsite-images', true)
 ON CONFLICT (id) DO NOTHING;
 
 DROP POLICY IF EXISTS "Public Access campsite-images" ON storage.objects;
-CREATE POLICY "Public Access campsite-images" ON storage.objects
-FOR SELECT USING (bucket_id = 'campsite-images');
+DROP POLICY IF EXISTS "Acceso público de lectura a imágenes de campings" ON storage.objects;
+CREATE POLICY "Acceso público de lectura a imágenes de campings" ON storage.objects
+FOR SELECT TO anon, authenticated USING (bucket_id = 'campsite-images');
 
 DROP POLICY IF EXISTS "Allow public uploads campsite-images" ON storage.objects;
 CREATE POLICY "Allow public uploads campsite-images" ON storage.objects

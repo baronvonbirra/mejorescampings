@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const guias = await getCollection('guias');
+  return guias.map((guia) => ({
+    params: { slug: guia.slug },
+    props: { guia }
+  }));
+}
+
+const { guia } = Astro.props;
+const { Content, headings } = await guia.render();
+
+const jsonLdArticle = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": guia.data.title,
+  "description": guia.data.description,
+  "image": guia.data.heroImage,
+  "datePublished": guia.data.pubDate.toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": guia.data.author || "Redacción MejoresCampings"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MejoresCampings.es",
+    "url": "https://mejorescampings.es"
+  }
+};
+
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<Layout title={guia.data.title} description={guia.data.description} image={guia.data.heroImage}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdArticle)} />
+
+  <article class="max-w-4xl mx-auto space-y-8">
+    <!-- Breadcrumb Navigation -->
+    <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+      <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+      <span>/</span>
+      <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-slate-800">Guías</a>
+      <span>/</span>
+      <span class="text-slate-800 font-semibold">{guia.data.title}</span>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="space-y-4 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-3 text-xs text-slate-500">
+        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-full uppercase tracking-wider">
+          Guía Editorial
+        </span>
+        <time datetime={guia.data.pubDate.toISOString()}>
+          {guia.data.pubDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        <span>• Por {guia.data.author}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        {guia.data.title}
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-600 font-medium">
+        {guia.data.description}
+      </p>
+    </header>
+
+    <!-- Table of Contents (TOC) -->
+    {tocHeadings.length > 0 && (
+      <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl shadow-2xs">
+        <h2 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <span>📌</span> Índice de contenidos
+        </h2>
+        <ul class="space-y-2 text-xs sm:text-sm font-medium text-slate-700">
+          {tocHeadings.map((h) => (
+            <li class={h.depth === 3 ? 'ml-4 list-disc text-slate-600' : ''}>
+              <a href={`#${h.slug}`} class="hover:text-emerald-600 hover:underline transition">
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <!-- Main Markdown Content -->
+    <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-100 prose-h2:pb-2 prose-h3:text-xl prose-a:text-emerald-600 hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50/60 prose-blockquote:p-4 prose-blockquote:rounded-r-xl prose-blockquote:text-slate-800 prose-blockquote:not-italic shadow-none">
+      <Content />
+    </div>
+
+    <!-- Related Internal Links & Hubs -->
+    <section class="mt-12 pt-8 border-t border-slate-200 space-y-4">
+      <h3 class="text-lg font-extrabold text-slate-900">Encuentra tu próximo alojamiento en Andalucía</h3>
+      <div class="flex flex-wrap gap-2 text-xs font-semibold">
+        <a href={`${import.meta.env.BASE_URL}malaga/`} class="px-3.5 py-2 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl hover:bg-emerald-100 transition">
+          Campings en Málaga &rarr;
+        </a>
+        <a href={`${import.meta.env.BASE_URL}cadiz/`} class="px-3.5 py-2 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl hover:bg-emerald-100 transition">
+          Campings en Cádiz &rarr;
+        </a>
+        <a href={`${import.meta.env.BASE_URL}campings-con-mascotas/`} class="px-3.5 py-2 bg-slate-100 border border-slate-200 text-slate-800 rounded-xl hover:bg-slate-200 transition">
+          Campings con Mascotas &rarr;
+        </a>
+        <a href={`${import.meta.env.BASE_URL}glamping/`} class="px-3.5 py-2 bg-slate-100 border border-slate-200 text-slate-800 rounded-xl hover:bg-slate-200 transition">
+          Glampings Recomendados &rarr;
+        </a>
+      </div>
+    </section>
+  </article>
+</Layout>

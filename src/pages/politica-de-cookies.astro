@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Política de Cookies | MejoresCampings.es" description="Información detallada sobre las cookies utilizadas en MejoresCampings.es, su finalidad y cómo gestionarlas.">
+  <div class="max-w-4xl mx-auto space-y-8">
+    <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
+      <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+      <span>/</span>
+      <span class="text-slate-800 font-semibold">Política de Cookies</span>
+    </nav>
+
+    <header class="border-b border-slate-200 pb-6">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Política de Cookies</h1>
+      <p class="text-sm text-slate-500 mt-2">Uso de galletas informáticas y servicios de terceros</p>
+    </header>
+
+    <section class="prose prose-slate max-w-none space-y-6 text-slate-700 leading-relaxed text-sm">
+      <h2 class="text-xl font-bold text-slate-900">1. ¿Qué son las Cookies?</h2>
+      <p>
+        Una cookie es un fichero que se descarga en su ordenador al acceder a determinadas páginas web. Las cookies permiten a una página web, entre otras cosas, almacenar y recuperar información sobre los hábitos de navegación de un usuario o de su equipo.
+      </p>
+
+      <h2 class="text-xl font-bold text-slate-900">2. Tipos de Cookies Utilizadas</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>Cookies Técnicas Básicas:</strong> Imprescindibles para el funcionamiento correcto de la web y el almacenamiento de preferencias del usuario.</li>
+        <li><strong>Cookies Analíticas y de Publicidad (Google AdSense):</strong> Servicios prestados por Google Inc. para mostrar publicidad personalizada y analizar patrones de navegación.</li>
+        <li><strong>Cookies de Afiliación (Travelpayouts):</strong> Permiten rastrear las reservas derivadas para la acreditación de comisiones sin coste alguno para el usuario.</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-slate-900">3. Cómo Desactivar o Desconfigurar las Cookies</h2>
+      <p>
+        Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de las opciones del navegador instalado en tu ordenador (Google Chrome, Mozilla Firefox, Safari, Microsoft Edge).
+      </p>
+    </section>
+  </div>
+</Layout>
