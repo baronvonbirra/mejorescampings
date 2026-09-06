@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Política de Privacidad | MejoresCampings.es" description="Política de privacidad y protección de datos personales de MejoresCampings.es en cumplimiento del RGPD y LOPDGDD.">
+  <div class="max-w-4xl mx-auto space-y-8">
+    <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5">
+      <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+      <span>/</span>
+      <span class="text-slate-800 font-semibold">Política de Privacidad</span>
+    </nav>
+
+    <header class="border-b border-slate-200 pb-6">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Política de Privacidad</h1>
+      <p class="text-sm text-slate-500 mt-2">Adaptado al Reglamento General de Protección de Datos (RGPD - UE 2016/679)</p>
+    </header>
+
+    <section class="prose prose-slate max-w-none space-y-6 text-slate-700 leading-relaxed text-sm">
+      <h2 class="text-xl font-bold text-slate-900">1. Responsable del Tratamiento</h2>
+      <p>
+        El responsable del tratamiento de los datos recabados a través de este sitio web es <strong>MejoresCampings.es</strong> (contacto: contacto@mejorescampings.es).
+      </p>
+
+      <h2 class="text-xl font-bold text-slate-900">2. Finalidad del Tratamiento de Datos</h2>
+      <p>
+        Tratamos la información que nos facilitan las personas interesadas con las siguientes finalidades:
+      </p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li>Atender y responder a las consultas o solicitudes enviadas a través del formulario de contacto.</li>
+        <li>Garantizar la seguridad técnica de la plataforma y prevenir fraudes.</li>
+        <li>Analizar de forma anónima la navegación de los usuarios para mejorar la experiencia de uso.</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-slate-900">3. Derechos del Usuario</h2>
+      <p>
+        Cualquier persona tiene derecho a obtener confirmación sobre si en MejoresCampings.es estamos tratando datos personales que les conciernan. Tienes derecho a acceder a tus datos personales, solicitar la rectificación de los datos inexactos o solicitar su supresión cuando los datos ya no sean necesarios.
+      </p>
+    </section>
+  </div>
+</Layout>

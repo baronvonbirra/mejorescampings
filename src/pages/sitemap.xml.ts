@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { getCampings, getLocations, PROVINCES } from '../lib/db';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -7,12 +8,23 @@ export const GET: APIRoute = async ({ site }) => {
 
   const campings = await getCampings();
   const locations = await getLocations();
+  const editorialGuias = await getCollection('guias');
 
   const urls: string[] = [];
 
-  // 1. Root Home & Guides Hub
+  // 1. Root Home, Corporate Trust Pages & Guides Hub
   urls.push(`${baseUrl}/`);
+  urls.push(`${baseUrl}/sobre-nosotros/`);
+  urls.push(`${baseUrl}/contacto/`);
+  urls.push(`${baseUrl}/aviso-legal/`);
+  urls.push(`${baseUrl}/politica-de-privacidad/`);
+  urls.push(`${baseUrl}/politica-de-cookies/`);
   urls.push(`${baseUrl}/guias/`);
+
+  // Editorial Pillar Guides from Content Collection
+  for (const guia of editorialGuias) {
+    urls.push(`${baseUrl}/guias/${guia.slug}/`);
+  }
 
   // 2. 8 Provincial Guides & Hubs
   for (const prov of PROVINCES) {

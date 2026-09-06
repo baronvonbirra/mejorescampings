@@ -1,10 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { PROVINCES } from '../../lib/db';
 import { PERNOCTA_GUIDES } from '../../lib/pernoctaData';
 
-const metaTitle = "Guías de Pernocta y Normativa Camper en Andalucía (8 Provincias) | MejoresCampings";
+const editorialGuias = await getCollection('guias');
+
+const metaTitle = "Guías de Pernocta y Artículos Editoriales de Camping en Andalucía | MejoresCampings";
 const metaDesc = "Sección de guías oficiales de pernocta, acampada libre y legislación camper en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.";
 
 const jsonLdItemList = {
@@ -45,6 +48,42 @@ const jsonLdItemList = {
       </p>
     </div>
   </header>
+
+  <!-- Editorial Pillar Guides Section -->
+  {editorialGuias.length > 0 && (
+    <section class="mb-12">
+      <div class="mb-6">
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block">Artículos Destacados</span>
+        <h2 class="text-2xl font-bold text-slate-900">Guías Prácticas y Consejos de Acampada</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {editorialGuias.map((g) => (
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
+            <div class="p-6 space-y-3">
+              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                Consejos & Rutas
+              </span>
+              <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition leading-snug">
+                {g.data.title}
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                {g.data.description}
+              </p>
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100">
+              <a
+                href={`${import.meta.env.BASE_URL}guias/${g.slug}/`}
+                class="block w-full text-center py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition"
+              >
+                Leer Guía Completa &rarr;
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
 
   <!-- General Legal Summary Card -->
   <div class="mb-10 p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 rounded-2xl shadow-2xs space-y-3">

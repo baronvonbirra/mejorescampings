@@ -351,6 +351,24 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         <span class="text-slate-400 text-[11px] mt-0.5">Espacio reservado 728x90 (CLS 0)</span>
       </div>
 
+      <!-- Bloque al final de la ficha del camping: Related Editorial Guides -->
+      <section class="related-guides bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-5 my-6">
+        <h3 class="text-sm font-extrabold text-emerald-950 uppercase tracking-wide mb-3 flex items-center gap-2">
+          <span>📚</span> Guías útiles para tu estancia
+        </h3>
+        <div class="space-y-2 text-xs sm:text-sm font-bold text-emerald-800">
+          <a href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-autocaravanas-andalucia/`} class="block hover:underline hover:text-emerald-950 transition">
+            &rarr; Normativa de acampada y pernocta en Andalucía (Actualizado)
+          </a>
+          <a href={`${import.meta.env.BASE_URL}guias/guia-camping-con-ninos-consejos-equipamiento/`} class="block hover:underline hover:text-emerald-950 transition">
+            &rarr; Guía para ir de camping con niños: Consejos y equipamiento
+          </a>
+          <a href={`${import.meta.env.BASE_URL}guias/ruta-5-dias-camper-costa-del-sol/`} class="block hover:underline hover:text-emerald-950 transition">
+            &rarr; Ruta de 5 días en camper por la Costa del Sol
+          </a>
+        </div>
+      </section>
+
       <!-- FAQs Section -->
       {camping.faqs_json && camping.faqs_json.length > 0 && (
         <div class="pt-6 border-t border-slate-200">
