@@ -2,8 +2,9 @@
 title: "Normativa de Pernocta y Acampada Libre en Andalucía: Guía Completa"
 description: "Diferencias legales entre pernoctar y acampar en camper o autocaravana en Andalucía. Multas, zonas permitidas y regulación de la Junta."
 pubDate: 2026-09-01
-heroImage: "https://images.unsplash.com/photo-1513311968627-2a4d31ed72b2?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/normativa-pernocta-autocaravanas-andalucia.webp"
 relatedProvince: "malaga"
+heroImageAlt: "Imagen ilustrativa: Normativa de Pernocta y Acampada Libre en Andalucía: Guía Completa"
 ---
 
 Viajar en camper o autocaravana por Andalucía ofrece una libertad inigualable, pero la legislación regional es estricta respecto a dónde y cómo se puede pasar la noche. Confundir los conceptos de **pernoctar** y **acampar** es el motivo principal de las sanciones dictadas por el SEPRONA y los ayuntamientos locales.

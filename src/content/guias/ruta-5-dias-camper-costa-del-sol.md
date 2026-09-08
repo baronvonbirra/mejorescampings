@@ -2,8 +2,9 @@
 title: "Ruta de 5 días en Camper o Autocaravana por la Costa del Sol"
 description: "Itinerario detallado de Nerja a Tarifa. Puntos de pernocta, visitas imprescindibles y consejos de conducción por la costa sur."
 pubDate: 2026-09-03
-heroImage: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/ruta-5-dias-camper-costa-del-sol.webp"
 relatedProvince: "malaga"
+heroImageAlt: "Imagen ilustrativa: Ruta de 5 días en Camper o Autocaravana por la Costa del Sol"
 ---
 
 La ruta costera entre la Axarquía malagueña y la entrada a la Costa de la Luz gaditana combina playas mediterráneas, pueblos blancos y una infraestructura excelente para vehículos recreativos.

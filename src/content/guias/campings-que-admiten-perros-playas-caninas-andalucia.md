@@ -2,8 +2,9 @@
 title: "Campings que Admiten Perros en Andalucía y Playas Caninas Cercanas"
 description: "Guía completa de campings pet-friendly en Andalucía. Normativa, servicios para mascotas y mapa de playas caninas oficiales cerca de los recintos."
 pubDate: 2026-09-08
-heroImage: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/campings-que-admiten-perros-playas-caninas-andalucia.webp"
 relatedProvince: "malaga"
+heroImageAlt: "Imagen ilustrativa: Campings que Admiten Perros en Andalucía y Playas Caninas Cercanas"
 ---
 
 Viajar con mascotas a la costa andaluza requiere conocer de antemano qué recintos ofrecen instalaciones preparadas y qué municipios disponen de playas caninas autorizadas por la Junta de Andalucía durante la temporada de baño.

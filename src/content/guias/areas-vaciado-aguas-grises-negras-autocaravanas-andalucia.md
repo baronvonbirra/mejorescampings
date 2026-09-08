@@ -2,7 +2,8 @@
 title: "Guía de Áreas de Vaciado de Aguas Grises y Negras en Andalucía"
 description: "Dónde cambiar aguas de forma ecológica y legal en autocaravanas y campers. Tipos de bornes, costes y mapa de puntos limpios."
 pubDate: 2026-09-08
-heroImage: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/areas-vaciado-aguas-grises-negras-autocaravanas-andalucia.webp"
+heroImageAlt: "Imagen ilustrativa: Guía de Áreas de Vaciado de Aguas Grises y Negras en Andalucía"
 ---
 
 El mantenimiento ecológico de los depósitos de residuos es un compromiso obligatorio para todos los usuarios de vehículos recreativos en Andalucía.
