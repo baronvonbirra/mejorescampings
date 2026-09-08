@@ -13,12 +13,14 @@ export interface PernoctaGuideData {
   naturalParksList: string[];
   localTips: string[];
   faqs: Array<{ question: string; answer: string }>;
+  heroImage?: string;
 }
 
 export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   almeria: {
     slug: 'almeria',
     provinceName: 'Almería',
+    heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Almería 2026 | MejoresCampings',
     metaDesc: 'Regulación oficial para pernoctar en furgoneta camper y autocaravana en Almería. Normas en Parque Natural Cabo de Gata-Níjar y Ley de Costas.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Almería',
@@ -57,6 +59,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   cadiz: {
     slug: 'cadiz',
     provinceName: 'Cádiz',
+    heroImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Cádiz 2026 | MejoresCampings',
     metaDesc: 'Regulación oficial para pernoctar en camper y autocaravana en Cádiz. Normas en Tarifa, Costa de la Luz y Sierra de Grazalema.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Cádiz',
@@ -95,6 +98,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   cordoba: {
     slug: 'cordoba',
     provinceName: 'Córdoba',
+    heroImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Córdoba 2026 | MejoresCampings',
     metaDesc: 'Normativa legal para pernoctar en furgoneta camper y autocaravana en Córdoba. Regulación en Sierra Morena, Subbética y embalses.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Córdoba',
@@ -132,6 +136,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   granada: {
     slug: 'granada',
     provinceName: 'Granada',
+    heroImage: 'https://images.unsplash.com/photo-1568084680786-a84f91d1153c?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Granada 2026 | MejoresCampings',
     metaDesc: 'Regulación oficial de pernocta en Granada. Normas en Sierra Nevada, La Alpujarra, Costa Tropical y Geoparque de Granada.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Granada',
@@ -171,6 +176,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   huelva: {
     slug: 'huelva',
     provinceName: 'Huelva',
+    heroImage: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Huelva 2026 | MejoresCampings',
     metaDesc: 'Normativa legal de pernocta en Huelva. Regulación en Parque Nacional de Doñana, Mazagón, Matalascañas y Sierra de Aracena.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Huelva',
@@ -209,6 +215,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   jaen: {
     slug: 'jaen',
     provinceName: 'Jaén',
+    heroImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Jaén 2026 | MejoresCampings',
     metaDesc: 'Guía oficial de pernocta y acampada en Jaén. Normas en Parque Natural Cazorla, Segura y Las Villas, Despeñaperros y Úbeda.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Jaén',
@@ -247,6 +254,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   malaga: {
     slug: 'malaga',
     provinceName: 'Málaga',
+    heroImage: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Málaga 2026 | MejoresCampings',
     metaDesc: 'Descubre la regulación oficial para pernoctar en furgoneta camper, autocaravana y acampada libre en Málaga. Ley de Costas y Parques Naturales.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Málaga',
@@ -285,6 +293,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
   sevilla: {
     slug: 'sevilla',
     provinceName: 'Sevilla',
+    heroImage: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=80',
     metaTitle: 'Guía Normativa de Pernocta y Acampada Libre en Sevilla 2026 | MejoresCampings',
     metaDesc: 'Normativa legal de pernocta en Sevilla. Regulación en Sierra Norte de Sevilla, Pinares de Aznalcázar y Vega del Guadalquivir.',
     headline: 'Guía de Normativa de Pernocta y Acampada Libre en Sevilla',
