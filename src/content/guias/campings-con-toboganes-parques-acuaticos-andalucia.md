@@ -2,8 +2,9 @@
 title: "Los Mejores Campings con Parque Acuático y Toboganes en Andalucía"
 description: "Selección de campings familiares con piscinas de olas, toboganes y zonas de juegos acuáticos en las costas de Málaga, Cádiz y Huelva."
 pubDate: 2026-09-08
-heroImage: "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/campings-con-toboganes-parques-acuaticos-andalucia.webp"
 relatedProvince: "cadiz"
+heroImageAlt: "Imagen ilustrativa: Los Mejores Campings con Parque Acuático y Toboganes en Andalucía"
 ---
 
 Los campings equipados con complejo acuático propio se han convertido en la opción preferida para vacaciones en familia, combinando la libertad del camping con la diversión de un parque temático.

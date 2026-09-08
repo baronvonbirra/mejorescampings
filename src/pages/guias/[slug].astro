@@ -14,12 +14,17 @@ export async function getStaticPaths() {
 const { guia } = Astro.props;
 const { Content, headings } = await guia.render();
 
+// Fallback hero image if heroImage is not specified in frontmatter
+const defaultHero = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80";
+const heroUrl = guia.data.heroImage || defaultHero;
+const heroAlt = guia.data.heroImageAlt || guia.data.title;
+
 const jsonLdArticle = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": guia.data.title,
   "description": guia.data.description,
-  "image": guia.data.heroImage,
+  "image": heroUrl,
   "datePublished": guia.data.pubDate.toISOString(),
   "author": {
     "@type": "Organization",
@@ -69,7 +74,7 @@ const affiliateConfigs: Record<string, { title: string; description: string; but
 const guideAffiliate = affiliateConfigs[guia.slug];
 ---
 
-<Layout title={guia.data.title} description={guia.data.description} image={guia.data.heroImage}>
+<Layout title={guia.data.title} description={guia.data.description} image={heroUrl}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdArticle)} />
 
   <article class="max-w-4xl mx-auto space-y-8">
@@ -101,6 +106,17 @@ const guideAffiliate = affiliateConfigs[guia.slug];
       <p class="text-base sm:text-lg text-slate-600 font-medium">
         {guia.data.description}
       </p>
+
+      <!-- Responsive Hero Image Banner -->
+      <div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden mt-6 shadow-md">
+        <img
+          src={heroUrl}
+          alt={heroAlt}
+          class="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </header>
 
     <!-- Table of Contents (TOC) -->

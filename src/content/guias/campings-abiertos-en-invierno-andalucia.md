@@ -2,8 +2,9 @@
 title: "Campings Abiertos en Invierno y Todo el Año en Andalucía"
 description: "Disfruta del clima suave del sur en temporada baja. Campings para pasar el invierno en Málaga, Almería y Cádiz con tarifas de larga estancia."
 pubDate: 2026-09-08
-heroImage: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/campings-abiertos-en-invierno-andalucia.webp"
 relatedProvince: "almeria"
+heroImageAlt: "Imagen ilustrativa: Campings Abiertos en Invierno y Todo el Año en Andalucía"
 ---
 
 El suave clima invernal de Andalucía convierte a la región en el destino europeo de referencia para viajes en temporada baja, ofreciendo temperaturas medias de 16 °C a 20 °C en la costa.

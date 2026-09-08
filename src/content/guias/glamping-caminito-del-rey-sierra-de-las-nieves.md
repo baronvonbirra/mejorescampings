@@ -2,8 +2,9 @@
 title: "Glamping Cerca del Caminito del Rey y la Sierra de las Nieves"
 description: "Dormir en domos geodésicos, yurtas y tiendas safari cerca de Álora, Ardales y el Parque Nacional Sierra de las Nieves."
 pubDate: 2026-09-08
-heroImage: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+heroImage: "/images/guias/glamping-caminito-del-rey-sierra-de-las-nieves.webp"
 relatedProvince: "malaga"
+heroImageAlt: "Imagen ilustrativa: Glamping Cerca del Caminito del Rey y la Sierra de las Nieves"
 ---
 
 El interior de la provincia de Málaga combina paisajes kársticos, embalses de agua turquesa y el Parque Nacional de la Sierra de las Nieves, ofreciendo el escenario perfecto para una escapada de glamping.
