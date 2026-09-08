@@ -59,29 +59,46 @@ const jsonLdItemList = {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {editorialGuias.map((g) => (
-          <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
-            <div class="p-6 space-y-3">
-              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                Consejos & Rutas
-              </span>
-              <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition leading-snug">
-                {g.data.title}
-              </h3>
-              <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
-                {g.data.description}
-              </p>
+        {editorialGuias.map((g) => {
+          const defaultHero = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80";
+          const heroUrl = g.data.heroImage || defaultHero;
+          const heroAlt = g.data.heroImageAlt || g.data.title;
+          return (
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
+              <div>
+                <div class="relative h-44 w-full overflow-hidden bg-slate-100">
+                  <img
+                    src={heroUrl}
+                    alt={heroAlt}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-3 left-3">
+                    <span class="text-[10px] font-bold text-emerald-950 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full uppercase tracking-wider shadow-2xs">
+                      Consejos & Rutas
+                    </span>
+                  </div>
+                </div>
+                <div class="p-6 space-y-3">
+                  <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition leading-snug">
+                    {g.data.title}
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                    {g.data.description}
+                  </p>
+                </div>
+              </div>
+              <div class="p-4 bg-slate-50 border-t border-slate-100">
+                <a
+                  href={`${import.meta.env.BASE_URL}guias/${g.slug}/`}
+                  class="block w-full text-center py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition"
+                >
+                  Leer Guía Completa &rarr;
+                </a>
+              </div>
             </div>
-            <div class="p-4 bg-slate-50 border-t border-slate-100">
-              <a
-                href={`${import.meta.env.BASE_URL}guias/${g.slug}/`}
-                class="block w-full text-center py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition"
-              >
-                Leer Guía Completa &rarr;
-              </a>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   )}
@@ -116,34 +133,48 @@ const jsonLdItemList = {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {PROVINCES.map((p) => {
         const guideData = PERNOCTA_GUIDES[p.slug] || PERNOCTA_GUIDES.malaga;
+        const defaultHero = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80";
+        const pernoctaHero = guideData.heroImage || p.image || defaultHero;
         return (
           <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
-            <div class="p-6 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  {p.name}
-                </span>
-                <span class="text-[11px] font-semibold text-slate-400">Andalucía</span>
+            <div>
+              <div class="relative h-40 w-full overflow-hidden bg-slate-100">
+                <img
+                  src={pernoctaHero}
+                  alt={`Normativa de pernocta camper en ${p.name}`}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+                <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-emerald-950 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full shadow-2xs">
+                    {p.name}
+                  </span>
+                  <span class="text-[10px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Pernocta
+                  </span>
+                </div>
               </div>
 
-              <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition">
-                Guía de Pernocta en {p.name}
-              </h3>
+              <div class="p-5 space-y-3">
+                <h3 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition leading-snug">
+                  Guía de Pernocta en {p.name}
+                </h3>
 
-              <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
-                {guideData.summaryText}
-              </p>
+                <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                  {guideData.summaryText}
+                </p>
 
-              <div class="pt-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
-                  Espacios destacados:
-                </span>
-                <div class="flex flex-wrap gap-1">
-                  {guideData.naturalParksList.slice(0, 2).map((park) => (
-                    <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-medium">
-                      {park}
-                    </span>
-                  ))}
+                <div class="pt-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
+                    Espacios destacados:
+                  </span>
+                  <div class="flex flex-wrap gap-1">
+                    {guideData.naturalParksList.slice(0, 2).map((park) => (
+                      <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-medium">
+                        {park}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

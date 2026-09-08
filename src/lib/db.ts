@@ -59,17 +59,66 @@ export interface ProvinceInfo {
   slug: string;
   description: string;
   highlights: string[];
+  image: string;
 }
 
 export const PROVINCES: ProvinceInfo[] = [
-  { name: 'Almería', slug: 'almeria', description: 'Campings en Cabo de Gata, las Tabernas y la costa almeriense.', highlights: ['Cabo de Gata', 'Níjar', 'Roquetas de Mar'] },
-  { name: 'Cádiz', slug: 'cadiz', description: 'Campings en Tarifa, Costa de la Luz y Sierra de Grazalema.', highlights: ['Tarifa', 'Conil de la Frontera', 'Grazalema'] },
-  { name: 'Córdoba', slug: 'cordoba', description: 'Campings en Sierra Morena, Valle del Guadalquivir y Subbética.', highlights: ['Sierra Morena', 'Zuheros', 'Hornachuelos'] },
-  { name: 'Granada', slug: 'granada', description: 'Campings en Sierra Nevada, Alpujarra y Costa Tropical.', highlights: ['Sierra Nevada', 'Orgiva', 'Almuñécar'] },
-  { name: 'Huelva', slug: 'huelva', description: 'Campings en el entorno de Doñana, Sierra de Aracena y Costa de la Luz.', highlights: ['Doñana', 'Mazagón', 'Aracena'] },
-  { name: 'Jaén', slug: 'jaen', description: 'Campings en Cazorla, Segura, Las Villas y Despeñaperros.', highlights: ['Sierra de Cazorla', 'Úbeda', 'Segura de la Sierra'] },
-  { name: 'Málaga', slug: 'malaga', description: 'Campings en la Costa del Sol, Serranía de Ronda y Axarquía.', highlights: ['Ronda', 'Marbella', 'Nerja'] },
-  { name: 'Sevilla', slug: 'sevilla', description: 'Campings en Sierra Norte, Vega del Guadalquivir y entorno de Doñana.', highlights: ['Sierra Norte', 'Cazalla de la Sierra', 'El Pedroso'] }
+  {
+    name: 'Almería',
+    slug: 'almeria',
+    description: 'Campings en Cabo de Gata, las Tabernas y la costa almeriense.',
+    highlights: ['Cabo de Gata', 'Níjar', 'Roquetas de Mar'],
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Cádiz',
+    slug: 'cadiz',
+    description: 'Campings en Tarifa, Costa de la Luz y Sierra de Grazalema.',
+    highlights: ['Tarifa', 'Conil de la Frontera', 'Grazalema'],
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Córdoba',
+    slug: 'cordoba',
+    description: 'Campings en Sierra Morena, Valle del Guadalquivir y Subbética.',
+    highlights: ['Sierra Morena', 'Zuheros', 'Hornachuelos'],
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Granada',
+    slug: 'granada',
+    description: 'Campings en Sierra Nevada, Alpujarra y Costa Tropical.',
+    highlights: ['Sierra Nevada', 'Orgiva', 'Almuñécar'],
+    image: 'https://images.unsplash.com/photo-1568084680786-a84f91d1153c?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Huelva',
+    slug: 'huelva',
+    description: 'Campings en el entorno de Doñana, Sierra de Aracena y Costa de la Luz.',
+    highlights: ['Doñana', 'Mazagón', 'Aracena'],
+    image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Jaén',
+    slug: 'jaen',
+    description: 'Campings en Cazorla, Segura, Las Villas y Despeñaperros.',
+    highlights: ['Sierra de Cazorla', 'Úbeda', 'Segura de la Sierra'],
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Málaga',
+    slug: 'malaga',
+    description: 'Campings en la Costa del Sol, Serranía de Ronda y Axarquía.',
+    highlights: ['Ronda', 'Marbella', 'Nerja'],
+    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Sevilla',
+    slug: 'sevilla',
+    description: 'Campings en Sierra Norte, Vega del Guadalquivir y entorno de Doñana.',
+    highlights: ['Sierra Norte', 'Cazalla de la Sierra', 'El Pedroso'],
+    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80'
+  }
 ];
 
 const getEnvVar = (key: string): string | undefined => {
