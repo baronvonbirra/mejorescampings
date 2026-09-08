@@ -10,6 +10,7 @@ import CampingCard from '../../components/CampingCard.astro';
 import AffiliateCard from '../../components/AffiliateCard.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { getCampings, PROVINCES } from '../../lib/db';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const campings = await getCampings();
@@ -59,6 +60,13 @@ const provinceName = provInfo ? provInfo.name : provinceSlug.charAt(0).toUpperCa
 
 const municipalitySlug = (camping.municipality_slug || '').split('/').pop() || provinceSlug;
 const municipalityName = municipalitySlug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+
+// Dynamic Related Editorial Guides based on relatedProvince frontmatter
+const allEditorialGuides = await getCollection('guias');
+const relatedEditorialGuides = allEditorialGuides
+  .filter((g) => !g.data.relatedProvince || g.data.relatedProvince === provinceSlug)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 
 // Neighboring province suggestion logic
 const neighborProvinces: Record<string, string[]> = {
@@ -352,22 +360,20 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
       </div>
 
       <!-- Bloque al final de la ficha del camping: Related Editorial Guides -->
-      <section class="related-guides bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-5 my-6">
-        <h3 class="text-sm font-extrabold text-emerald-950 uppercase tracking-wide mb-3 flex items-center gap-2">
-          <span>📚</span> Guías útiles para tu estancia
-        </h3>
-        <div class="space-y-2 text-xs sm:text-sm font-bold text-emerald-800">
-          <a href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-autocaravanas-andalucia/`} class="block hover:underline hover:text-emerald-950 transition">
-            &rarr; Normativa de acampada y pernocta en Andalucía (Actualizado)
-          </a>
-          <a href={`${import.meta.env.BASE_URL}guias/guia-camping-con-ninos-consejos-equipamiento/`} class="block hover:underline hover:text-emerald-950 transition">
-            &rarr; Guía para ir de camping con niños: Consejos y equipamiento
-          </a>
-          <a href={`${import.meta.env.BASE_URL}guias/ruta-5-dias-camper-costa-del-sol/`} class="block hover:underline hover:text-emerald-950 transition">
-            &rarr; Ruta de 5 días en camper por la Costa del Sol
-          </a>
-        </div>
-      </section>
+      {relatedEditorialGuides.length > 0 && (
+        <section class="related-guides bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-5 my-6">
+          <h3 class="text-sm font-extrabold text-emerald-950 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <span>📚</span> Guías útiles para tu estancia en {provinceName}
+          </h3>
+          <div class="space-y-2 text-xs sm:text-sm font-bold text-emerald-800">
+            {relatedEditorialGuides.map((guide) => (
+              <a href={`${import.meta.env.BASE_URL}guias/${guide.slug}/`} class="block hover:underline hover:text-emerald-950 transition">
+                &rarr; {guide.data.title}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <!-- FAQs Section -->
       {camping.faqs_json && camping.faqs_json.length > 0 && (

@@ -2,7 +2,7 @@
 title: "Guía para ir de Camping con Niños: Consejos y Lista de Equipamiento"
 description: "Todo lo que necesitas saber para organizar unas vacaciones de camping en familia sin estrés. Selección de instalaciones y lista imprescindible."
 pubDate: 2026-09-02
-heroImage: "/images/guias/camping-con-ninos.webp"
+heroImage: "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
 relatedProvince: "cadiz"
 ---
 

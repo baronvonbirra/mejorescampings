@@ -2,7 +2,7 @@
 title: "Glamping, Bungalow o Tienda Tradicional: ¿Cuál elegir?"
 description: "Comparativa detallada entre los diferentes tipos de alojamiento en camping. Ventajas, costes orientativos y perfil de viajero."
 pubDate: 2026-09-05
-heroImage: "/images/guias/glamping-vs-bungalow.webp"
+heroImage: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
 ---
 
 El sector del camping ha evolucionado para ofrecer alternativas que van desde la acampada rústica tradicional hasta alojamientos de lujo con todas las comodidades de un hotel boutique.
