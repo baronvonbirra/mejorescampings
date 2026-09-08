@@ -9,6 +9,35 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Encuentra tu camping ideal en Andalucía');
     await expect(page.getByRole('heading', { name: 'Glamping de Lujo' })).toBeVisible();
     await expect(page.locator('div[data-slug] a[aria-label*="Ver detalles de"]:visible').first()).toBeVisible();
+
+    // Check Featured Editorial Guides Section on Homepage
+    await expect(page.getByRole('heading', { name: 'Guías y Consejos de Acampada' })).toBeVisible();
+    await expect(page.locator('section').filter({ hasText: 'Guías y Consejos de Acampada' }).locator('a[href*="/guias/"]').first()).toBeVisible();
+  });
+
+  test('Editorial Guides render individual pages with Travelpayouts affiliate callouts and JSON-LD Article Schema', async ({ page }) => {
+    // Test Camper/Pernocta Guide with Economybookings callout
+    const resp1 = await page.goto('guias/normativa-pernocta-autocaravanas-andalucia/');
+    expect(resp1?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Normativa de Pernocta');
+    await expect(page.locator('a[href*="economybookings.tpx.lv"]').first()).toBeVisible();
+
+    // Check JSON-LD Article Schema
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"Article"'))).toBe(true);
+
+    // Test Camping con Ninos Guide with Tiqets, Klook & Go City callout
+    const resp2 = await page.goto('guias/guia-camping-con-ninos-consejos-equipamiento/');
+    expect(resp2?.status()).toBe(200);
+    await expect(page.locator('a[href*="tiqets.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="klook.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="gocity.tpx.lv"]').first()).toBeVisible();
+
+    // Test Costa del Sol Camper Route with EKTA and Radical Storage
+    const resp3 = await page.goto('guias/ruta-5-dias-camper-costa-del-sol/');
+    expect(resp3?.status()).toBe(200);
+    await expect(page.locator('a[href*="ektatraveling.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="radicalstorage.tpx.lv"]').first()).toBeVisible();
   });
 
   test('Global Regional Category Route (/campings-con-mascotas/) loads all pet-friendly campsites across Andalucia', async ({ page }) => {

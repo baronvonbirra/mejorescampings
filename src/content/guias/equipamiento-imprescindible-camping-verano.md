@@ -2,7 +2,7 @@
 title: "Equipamiento Imprescindible para ir de Camping en Verano"
 description: "Lista de material probado para combatir el calor, organizar la parcela y disfrutar de la estancia estival en el sur de España."
 pubDate: 2026-09-04
-heroImage: "/images/guias/equipamiento-camping.webp"
+heroImage: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1200&q=80"
 ---
 
 Acampar en el sur de la península ibérica durante los meses de junio a septiembre exige un equipamiento específicamente seleccionado para resistir altas temperaturas y alta radiación solar.

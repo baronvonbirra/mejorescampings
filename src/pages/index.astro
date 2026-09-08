@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import CampingCard from '../components/CampingCard.astro';
 import LiveSupabaseSync from '../components/LiveSupabaseSync.astro';
@@ -6,6 +7,11 @@ import { getCampings, getFeatures, PROVINCES } from '../lib/db';
 
 const allCampings = await getCampings();
 const features = await getFeatures();
+
+// Fetch latest 3 editorial guides
+const latestGuides = (await getCollection('guias'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 
 // Filter active campsites and sort globally: promoted first, then by rating
 const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'disabled');
@@ -200,6 +206,34 @@ const provinceCounts = PROVINCES.map((p) => {
         >
           <CampingCard camping={camping} />
         </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Editorial Guides Block (3 Latest Guides) -->
+  <section class="mb-12 py-8 border-t border-slate-200">
+    <div class="flex justify-between items-end mb-8">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Guías y Consejos de Acampada</h2>
+        <p class="text-slate-600 text-sm">Información práctica y normativa para tu viaje por Andalucía</p>
+      </div>
+      <a href={`${import.meta.env.BASE_URL}guias/`} class="text-emerald-600 hover:underline font-medium text-sm">Ver todas las guías &rarr;</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {latestGuides.map(guide => (
+        <article class="border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white flex flex-col justify-between">
+          <img src={guide.data.heroImage} alt={guide.data.title} class="w-full h-48 object-cover" />
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-slate-900 mb-2 line-clamp-2">
+                <a href={`${import.meta.env.BASE_URL}guias/${guide.slug}/`} class="hover:text-emerald-600">{guide.data.title}</a>
+              </h3>
+              <p class="text-slate-600 text-sm line-clamp-3 mb-4">{guide.data.description}</p>
+            </div>
+            <a href={`${import.meta.env.BASE_URL}guias/${guide.slug}/`} class="text-xs font-semibold text-emerald-600 uppercase hover:underline">Leer artículo completo &rarr;</a>
+          </div>
+        </article>
       ))}
     </div>
   </section>

@@ -2,11 +2,20 @@
 title: "Normativa de Pernocta y Acampada Libre en Andalucía: Guía Completa"
 description: "Diferencias legales entre pernoctar y acampar en camper o autocaravana en Andalucía. Multas, zonas permitidas y regulación de la Junta."
 pubDate: 2026-09-01
-heroImage: "/images/guias/normativa-pernocta.webp"
+heroImage: "https://images.unsplash.com/photo-1513311968627-2a4d31ed72b2?auto=format&fit=crop&w=1200&q=80"
 relatedProvince: "malaga"
 ---
 
 Viajar en camper o autocaravana por Andalucía ofrece una libertad inigualable, pero la legislación regional es estricta respecto a dónde y cómo se puede pasar la noche. Confundir los conceptos de **pernoctar** y **acampar** es el motivo principal de las sanciones dictadas por el SEPRONA y los ayuntamientos locales.
+
+<div class="my-8 p-6 bg-emerald-50 border border-emerald-200 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Alquiler Recomendado</span>
+</div>
+<h4 class="text-lg font-bold text-gray-900 mb-1">¿Necesitas alquilar furgoneta o coche para esta ruta?</h4>
+<p class="text-gray-600 text-sm mb-4">Compara precios en el aeropuerto de Málaga y reserva tu vehículo camper o coche al mejor precio para recorrer Andalucía.</p>
+<a href="https://economybookings.tpx.lv/ex1AUP2Z" target="_blank" rel="sponsored nofollow" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">Compara precios en el aeropuerto de Málaga →</a>
+</div>
 
 ## La diferencia legal clave: Pernoctar vs. Acampar
 
