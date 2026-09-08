@@ -25,6 +25,9 @@ GUIDES_DIR = "src/content/guias"
 PUBLIC_OUTPUT_DIR = "public/images/guias"
 DEFAULT_FALLBACK_URL = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80"
 
+# Global set to track used image URLs across the process run to prevent duplicates
+USED_URLS = set()
+
 # Mapping guide slugs or keywords to optimal search terms
 KEYWORD_MAPPING = {
     "areas-vaciado-aguas-grises-negras-autocaravanas-andalucia": "campervan motorhome service station",
@@ -37,6 +40,20 @@ KEYWORD_MAPPING = {
     "guia-camping-con-ninos-consejos-equipamiento": "family camping kids outdoor nature tent",
     "normativa-pernocta-autocaravanas-andalucia": "campervan sunset coastal roadtrip",
     "ruta-5-dias-camper-costa-del-sol": "campervan coastal roadtrip beach Spain"
+}
+
+# Unique, topic-specific high-resolution fallback photos for each guide slug
+SPECIFIC_FALLBACK_URLS = {
+    "areas-vaciado-aguas-grises-negras-autocaravanas-andalucia": "https://images.unsplash.com/photo-1527786356703-4b100091cd2c?auto=format&fit=crop&w=1200&q=80",
+    "campings-abiertos-en-invierno-andalucia": "https://images.unsplash.com/photo-1483389127117-b6a2102724ae?auto=format&fit=crop&w=1200&q=80",
+    "campings-con-toboganes-parques-acuaticos-andalucia": "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&w=1200&q=80",
+    "campings-que-admiten-perros-playas-caninas-andalucia": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+    "diferencias-glamping-bungalow-camping-tradicional": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
+    "equipamiento-imprescindible-camping-verano": "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
+    "glamping-caminito-del-rey-sierra-de-las-nieves": "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+    "guia-camping-con-ninos-consejos-equipamiento": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
+    "normativa-pernocta-autocaravanas-andalucia": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80",
+    "ruta-5-dias-camper-costa-del-sol": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80"
 }
 
 def get_supabase_client():
@@ -90,32 +107,50 @@ def fetch_image_from_unsplash_api(query):
         print(f"[UNSPLASH API WARN] Error searching Unsplash API: {e}")
     return None
 
-def fetch_image_fallback(query):
-    """Fallback stock images if no API key is available."""
+def fetch_image_fallback(slug, query):
+    """Fallback stock images ensuring topic relevance and no duplicates."""
+    if slug in SPECIFIC_FALLBACK_URLS and SPECIFIC_FALLBACK_URLS[slug] not in USED_URLS:
+        return SPECIFIC_FALLBACK_URLS[slug]
+
     fallback_urls = [
         "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80",
         "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80"
+        "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1527786356703-4b100091cd2c?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1483389127117-b6a2102724ae?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80"
     ]
-    # Simple hash based on query string to pick a consistent photo
+    for url in fallback_urls:
+        if url not in USED_URLS:
+            return url
+
+    # Hash fallback if all in USED_URLS
     idx = abs(hash(query)) % len(fallback_urls)
     return fallback_urls[idx]
 
-def fetch_hero_image_url(query):
+def fetch_hero_image_url(slug, query):
     # Try Pexels first
     img_url = fetch_image_from_pexels(query)
-    if img_url:
+    if img_url and img_url not in USED_URLS:
+        USED_URLS.add(img_url)
         return img_url
 
     # Try Unsplash API
     img_url = fetch_image_from_unsplash_api(query)
-    if img_url:
+    if img_url and img_url not in USED_URLS:
+        USED_URLS.add(img_url)
         return img_url
 
-    # Direct search fallback
-    return fetch_image_fallback(query)
+    # Direct specific search fallback
+    fallback_url = fetch_image_fallback(slug, query)
+    USED_URLS.add(fallback_url)
+    return fallback_url
 
 def download_and_process_image(source_url, output_path, max_width=1200, quality=80):
     """Downloads image, resizes if needed, and saves as WebP."""
@@ -239,7 +274,7 @@ def process_guide_file(md_path, force=False, custom_query=None):
     print(f"Keyword search: '{query}'")
 
     # Fetch source image URL
-    source_url = fetch_hero_image_url(query)
+    source_url = fetch_hero_image_url(slug, query)
 
     # Download and process to local WebP
     download_and_process_image(source_url, local_webp_path)
