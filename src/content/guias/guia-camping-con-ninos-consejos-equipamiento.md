@@ -19,6 +19,19 @@ No todos los campings están adaptados para viajar con niños pequeños. Al filt
 
 Te recomendamos revisar nuestra sección de [campings familiares en Málaga](/malaga/) equipados con instalaciones infantiles.
 
+<div class="my-8 p-6 bg-emerald-50 border border-emerald-200 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Actividades en Familia</span>
+</div>
+<h4 class="text-lg font-bold text-gray-900 mb-1">Pases con descuento para parques acuáticos y monumentos en Andalucía</h4>
+<p class="text-gray-600 text-sm mb-4">Asegura tus entradas con antelación y consigue pases familiares con descuento para parques temáticos, acuarios y tours guiados.</p>
+<div class="flex flex-wrap gap-3">
+<a href="https://tiqets.tpx.lv/l4s4f69n" target="_blank" rel="sponsored nofollow" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">Ver ofertas en Tiqets →</a>
+<a href="https://klook.tpx.lv/yBJjXg2w" target="_blank" rel="sponsored nofollow" class="inline-block bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">Actividades Klook →</a>
+<a href="https://gocity.tpx.lv/jVO3pazL" target="_blank" rel="sponsored nofollow" class="inline-block bg-teal-700 hover:bg-teal-800 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">Pases Go City →</a>
+</div>
+</div>
+
 ## Check-list de equipamiento para familias
 
 | Categoría | Elementos imprescindibles |

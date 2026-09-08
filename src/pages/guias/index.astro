@@ -5,7 +5,8 @@ import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { PROVINCES } from '../../lib/db';
 import { PERNOCTA_GUIDES } from '../../lib/pernoctaData';
 
-const editorialGuias = await getCollection('guias');
+const editorialGuias = (await getCollection('guias'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const metaTitle = "Guías de Pernocta y Artículos Editoriales de Camping en Andalucía | MejoresCampings";
 const metaDesc = "Sección de guías oficiales de pernocta, acampada libre y legislación camper en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.";

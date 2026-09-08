@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import AffiliateCallout from '../../components/AffiliateCallout.astro';
 
 export async function getStaticPaths() {
   const guias = await getCollection('guias');
@@ -32,6 +33,40 @@ const jsonLdArticle = {
 };
 
 const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+// Dynamic Contextual Affiliate Callout Config based on guide slug
+const affiliateConfigs: Record<string, { title: string; description: string; buttonText: string; url: string; badge: string }> = {
+  'normativa-pernocta-autocaravanas-andalucia': {
+    title: '¿Necesitas alquilar furgoneta o coche para esta ruta?',
+    description: 'Compara precios en el aeropuerto de Málaga y reserva al mejor precio con EconomyBookings.',
+    buttonText: 'Compara precios en el aeropuerto de Málaga',
+    url: 'https://economybookings.tpx.lv/ex1AUP2Z',
+    badge: 'Alquiler Recomendado'
+  },
+  'guia-camping-con-ninos-consejos-equipamiento': {
+    title: 'Pases con descuento para parques acuáticos y monumentos en Andalucía',
+    description: 'Reserva pases familiares, entradas a parques temáticos y excursiones guiadas con Tiqets y Klook.',
+    buttonText: 'Ver pases con descuento en Tiqets',
+    url: 'https://tiqets.tpx.lv/l4s4f69n',
+    badge: 'Actividades Familiares'
+  },
+  'ruta-5-dias-camper-costa-del-sol': {
+    title: 'Viaja asegurado en tu ruta por Andalucía',
+    description: 'Protege tu viaje camper o de carretera con cobertura médica y asistencia en viaje integral de EKTA.',
+    buttonText: 'Contratar Seguro EKTA',
+    url: 'https://ektatraveling.tpx.lv/V0yP4yJF',
+    badge: 'Seguro de Viaje'
+  },
+  'diferencias-glamping-bungalow-camping-tradicional': {
+    title: 'Recomendaciones de experiencias exclusivas cerca de zonas de Glamping',
+    description: 'Disfruta de tours privados, veleros y catas exclusivas en Andalucía reservando con Tiqets.',
+    buttonText: 'Explorar experiencias en Tiqets',
+    url: 'https://tiqets.tpx.lv/l4s4f69n',
+    badge: 'Experiencias Glamping'
+  }
+};
+
+const guideAffiliate = affiliateConfigs[guia.slug];
 ---
 
 <Layout title={guia.data.title} description={guia.data.description} image={guia.data.heroImage}>
@@ -90,6 +125,17 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
     <div class="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-bold prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-100 prose-h2:pb-2 prose-h3:text-xl prose-a:text-emerald-600 hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50/60 prose-blockquote:p-4 prose-blockquote:rounded-r-xl prose-blockquote:text-slate-800 prose-blockquote:not-italic shadow-none">
       <Content />
     </div>
+
+    <!-- Contextual Affiliate Callout Component -->
+    {guideAffiliate && (
+      <AffiliateCallout
+        title={guideAffiliate.title}
+        description={guideAffiliate.description}
+        buttonText={guideAffiliate.buttonText}
+        url={guideAffiliate.url}
+        badge={guideAffiliate.badge}
+      />
+    )}
 
     <!-- Related Internal Links & Hubs -->
     <section class="mt-12 pt-8 border-t border-slate-200 space-y-4">
