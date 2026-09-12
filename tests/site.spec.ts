@@ -66,11 +66,16 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     // Verify dashboard displays
     await expect(page.getByRole('heading', { name: 'Gestor de Campings y Promocionados' })).toBeVisible();
 
-    // Test action buttons: Re-scrap
+    // Test action buttons: Re-scrap opens Data Rescraper Comparison Modal
     const rescrapeBtn = page.locator('button[data-action="rescrape"]').first();
     await expect(rescrapeBtn).toBeVisible();
     await rescrapeBtn.click();
-    await expect(page.locator('#action-notification-box')).toContainText(/Re-scrap|actualizados|completada/i);
+
+    const dataModal = page.locator('#data-rescraper-modal');
+    await expect(dataModal).toBeVisible();
+    await expect(page.locator('#data-modal-title')).toContainText('Re-scraping y Comparación de Datos');
+    await page.locator('#btn-close-data-modal').click();
+    await expect(dataModal).toBeHidden();
 
     // Test promoted toggle checkbox in merged inventory table
     const promotedCheckbox = page.locator('.promoted-checkbox').first();
