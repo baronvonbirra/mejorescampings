@@ -198,6 +198,9 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       </div>
     </div>
 
+    <!-- Script data island for initial campsite objects -->
+    <script id="all-campings-data" type="application/json" is:inline set:html={JSON.stringify(allCampings)} />
+
     <!-- Photo Re-scraper Inspection & Selection Modal -->
     <div id="photo-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-2.5 sm:p-4">
       <div class="bg-white rounded-3xl p-3.5 sm:p-6 md:p-8 max-w-4xl w-full max-h-[94vh] sm:max-h-[90vh] flex flex-col space-y-3 sm:space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
@@ -284,6 +287,88 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
               class="px-4 sm:px-5 py-2 sm:py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
             >
               <span>💾</span> Guardar Selección y Propagar a Supabase DB
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Re-scraper Inspection & Field Comparison Modal -->
+    <div id="data-rescraper-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-2.5 sm:p-4">
+      <div class="bg-white rounded-3xl p-3.5 sm:p-6 md:p-8 max-w-4xl w-full max-h-[94vh] sm:max-h-[90vh] flex flex-col space-y-3 sm:space-y-5 border border-slate-200 shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-2 sm:pb-3 border-b border-slate-100 shrink-0">
+          <div>
+            <h3 id="data-modal-title" class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+              <span>🔄</span> Inspección, Re-scraping y Comparación de Datos
+            </h3>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+              Introduce la URL de la web oficial del camping para extraer y comparar los datos actuales con la información re-scrapeada. Selecciona qué campos deseas actualizar.
+            </p>
+          </div>
+          <button id="btn-close-data-modal" class="text-slate-400 hover:text-slate-600 font-bold text-xl cursor-pointer p-1">&times;</button>
+        </div>
+
+        <!-- Control Bar: URL Input & Rescrap Action Button -->
+        <div class="bg-slate-50 p-2.5 sm:p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 shrink-0">
+          <div class="flex-1 flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-600 shrink-0 hidden sm:inline">URL Web:</span>
+            <input
+              type="url"
+              id="input-data-rescrape-url"
+              placeholder="https://www.camping-ejemplo.com (URL de la web del camping)"
+              class="w-full px-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
+            />
+          </div>
+          <button
+            type="button"
+            id="btn-exec-data-rescrape"
+            class="px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white text-xs font-extrabold rounded-xl transition shrink-0 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
+          >
+            <span>🔄</span> Re-scrapear Datos
+          </button>
+        </div>
+
+        <!-- Comparison Table Area -->
+        <div class="flex-1 overflow-y-auto min-h-0 border border-slate-200 rounded-2xl p-2 sm:p-4 bg-slate-50/50 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+            <span id="data-comparison-subtitle" class="text-xs font-extrabold text-slate-700">
+              Campos comparados (Guardado directo en Supabase DB)
+            </span>
+            <div class="flex items-center gap-2 text-[11px]">
+              <button type="button" id="btn-data-select-all" class="text-sky-700 hover:underline font-bold cursor-pointer">Seleccionar Todos</button>
+              <span class="text-slate-300">|</span>
+              <button type="button" id="btn-data-deselect-all" class="text-slate-500 hover:underline font-bold cursor-pointer">Deseleccionar Todos</button>
+            </div>
+          </div>
+
+          <!-- Comparison Grid / Table -->
+          <div id="data-comparison-container" class="space-y-2">
+            <div class="p-8 text-center text-xs text-slate-400">
+              Haz clic en "Re-scrapear Datos" para extraer la información de la URL introducida.
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 pt-2 sm:pt-3 border-t border-slate-100 shrink-0">
+          <span id="data-modal-counter-badge" class="text-xs font-extrabold text-sky-800 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+            0 campos seleccionados para reemplazar
+          </span>
+          <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
+            <button
+              type="button"
+              id="btn-cancel-data-modal"
+              class="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              id="btn-save-data-selection"
+              class="px-4 sm:px-5 py-2 sm:py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-extrabold rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <span>💾</span> Guardar Cambios Seleccionados y Propagar a Supabase DB
             </button>
           </div>
         </div>
@@ -446,6 +531,15 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     // Client-Side Admin Interactivity, Supabase Database Persistence, and Authentication
     const PASSKEY = 'C4mp1n64l1f3';
 
+    // Load initial campsites array from script data island
+    let allCampingsList = [];
+    try {
+      const rawData = document.getElementById('all-campings-data')?.textContent || '[]';
+      allCampingsList = JSON.parse(rawData);
+    } catch (e) {
+      console.warn('Failed to parse all-campings-data island:', e);
+    }
+
     // Location-based real photo pools (per province/landmark, non-duplicated)
     const LOCATION_PHOTO_POOLS = {
       almeria: [
@@ -506,6 +600,400 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     const errorMsg = document.getElementById('login-error-msg');
     const btnLogout = document.getElementById('btn-logout');
     const notificationBox = document.getElementById('action-notification-box');
+
+    // --- Data Re-scraper Modal Management ---
+    let currentDataRescrapeSlug = '';
+    let currentDataRescrapeObject = null;
+    let scrapedNewDataResult = null;
+
+    const dataModal = document.getElementById('data-rescraper-modal');
+    const dataModalTitle = document.getElementById('data-modal-title');
+    const dataUrlInput = document.getElementById('input-data-rescrape-url');
+    const dataComparisonContainer = document.getElementById('data-comparison-container');
+    const dataCounterBadge = document.getElementById('data-modal-counter-badge');
+    const btnExecDataRescrape = document.getElementById('btn-exec-data-rescrape');
+
+    document.getElementById('btn-close-data-modal')?.addEventListener('click', () => {
+      dataModal?.classList.add('hidden');
+    });
+
+    document.getElementById('btn-cancel-data-modal')?.addEventListener('click', () => {
+      dataModal?.classList.add('hidden');
+    });
+
+    // Helper: Scrape campsite data from website HTML
+    async function fetchCampsiteDataFromUrl(targetSiteUrl, currentObj) {
+      if (!targetSiteUrl) return null;
+      let siteUrl = targetSiteUrl.trim();
+      if (!siteUrl.startsWith('http://') && !siteUrl.startsWith('https://')) {
+        siteUrl = 'https://' + siteUrl;
+      }
+
+      let htmlText = '';
+      const proxyUrls = [
+        `https://proxy.cors.sh/${siteUrl}`,
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(siteUrl)}`
+      ];
+
+      for (const proxyEndpoint of proxyUrls) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000);
+          const proxyRes = await fetch(proxyEndpoint, {
+            headers: { 'x-requested-with': 'XMLHttpRequest' },
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+          if (proxyRes.ok) {
+            const txt = await proxyRes.text();
+            if (txt && txt.length > 500) {
+              htmlText = txt;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+
+      if (!htmlText) {
+        try {
+          const directRes = await fetch(siteUrl, { mode: 'cors' });
+          if (directRes.ok) htmlText = await directRes.text();
+        } catch (e) {}
+      }
+
+      const parsedData = {
+        official_url: siteUrl,
+        name: '',
+        description: '',
+        address: '',
+        rating: null,
+        review_count: null,
+        seasonality: '',
+        category: '',
+        rta_license: '',
+        amenities: {}
+      };
+
+      if (!htmlText) {
+        // Fallback: Return basic URL record if HTML unreachable
+        parsedData.name = currentObj.name;
+        return parsedData;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+
+      // 1. Extract Name
+      let extractedTitle = doc.querySelector('title')?.textContent?.trim() || '';
+      const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content')?.trim();
+      const h1Text = doc.querySelector('h1')?.textContent?.trim();
+
+      let candidateTitle = ogTitle || extractedTitle || h1Text || '';
+      candidateTitle = candidateTitle.replace(/[-|•–].*$/, '').trim(); // strip site suffixes
+      if (candidateTitle.length > 3) {
+        parsedData.name = candidateTitle;
+      } else {
+        parsedData.name = currentObj.name;
+      }
+
+      // 2. Extract Description
+      const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content')?.trim() ||
+                       doc.querySelector('meta[property="og:description"]')?.getAttribute('content')?.trim();
+      if (metaDesc && metaDesc.length > 15) {
+        parsedData.description = metaDesc;
+      }
+
+      // 3. Extract Schema.org JSON-LD structured data
+      doc.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
+        try {
+          const json = JSON.parse(script.textContent || '{}');
+          const items = Array.isArray(json) ? json : [json];
+          items.forEach(item => {
+            if (item && (item['@type'] === 'Campground' || item['@type'] === 'LodgingBusiness' || item['@type'] === 'LocalBusiness' || item['@type'] === 'Park')) {
+              if (item.name) parsedData.name = item.name;
+              if (item.description) parsedData.description = item.description;
+              if (item.address) {
+                if (typeof item.address === 'string') parsedData.address = item.address;
+                else if (typeof item.address === 'object') {
+                  parsedData.address = [item.address.streetAddress, item.address.addressLocality, item.address.addressRegion]
+                    .filter(Boolean).join(', ');
+                }
+              }
+              if (item.aggregateRating) {
+                if (item.aggregateRating.ratingValue) parsedData.rating = parseFloat(item.aggregateRating.ratingValue);
+                if (item.aggregateRating.reviewCount) parsedData.review_count = parseInt(item.aggregateRating.reviewCount, 10);
+              }
+            }
+          });
+        } catch (e) {}
+      });
+
+      // 4. Extract Address if missing
+      if (!parsedData.address) {
+        const addrEl = doc.querySelector('[itemprop="address"], .direccion, .address, footer address');
+        if (addrEl && addrEl.textContent?.trim().length > 8) {
+          parsedData.address = addrEl.textContent.trim().replace(/\s+/g, ' ');
+        }
+      }
+
+      // 5. Scan full page text for Seasonality and Amenities
+      const bodyText = doc.body?.textContent?.toLowerCase() || '';
+
+      if (bodyText.includes('abierto todo el año') || bodyText.includes('abiertos todo el año') || bodyText.includes('365 días')) {
+        parsedData.seasonality = 'Abierto todo el año';
+      } else if (bodyText.includes('temporada') || bodyText.includes('marzo') || bodyText.includes('abril') || bodyText.includes('octubre')) {
+        parsedData.seasonality = 'Temporada (Primavera/Verano)';
+      }
+
+      // RTA license match
+      const rtaMatch = bodyText.match(/(?:rta|registro|licencia)[\s:]*([a-z0-9\/-]{5,20})/i);
+      if (rtaMatch && rtaMatch[1]) {
+        parsedData.rta_license = rtaMatch[1].toUpperCase();
+      }
+
+      // Amenities keyword detection
+      const currentAmenities = currentObj.amenities || {};
+      parsedData.amenities = {
+        playa: bodyText.includes('playa') || bodyText.includes('mar') || bodyText.includes('costa') || currentAmenities.playa || false,
+        piscina: bodyText.includes('piscina') || bodyText.includes('pool') || currentAmenities.piscina || false,
+        mascotas: bodyText.includes('mascota') || bodyText.includes('perro') || bodyText.includes('animale') || currentAmenities.mascotas || false,
+        glamping: bodyText.includes('glamping') || bodyText.includes('bungalow') || bodyText.includes('cabaña') || currentAmenities.glamping || false,
+        montana: bodyText.includes('montaña') || bodyText.includes('sierra') || currentAmenities.montana || false,
+        restaurante: bodyText.includes('restaurante') || bodyText.includes('bar') || currentAmenities.restaurante || false,
+        wifi: bodyText.includes('wifi') || bodyText.includes('internet') || currentAmenities.wifi || false
+      };
+
+      return parsedData;
+    }
+
+    // Render Data Comparison UI Rows
+    function renderDataComparisonTable(oldObj, newObj) {
+      if (!dataComparisonContainer) return;
+      dataComparisonContainer.innerHTML = '';
+
+      if (!newObj) {
+        dataComparisonContainer.innerHTML = `
+          <div class="p-8 text-center text-xs text-rose-600 font-bold">
+            ❌ No se pudieron extraer datos de la URL especificada. Revisa la URL o inténtalo de nuevo.
+          </div>
+        `;
+        return;
+      }
+
+      const fieldsToCompare = [
+        {
+          key: 'name',
+          label: 'Nombre del Camping',
+          oldVal: oldObj.name || '',
+          newVal: newObj.name || ''
+        },
+        {
+          key: 'official_url',
+          label: 'URL Web Oficial',
+          oldVal: oldObj.official_url || oldObj.website || '',
+          newVal: newObj.official_url || ''
+        },
+        {
+          key: 'address',
+          label: 'Dirección Físico-Postal',
+          oldVal: oldObj.address || '',
+          newVal: newObj.address || ''
+        },
+        {
+          key: 'description',
+          label: 'Descripción Principal',
+          oldVal: oldObj.description || '',
+          newVal: newObj.description || ''
+        },
+        {
+          key: 'rating',
+          label: 'Puntuación / Valoración',
+          oldVal: oldObj.rating ? `${oldObj.rating} ★` : 'No asignada',
+          newVal: newObj.rating ? `${newObj.rating} ★` : '',
+          rawValue: newObj.rating
+        },
+        {
+          key: 'review_count',
+          label: 'Número de Reseñas',
+          oldVal: oldObj.review_count || '120',
+          newVal: newObj.review_count || '',
+          rawValue: newObj.review_count
+        },
+        {
+          key: 'seasonality',
+          label: 'Temporada de Apertura',
+          oldVal: oldObj.seasonality || 'Abierto todo el año',
+          newVal: newObj.seasonality || ''
+        },
+        {
+          key: 'rta_license',
+          label: 'Licencia RTA Oficial',
+          oldVal: oldObj.rta_license || 'No registrada',
+          newVal: newObj.rta_license || ''
+        },
+        {
+          key: 'amenities',
+          label: 'Servicios y Comodidades',
+          oldVal: oldObj.amenities ? Object.keys(oldObj.amenities).filter(k => oldObj.amenities[k]).join(', ') : 'Ninguno',
+          newVal: newObj.amenities ? Object.keys(newObj.amenities).filter(k => newObj.amenities[k]).join(', ') : '',
+          rawValue: newObj.amenities
+        }
+      ];
+
+      fieldsToCompare.forEach(field => {
+        const hasNewVal = field.newVal !== '' && field.newVal !== null && field.newVal !== undefined;
+        const isDifferent = hasNewVal && String(field.oldVal).trim() !== String(field.newVal).trim();
+
+        const row = document.createElement('div');
+        row.className = `p-3 rounded-xl border text-xs transition flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${
+          isDifferent ? 'bg-amber-50/60 border-amber-300' : 'bg-white border-slate-200'
+        }`;
+
+        row.innerHTML = `
+          <div class="flex items-start gap-2.5 flex-1 min-w-0">
+            <input
+              type="checkbox"
+              data-field-key="${field.key}"
+              class="data-field-cb w-4 h-4 mt-0.5 rounded text-sky-600 focus:ring-sky-500 cursor-pointer shrink-0"
+              ${isDifferent ? 'checked' : ''}
+            />
+            <div class="space-y-1 flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-slate-900 text-xs">${field.label}</span>
+                ${isDifferent ? '<span class="px-1.5 py-0.5 text-[9px] font-black bg-amber-500 text-white rounded uppercase">Nuevo dato</span>' : ''}
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+                <div class="bg-slate-100 p-2 rounded-lg border border-slate-200">
+                  <span class="block text-[9px] font-bold text-slate-400 uppercase">Dato Actual (BD)</span>
+                  <span class="text-slate-800 break-words">${field.oldVal || '<em>Sin datos</em>'}</span>
+                </div>
+
+                <div class="p-2 rounded-lg border ${isDifferent ? 'bg-sky-50 border-sky-300' : 'bg-slate-50 border-slate-200'}">
+                  <span class="block text-[9px] font-bold ${isDifferent ? 'text-sky-700' : 'text-slate-400'} uppercase">Dato Re-scrapeado (Nuevo)</span>
+                  <input
+                    type="text"
+                    data-field-input="${field.key}"
+                    value="${typeof field.newVal === 'string' ? field.newVal.replace(/"/g, '&quot;') : field.newVal}"
+                    placeholder="Sin nuevo valor extraído"
+                    class="w-full mt-0.5 px-2 py-1 bg-white border border-slate-300 rounded text-[11px] font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        dataComparisonContainer.appendChild(row);
+      });
+
+      updateSelectedDataCount();
+
+      // Checkbox click listeners
+      dataComparisonContainer.querySelectorAll('.data-field-cb').forEach(cb => {
+        cb.addEventListener('change', updateSelectedDataCount);
+      });
+    }
+
+    function updateSelectedDataCount() {
+      const checkedCbs = dataComparisonContainer.querySelectorAll('.data-field-cb:checked');
+      if (dataCounterBadge) {
+        dataCounterBadge.textContent = `${checkedCbs.length} campo(s) seleccionado(s) para reemplazar`;
+      }
+    }
+
+    document.getElementById('btn-data-select-all')?.addEventListener('click', () => {
+      dataComparisonContainer.querySelectorAll('.data-field-cb').forEach(cb => cb.checked = true);
+      updateSelectedDataCount();
+    });
+
+    document.getElementById('btn-data-deselect-all')?.addEventListener('click', () => {
+      dataComparisonContainer.querySelectorAll('.data-field-cb').forEach(cb => cb.checked = false);
+      updateSelectedDataCount();
+    });
+
+    // Execute Data Rescraping Button Click
+    btnExecDataRescrape?.addEventListener('click', async () => {
+      const siteUrl = dataUrlInput?.value?.trim();
+      if (!siteUrl) {
+        alert('Por favor introduce la URL de la web del camping.');
+        return;
+      }
+
+      btnExecDataRescrape.disabled = true;
+      btnExecDataRescrape.innerHTML = '<span>⏳</span> Extrayendo Datos...';
+
+      scrapedNewDataResult = await fetchCampsiteDataFromUrl(siteUrl, currentDataRescrapeObject);
+      renderDataComparisonTable(currentDataRescrapeObject, scrapedNewDataResult);
+
+      btnExecDataRescrape.disabled = false;
+      btnExecDataRescrape.innerHTML = '<span>🔄</span> Re-scrapear Datos';
+      showNotification(`✨ Extracción finalizada para "${currentDataRescrapeObject.name}". Selecciona los campos que deseas actualizar.`, 'info');
+    });
+
+    // Save Selected Scraped Fields to Supabase DB
+    document.getElementById('btn-save-data-selection')?.addEventListener('click', async () => {
+      const checkedBoxes = dataComparisonContainer.querySelectorAll('.data-field-cb:checked');
+      if (checkedBoxes.length === 0) {
+        alert('No has seleccionado ningún campo para actualizar.');
+        return;
+      }
+
+      const saveBtn = document.getElementById('btn-save-data-selection');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span>⏳</span> Guardando en Supabase DB...';
+      }
+
+      const patchPayload = {
+        updated_at: new Date().toISOString()
+      };
+
+      checkedBoxes.forEach(cb => {
+        const key = cb.getAttribute('data-field-key');
+        const inputEl = dataComparisonContainer.querySelector(`[data-field-input="${key}"]`);
+        const val = inputEl?.value?.trim();
+
+        if (key === 'rating') {
+          patchPayload.rating = val ? parseFloat(val) : currentDataRescrapeObject.rating;
+        } else if (key === 'review_count') {
+          patchPayload.review_count = val ? parseInt(val, 10) : currentDataRescrapeObject.review_count;
+        } else if (key === 'amenities') {
+          patchPayload.amenities = scrapedNewDataResult?.amenities || currentDataRescrapeObject.amenities || {};
+        } else if (val) {
+          patchPayload[key] = val;
+        }
+      });
+
+      const res = await updateCampsiteInSupabase(currentDataRescrapeSlug, patchPayload);
+
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<span>💾</span> Guardar Cambios Seleccionados y Propagar a Supabase DB';
+      }
+
+      if (res.mode === 'supabase' && res.success) {
+        // Update local object memory & DOM row
+        if (patchPayload.name) {
+          const row = document.querySelector(`.camping-row[data-slug="${currentDataRescrapeSlug}"]`);
+          if (row) {
+            const nameSpan = row.querySelector('.font-extrabold.text-slate-900');
+            if (nameSpan) nameSpan.textContent = patchPayload.name;
+          }
+        }
+        applyAdminOverridesToDOM();
+        dataModal?.classList.add('hidden');
+        showNotification(`✅ ¡Campos actualizados e instalados exitosamente en la base de datos Supabase para "${currentDataRescrapeSlug}"!`, 'success');
+      } else if (res.mode === 'disconnected') {
+        alert(`⚠️ Supabase no está conectado.\n\nLos cambios solo se guardaron en tu navegador local. Para guardarlos en la base de datos para todos los usuarios, haz clic en "Configurar Supabase" e introduce la URL y la Anon Key de tu proyecto.`);
+        applyAdminOverridesToDOM();
+        dataModal?.classList.add('hidden');
+        showNotification(`⚠️ Cambios guardados solo localmente. Supabase desconectado.`, 'warning');
+      } else {
+        alert(`❌ Error al escribir en Supabase DB:\n\n${res.error}\n\nComprueba tu conexión y credenciales de Supabase.`);
+        showNotification(`❌ Error al escribir en Supabase DB: ${res.error}`, 'warning');
+      }
+    });
 
     // --- Photo Re-scraper Modal Management ---
     let currentRescrapeSlug = '';
@@ -1507,19 +1995,41 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
       }
 
       if (action === 'rescrape') {
-        target.disabled = true;
-        target.innerHTML = '<span>⏳</span> Re-scraping...';
-        showNotification(`🔄 Iniciando re-scraping completo para "${name}"...`, 'info');
+        console.log('RESCRAPE CLICKED', { action, slug, name });
+        currentDataRescrapeSlug = slug;
+        currentDataRescrapeObject = (Array.isArray(allCampingsList) ? allCampingsList.find(c => c && c.slug === slug) : null) || {
+          slug: slug,
+          name: name,
+          official_url: '',
+          address: '',
+          description: '',
+          rating: 4.5,
+          review_count: 120,
+          seasonality: 'Abierto todo el año'
+        };
 
-        const now = new Date().toISOString();
-        const res = await updateCampsiteInSupabase(slug, { updated_at: now, quality_score: 85 });
+        if (dataModalTitle) {
+          dataModalTitle.textContent = `🔄 Inspección, Re-scraping y Comparación de Datos para "${name}"`;
+        }
 
-        target.disabled = false;
-        target.innerHTML = '<span>✅</span> Re-scraped';
-        if (res.mode === 'supabase' && res.success) {
-          showNotification(`✨ Re-scraping y datos guardados en Supabase DB para "${name}".`, 'success');
+        const prefilledUrl = currentDataRescrapeObject.official_url || currentDataRescrapeObject.website || '';
+        if (dataUrlInput) dataUrlInput.value = prefilledUrl;
+
+        showNotification(`🔄 Iniciando re-scraping de datos para "${name}"...`, 'info');
+
+        dataModal?.classList.remove('hidden');
+
+        // Automatically trigger data rescraping if official URL exists, otherwise prompt user
+        if (prefilledUrl) {
+          if (dataComparisonContainer) {
+            dataComparisonContainer.innerHTML = '<div class="p-8 text-center text-xs text-sky-700 font-bold animate-pulse">⏳ Re-scrapeando datos de la web oficial...</div>';
+          }
+          fetchCampsiteDataFromUrl(prefilledUrl, currentDataRescrapeObject).then(result => {
+            scrapedNewDataResult = result;
+            renderDataComparisonTable(currentDataRescrapeObject, scrapedNewDataResult);
+          });
         } else {
-          showNotification(`✨ Datos re-scraped y guardados localmente para "${name}".`, 'warning');
+          renderDataComparisonTable(currentDataRescrapeObject, null);
         }
       }
 
@@ -1576,20 +2086,21 @@ const metaDesc = "Panel de administración interno para gestión de campings pro
     });
 
     function showNotification(msg, type) {
-      if (!notificationBox) return;
-      notificationBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-amber-100', 'text-amber-900', 'bg-sky-100', 'text-sky-900');
+      const box = document.getElementById('action-notification-box');
+      if (!box) return;
+      box.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-amber-100', 'text-amber-900', 'bg-sky-100', 'text-sky-900');
 
       if (type === 'success') {
-        notificationBox.classList.add('bg-emerald-100', 'text-emerald-900');
+        box.classList.add('bg-emerald-100', 'text-emerald-900');
       } else if (type === 'warning') {
-        notificationBox.classList.add('bg-amber-100', 'text-amber-900');
+        box.classList.add('bg-amber-100', 'text-amber-900');
       } else {
-        notificationBox.classList.add('bg-sky-100', 'text-sky-900');
+        box.classList.add('bg-sky-100', 'text-sky-900');
       }
 
-      notificationBox.textContent = msg;
+      box.textContent = msg;
       setTimeout(() => {
-        notificationBox.classList.add('hidden');
+        box.classList.add('hidden');
       }, 5000);
     }
 
