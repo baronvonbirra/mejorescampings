@@ -1,0 +1,115 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import { PROVINCES } from '../../lib/db';
+import { AREAS_AC } from '../../lib/areasAcData';
+
+const pageTitle = "Directorio de Áreas de Pernocta y Servicio AC en Andalucía | MejoresCampings";
+const pageDescription = "Encuentra áreas de autocaravanas y campers públicas y privadas en Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla. Vaciado de aguas, luz y coordenadas GPS.";
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Directorio de Áreas de Pernocta y Autocaravanas (Áreas AC) en Andalucía",
+  "numberOfItems": PROVINCES.length,
+  "itemListElement": PROVINCES.map((p, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": `Áreas AC en ${p.name}`,
+    "url": `https://mejorescampings.es/areas-ac/${p.slug}/`
+  }))
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">Áreas de Autocaravanas (Áreas AC)</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
+    <div class="relative z-10 max-w-3xl">
+      <span class="inline-block px-3 py-1 bg-teal-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-teal-300 mb-3 uppercase">
+        Directorio Oficial de Áreas Camper 2026
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+        Áreas de Servicio y Pernocta para Autocaravanas
+      </h1>
+      <p class="mt-4 text-slate-300 text-xs sm:text-base leading-relaxed">
+        Localiza áreas públicas y privadas autorizadas para vaciar aguas residuales, recargar agua potable, conectar electricidad y pernoctar con total tranquilidad en las 8 provincias de Andalucía.
+      </p>
+    </div>
+  </header>
+
+  <!-- Provinces Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    {PROVINCES.map((p) => {
+      const provAreas = AREAS_AC.filter((a) => a.provinceSlug === p.slug);
+      return (
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
+          <div>
+            <div class="relative h-40 w-full overflow-hidden bg-slate-100">
+              <img
+                src={p.image}
+                alt={`Áreas de autocaravanas en ${p.name}`}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+              <div class="absolute top-3 left-3">
+                <span class="text-xs font-extrabold text-emerald-950 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full shadow-2xs">
+                  {p.name}
+                </span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <h2 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition leading-snug">
+                Áreas AC en {p.name}
+              </h2>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                {provAreas.length} puntos de pernocta verificados con servicios de agua y vaciado.
+              </p>
+
+              <div class="flex flex-wrap gap-1 text-[11px] font-semibold text-slate-600 pt-1">
+                <span class="px-2 py-0.5 bg-slate-100 rounded">🚰 Agua potable</span>
+                <span class="px-2 py-0.5 bg-slate-100 rounded">🔌 Electricidad</span>
+                <span class="px-2 py-0.5 bg-slate-100 rounded">🚐 Aguas grises/negras</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-50 border-t border-slate-100 space-y-2">
+            <a
+              href={`${import.meta.env.BASE_URL}areas-ac/${p.slug}/`}
+              class="block w-full text-center py-2.5 px-4 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs transition"
+            >
+              Ver Áreas AC en {p.name} &rarr;
+            </a>
+            <a
+              href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-${p.slug}/`}
+              class="block w-full text-center py-1.5 text-[11px] font-semibold text-slate-600 hover:text-teal-700 transition"
+            >
+              Ver Normativa de Pernocta en {p.name}
+            </a>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <!-- Camper Rental Affiliate Banner -->
+  <div class="mb-10">
+    <AffiliateBanner
+      type="car_rental"
+      url="https://getrentacar.tpx.lv/3TC3lyZZ"
+      locationName="Andalucía"
+      title="Alquila tu Furgoneta Camper o Autocaravana para recorrer Andalucía"
+      description="Encuentra las mejores ofertas de alquiler de vehículos camper equipados con cocina y baño para tu ruta por las áreas pernocta de Andalucía."
+    />
+  </div>
+</Layout>

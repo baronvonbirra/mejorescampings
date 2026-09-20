@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { getCampings, getLocations, PROVINCES } from '../lib/db';
+import { POI_LIST } from '../lib/poiData';
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site ? site.href.replace(/\/$/, '') : 'https://mejorescampings.es';
@@ -20,10 +21,22 @@ export const GET: APIRoute = async ({ site }) => {
   urls.push(`${baseUrl}/politica-de-privacidad/`);
   urls.push(`${baseUrl}/politica-de-cookies/`);
   urls.push(`${baseUrl}/guias/`);
+  urls.push(`${baseUrl}/cerca-de/`);
+  urls.push(`${baseUrl}/areas-ac/`);
 
   // Editorial Pillar Guides from Content Collection
   for (const guia of editorialGuias) {
     urls.push(`${baseUrl}/guias/${guia.slug}/`);
+  }
+
+  // POI Hubs (/cerca-de/)
+  for (const poi of POI_LIST) {
+    urls.push(`${baseUrl}/cerca-de/${poi.slug}/`);
+  }
+
+  // Áreas AC Hubs (/areas-ac/)
+  for (const prov of PROVINCES) {
+    urls.push(`${baseUrl}/areas-ac/${prov.slug}/`);
   }
 
   // 2. 8 Provincial Guides & Hubs
@@ -32,15 +45,17 @@ export const GET: APIRoute = async ({ site }) => {
     urls.push(`${baseUrl}/andalucia/${prov.slug}/`);
     urls.push(`${baseUrl}/guias/normativa-pernocta-${prov.slug}/`);
   }
-  urls.push(`${baseUrl}/normativa-pernocta-malaga/`);
 
   // 3. Category pages per province
   const categorySlugs = [
     'campings-playa',
+    'campings-a-pie-de-playa',
     'campings-montana',
     'campings-con-mascotas',
     'campings-bungalows',
-    'campings-con-piscina'
+    'campings-con-bungalow-barato',
+    'campings-con-piscina',
+    'campings-con-piscina-climatizada'
   ];
   for (const prov of PROVINCES) {
     for (const cat of categorySlugs) {

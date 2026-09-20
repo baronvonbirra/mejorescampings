@@ -135,6 +135,50 @@ const jsonLdFaq = {
         </p>
       </section>
 
+      <!-- Severidad y Multas Matrix -->
+      {guide.fineMatrix && (
+        <section class="space-y-3 p-5 bg-rose-50/70 border border-rose-200/90 rounded-2xl">
+          <h3 class="font-extrabold text-rose-950 text-base flex items-center gap-2">
+            🚨 Matriz de Severidad y Multas en {guide.provinceName}
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-3 bg-white border border-rose-100 rounded-xl space-y-1">
+              <span class="font-bold text-slate-500 text-[10px] uppercase block">Rango de Sanciones Locales</span>
+              <p class="font-black text-rose-700 text-base">{guide.fineMatrix.minFine} &ndash; {guide.fineMatrix.maxFine}</p>
+            </div>
+            <div class="p-3 bg-white border border-rose-100 rounded-xl space-y-1">
+              <span class="font-bold text-slate-500 text-[10px] uppercase block">Nivel de Tolerancia Policial</span>
+              <p class="font-bold text-slate-900 text-xs">{guide.fineMatrix.toleranceLevel}</p>
+            </div>
+          </div>
+          <p class="text-xs text-rose-900/80 italic">{guide.fineMatrix.notes}</p>
+        </section>
+      )}
+
+      <!-- Puntos Calientes Municipales -->
+      {guide.hotspots && guide.hotspots.length > 0 && (
+        <section class="space-y-3">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Regulación Municipal en Puntos Calientes de {guide.provinceName}
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Detalle de las ordenanzas específicas en los municipios más concurridos o vigilados de la provincia:
+          </p>
+          <div class="space-y-3">
+            {guide.hotspots.map((hs) => (
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+                <span class="font-extrabold text-slate-900 text-sm block flex items-center gap-1.5">
+                  <span>📍</span> {hs.location}
+                </span>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  {hs.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <!-- Section 2 -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">

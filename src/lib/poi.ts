@@ -46,3 +46,26 @@ export function getNearestPois(lat: number, lng: number, limit = 3): PoiDistance
   calculated.sort((a, b) => a.distanceKm - b.distanceKm);
   return calculated.slice(0, limit);
 }
+
+export function getNearbyCampings<T extends { slug: string; lat: number; lng: number }>(
+  currentCamping: T,
+  allCampings: T[],
+  limit = 4,
+  maxRadiusKm = 35
+): (T & { distanceKm: number })[] {
+  if (!currentCamping || !currentCamping.lat || !currentCamping.lng) return [];
+
+  const calculated = allCampings
+    .filter((c) => c.slug !== currentCamping.slug && c.lat && c.lng)
+    .map((c) => {
+      const dist = haversineDistance(currentCamping.lat, currentCamping.lng, c.lat, c.lng);
+      return {
+        ...c,
+        distanceKm: Math.round(dist * 10) / 10
+      };
+    })
+    .filter((c) => c.distanceKm <= maxRadiusKm);
+
+  calculated.sort((a, b) => a.distanceKm - b.distanceKm);
+  return calculated.slice(0, limit);
+}

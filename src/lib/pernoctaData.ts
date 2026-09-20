@@ -14,6 +14,13 @@ export interface PernoctaGuideData {
   localTips: string[];
   faqs: Array<{ question: string; answer: string }>;
   heroImage?: string;
+  hotspots?: Array<{ location: string; description: string }>;
+  fineMatrix?: {
+    minFine: string;
+    maxFine: string;
+    toleranceLevel: string;
+    notes: string;
+  };
 }
 
 export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
@@ -27,7 +34,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
     summaryText: 'Todo lo que necesitas saber para viajar en camper o autocaravana por Almería. Normativa del Parque Natural Cabo de Gata-Níjar, Ley de Costas y áreas autorizadas.',
     goldenRule: 'Aparcar no es acampar: Puedes pernoctar dentro de tu furgoneta o autocaravana siempre que esté estacionada legalmente, sin sobresalir del perímetro del vehículo y sin desplegar elementos al exterior (toldos, sillas o calzos).',
     introText: 'En Almería, la acampada libre fuera de los establecimientos turísticos autorizados está prohibida por el Decreto 26/2018 de la Junta de Andalucía. Especialmente en el Parque Natural Cabo de Gata-Níjar y el Desierto de Tabernas, el SEPRONA y los agentes medioambientales aplican controles rigurosos.',
-    sanctionsRange: '60 € hasta más de 1.500 €',
+    sanctionsRange: '100 € hasta 3.000 €',
     coastalRules: 'En las calas vírgenes del Parque Natural Cabo de Gata-Níjar (como Mónsul, Los Genoveses y Cala Carbón), está estrictamente prohibido estacionar y pernoctar fuera de los aparcamientos regulados. La Ley de Costas prohíbe el estacionamiento a menos de 500 metros del Dominio Público Marítimo-Terrestre entre el ocaso y la salida del sol.',
     naturalParksRules: 'En el Parque Natural Cabo de Gata-Níjar y la Sierra de María-Los Vélez no se permite la pernocta en caminos, miradores ni pistas forestales. La estancia nocturna solo es legal en campings oficiales y áreas públicas o privadas de autocaravanas registradas.',
     naturalParksList: [
@@ -36,6 +43,26 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Paraje Natural Desierto de Tabernas',
       'Paraje Natural Karst en Yesos de Sorbas'
     ],
+    hotspots: [
+      {
+        location: 'Parque Natural Cabo de Gata-Níjar (Mónsul, Genoveses, San José)',
+        description: 'Vigilancia intensiva del SEPRONA y agentes de medio ambiente entre el ocaso y el orto. Prohibición absoluta de pernocta libre en todo el perímetro protegido.'
+      },
+      {
+        location: 'Las Negras y Agua Amarga',
+        description: 'Control policial en accesos a playas. Se permite el estacionamiento diurno, pero la pernocta exige desplazarse a campings o áreas camper de Níjar o Carboneras.'
+      },
+      {
+        location: 'Desierto de Tabernas',
+        description: 'Paraje natural protegido donde está prohibida la pernocta en ramales y pistas no asfaltadas por riesgo medioambiental.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '100 €',
+      maxFine: '3.000 €',
+      toleranceLevel: 'Alta en áreas del interior / Nula en el Parque Natural Cabo de Gata y franja costera en verano',
+      notes: 'Las sanciones máximas se imponen por pernocta o vertido de residuos en el interior del Parque Natural Cabo de Gata-Níjar.'
+    },
     localTips: [
       'Utiliza la red de campings de Níjar y Carboneras para vaciar aguas grises y negras respetando el entorno del parque.',
       'En San José y Las Negras existen estacionamientos habilitados de día, pero debes trasladarte a campings o áreas camper autorizadas por la noche.',
@@ -66,7 +93,7 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
     summaryText: 'Regulación actualizada para la pernocta en furgoneta camper y autocaravana en Tarifa, El Palmar, Conil y los Parques Naturales de Cádiz.',
     goldenRule: 'Respetar el litoral gaditano: Está permitido pernoctar en plazas de aparcamiento públicas autorizadas siempre que no despliegues elementos exteriores (toldos, mesas, calzos o patas niveladoras).',
     introText: 'La provincia de Cádiz aplica una estricta regulación de la acampada libre bajo el Decreto 26/2018 de la Junta de Andalucía. Municipios de la Costa de la Luz como Tarifa, Barbate y Vejer de la Frontera (El Palmar) cuentan con ordenanzas municipales específicas para proteger el litoral.',
-    sanctionsRange: '100 € hasta 1.500 €',
+    sanctionsRange: '100 € hasta 3.000 €',
     coastalRules: 'En Tarifa, Bolonia, Zahara de los Atunes y El Palmar, la Ley de Costas y la Policía Local sancionan duramente a los vehículos que ocupan la franja de protección del Dominio Público Marítimo-Terrestre o acampan en los pinares costeros.',
     naturalParksRules: 'En la Sierra de Grazalema y Los Alcornocales la acampada libre y la pernocta fuera de campings y áreas camper autorizadas está prohibida por la Consejería de Sostenibilidad y Medio Ambiente para evitar incendios y proteger la fauna.',
     naturalParksList: [
@@ -75,6 +102,26 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Parque Natural Del Estrecho',
       'Parque Natural Bahía de Cádiz'
     ],
+    hotspots: [
+      {
+        location: 'Tarifa y Parque Natural del Estrecho (Valdevaqueros, Los Lances, Bolonia)',
+        description: 'Ordenanza municipal extremadamente rigurosa con patrullas nocturnas. Sanciones elevadas por pernocta fuera de campings o áreas camper habilitadas.'
+      },
+      {
+        location: 'El Palmar (Vejer) y Conil de la Frontera',
+        description: 'Prohibición explícita de estacionamiento nocturno en caminos de acceso a la playa y zonas de carril. Uso obligatorio de áreas autorizadas.'
+      },
+      {
+        location: 'El Puerto de Santa María y Chiclana',
+        description: 'Existen áreas municipales y aparcamientos regulados donde la pernocta en modo estacionado está permitida fuera de la primera línea de playa.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '100 €',
+      maxFine: '3.000 €',
+      toleranceLevel: 'Moderada en áreas del interior / Nula en primera línea de playa en verano (Tarifa, El Palmar, Conil)',
+      notes: 'La Policía Local y agentes del Parque Natural del Estrecho interponen sanciones directas por despliegue de calzos o toldos.'
+    },
     localTips: [
       'En Tarifa y El Palmar utiliza los campings oficiales y áreas camper de la N-340 para evitar multas de Costas y Policía Local.',
       'En la Sierra de Grazalema planifica tu estancia con reserva previa en campings de montaña.',
@@ -113,6 +160,22 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Parque Natural Sierra de Hornachuelos',
       'Parque Natural Sierra de Cardeña y Montoro'
     ],
+    hotspots: [
+      {
+        location: 'Embalse de Iznájar',
+        description: 'Vigilancia de la Confederación Hidrográfica del Guadalquivir. Prohibida la pernocta en la orilla del embalse fuera del camping municipal y áreas reguladas.'
+      },
+      {
+        location: 'Córdoba Capital (Casco Histórico)',
+        description: 'Aparcamientos céntricos vigilados. Estacionamiento en modo aparcado permitido; áreas camper recomendadas en zonas perimetrales.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '60 €',
+      maxFine: '1.000 €',
+      toleranceLevel: 'Alta en áreas rurales interiores / Media-Baja en embalses y zonas de Parque Natural',
+      notes: 'Mayor control durante la temporada de prevención de incendios forestales en Sierra Morena.'
+    },
     localTips: [
       'Para visitar la Mezquita-Catedral de Córdoba, utiliza los estacionamientos regulados del casco urbano o campings metropolitanos como Camping Albolafia.',
       'Respetar las señales de prohibición de la Confederación Hidrográfica en la zona de embalses.',
@@ -153,6 +216,22 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Parque Natural Sierra de Huétor',
       'Geoparque de Granada'
     ],
+    hotspots: [
+      {
+        location: 'Sierra Nevada (Pradollano y Hoya de la Mora)',
+        description: 'Pernocta autorizada únicamente en el parking regulado de Los Peñones. Prohibición estricta de acampada en la franja protegida del Parque Nacional.'
+      },
+      {
+        location: 'Costa Tropical (Almuñécar, La Herradura, Salobreña)',
+        description: 'Control de la Policía Local en aparcamientos marítimos. Se permite estacionar de día; para pernoctar se recomienda acudir a los campings de la zona.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '100 €',
+      maxFine: '2.000 €',
+      toleranceLevel: 'Moderada en el Geoparque y pueblos del interior / Nula en el Parque Nacional de Sierra Nevada y playas en verano',
+      notes: 'Sanciones severas por acampada o fuego en zonas de alta montaña de Sierra Nevada.'
+    },
     localTips: [
       'Para visitar Granada capital y la Alhambra, utiliza el camping Sierra Nevada o aparcamientos específicos para camper cerca del centro.',
       'En la Alpujarra, las carreteras de montaña son estrechas; aparca solo en zonas niveladas y autorizadas en Órgiva o Trevélez.',
@@ -192,6 +271,22 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Paraje Natural Marismas del Odiel',
       'Paraje Natural Los Enebrales de Punta Umbría'
     ],
+    hotspots: [
+      {
+        location: 'Parque Nacional de Doñana y Costa de Matalascañas / Mazagón',
+        description: 'Vigilancia constante del SEPRONA. Multas máximas por pernoctar en dunas o caminos de acceso a la playa.'
+      },
+      {
+        location: 'Sierra de Aracena y Picos de Aroche',
+        description: 'Prohibición de pernocta en caminos rurales privados o dehesas. Uso recomendable de áreas camper y campings municipales.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '100 €',
+      maxFine: '3.000 €',
+      toleranceLevel: 'Media en la Sierra de Aracena / Nula en el espacio protegido de Doñana y litoral dunar',
+      notes: 'Las multas más elevadas de Andalucía se aplican en el Espacio Natural de Doñana.'
+    },
     localTips: [
       'En Mazagón y Matalascañas utiliza campings como Camping Doñana Playa para pernoctar seguro y con acceso directo a las playas.',
       'En la Sierra de Aracena respeta los caminos de dehesas privadas y aprovecha la red de campings rurales de la comarca.',
@@ -231,6 +326,22 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Parque Natural Sierra Mágina',
       'Parque Natural Sierra de Andújar'
     ],
+    hotspots: [
+      {
+        location: 'Parque Natural Sierra de Cazorla (Río Borosa, Vadillo Castril, Tranco)',
+        description: 'Vigilancia de agentes forestales en pistas de montaña. Pernocta prohibida en miradores e itinerarios del parque fuera de campings.'
+      },
+      {
+        location: 'Úbeda y Baeza',
+        description: 'Ciudades Patrimonio con áreas de autocaravanas municipales donde el estacionamiento y pernocta están permitidos.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '60 €',
+      maxFine: '1.500 €',
+      toleranceLevel: 'Alta en áreas urbanas del interior / Nula en el interior del Parque Natural de Cazorla',
+      notes: 'Controles especiales de acampada y uso del fuego durante los meses estivales.'
+    },
     localTips: [
       'Reserva tu parcela en campings emblemáticos como Camping Puente de las Herrerías cerca del nacimiento del Guadalquivir.',
       'En Úbeda y Baeza utiliza los aparcamientos municipales para autocaravanas debidamente acondicionados.',
@@ -270,6 +381,26 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Parque Natural Montes de Málaga',
       'Parque Natural Sierras de Tejeda, Almijara y Alhama'
     ],
+    hotspots: [
+      {
+        location: 'Acantilados de Maro y Nerja',
+        description: 'Prohibición total de pernocta en el Paraje Natural de los Acantilados de Maro-Cerro Gordo con vigilancia de Policía Local y Guardia Civil.'
+      },
+      {
+        location: 'Málaga Capital (El Candado y Paseo Marítimo)',
+        description: 'Se permite estacionar en áreas de servicio privadas (Málaga Beach) o aparcamientos habilitados, prohibido acampar en primera línea de playa.'
+      },
+      {
+        location: 'Serranía de Ronda y Antequera',
+        description: 'Áreas públicas autorizadas en el interior con alta tolerancia siempre que el vehículo permanezca en modo estacionamiento.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '60 €',
+      maxFine: '1.500 €',
+      toleranceLevel: 'Alta en áreas interiores (Ronda, Antequera) / Nula en acantilados de Maro y primera línea de playa en la Costa del Sol',
+      notes: 'En la Costa del Sol la Ley de Costas sanciona el estacionamiento nocturno a menos de 500 m de la playa.'
+    },
     localTips: [
       'En la Serranía de Ronda pernocta en campings reconocidos como Camping El Sur con vistas a la sierra y servicios completos.',
       'En la Costa del Sol utiliza campings costeros con acceso directo a playa como Cabopino o El Templo del Sol.',
@@ -308,6 +439,22 @@ export const PERNOCTA_GUIDES: Record<string, PernoctaGuideData> = {
       'Paisaje Protegido Corredor Verde del Guadiamar',
       'Pinares de Aznalcázar y Puebla del Río'
     ],
+    hotspots: [
+      {
+        location: 'Pinares de Aznalcázar y Puebla del Río',
+        description: 'Vigilancia forestal en accesos a pinares. Uso obligatorio de áreas camper autorizadas como Dehesa Nueva.'
+      },
+      {
+        location: 'Sierra Norte de Sevilla (Cazalla, Constantina, Cascadas del Huéznar)',
+        description: 'Control en aparcamientos de senderos y riberas. Pernocta permitida solo en zonas urbanas habilitadas o campings.'
+      }
+    ],
+    fineMatrix: {
+      minFine: '60 €',
+      maxFine: '1.200 €',
+      toleranceLevel: 'Alta en áreas periurbanas / Moderada-Baja en pinares protegidos de Aznalcázar y Sierra Norte',
+      notes: 'Estricto control sobre la emisión de ruidos y vertidos de agua en zonas recreativas.'
+    },
     localTips: [
       'Para visitar Sevilla capital, utiliza el área de autocaravanas del Puerto Gelves o el Camping Dehesa Nueva en Aznalcázar.',
       'En la Sierra Norte disfruta de las vías verdes y campings rodeados de encinas y alcornoques.',

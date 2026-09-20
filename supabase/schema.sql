@@ -169,6 +169,18 @@ CREATE INDEX IF NOT EXISTS idx_campings_province ON campings(province_slug);
 CREATE INDEX IF NOT EXISTS idx_campings_muni ON campings(province_slug, municipality_slug);
 CREATE INDEX IF NOT EXISTS idx_campings_geo ON campings USING GIST (ll_to_earth(lat, lng));
 
+-- 6. PostgreSQL / Supabase earthdistance function for nearby campsite queries
+CREATE OR REPLACE FUNCTION get_nearby_campings(lat double precision, lng double precision, current_id uuid, radius_km double precision DEFAULT 30.0, limit_num int DEFAULT 4)
+RETURNS SETOF campings AS $$
+  SELECT *
+  FROM campings
+  WHERE id != current_id
+    AND is_active = true
+    AND earth_box(ll_to_earth(lat, lng), radius_km * 1000) @> ll_to_earth(lat, lng)
+  ORDER BY earth_distance(ll_to_earth(lat, lng), ll_to_earth(campings.lat, campings.lng)) ASC
+  LIMIT limit_num;
+$$ LANGUAGE sql STABLE;
+
 -- Seed Data for Locations
 INSERT INTO locations (region, province, municipality, slug) VALUES
 ('andalucia', 'almeria', 'Níjar', 'almeria/nijar'),

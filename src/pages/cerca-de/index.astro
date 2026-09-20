@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import { POI_LIST } from '../../lib/poiData';
+
+const pageTitle = "Campings cerca de Parques Naturales y Puntos de Interés en Andalucía | MejoresCampings";
+const pageDescription = "Encuentra y compara los mejores campings ubicados cerca de parques naturales y monumentos en Andalucía: Cabo de Gata, Caminito del Rey, Doñana, Cazorla, Sierra Nevada y más.";
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hub de Parques Naturales y Puntos de Interés para Camping en Andalucía",
+  "numberOfItems": POI_LIST.length,
+  "itemListElement": POI_LIST.map((poi, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": `Campings cerca de ${poi.name}`,
+    "url": `https://mejorescampings.es/cerca-de/${poi.slug}/`
+  }))
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">Campings Cerca de Parques Naturales</span>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
+    <div class="relative z-10 max-w-3xl">
+      <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-emerald-300 mb-3 uppercase">
+        Destinos de Naturaleza 2026
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+        Campings Cerca de Parques Naturales y Monumentos
+      </h1>
+      <p class="mt-4 text-slate-300 text-xs sm:text-base leading-relaxed">
+        Planifica tu estancia en la naturaleza. Selecciona tu punto de interés o parque natural favorito en Andalucía para ver los campings más cercanos, distancias en km, tiempos de ruta y recomendaciones locales.
+      </p>
+    </div>
+  </header>
+
+  <!-- POI Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    {POI_LIST.map((poi) => (
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
+        <div>
+          <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+            <img
+              src={poi.heroImage}
+              alt={`Campings cerca de ${poi.name}`}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            <div class="absolute top-3 left-3 flex items-center gap-2">
+              <span class="text-xs font-extrabold text-emerald-950 bg-white/90 backdrop-blur-xs px-3 py-1 rounded-full shadow-2xs">
+                📍 {poi.province}
+              </span>
+            </div>
+          </div>
+          <div class="p-6 space-y-3">
+            <h2 class="font-extrabold text-slate-900 text-xl group-hover:text-emerald-600 transition leading-snug">
+              Campings cerca de {poi.name}
+            </h2>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
+              {poi.summaryText}
+            </p>
+            <div class="pt-2">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Puntos clave:</span>
+              <ul class="space-y-1">
+                {poi.highlights.slice(0, 2).map((h) => (
+                  <li class="text-xs text-slate-700 flex items-center gap-1.5 font-medium">
+                    <span class="text-emerald-600 text-xs">✓</span> {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 bg-slate-50 border-t border-slate-100">
+          <a
+            href={`${import.meta.env.BASE_URL}cerca-de/${poi.slug}/`}
+            class="block w-full text-center py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition"
+          >
+            Ver Campings Cercanos &rarr;
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Affiliate Banner: Camper & Car Rental -->
+  <div class="mb-10">
+    <AffiliateBanner
+      type="car_rental"
+      url="https://getrentacar.tpx.lv/3TC3lyZZ"
+      locationName="Andalucía"
+    />
+  </div>
+</Layout>

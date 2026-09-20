@@ -3,6 +3,26 @@ import localCampings from '../data/campings.json';
 import localLocations from '../data/locations.json';
 import localFeatures from '../data/features.json';
 
+export interface CamperSpecs {
+  max_vehicle_length_m?: number;
+  electricity_amperage?: string[];
+  plug_type?: string;
+  pitch_ground?: string;
+  shade_type?: string;
+}
+
+export interface PetPolicy {
+  allowed: boolean;
+  max_weight_kg?: number | null;
+  dog_shower?: boolean;
+  extra_fee_per_night?: string;
+}
+
+export interface ProsCons {
+  pros: string[];
+  cons: string[];
+}
+
 export interface Camping {
   id?: string;
   name: string;
@@ -38,6 +58,9 @@ export interface Camping {
   pitchup_rating?: number | null;
   photos_manifest?: Array<{ url: string; caption?: string; score?: number }> | null;
   google_place_id?: string | null;
+  camper_specs?: CamperSpecs | null;
+  pet_policy?: PetPolicy | null;
+  pros_cons?: ProsCons | null;
 }
 
 export interface Location {

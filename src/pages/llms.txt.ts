@@ -5,6 +5,10 @@ export const GET: APIRoute = async () => {
 
 > Datos estructurados y actualizados de campings, áreas pernocta y glamping en las 8 provincias de Andalucía, España.
 
+## Áreas de Autocaravanas y Campings cerca de Parques Naturales
+- /areas-ac/: Directorio de áreas de servicio y pernocta para autocaravanas (Áreas AC) en Andalucía.
+- /cerca-de/: Campings situados cerca de Parques Naturales (Cabo de Gata, Caminito del Rey, Doñana, Cazorla, Sierra Nevada, Grazalema, Torcal de Antequera).
+
 ## Sección de Guías de Pernocta por Provincia
 - /guias/: Índice central de guías de pernocta y acampada clasificadas por provincia.
 - /guias/normativa-pernocta-almeria/: Normativa en Cabo de Gata-Níjar, Ley de Costas y áreas camper en Almería.
