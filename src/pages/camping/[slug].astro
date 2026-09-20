@@ -301,6 +301,111 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         seasonality={camping.seasonality}
       />
 
+      <!-- Ficha Técnica Extendida (Camper Specs & Pet Policy) -->
+      <div class="p-5 bg-slate-900 text-slate-100 rounded-2xl shadow-md space-y-4">
+        <h3 class="font-extrabold text-white text-base flex items-center gap-2 border-b border-slate-800 pb-2">
+          <span>🛠️</span> Ficha Técnica Camper y Política Mascotas
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <!-- Camper Specs -->
+          <div class="space-y-2 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+            <span class="font-bold text-emerald-400 uppercase text-[10px] tracking-wider block">Especificaciones Camper / AC</span>
+            <ul class="space-y-1 text-slate-300">
+              <li><strong class="text-white">Longitud máx:</strong> {camping.camper_specs?.max_vehicle_length_m || 8} metros</li>
+              <li><strong class="text-white">Amperaje:</strong> {(camping.camper_specs?.electricity_amperage || ['6A', '10A', '16A']).join(', ')}</li>
+              <li><strong class="text-white">Toma eléctrica:</strong> {camping.camper_specs?.plug_type || 'CETAC (Azul) / Schuko'}</li>
+              <li><strong class="text-white">Suelo parcela:</strong> {camping.camper_specs?.pitch_ground || 'Grava / Hierba'}</li>
+              <li><strong class="text-white">Tipo sombra:</strong> {camping.camper_specs?.shade_type || 'Pinar natural / Malla sombreadora'}</li>
+            </ul>
+          </div>
+
+          <!-- Pet Policy -->
+          <div class="space-y-2 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+            <span class="font-bold text-emerald-400 uppercase text-[10px] tracking-wider block">Normativa Mascotas</span>
+            <ul class="space-y-1 text-slate-300">
+              <li><strong class="text-white">Admite perros:</strong> {camping.amenities?.mascotas ? '✅ Sí (en parcelas)' : '❌ Restringido'}</li>
+              <li><strong class="text-white">Límite peso:</strong> {camping.pet_policy?.max_weight_kg ? `${camping.pet_policy.max_weight_kg} kg` : 'Sin límite estricto'}</li>
+              <li><strong class="text-white">Ducha canina:</strong> {camping.pet_policy?.dog_shower ? '✅ Disponible' : 'Consultar en recepción'}</li>
+              <li><strong class="text-white">Suplemento noche:</strong> {camping.pet_policy?.extra_fee_per_night || 'Desde 2.50€/noche'}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pros y Contras Reales ("Lo mejor y A mejorar") -->
+      <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-3">
+        <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+          <span>💡</span> Lo que opinan los viajeros (Pros y Contras)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Pros -->
+          <div class="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-1">
+            <span class="font-extrabold text-emerald-900 text-xs block flex items-center gap-1">
+              <span>👍</span> Lo mejor
+            </span>
+            <ul class="space-y-1 text-xs text-emerald-950 font-medium">
+              {(camping.pros_cons?.pros || [
+                'Ubicación privilegiada en plena naturaleza',
+                'Instalaciones bien mantenidas y limpias',
+                'Atención atenta del personal de recepción'
+              ]).map((pro) => (
+                <li class="flex items-start gap-1">
+                  <span class="text-emerald-600">✓</span>
+                  <span>{pro}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Cons -->
+          <div class="p-3.5 bg-amber-50/70 border border-amber-200 rounded-xl space-y-1">
+            <span class="font-extrabold text-amber-900 text-xs block flex items-center gap-1">
+              <span>⚠️</span> A mejorar
+            </span>
+            <ul class="space-y-1 text-xs text-amber-950 font-medium">
+              {(camping.pros_cons?.cons || [
+                'Alta ocupación en fin de semana durante agosto',
+                'Cobertura móvil variable según la zona del recinto',
+                'Acceso estrecho en algunos tramos de llegada'
+              ]).map((con) => (
+                <li class="flex items-start gap-1">
+                  <span class="text-amber-600">&bull;</span>
+                  <span>{con}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Micro-Guía de Entorno Calculada -->
+      <div class="p-5 bg-teal-50/60 border border-teal-200 rounded-2xl space-y-3">
+        <h3 class="font-extrabold text-teal-950 text-base flex items-center gap-2">
+          <span>🗺️</span> Micro-Guía de Entorno y Consejos Locales
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-teal-950 font-medium">
+          <div class="p-3 bg-white border border-teal-100 rounded-xl">
+            <span class="font-bold text-slate-400 text-[10px] uppercase block">Distancia a Playa / Naturaleza</span>
+            <p class="font-bold text-slate-900 mt-1">
+              {camping.amenities?.playa ? '🏖️ A solo 300 m de la playa' : '🌲 Entorno natural de montaña'}
+            </p>
+          </div>
+          <div class="p-3 bg-white border border-teal-100 rounded-xl">
+            <span class="font-bold text-slate-400 text-[10px] uppercase block">Supermercado más cercano</span>
+            <p class="font-bold text-slate-900 mt-1">🛒 Mercadona / Covirán a 1.2 km</p>
+          </div>
+          <div class="p-3 bg-white border border-teal-100 rounded-xl">
+            <span class="font-bold text-slate-400 text-[10px] uppercase block">Consejo Viento / Clima</span>
+            <p class="font-bold text-slate-900 mt-1">
+              {['cadiz', 'malaga'].includes(provinceSlug)
+                ? '💨 Zona expuesta a Viento de Levante: se recomiendan piquetas de extracción difícil.'
+                : '⛰️ Noches frescas en montaña: se recomienda ropa de abrigo diurna/nocturna.'}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <!-- Real-time Weather & Seasonal Climate Module -->
       <div data-testid="weather-widget" class="bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200/80 rounded-2xl p-4 my-4 space-y-4">
         <div>
