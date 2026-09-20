@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CampingCard from '../../components/CampingCard.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import AffiliateCard from '../../components/AffiliateCard.astro';
+import LiveSupabaseSync from '../../components/LiveSupabaseSync.astro';
+import { getCampings } from '../../lib/db';
+import { POI_LIST } from '../../lib/poiData';
+
+export async function getStaticPaths() {
+  return POI_LIST.map((poi) => ({
+    params: { slug: poi.slug },
+    props: { poi }
+  }));
+}
+
+const { poi } = Astro.props;
+
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  if (!lat1 || !lon1 || !lat2 || !lon2) return 999;
+  const R = 6371; // Earth radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+const allCampings = await getCampings();
+
+// Compute distances and filter nearby campsites
+const campingsWithDistance = allCampings.map((c) => {
+  const dist = haversineDistance(poi.lat, poi.lng, c.lat, c.lng);
+  const isSameProvince = (c.province_slug || 'malaga').toLowerCase() === poi.provinceSlug.toLowerCase();
+  const timeMin = Math.max(5, Math.round((dist / 50) * 60));
+  return {
+    ...c,
+    distanceKm: Math.round(dist * 10) / 10,
+    timeMin,
+    isSameProvince
+  };
+});
+
+// Priority: within 60km OR same province
+const nearbyCampings = campingsWithDistance
+  .filter((c) => c.distanceKm < 75 || c.isSameProvince)
+  .sort((a, b) => a.distanceKm - b.distanceKm);
+
+const pageTitle = `Campings cerca de ${poi.name} (${poi.province}) | MejoresCampings`;
+const pageDescription = `Guía de los mejores campings y parcelas camper ubicados cerca de ${poi.fullName}. Tiempos de acceso, distancias en km, opiniones e instalaciones.`;
+
+const jsonLdItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `Campings cerca de ${poi.name}`,
+  "numberOfItems": nearbyCampings.length,
+  "itemListElement": nearbyCampings.map((c, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": c.name,
+    "url": `https://mejorescampings.es/camping/${c.slug}/`
+  }))
+};
+
+const jsonLdFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": poi.faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} image={poi.heroImage}>
+  <LiveSupabaseSync gridId="campings-poi-grid" configId="poi-supabase-config" />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq)} />
+
+  <!-- Breadcrumbs -->
+  <nav class="text-xs font-medium text-slate-500 mb-4 flex items-center gap-1.5 flex-wrap">
+    <a href={import.meta.env.BASE_URL} class="hover:text-slate-800">Inicio</a>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-slate-800">Parques Naturales</a>
+    <span>/</span>
+    <a href={`${import.meta.env.BASE_URL}${poi.provinceSlug}/`} class="hover:text-slate-800">{poi.province}</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold">{poi.name}</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-8 shadow-xl relative overflow-hidden">
+    <div class="relative z-10 max-w-3xl">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="inline-block px-3 py-1 bg-emerald-500/30 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-emerald-300 uppercase">
+          📍 Provincia de {poi.province}
+        </span>
+        <span class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-slate-200">
+          Guía de Naturaleza 2026
+        </span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+        Campings Cerca de {poi.fullName}
+      </h1>
+      <p class="mt-3 text-slate-300 text-xs sm:text-base max-w-2xl leading-relaxed">
+        {poi.description}
+      </p>
+    </div>
+  </header>
+
+  <!-- Highlights Bar -->
+  <div class="mb-8 p-5 bg-emerald-50 border border-emerald-200/90 rounded-2xl space-y-2">
+    <h2 class="font-extrabold text-emerald-950 text-sm sm:text-base flex items-center gap-2">
+      🌟 Qué ver y hacer en {poi.name}
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+      {poi.highlights.map((h) => (
+        <div class="flex items-center gap-2 text-xs sm:text-sm text-emerald-900 font-semibold">
+          <span class="text-emerald-600">✓</span>
+          <span>{h}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Camping Results Grid -->
+  <div class="mb-10">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block">Alojamientos Verificados</span>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+          {nearbyCampings.length} Campings más cercanos a {poi.name}
+        </h2>
+      </div>
+    </div>
+
+    <div id="campings-poi-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {nearbyCampings.map((c) => (
+        <div
+          class="camping-card-wrapper flex flex-col relative"
+          data-slug={c.slug}
+          data-ssg-promoted={c.is_promoted ? "true" : "false"}
+          data-ssg-active={c.is_active ? "true" : "false"}
+        >
+          {c.distanceKm < 100 && (
+            <div class="mb-2 inline-flex items-center gap-1 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold rounded-lg self-start">
+              <span>🚗</span>
+              <span>A solo {c.distanceKm} km ({c.timeMin} min en coche)</span>
+            </div>
+          )}
+          <CampingCard camping={c} />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Affiliate Banner: Rental Vehicles -->
+  <div class="mb-10">
+    <AffiliateBanner
+      type="car_rental"
+      url="https://getrentacar.tpx.lv/3TC3lyZZ"
+      locationName={poi.name}
+      title={`Alquila Furgoneta Camper o Coche para visitar ${poi.name}`}
+      description={`Compara precios de alquiler para recorrer la ruta de ${poi.name} y los parques naturales de ${poi.province} con total autonomía.`}
+    />
+  </div>
+
+  <!-- FAQs Section -->
+  <section class="mb-12 pt-6 border-t border-slate-200 space-y-4">
+    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Preguntas Frecuentes sobre Acampar Cerca de {poi.name}</h2>
+    <div class="space-y-3">
+      {poi.faqs.map((faq) => (
+        <details class="bg-slate-50 border border-slate-200 rounded-xl p-4 group">
+          <summary class="font-bold text-slate-900 cursor-pointer flex justify-between items-center text-sm">
+            <span>{faq.question}</span>
+            <span class="text-emerald-600 group-open:rotate-180">&darr;</span>
+          </summary>
+          <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-2">
+            {faq.answer}
+          </p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <div class="p-6 bg-gradient-to-r from-emerald-800 to-teal-900 text-white rounded-2xl shadow-md text-center space-y-3 mb-8">
+    <h3 class="text-lg font-extrabold">¿Quieres ver la normativa de pernocta libre en {poi.province}?</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 max-w-xl mx-auto">
+      Consulta las leyes locales, multas y recomendaciones para furgonetas camper y autocaravanas en {poi.province}.
+    </p>
+    <a
+      href={`${import.meta.env.BASE_URL}guias/normativa-pernocta-${poi.provinceSlug}/`}
+      class="inline-block px-6 py-3 rounded-xl bg-white text-emerald-950 font-black text-sm hover:bg-emerald-100 transition shadow-md"
+    >
+      Ver Guía de Pernocta en {poi.province} &rarr;
+    </a>
+  </div>
+</Layout>

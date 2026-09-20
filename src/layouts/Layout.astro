@@ -11,6 +11,7 @@ interface Props {
 
 const { title, description = 'MejoresCampings - Encuentra los mejores campings y glampings en Andalucía y España.', image, noindex = false } = Astro.props;
 const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80';
+const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').href;
 ---
 
 <!DOCTYPE html>
@@ -20,9 +21,10 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="twSOWF6MuHCrN5SBMKhYQZJ9FRm1Swt2VTxmpVl7KVc" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title} | MejoresCampings.es</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <!-- OpenGraph Social Preview Meta Tags -->
     <meta property="og:title" content={title} />
@@ -58,11 +60,12 @@ const ogImageUrl = image || 'https://images.unsplash.com/photo-1504280390367-361
         </a>
         <nav class="hidden sm:flex gap-6 text-sm font-medium text-slate-600">
           <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-emerald-600 font-bold text-emerald-700 transition">Guías Pernocta</a>
+          <a href={`${import.meta.env.BASE_URL}areas-ac/`} class="hover:text-emerald-600 font-bold text-teal-700 transition">Áreas AC</a>
+          <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-emerald-600 font-bold text-amber-700 transition">Parques Naturales</a>
           <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-emerald-600 transition">Málaga</a>
           <a href={`${import.meta.env.BASE_URL}malaga/campings-con-mascotas/`} class="hover:text-emerald-600 transition">Mascotas OK</a>
           <a href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`} class="hover:text-emerald-600 transition">Con Piscina</a>
           <a href={`${import.meta.env.BASE_URL}malaga/campings-playa/`} class="hover:text-emerald-600 transition">Playa</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-bungalows/`} class="hover:text-emerald-600 transition">Glamping</a>
         </nav>
       </div>
     </header>

@@ -19,10 +19,13 @@ export async function getStaticPaths() {
   // Standard category slugs
   const categorySlugs = [
     { name: 'Cerca de la Playa', slug: 'campings-playa', key: 'playa' },
+    { name: 'A Pie de Playa', slug: 'campings-a-pie-de-playa', key: 'pie_de_playa' },
     { name: 'En la Montaña', slug: 'campings-montana', key: 'montana' },
     { name: 'Mascotas Permitidas', slug: 'campings-con-mascotas', key: 'mascotas' },
     { name: 'Bungalows y Cabañas', slug: 'campings-bungalows', key: 'glamping' },
+    { name: 'Bungalows Baratos', slug: 'campings-con-bungalow-barato', key: 'bungalow_barato' },
     { name: 'Con Piscina', slug: 'campings-con-piscina', key: 'piscina' },
+    { name: 'Piscina Climatizada', slug: 'campings-con-piscina-climatizada', key: 'piscina_climatizada' },
     { name: 'Animación Infantil', slug: 'campings-con-animacion-infantil', key: 'animacion_infantil' },
     { name: 'Entorno Familiar', slug: 'campings-familiares', key: 'entorno_familiar' },
     { name: 'Glamping de Lujo', slug: 'glamping', key: 'glamping' },
@@ -93,10 +96,12 @@ if (type === 'category') {
   const key = cat.key;
 
   campings = provCampings.filter((c) => {
-    if (key === 'playa') return c.amenities?.playa || ['almeria', 'cadiz', 'huelva', 'malaga', 'granada'].includes(provincia);
+    if (key === 'playa' || key === 'pie_de_playa') return c.amenities?.playa || ['almeria', 'cadiz', 'huelva', 'malaga', 'granada'].includes(provincia);
     if (key === 'montana') return c.amenities?.montana || ['jaen', 'granada', 'cordoba', 'sevilla', 'malaga'].includes(provincia);
     if (key === 'mascotas') return c.amenities?.mascotas;
     if (key === 'glamping') return c.amenities?.glamping || c.amenities?.bungalow;
+    if (key === 'piscina_climatizada') return c.amenities?.piscina || (c.description || '').toLowerCase().includes('piscina') || (c.ai_description || '').toLowerCase().includes('piscina');
+    if (key === 'bungalow_barato') return c.amenities?.bungalow || c.amenities?.glamping || (c.price_tier !== undefined && c.price_tier <= 2);
     return c.amenities && c.amenities[key];
   });
 
@@ -136,7 +141,7 @@ const jsonLdItemList = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} noindex={campings.length < 3}>
   <LiveSupabaseSync gridId="campings-listing-grid" configId="listing-supabase-config" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdItemList)} />
 
@@ -171,6 +176,9 @@ const jsonLdItemList = {
     <a href={`${import.meta.env.BASE_URL}${provincia}/campings-playa/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-playa' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
       🏖️ Playa
     </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-a-pie-de-playa/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-a-pie-de-playa' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🌊 A Pie de Playa
+    </a>
     <a href={`${import.meta.env.BASE_URL}${provincia}/campings-montana/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-montana' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
       🏔️ Montaña
     </a>
@@ -178,16 +186,19 @@ const jsonLdItemList = {
       🐾 Mascotas
     </a>
     <a href={`${import.meta.env.BASE_URL}${provincia}/campings-bungalows/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-bungalows' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
-      ⛺ Bungalows & Glamping
+      ⛺ Bungalows
+    </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-bungalow-barato/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-bungalow-barato' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      🏷️ Bungalow Barato
     </a>
     <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-piscina/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-piscina' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
       🏊 Piscina
     </a>
+    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-piscina-climatizada/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-piscina-climatizada' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
+      ♨️ Piscina Climatizada
+    </a>
     <a href={`${import.meta.env.BASE_URL}${provincia}/campings-con-animacion-infantil/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-con-animacion-infantil' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
       ✨ Animación Infantil
-    </a>
-    <a href={`${import.meta.env.BASE_URL}${provincia}/campings-familiares/`} class={`px-3.5 py-1.5 rounded-lg text-xs transition ${slug === 'campings-familiares' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}`}>
-      👨‍👩‍👧‍👦 Familiares
     </a>
   </div>
 

@@ -281,6 +281,8 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     expect(contentIndex).toContain('<urlset');
     expect(contentIndex).toContain('https://mejorescampings.es');
     expect(contentIndex).toContain('https://mejorescampings.es/guias/');
+    expect(contentIndex).toContain('https://mejorescampings.es/cerca-de/');
+    expect(contentIndex).toContain('https://mejorescampings.es/areas-ac/');
     expect(contentIndex).toContain('https://mejorescampings.es/guias/normativa-pernocta-cadiz/');
 
     const respMalaga = await page.goto('sitemap-malaga.xml');
@@ -289,6 +291,59 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     expect(contentMalaga).toContain('<urlset');
     expect(contentMalaga).toContain('https://mejorescampings.es/andalucia/malaga/');
     expect(contentMalaga).toContain('https://mejorescampings.es/camping/');
+  });
+
+  test('Canonical URL tag is rendered in head across layout pages', async ({ page }) => {
+    await page.goto('cadiz/');
+    const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+    expect(canonical).toContain('https://mejorescampings.es/cadiz/');
+  });
+
+  test('Automatic noindex tag is output on thin content listing pages (< 3 campings)', async ({ page }) => {
+    await page.goto('sevilla/aznalcazar/');
+    const robots = await page.locator('meta[name="robots"]').getAttribute('content');
+    expect(robots).toContain('noindex');
+  });
+
+  test('Natural Parks POI Hubs (/cerca-de/) render hub and detail pages with ItemList Schema', async ({ page }) => {
+    const respHub = await page.goto('cerca-de/');
+    expect(respHub?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Campings Cerca de Parques Naturales');
+
+    const respPoi = await page.goto('cerca-de/cabo-de-gata/');
+    expect(respPoi?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Cabo de Gata');
+
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"ItemList"'))).toBe(true);
+    expect(jsonLdScripts.some(s => s.includes('"@type":"FAQPage"'))).toBe(true);
+  });
+
+  test('Motorhome Overnight Areas (/areas-ac/) render hub and provincial directory pages', async ({ page }) => {
+    const respHub = await page.goto('areas-ac/');
+    expect(respHub?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Áreas de Servicio y Pernocta');
+
+    const respProv = await page.goto('areas-ac/malaga/');
+    expect(respProv?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Áreas de Autocaravanas');
+
+    const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
+    expect(jsonLdScripts.some(s => s.includes('"@type":"ItemList"'))).toBe(true);
+  });
+
+  test('Intention category landing pages (pie de playa, piscina climatizada, bungalow barato) load correctly', async ({ page }) => {
+    const respPlaya = await page.goto('malaga/campings-a-pie-de-playa/');
+    expect(respPlaya?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('A Pie de Playa');
+
+    const respPool = await page.goto('malaga/campings-con-piscina-climatizada/');
+    expect(respPool?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Piscina Climatizada');
+
+    const respBungalow = await page.goto('malaga/campings-con-bungalow-barato/');
+    expect(respBungalow?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Bungalows Baratos');
   });
 
 });
