@@ -28,6 +28,8 @@ const detailUrl = `${import.meta.env.BASE_URL}camping/${camping.slug}/`;
       <img
         src={camping.image_url || (camping.image_urls && camping.image_urls[0])}
         alt={camping.name}
+        width="600"
+        height="400"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 camping-card-img"
         data-slug={camping.slug}
         loading="lazy"

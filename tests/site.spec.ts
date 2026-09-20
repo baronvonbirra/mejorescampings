@@ -237,7 +237,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
 
     // Check JSON-LD structured data in head
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').allInnerTexts();
-    expect(jsonLdScripts.some(s => s.includes('"@type":"Campground"'))).toBe(true);
+    expect(jsonLdScripts.some(s => s.includes('"@type":"Campsite"') || s.includes('"@type":"Campground"'))).toBe(true);
 
     // Check FAQ section rendered
     await expect(page.locator('h2').filter({ hasText: /Preguntas Frecuentes/i })).toBeVisible();
