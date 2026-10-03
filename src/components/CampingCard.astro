@@ -17,54 +17,54 @@ const imgUrl = camping.image_url || (camping.image_urls && camping.image_urls[0]
 ---
 
 <article
-  class="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white border border-stone-200/80 shadow-xs hover:shadow-md transition-all duration-300 h-full cursor-pointer"
+  class="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#F3EFEA] border border-[#E7E5E4] hover:border-[#2A4836]/30 hover:shadow-lg transition-all duration-400 ease-out h-full cursor-pointer"
   data-slug={camping.slug}
   data-ssg-promoted={camping.is_promoted ? "true" : "false"}
 >
   <!-- Main stretched link covering the entire card -->
   <a
     href={detailUrl}
-    class="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[#2D4A3E] rounded-2xl"
+    class="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[#2A4836] rounded-2xl"
     aria-label={`Ver detalles de ${camping.name}`}
   ></a>
 
   <div>
-    <!-- Full-Bleed 4:3 Aspect Ratio Image Container with Zoom Effect -->
-    <div class="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
+    <!-- Full-Bleed 4:3 Aspect Ratio Image Container with Smooth Parallax Zoom Effect -->
+    <div class="relative aspect-[4/3] w-full overflow-hidden bg-stone-200">
       <img
         src={imgUrl}
         alt={camping.name}
         width="600"
         height="450"
         style={`view-transition-name: camping-img-${camping.slug};`}
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out camping-card-img"
+        class="w-full h-full object-cover transition-transform duration-[600ms] [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[1.04] camping-card-img"
         data-slug={camping.slug}
         loading="lazy"
       />
       <span
-        class={`camping-promoted-badge absolute top-3 left-3 bg-[#2D4A3E] text-white px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider shadow-sm z-20 pointer-events-none ${camping.is_promoted ? '' : 'hidden'}`}
+        class={`camping-promoted-badge absolute top-3 left-3 bg-[#2A4836] text-white px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider shadow-xs z-20 pointer-events-none ${camping.is_promoted ? '' : 'hidden'}`}
       >
         ⭐ Promocionado
       </span>
-      <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-stone-800 shadow-xs z-20 pointer-events-none">
+      <div class="absolute top-3 right-3 bg-[#FBF9F5]/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-[#1C1917] shadow-2xs z-20 pointer-events-none border border-[#E7E5E4]">
         {priceLabels[camping.price_tier] || '€€'}
       </div>
     </div>
 
-    <!-- Body -->
-    <div class="p-5 relative z-20 pointer-events-none">
-      <div class="flex items-center justify-between text-[11px] font-semibold text-stone-500 uppercase tracking-widest mb-1">
+    <!-- Body with Discreet Text Elevation on hover -->
+    <div class="p-5 relative z-20 pointer-events-none transition-transform duration-400 ease-out group-hover:-translate-y-[3px]">
+      <div class="flex items-center justify-between text-[11px] font-semibold text-[#78716C] group-hover:text-[#1C1917] uppercase tracking-widest mb-1 transition-colors">
         <span class="capitalize">{municipalityName}, {provinceName}</span>
         {camping.rating && (
-          <span class="text-stone-800 font-bold flex items-center gap-1">★ {camping.rating}</span>
+          <span class="text-[#1C1917] font-bold flex items-center gap-1">★ {camping.rating}</span>
         )}
       </div>
 
-      <h3 class="font-serif text-xl font-bold text-stone-900 mt-1 line-clamp-1 group-hover:text-[#2D4A3E] transition-colors">
+      <h3 class="font-serif text-xl font-bold text-[#1C1917] mt-1 line-clamp-1 group-hover:text-[#2A4836] transition-colors">
         {camping.name}
       </h3>
 
-      <p class="text-xs text-stone-600 mt-1.5 line-clamp-2 leading-relaxed">
+      <p class="text-xs text-[#78716C] group-hover:text-[#1C1917]/90 mt-1.5 line-clamp-2 leading-relaxed transition-colors">
         {camping.description}
       </p>
 
@@ -73,9 +73,9 @@ const imgUrl = camping.image_url || (camping.image_urls && camping.image_urls[0]
   </div>
 
   <!-- Footer Actions -->
-  <div class="p-5 pt-0 mt-auto flex items-center justify-between border-t border-stone-100 pt-4 relative z-20 pointer-events-none">
+  <div class="p-5 pt-0 mt-auto flex items-center justify-between border-t border-[#E7E5E4] pt-4 relative z-20 pointer-events-none">
     <span
-      class="text-xs font-bold text-[#2D4A3E] group-hover:translate-x-1.5 transition-transform duration-300 inline-flex items-center gap-1"
+      class="text-xs font-bold text-[#2A4836] group-hover:translate-x-1.5 transition-transform duration-300 inline-flex items-center gap-1"
     >
       Explorar espacio &rarr;
     </span>
@@ -85,7 +85,7 @@ const imgUrl = camping.image_url || (camping.image_urls && camping.image_urls[0]
         href={camping.affiliate_url}
         target="_blank"
         rel="noopener noreferrer"
-        class="px-3.5 py-2 rounded-xl bg-[#2D4A3E] hover:bg-emerald-900 text-white text-xs font-bold shadow-2xs transition z-30 pointer-events-auto"
+        class="px-3.5 py-2 rounded-xl bg-[#2A4836] hover:bg-[#1F3628] text-white text-xs font-bold shadow-2xs transition z-30 pointer-events-auto"
       >
         Reservar
       </a>
@@ -94,14 +94,14 @@ const imgUrl = camping.image_url || (camping.image_urls && camping.image_urls[0]
         href={camping.official_url}
         target="_blank"
         rel="noopener noreferrer"
-        class="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold shadow-2xs transition z-30 pointer-events-auto"
+        class="px-3.5 py-2 rounded-xl bg-[#1C1917] hover:bg-black text-white text-xs font-bold shadow-2xs transition z-30 pointer-events-auto"
       >
         Reservar
       </a>
     ) : (
       <button
         disabled
-        class="px-3.5 py-2 rounded-xl bg-stone-200 text-stone-500 text-xs font-bold cursor-not-allowed opacity-75 z-30 pointer-events-auto"
+        class="px-3.5 py-2 rounded-xl bg-stone-200 text-[#78716C] text-xs font-bold cursor-not-allowed opacity-75 z-30 pointer-events-auto"
         title="Reserva online no disponible en este momento"
       >
         Reservar

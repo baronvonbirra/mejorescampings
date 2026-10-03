@@ -16,7 +16,7 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').h
 ---
 
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-[#FAF9F6] text-[#1C1917] font-sans antialiased selection:bg-stone-200">
+<html lang="es" class="h-full bg-[#FBF9F5] text-[#1C1917] font-sans antialiased selection:bg-stone-200">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,28 +52,32 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').h
     <!-- Astro ClientRouter for seamless page transitions -->
     <ClientRouter />
   </head>
-  <body class="flex flex-col min-h-screen pb-20 md:pb-0 bg-[#FAF9F6] text-[#1C1917]">
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-stone-200/80 shadow-2xs transition-colors duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href={import.meta.env.BASE_URL} class="flex items-center gap-2.5 font-serif text-2xl font-bold tracking-tight text-[#1C1917] hover:text-[#2D4A3E] transition-colors">
-          <svg class="w-7 h-7 text-[#2D4A3E]" fill="currentColor" viewBox="0 0 24 24">
+  <body class="flex flex-col min-h-screen pb-20 md:pb-0 bg-[#FBF9F5] text-[#1C1917]">
+    <!-- Header Navigation with Dynamic Glassmorphism (80px to 64px on scroll) -->
+    <header
+      id="site-header"
+      class="sticky top-0 z-40 bg-[#FBF9F5]/85 backdrop-blur-md border-b border-[#E7E5E4] shadow-2xs transition-all duration-300 h-20"
+      style="backdrop-filter: blur(12px); background-color: rgba(251, 249, 245, 0.85);"
+    >
+      <div id="header-inner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between transition-all duration-300">
+        <a href={import.meta.env.BASE_URL} class="flex items-center gap-2.5 font-serif text-2xl font-bold tracking-tight text-[#1C1917] hover:text-[#2A4836] transition-colors">
+          <svg class="w-7 h-7 text-[#2A4836]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2L2 22h20L12 2zm0 4.2L18.6 19H5.4L12 6.2z"/>
           </svg>
           <span class="tracking-tight">MejoresCampings</span>
         </a>
-        <nav class="hidden sm:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-stone-600">
-          <a href={`${import.meta.env.BASE_URL}mapa/`} class="hover:text-[#2D4A3E] transition-colors flex items-center gap-1 font-bold text-stone-900">
-            <span class="inline-block w-2 h-2 rounded-full bg-[#2D4A3E]"></span>
+        <nav class="hidden sm:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+          <a href={`${import.meta.env.BASE_URL}mapa/`} class="hover:text-[#2A4836] transition-colors flex items-center gap-1 font-bold text-[#1C1917]">
+            <span class="inline-block w-2 h-2 rounded-full bg-[#2A4836]"></span>
             Mapa Split
           </a>
-          <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-[#2D4A3E] transition-colors">Guías Pernocta</a>
-          <a href={`${import.meta.env.BASE_URL}areas-ac/`} class="hover:text-[#2D4A3E] transition-colors">Áreas AC</a>
-          <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-[#2D4A3E] transition-colors">Parques Naturales</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-[#2D4A3E] transition-colors">Málaga</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-mascotas/`} class="hover:text-[#2D4A3E] transition-colors">Mascotas OK</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`} class="hover:text-[#2D4A3E] transition-colors">Con Piscina</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-playa/`} class="hover:text-[#2D4A3E] transition-colors">Playa</a>
+          <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-[#2A4836] transition-colors">Guías Pernocta</a>
+          <a href={`${import.meta.env.BASE_URL}areas-ac/`} class="hover:text-[#2A4836] transition-colors">Áreas AC</a>
+          <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-[#2A4836] transition-colors">Parques Naturales</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-[#2A4836] transition-colors">Málaga</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-mascotas/`} class="hover:text-[#2A4836] transition-colors">Mascotas OK</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`} class="hover:text-[#2A4836] transition-colors">Con Piscina</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-playa/`} class="hover:text-[#2A4836] transition-colors">Playa</a>
         </nav>
       </div>
     </header>
@@ -85,5 +89,60 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').h
 
     <!-- Footer -->
     <Footer />
+
+    <script is:inline>
+      const setupLayoutInteractions = () => {
+        // Dynamic Glassmorphism Header height & backdrop blur on scroll
+        const header = document.getElementById('site-header');
+        if (header) {
+          const handleScroll = () => {
+            if (window.scrollY > 30) {
+              header.classList.remove('h-20');
+              header.classList.add('h-16');
+              header.style.backgroundColor = 'rgba(251, 249, 245, 0.95)';
+              header.style.backdropFilter = 'blur(16px)';
+            } else {
+              header.classList.remove('h-16');
+              header.classList.add('h-20');
+              header.style.backgroundColor = 'rgba(251, 249, 245, 0.85)';
+              header.style.backdropFilter = 'blur(12px)';
+            }
+          };
+
+          window.addEventListener('scroll', handleScroll, { passive: true });
+          handleScroll();
+        }
+
+        // Scroll-Triggered Reveals (.reveal-on-scroll with 50ms stagger)
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        if (revealElements.length > 0) {
+          if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const el = entry.target;
+                  const index = Array.from(revealElements).indexOf(el) % 12;
+                  setTimeout(() => {
+                    el.classList.add('is-visible');
+                  }, index * 50);
+                  observer.unobserve(el);
+                }
+              });
+            }, { threshold: 0.01 });
+
+            revealElements.forEach((el) => observer.observe(el));
+          } else {
+            revealElements.forEach((el) => el.classList.add('is-visible'));
+          }
+        }
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupLayoutInteractions);
+      } else {
+        setupLayoutInteractions();
+      }
+      document.addEventListener('astro:page-load', setupLayoutInteractions);
+    </script>
   </body>
 </html>
