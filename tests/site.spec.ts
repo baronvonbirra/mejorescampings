@@ -6,7 +6,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     const response = await page.goto('./');
     expect(response?.status()).toBe(200);
 
-    await expect(page.locator('h1')).toContainText('Encuentra tu camping ideal en Andalucía');
+    await expect(page.locator('h1')).toContainText('Explora Andalucía en Camper o Tienda');
     await expect(page.getByRole('heading', { name: 'Glamping de Lujo' })).toBeVisible();
     await expect(page.locator('div[data-slug] a[aria-label*="Ver detalles de"]:visible').first()).toBeVisible();
 

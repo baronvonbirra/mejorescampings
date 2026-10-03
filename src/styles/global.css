@@ -14,6 +14,15 @@
   --color-accent-terracotta: #C85A32;
   --color-border-color: #E7E5E4;
 
+  /* Spec Design Tokens */
+  --color-canvas-main: #FBF9F5;
+  --color-canvas-card: #F3EFEA;
+  --color-stoneText-main: #1C1917;
+  --color-stoneText-muted: #78716C;
+  --color-brand-olive: #2A4836;
+  --color-brand-olive-hover: #1F3628;
+  --color-line: #E7E5E4;
+
   /* Curvas de aceleración suave editorial */
   --ease-editorial: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
