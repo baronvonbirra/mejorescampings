@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 
@@ -15,7 +16,7 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').h
 ---
 
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-slate-50 text-slate-900">
+<html lang="es" class="h-full bg-[#FAF9F6] text-[#1C1917] font-sans antialiased selection:bg-stone-200">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,25 +48,32 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://mejorescampings.es').h
           document.head.appendChild(script);
       })();
     </script>
+
+    <!-- Astro ClientRouter for seamless page transitions -->
+    <ClientRouter />
   </head>
-  <body class="flex flex-col min-h-screen pb-20 md:pb-0">
+  <body class="flex flex-col min-h-screen pb-20 md:pb-0 bg-[#FAF9F6] text-[#1C1917]">
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <header class="sticky top-0 z-40 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-stone-200/80 shadow-2xs transition-colors duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href={import.meta.env.BASE_URL} class="flex items-center gap-2 font-black text-2xl tracking-tight text-emerald-600">
-          <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+        <a href={import.meta.env.BASE_URL} class="flex items-center gap-2.5 font-serif text-2xl font-bold tracking-tight text-[#1C1917] hover:text-[#2D4A3E] transition-colors">
+          <svg class="w-7 h-7 text-[#2D4A3E]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2L2 22h20L12 2zm0 4.2L18.6 19H5.4L12 6.2z"/>
           </svg>
-          MejoresCampings
+          <span class="tracking-tight">MejoresCampings</span>
         </a>
-        <nav class="hidden sm:flex gap-6 text-sm font-medium text-slate-600">
-          <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-emerald-600 font-bold text-emerald-700 transition">Guías Pernocta</a>
-          <a href={`${import.meta.env.BASE_URL}areas-ac/`} class="hover:text-emerald-600 font-bold text-teal-700 transition">Áreas AC</a>
-          <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-emerald-600 font-bold text-amber-700 transition">Parques Naturales</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-emerald-600 transition">Málaga</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-mascotas/`} class="hover:text-emerald-600 transition">Mascotas OK</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`} class="hover:text-emerald-600 transition">Con Piscina</a>
-          <a href={`${import.meta.env.BASE_URL}malaga/campings-playa/`} class="hover:text-emerald-600 transition">Playa</a>
+        <nav class="hidden sm:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-stone-600">
+          <a href={`${import.meta.env.BASE_URL}mapa/`} class="hover:text-[#2D4A3E] transition-colors flex items-center gap-1 font-bold text-stone-900">
+            <span class="inline-block w-2 h-2 rounded-full bg-[#2D4A3E]"></span>
+            Mapa Split
+          </a>
+          <a href={`${import.meta.env.BASE_URL}guias/`} class="hover:text-[#2D4A3E] transition-colors">Guías Pernocta</a>
+          <a href={`${import.meta.env.BASE_URL}areas-ac/`} class="hover:text-[#2D4A3E] transition-colors">Áreas AC</a>
+          <a href={`${import.meta.env.BASE_URL}cerca-de/`} class="hover:text-[#2D4A3E] transition-colors">Parques Naturales</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/`} class="hover:text-[#2D4A3E] transition-colors">Málaga</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-mascotas/`} class="hover:text-[#2D4A3E] transition-colors">Mascotas OK</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-con-piscina/`} class="hover:text-[#2D4A3E] transition-colors">Con Piscina</a>
+          <a href={`${import.meta.env.BASE_URL}malaga/campings-playa/`} class="hover:text-[#2D4A3E] transition-colors">Playa</a>
         </nav>
       </div>
     </header>
