@@ -1,39 +1,132 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CampingCard from '../components/CampingCard.astro';
+import { getCampings } from '../lib/db';
+
+const allCampings = await getCampings();
+const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'disabled');
 ---
 
-<Layout title="Mapa Interactivo de Campings en Andalucía | MejoresCampings" description="Explora en el mapa todos los campings y glampings verificados en Andalucía. Filtra por ubicación y encuentra tu próximo destino camper.">
+<Layout title="Mapa Interactivo de Campings en Andalucía | MejoresCampings" description="Explora en el mapa split view todos los campings y glampings verificados en Andalucía. Filtra por categoría y encuentra tu próximo destino camper.">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 
-  <div class="space-y-4">
+  <div class="space-y-4 max-w-7xl mx-auto">
     <!-- Header Banner -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 text-white p-6 rounded-2xl shadow-md border border-slate-800">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-2xs border border-stone-200/80">
       <div>
-        <div class="flex items-center gap-2 mb-1">
-          <span class="px-2.5 py-0.5 bg-emerald-500/20 text-emerald-400 font-bold text-[10px] rounded-full uppercase tracking-wider">
-            Mapa Interactivo
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="px-2.5 py-0.5 bg-[#2D4A3E]/10 text-[#2D4A3E] font-bold text-[10px] rounded-full uppercase tracking-wider">
+            Reportaje Interactivo • Vista Dividida
           </span>
-          <span class="text-slate-400 text-xs">OpenStreetMap</span>
+          <span class="text-stone-400 text-xs">OpenStreetMap</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Mapa de Campings en Andalucía</h1>
-        <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-          Haz clic en cualquier marcador para ver detalles, fotos y enlace directo a la ficha del camping.
+        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
+          Mapa de Campings en Andalucía
+        </h1>
+        <p class="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl leading-relaxed">
+          Pasa el cursor por las tarjetas para fijar la ubicación en el mapa o interactúa con los pins para resaltar los detalles de cada espacio.
         </p>
       </div>
-      <a href={import.meta.env.BASE_URL} class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition text-center shrink-0">
-        &larr; Volver al Inicio
-      </a>
+
+      <!-- Mobile/Tablet View Switcher Toggle (< 1024px) -->
+      <div class="flex items-center gap-2 lg:hidden bg-stone-100 p-1 rounded-xl shrink-0 self-start sm:self-auto">
+        <button
+          id="btn-view-map"
+          type="button"
+          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-stone-900 shadow-2xs cursor-pointer"
+        >
+          🗺️ Mapa
+        </button>
+        <button
+          id="btn-view-list"
+          type="button"
+          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition text-stone-600 hover:text-stone-900 cursor-pointer"
+        >
+          📋 Lista (<span id="mobile-count">{activeCampings.length}</span>)
+        </button>
+      </div>
     </div>
 
-    <!-- Map Container Container -->
-    <div class="relative w-full h-[calc(100vh-250px)] min-h-[500px] rounded-2xl overflow-hidden border border-slate-200 shadow-lg z-10">
-      <div id="map-container" class="w-full h-full bg-slate-100"></div>
+    <!-- Floating Filter Pills Bar -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs font-medium" id="filter-pills-container">
+      <button
+        type="button"
+        data-filter="all"
+        class="filter-pill active border border-[#2D4A3E] bg-[#2D4A3E] text-white px-4 py-2 rounded-full font-bold shadow-2xs shrink-0 cursor-pointer transition-all"
+      >
+        Todos ({activeCampings.length})
+      </button>
+      <button
+        type="button"
+        data-filter="glamping"
+        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+      >
+        ⛺ Glamping
+      </button>
+      <button
+        type="button"
+        data-filter="playa"
+        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+      >
+        🏖️ A Pie de Playa
+      </button>
+      <button
+        type="button"
+        data-filter="mascotas"
+        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+      >
+        🐾 Mascotas OK
+      </button>
+      <button
+        type="button"
+        data-filter="piscina"
+        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+      >
+        🏊 Con Piscina
+      </button>
+      <button
+        type="button"
+        data-filter="montana"
+        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+      >
+        ⛰️ Montaña
+      </button>
+    </div>
+
+    <!-- Split View Container (50% Map / 50% Editorial Card List on Desktop) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start relative">
+      <!-- Left Column: Interactive Map -->
+      <div id="map-wrapper" class="w-full lg:sticky lg:top-20 h-[500px] lg:h-[calc(100vh-9.5rem)] rounded-2xl overflow-hidden border border-stone-200/80 shadow-md z-10 bg-stone-100">
+        <div id="map-container" class="w-full h-full"></div>
+      </div>
+
+      <!-- Right Column: Scrollable Card Listing -->
+      <div id="list-wrapper" class="hidden lg:block lg:h-[calc(100vh-9.5rem)] lg:overflow-y-auto lg:pr-2 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="map-campings-grid">
+          {activeCampings.map((camping) => (
+            <div
+              class="map-card-item flex flex-col transition-all duration-300 rounded-2xl"
+              data-slug={camping.slug}
+              data-lat={camping.lat}
+              data-lng={camping.lng}
+              data-glamping={camping.amenities?.glamping ? "true" : "false"}
+              data-playa={camping.amenities?.playa ? "true" : "false"}
+              data-mascotas={camping.amenities?.mascotas ? "true" : "false"}
+              data-piscina={camping.amenities?.piscina ? "true" : "false"}
+              data-montana={camping.amenities?.montana ? "true" : "false"}
+            >
+              <CampingCard camping={camping} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 
   <script is:inline>
     document.addEventListener('DOMContentLoaded', async () => {
+      // Ensure Leaflet library is loaded
       if (typeof L === 'undefined') {
         await new Promise((resolve) => {
           const interval = setInterval(() => {
@@ -45,6 +138,7 @@ import Layout from '../layouts/Layout.astro';
         });
       }
 
+      // Initialize map centered on Andalucia
       const map = L.map('map-container').setView([37.3826, -4.5000], 8);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,27 +146,129 @@ import Layout from '../layouts/Layout.astro';
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
 
+      const markersMap = {};
+      const cardNodes = Array.from(document.querySelectorAll('.map-card-item'));
+
       try {
         const baseUrl = document.querySelector('base')?.getAttribute('href') || '/';
         const res = await fetch(`${baseUrl}api/campings-geo.json`);
-        if (!res.ok) return;
-        const campings = await res.json();
+        if (res.ok) {
+          const campingsGeo = await res.json();
 
-        campings.forEach((c) => {
-          if (c.latitude && c.longitude) {
-            const popupContent = `
-              <div class="p-1 max-w-[200px]">
-                <img src="${c.main_image}" alt="${c.name}" class="w-full h-24 object-cover rounded-md mb-2 shadow-xs"/>
-                <h4 class="font-bold text-xs text-slate-900 mb-0.5 line-clamp-1">${c.name}</h4>
-                <p class="text-[11px] text-slate-500 mb-2 capitalize">${c.municipality}</p>
-                <a href="${baseUrl}camping/${c.slug}/" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg block text-center font-bold transition shadow-2xs">Ver Ficha &rarr;</a>
-              </div>
-            `;
-            L.marker([c.latitude, c.longitude]).addTo(map).bindPopup(popupContent);
-          }
-        });
+          campingsGeo.forEach((c) => {
+            if (c.latitude && c.longitude) {
+              const popupContent = `
+                <div class="p-1 max-w-[210px] font-sans">
+                  <img src="${c.main_image}" alt="${c.name}" class="w-full h-24 object-cover rounded-lg mb-2 shadow-xs"/>
+                  <h4 class="font-serif font-bold text-xs text-stone-900 mb-0.5 line-clamp-1">${c.name}</h4>
+                  <p class="text-[11px] text-stone-500 mb-2 capitalize">${c.municipality}, ${c.province || 'Andalucía'}</p>
+                  <a href="${baseUrl}camping/${c.slug}/" class="text-xs bg-[#2D4A3E] hover:bg-emerald-900 text-white px-3 py-1.5 rounded-lg block text-center font-bold transition shadow-2xs">Explorar espacio &rarr;</a>
+                </div>
+              `;
+
+              const marker = L.marker([c.latitude, c.longitude]).addTo(map).bindPopup(popupContent);
+              markersMap[c.slug] = marker;
+
+              // Marker click behavior: highlight and scroll card into view
+              marker.on('click', () => {
+                const card = document.querySelector(`.map-card-item[data-slug="${c.slug}"]`);
+                if (card) {
+                  document.querySelectorAll('.map-card-item').forEach(el => el.classList.remove('ring-2', 'ring-[#2D4A3E]', 'scale-[1.01]'));
+                  card.classList.add('ring-2', 'ring-[#2D4A3E]', 'scale-[1.01]');
+                  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+              });
+            }
+          });
+        }
       } catch (err) {
         console.error('Failed to load campings geo JSON:', err);
+      }
+
+      // Card hover interaction: trigger map popup on marker
+      cardNodes.forEach((card) => {
+        const slug = card.getAttribute('data-slug');
+        if (!slug) return;
+
+        card.addEventListener('mouseenter', () => {
+          const marker = markersMap[slug];
+          if (marker) {
+            marker.openPopup();
+          }
+        });
+      });
+
+      // Filter Pills Logic
+      const filterPills = document.querySelectorAll('.filter-pill');
+
+      filterPills.forEach((pill) => {
+        pill.addEventListener('click', () => {
+          const filter = pill.getAttribute('data-filter') || 'all';
+
+          // Update active pill UI
+          filterPills.forEach(p => {
+            p.classList.remove('bg-[#2D4A3E]', 'text-white', 'border-[#2D4A3E]', 'active');
+            p.classList.add('bg-white', 'text-stone-700', 'border-stone-200');
+          });
+          pill.classList.remove('bg-white', 'text-stone-700', 'border-stone-200');
+          pill.classList.add('bg-[#2D4A3E]', 'text-white', 'border-[#2D4A3E]', 'active');
+
+          let visibleCount = 0;
+
+          // Filter card items
+          cardNodes.forEach((card) => {
+            const matches = filter === 'all' || card.getAttribute(`data-${filter}`) === 'true';
+            const slug = card.getAttribute('data-slug');
+
+            if (matches) {
+              card.style.display = 'flex';
+              visibleCount++;
+              if (slug && markersMap[slug]) {
+                if (!map.hasLayer(markersMap[slug])) {
+                  map.addLayer(markersMap[slug]);
+                }
+              }
+            } else {
+              card.style.display = 'none';
+              if (slug && markersMap[slug]) {
+                if (map.hasLayer(markersMap[slug])) {
+                  map.removeLayer(markersMap[slug]);
+                }
+              }
+            }
+          });
+
+          const countSpan = document.getElementById('mobile-count');
+          if (countSpan) countSpan.textContent = visibleCount.toString();
+        });
+      });
+
+      // Mobile Toggle Between Map and List View
+      const btnViewMap = document.getElementById('btn-view-map');
+      const btnViewList = document.getElementById('btn-view-list');
+      const mapWrapper = document.getElementById('map-wrapper');
+      const listWrapper = document.getElementById('list-wrapper');
+
+      if (btnViewMap && btnViewList && mapWrapper && listWrapper) {
+        btnViewMap.addEventListener('click', () => {
+          mapWrapper.classList.remove('hidden');
+          listWrapper.classList.add('hidden');
+          btnViewMap.classList.add('bg-white', 'text-stone-900', 'shadow-2xs');
+          btnViewMap.classList.remove('text-stone-600');
+          btnViewList.classList.remove('bg-white', 'text-stone-900', 'shadow-2xs');
+          btnViewList.classList.add('text-stone-600');
+          map.invalidateSize();
+        });
+
+        btnViewList.addEventListener('click', () => {
+          listWrapper.classList.remove('hidden');
+          listWrapper.classList.remove('lg:block');
+          mapWrapper.classList.add('hidden');
+          btnViewList.classList.add('bg-white', 'text-stone-900', 'shadow-2xs');
+          btnViewList.classList.remove('text-stone-600');
+          btnViewMap.classList.remove('bg-white', 'text-stone-900', 'shadow-2xs');
+          btnViewMap.classList.add('text-stone-600');
+        });
       }
     });
   </script>
