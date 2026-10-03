@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import AffiliateCallout from '../../components/AffiliateCallout.astro';
+import { getCampings, PROVINCES } from '../../lib/db';
 
 export async function getStaticPaths() {
   const guias = await getCollection('guias');
@@ -72,6 +73,17 @@ const affiliateConfigs: Record<string, { title: string; description: string; but
 };
 
 const guideAffiliate = affiliateConfigs[guia.slug];
+
+const relatedProvince = guia.data.relatedProvince;
+const allCampings = await getCampings();
+
+const provInfo = PROVINCES.find((p) => p.slug === (relatedProvince || '').toLowerCase());
+const relatedProvinceName = provInfo ? provInfo.name : relatedProvince ? (relatedProvince.charAt(0).toUpperCase() + relatedProvince.slice(1)) : '';
+
+const matchingCampings = relatedProvince
+  ? allCampings.filter((c) => (c.province_slug || 'malaga').toLowerCase() === relatedProvince.toLowerCase())
+  : allCampings;
+const topCampings = matchingCampings.slice(0, 4);
 ---
 
 <Layout title={guia.data.title} description={guia.data.description} image={heroUrl}>
@@ -151,6 +163,29 @@ const guideAffiliate = affiliateConfigs[guia.slug];
         url={guideAffiliate.url}
         badge={guideAffiliate.badge}
       />
+    )}
+
+    <!-- Campings Recomendados Silo Section -->
+    {relatedProvince && topCampings.length > 0 && (
+      <section class="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Campings verificados en {relatedProvinceName}</h3>
+        <p class="text-sm text-gray-600 mb-6">Si prefieres acampar con todos los servicios y sin riesgos de sanción:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {topCampings.map((c) => {
+            const img = c.image_url || (c.image_urls && c.image_urls[0]) || 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80';
+            const muniName = (c.municipality_slug || '').split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()) || relatedProvinceName;
+            return (
+              <a href={`${import.meta.env.BASE_URL}camping/${c.slug}/`} class="p-4 bg-white rounded-xl border hover:border-emerald-500 transition-colors flex gap-4 items-center group shadow-2xs">
+                <img src={img} alt={c.name} class="w-16 h-16 rounded-lg object-cover shrink-0" />
+                <div>
+                  <h4 class="font-bold text-sm text-gray-900 group-hover:text-emerald-600 transition">{c.name}</h4>
+                  <span class="text-xs text-gray-500 block capitalize">{muniName}</span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </section>
     )}
 
     <!-- Related Internal Links & Hubs -->

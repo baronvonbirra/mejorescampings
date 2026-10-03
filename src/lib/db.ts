@@ -39,6 +39,8 @@ export interface Camping {
   image_urls: string[];
   affiliate_url?: string | null;
   official_url?: string | null;
+  booking_affiliate_url?: string | null;
+  tiqets_location_id?: string | null;
   price_tier: number;
   is_active: boolean;
   is_promoted?: boolean;
@@ -189,6 +191,8 @@ export async function getCampings(): Promise<Camping[]> {
         return data.map((item: any) => ({
           ...item,
           affiliate_url: item.affiliate_url || item.aff_url || null,
+          booking_affiliate_url: item.booking_affiliate_url || null,
+          tiqets_location_id: item.tiqets_location_id || null,
           image_urls: item.image_urls || (item.image_url ? [item.image_url] : []),
           related_affiliates: item.related_affiliates || {},
           faqs_json: item.faqs_json && item.faqs_json.length > 0 ? item.faqs_json : [
@@ -263,6 +267,8 @@ export async function getCampingBySlug(slug: string): Promise<Camping | undefine
         return {
           ...data,
           affiliate_url: data.affiliate_url || data.aff_url || null,
+          booking_affiliate_url: data.booking_affiliate_url || null,
+          tiqets_location_id: data.tiqets_location_id || null,
           image_urls: data.image_urls || (data.image_url ? [data.image_url] : []),
           related_affiliates: data.related_affiliates || {},
           faqs_json: data.faqs_json && data.faqs_json.length > 0 ? data.faqs_json : [

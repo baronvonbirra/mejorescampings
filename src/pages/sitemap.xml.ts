@@ -15,6 +15,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   // 1. Root Home, Corporate Trust Pages & Guides Hub
   urls.push(`${baseUrl}/`);
+  urls.push(`${baseUrl}/mapa/`);
   urls.push(`${baseUrl}/sobre-nosotros/`);
   urls.push(`${baseUrl}/contacto/`);
   urls.push(`${baseUrl}/aviso-legal/`);
