@@ -5,6 +5,7 @@ import { getCampings } from '../lib/db';
 
 const allCampings = await getCampings();
 const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'disabled');
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Mapa Interactivo de Campings en Andalucía | MejoresCampings" description="Explora en el mapa split view todos los campings y glampings verificados en Andalucía. Filtra por categoría y encuentra tu próximo destino camper.">
@@ -13,35 +14,35 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
 
   <div class="space-y-4 max-w-7xl mx-auto">
     <!-- Header Banner -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-2xs border border-stone-200/80">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-[#F3EFEA] p-6 rounded-2xl border border-[#E7E5E4] shadow-2xs">
       <div>
         <div class="flex items-center gap-2 mb-1.5">
-          <span class="px-2.5 py-0.5 bg-[#2D4A3E]/10 text-[#2D4A3E] font-bold text-[10px] rounded-full uppercase tracking-wider">
+          <span class="px-2.5 py-0.5 bg-[#2A4836]/10 text-[#2A4836] font-bold text-[10px] rounded-full uppercase tracking-wider">
             Reportaje Interactivo • Vista Dividida
           </span>
-          <span class="text-stone-400 text-xs">OpenStreetMap</span>
+          <span class="text-[#78716C] text-xs">OpenStreetMap</span>
         </div>
-        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
+        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-[#1C1917] tracking-tight">
           Mapa de Campings en Andalucía
         </h1>
-        <p class="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl leading-relaxed">
+        <p class="text-xs sm:text-sm text-[#78716C] mt-1 max-w-2xl leading-relaxed">
           Pasa el cursor por las tarjetas para fijar la ubicación en el mapa o interactúa con los pins para resaltar los detalles de cada espacio.
         </p>
       </div>
 
       <!-- Mobile/Tablet View Switcher Toggle (< 1024px) -->
-      <div class="flex items-center gap-2 lg:hidden bg-stone-100 p-1 rounded-xl shrink-0 self-start sm:self-auto">
+      <div class="flex items-center gap-2 lg:hidden bg-stone-200/60 p-1 rounded-xl shrink-0 self-start sm:self-auto">
         <button
           id="btn-view-map"
           type="button"
-          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-stone-900 shadow-2xs cursor-pointer"
+          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-[#1C1917] shadow-2xs cursor-pointer"
         >
           🗺️ Mapa
         </button>
         <button
           id="btn-view-list"
           type="button"
-          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition text-stone-600 hover:text-stone-900 cursor-pointer"
+          class="flex-1 px-3 py-1.5 rounded-lg text-xs font-bold transition text-[#78716C] hover:text-[#1C1917] cursor-pointer"
         >
           📋 Lista (<span id="mobile-count">{activeCampings.length}</span>)
         </button>
@@ -53,42 +54,42 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
       <button
         type="button"
         data-filter="all"
-        class="filter-pill active border border-[#2D4A3E] bg-[#2D4A3E] text-white px-4 py-2 rounded-full font-bold shadow-2xs shrink-0 cursor-pointer transition-all"
+        class="filter-pill active border border-[#2A4836] bg-[#2A4836] text-white px-4 py-2 rounded-full font-bold shadow-2xs shrink-0 cursor-pointer transition-all"
       >
         Todos ({activeCampings.length})
       </button>
       <button
         type="button"
         data-filter="glamping"
-        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+        class="filter-pill border border-[#E7E5E4] bg-white hover:bg-[#F3EFEA] text-[#1C1917] px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
       >
         ⛺ Glamping
       </button>
       <button
         type="button"
         data-filter="playa"
-        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+        class="filter-pill border border-[#E7E5E4] bg-white hover:bg-[#F3EFEA] text-[#1C1917] px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
       >
         🏖️ A Pie de Playa
       </button>
       <button
         type="button"
         data-filter="mascotas"
-        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+        class="filter-pill border border-[#E7E5E4] bg-white hover:bg-[#F3EFEA] text-[#1C1917] px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
       >
         🐾 Mascotas OK
       </button>
       <button
         type="button"
         data-filter="piscina"
-        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+        class="filter-pill border border-[#E7E5E4] bg-white hover:bg-[#F3EFEA] text-[#1C1917] px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
       >
         🏊 Con Piscina
       </button>
       <button
         type="button"
         data-filter="montana"
-        class="filter-pill border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
+        class="filter-pill border border-[#E7E5E4] bg-white hover:bg-[#F3EFEA] text-[#1C1917] px-4 py-2 rounded-full shrink-0 cursor-pointer transition-all"
       >
         ⛰️ Montaña
       </button>
@@ -97,8 +98,8 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
     <!-- Split View Container (50% Map / 50% Editorial Card List on Desktop) -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start relative">
       <!-- Left Column: Interactive Map -->
-      <div id="map-wrapper" class="w-full lg:sticky lg:top-20 h-[500px] lg:h-[calc(100vh-9.5rem)] rounded-2xl overflow-hidden border border-stone-200/80 shadow-md z-10 bg-stone-100">
-        <div id="map-container" class="w-full h-full"></div>
+      <div id="map-wrapper" class="w-full lg:sticky lg:top-20 h-[500px] lg:h-[calc(100vh-9.5rem)] rounded-2xl overflow-hidden border border-[#E7E5E4] shadow-md z-10 bg-[#F3EFEA]">
+        <div id="map-container" class="w-full h-full min-h-[400px]"></div>
       </div>
 
       <!-- Right Column: Scrollable Card Listing -->
@@ -106,7 +107,7 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="map-campings-grid">
           {activeCampings.map((camping) => (
             <div
-              class="map-card-item flex flex-col transition-all duration-300 rounded-2xl"
+              class="map-card-item reveal-on-scroll flex flex-col transition-all duration-300 rounded-2xl"
               data-slug={camping.slug}
               data-lat={camping.lat}
               data-lng={camping.lng}
@@ -124,19 +125,47 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
     </div>
   </div>
 
-  <script is:inline>
-    document.addEventListener('DOMContentLoaded', async () => {
+  <script is:inline define:vars={{ baseUrl }}>
+    const initMapa = async () => {
       // Ensure Leaflet library is loaded
       if (typeof L === 'undefined') {
         await new Promise((resolve) => {
+          let attempts = 0;
           const interval = setInterval(() => {
-            if (typeof L !== 'undefined') {
+            attempts++;
+            if (typeof L !== 'undefined' || attempts > 100) {
               clearInterval(interval);
               resolve();
             }
           }, 50);
         });
       }
+
+      if (typeof L === 'undefined') {
+        console.error('Leaflet failed to load');
+        return;
+      }
+
+      // Configure default Leaflet icon paths to prevent broken marker graphics
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+
+      // Custom editorial SVG icon for map pins matching Verde Olivo #2A4836
+      const createCustomIcon = (isSelected = false) => {
+        const color = isSelected ? '#C85A32' : '#2A4836';
+        const size = isSelected ? 36 : 28;
+        return L.divIcon({
+          className: 'custom-map-pin',
+          html: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" stroke="#ffffff" stroke-width="1.5" style="filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3)); transition: all 300ms ease;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size],
+          popupAnchor: [0, -size]
+        });
+      };
 
       // Initialize map centered on Andalucia
       const map = L.map('map-container').setView([37.3826, -4.5000], 8);
@@ -146,11 +175,20 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
 
+      // Invalidate size once map layer is ready to ensure correct container tile rendering
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 200);
+
+      window.addEventListener('resize', () => {
+        map.invalidateSize();
+      });
+
       const markersMap = {};
       const cardNodes = Array.from(document.querySelectorAll('.map-card-item'));
+      const latLngs = [];
 
       try {
-        const baseUrl = document.querySelector('base')?.getAttribute('href') || '/';
         const res = await fetch(`${baseUrl}api/campings-geo.json`);
         if (res.ok) {
           const campingsGeo = await res.json();
@@ -160,26 +198,39 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
               const popupContent = `
                 <div class="p-1 max-w-[210px] font-sans">
                   <img src="${c.main_image}" alt="${c.name}" class="w-full h-24 object-cover rounded-lg mb-2 shadow-xs"/>
-                  <h4 class="font-serif font-bold text-xs text-stone-900 mb-0.5 line-clamp-1">${c.name}</h4>
-                  <p class="text-[11px] text-stone-500 mb-2 capitalize">${c.municipality}, ${c.province || 'Andalucía'}</p>
-                  <a href="${baseUrl}camping/${c.slug}/" class="text-xs bg-[#2D4A3E] hover:bg-emerald-900 text-white px-3 py-1.5 rounded-lg block text-center font-bold transition shadow-2xs">Explorar espacio &rarr;</a>
+                  <h4 class="font-serif font-bold text-xs text-[#1C1917] mb-0.5 line-clamp-1">${c.name}</h4>
+                  <p class="text-[11px] text-[#78716C] mb-2 capitalize">${c.municipality}, ${c.province || 'Andalucía'}</p>
+                  <a href="${baseUrl}camping/${c.slug}/" class="text-xs bg-[#2A4836] hover:bg-[#1F3628] text-white px-3 py-1.5 rounded-lg block text-center font-bold transition shadow-2xs">Explorar espacio &rarr;</a>
                 </div>
               `;
 
-              const marker = L.marker([c.latitude, c.longitude]).addTo(map).bindPopup(popupContent);
+              const marker = L.marker([c.latitude, c.longitude], {
+                icon: createCustomIcon(false)
+              }).addTo(map).bindPopup(popupContent);
+
               markersMap[c.slug] = marker;
+              latLngs.push([c.latitude, c.longitude]);
 
               // Marker click behavior: highlight and scroll card into view
               marker.on('click', () => {
+                // Highlight marker icon
+                Object.values(markersMap).forEach(m => m.setIcon(createCustomIcon(false)));
+                marker.setIcon(createCustomIcon(true));
+
                 const card = document.querySelector(`.map-card-item[data-slug="${c.slug}"]`);
                 if (card) {
-                  document.querySelectorAll('.map-card-item').forEach(el => el.classList.remove('ring-2', 'ring-[#2D4A3E]', 'scale-[1.01]'));
-                  card.classList.add('ring-2', 'ring-[#2D4A3E]', 'scale-[1.01]');
+                  document.querySelectorAll('.map-card-item').forEach(el => el.classList.remove('ring-2', 'ring-[#2A4836]', 'scale-[1.01]'));
+                  card.classList.add('ring-2', 'ring-[#2A4836]', 'scale-[1.01]');
                   card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
               });
             }
           });
+
+          if (latLngs.length > 0) {
+            const bounds = L.latLngBounds(latLngs);
+            map.fitBounds(bounds, { padding: [30, 30] });
+          }
         }
       } catch (err) {
         console.error('Failed to load campings geo JSON:', err);
@@ -194,6 +245,8 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
           const marker = markersMap[slug];
           if (marker) {
             marker.openPopup();
+            Object.values(markersMap).forEach(m => m.setIcon(createCustomIcon(false)));
+            marker.setIcon(createCustomIcon(true));
           }
         });
       });
@@ -207,13 +260,14 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
 
           // Update active pill UI
           filterPills.forEach(p => {
-            p.classList.remove('bg-[#2D4A3E]', 'text-white', 'border-[#2D4A3E]', 'active');
-            p.classList.add('bg-white', 'text-stone-700', 'border-stone-200');
+            p.classList.remove('bg-[#2A4836]', 'text-white', 'border-[#2A4836]', 'active');
+            p.classList.add('bg-white', 'text-[#1C1917]', 'border-[#E7E5E4]');
           });
-          pill.classList.remove('bg-white', 'text-stone-700', 'border-stone-200');
-          pill.classList.add('bg-[#2D4A3E]', 'text-white', 'border-[#2D4A3E]', 'active');
+          pill.classList.remove('bg-white', 'text-[#1C1917]', 'border-[#E7E5E4]');
+          pill.classList.add('bg-[#2A4836]', 'text-white', 'border-[#2A4836]', 'active');
 
           let visibleCount = 0;
+          const activeLatLngs = [];
 
           // Filter card items
           cardNodes.forEach((card) => {
@@ -227,6 +281,7 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
                 if (!map.hasLayer(markersMap[slug])) {
                   map.addLayer(markersMap[slug]);
                 }
+                activeLatLngs.push(markersMap[slug].getLatLng());
               }
             } else {
               card.style.display = 'none';
@@ -237,6 +292,10 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
               }
             }
           });
+
+          if (activeLatLngs.length > 0) {
+            map.fitBounds(L.latLngBounds(activeLatLngs), { padding: [30, 30] });
+          }
 
           const countSpan = document.getElementById('mobile-count');
           if (countSpan) countSpan.textContent = visibleCount.toString();
@@ -253,23 +312,32 @@ const activeCampings = allCampings.filter((c) => c.is_active && c.status !== 'di
         btnViewMap.addEventListener('click', () => {
           mapWrapper.classList.remove('hidden');
           listWrapper.classList.add('hidden');
-          btnViewMap.classList.add('bg-white', 'text-stone-900', 'shadow-2xs');
-          btnViewMap.classList.remove('text-stone-600');
-          btnViewList.classList.remove('bg-white', 'text-stone-900', 'shadow-2xs');
-          btnViewList.classList.add('text-stone-600');
-          map.invalidateSize();
+          btnViewMap.classList.add('bg-white', 'text-[#1C1917]', 'shadow-2xs');
+          btnViewMap.classList.remove('text-[#78716C]');
+          btnViewList.classList.remove('bg-white', 'text-[#1C1917]', 'shadow-2xs');
+          btnViewList.classList.add('text-[#78716C]');
+          setTimeout(() => {
+            map.invalidateSize();
+          }, 100);
         });
 
         btnViewList.addEventListener('click', () => {
           listWrapper.classList.remove('hidden');
           listWrapper.classList.remove('lg:block');
           mapWrapper.classList.add('hidden');
-          btnViewList.classList.add('bg-white', 'text-stone-900', 'shadow-2xs');
-          btnViewList.classList.remove('text-stone-600');
-          btnViewMap.classList.remove('bg-white', 'text-stone-900', 'shadow-2xs');
-          btnViewMap.classList.add('text-stone-600');
+          btnViewList.classList.add('bg-white', 'text-[#1C1917]', 'shadow-2xs');
+          btnViewList.classList.remove('text-[#78716C]');
+          btnViewMap.classList.remove('bg-white', 'text-[#1C1917]', 'shadow-2xs');
+          btnViewMap.classList.add('text-[#78716C]');
         });
       }
-    });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMapa);
+    } else {
+      initMapa();
+    }
+    document.addEventListener('astro:page-load', initMapa);
   </script>
 </Layout>
