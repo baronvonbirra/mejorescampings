@@ -11,6 +11,7 @@ import AffiliateCard from '../../components/AffiliateCard.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
 import { getCampings, PROVINCES } from '../../lib/db';
 import { getNearbyCampings } from '../../lib/poi';
+import { generateCampsiteSchema } from '../../utils/seoSchemas';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -149,25 +150,14 @@ const metaDesc = camping.meta_description || `Reserva y opiniones de ${camping.n
 const ogImage = camping.image_urls && camping.image_urls.length > 0 ? camping.image_urls[0] : camping.image_url;
 
 // Schema.org Structured Data (Rich Snippets: Campsite + AggregateRating + Geo + Breadcrumbs + FAQ)
+const campsiteSchemaBase = generateCampsiteSchema({
+  ...camping,
+  municipality: municipalityName,
+  province: provinceName
+});
+
 const jsonLdCampground = {
-  "@context": "https://schema.org",
-  "@type": "Campsite",
-  "name": camping.name,
-  "description": camping.ai_description || camping.description,
-  "url": `https://mejorescampings.es${import.meta.env.BASE_URL}camping/${camping.slug}/`,
-  "image": camping.image_urls && camping.image_urls.length > 0 ? camping.image_urls : [camping.image_url],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": camping.address,
-    "addressLocality": municipalityName,
-    "addressRegion": provinceName,
-    "addressCountry": "ES"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": camping.lat,
-    "longitude": camping.lng
-  },
+  ...campsiteSchemaBase,
   "priceRange": camping.price_tier === 1 ? "€" : camping.price_tier === 3 ? "€€€" : "€€",
   "aggregateRating": camping.rating ? {
     "@type": "AggregateRating",
@@ -299,38 +289,50 @@ const jsonLdFaq = camping.faqs_json && camping.faqs_json.length > 0 ? {
         <CampingBadges amenities={camping.amenities} provinceSlug={provinceSlug} />
       </div>
 
-      <!-- Primary Booking CTA Box -->
+      <!-- Primary Booking / Bungalow CTA Box -->
       <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200/90 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span class="text-xs font-bold text-emerald-800 uppercase tracking-wide block">Garantía de Mejor Precio</span>
-          <span class="text-xs sm:text-sm text-emerald-950 font-medium">Comprueba disponibilidad y fechas directamente con el alojamiento.</span>
+          <span class="text-xs sm:text-sm text-emerald-950 font-medium">Comprueba disponibilidad y precios directamente para tu estancia.</span>
         </div>
-        {camping.affiliate_url ? (
-          <a
-            href={camping.affiliate_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
-          >
-            Reservar Camping &rarr;
-          </a>
-        ) : camping.official_url ? (
-          <a
-            href={camping.official_url}
-            target="_blank"
-            rel="nofollow sponsored"
-            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
-          >
-            Reservar en Web Oficial &rarr;
-          </a>
-        ) : (
-          <button
-            disabled
-            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-300 text-slate-600 font-extrabold text-sm text-center cursor-not-allowed opacity-75 shrink-0"
-          >
-            Reserva no disponible
-          </button>
-        )}
+        <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto shrink-0">
+          {camping.booking_affiliate_url && (
+            <a
+              href={camping.booking_affiliate_url}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="w-full sm:w-auto px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-md text-center transition flex items-center justify-center gap-2"
+            >
+              <span>🏨</span> Ver Disponibilidad de Bungalows en Booking &rarr;
+            </a>
+          )}
+          {camping.affiliate_url ? (
+            <a
+              href={camping.affiliate_url}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
+            >
+              Reservar Camping &rarr;
+            </a>
+          ) : camping.official_url ? (
+            <a
+              href={camping.official_url}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-sm shadow-md text-center transition shrink-0"
+            >
+              Reservar en Web Oficial &rarr;
+            </a>
+          ) : !camping.booking_affiliate_url && (
+            <button
+              disabled
+              class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-300 text-slate-600 font-extrabold text-sm text-center cursor-not-allowed opacity-75 shrink-0"
+            >
+              Reserva no disponible
+            </button>
+          )}
+        </div>
       </div>
 
       <!-- 3. Component <CampingHighlights /> -->

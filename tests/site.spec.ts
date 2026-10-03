@@ -346,4 +346,29 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('h1')).toContainText('Bungalows Baratos');
   });
 
+  test('Interactive Map (/mapa/) and API endpoint (/api/campings-geo.json) serve campsite geolocation data', async ({ page }) => {
+    // API endpoint test
+    const apiResp = await page.goto('api/campings-geo.json');
+    expect(apiResp?.status()).toBe(200);
+    const json = await apiResp?.json();
+    expect(Array.isArray(json)).toBe(true);
+    expect(json.length).toBeGreaterThan(0);
+    expect(json[0]).toHaveProperty('latitude');
+    expect(json[0]).toHaveProperty('longitude');
+
+    // Interactive map page test
+    const mapPageResp = await page.goto('mapa/');
+    expect(mapPageResp?.status()).toBe(200);
+    await expect(page.locator('h1')).toContainText('Mapa de Campings en Andalucía');
+    await expect(page.locator('#map-container')).toBeVisible();
+  });
+
+  test('Editorial Guides render siloing section "Campings verificados"', async ({ page }) => {
+    const response = await page.goto('guias/ruta-5-dias-camper-costa-del-sol/');
+    expect(response?.status()).toBe(200);
+
+    await expect(page.locator('h3').filter({ hasText: /Campings verificados/i })).toBeVisible();
+    await expect(page.locator('a[href*="/camping/"]').first()).toBeVisible();
+  });
+
 });

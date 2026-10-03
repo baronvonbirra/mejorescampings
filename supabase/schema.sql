@@ -67,6 +67,8 @@ CREATE TABLE IF NOT EXISTS campings (
     image_urls TEXT[] DEFAULT '{}',
     affiliate_url TEXT,
     official_url TEXT,
+    booking_affiliate_url TEXT DEFAULT NULL,
+    tiqets_location_id TEXT DEFAULT NULL,
     price_tier INT DEFAULT 2 CHECK (price_tier BETWEEN 1 AND 4),
     is_active BOOLEAN DEFAULT TRUE,
     is_promoted BOOLEAN DEFAULT FALSE,
@@ -117,6 +119,8 @@ ALTER TABLE features
 ADD COLUMN IF NOT EXISTS icon TEXT;
 
 ALTER TABLE campings
+ADD COLUMN IF NOT EXISTS booking_affiliate_url TEXT DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS tiqets_location_id TEXT DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS is_promoted BOOLEAN DEFAULT FALSE,
 ADD COLUMN IF NOT EXISTS province_slug TEXT NOT NULL DEFAULT 'malaga',
 ADD COLUMN IF NOT EXISTS comarca TEXT DEFAULT NULL,
