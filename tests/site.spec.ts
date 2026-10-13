@@ -191,7 +191,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('a[href*="/guias/normativa-pernocta-almeria/"]').first()).toBeVisible();
 
     // Check affiliate banners on pernocta guide page
-    await expect(page.locator('a[href*="getrentacar.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="autoeurope.tpx.lv"]').first()).toBeVisible();
     await expect(page.locator('a[href*="bikesbooking.tpx.lv"]').first()).toBeVisible();
   });
 
@@ -231,7 +231,7 @@ test.describe('MejoresCampings - Site QA Suite', () => {
     await expect(page.locator('[data-testid="environment-block"]')).toBeVisible();
 
     // Check Travelpayouts Affiliate elements (Rentacar, Klook cards, Radical Storage)
-    await expect(page.locator('a[href*="getrentacar.tpx.lv"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="autoeurope.tpx.lv"]').first()).toBeVisible();
     await expect(page.locator('a[href*="klook.tpx.lv"]').first()).toBeVisible();
     await expect(page.locator('a[href*="radicalstorage.tpx.lv"]').first()).toBeVisible();
 
